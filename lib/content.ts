@@ -8,7 +8,7 @@ export const site = {
   shortName: "Tim",
   role: "Designer & Developer",
   location: "Amsterdam, NL",
-  email: "info@disseldesign.nl",
+  email: "info@disseldesign.com",
   tagline:
     "I design and build calm, considered digital products — where craft meets clarity.",
   hero: {
@@ -234,11 +234,11 @@ export const socials = [
 /**
  * Contact form — real submissions go to formsubmit.co and forward to `site.email`.
  * NOTE: the very first submission triggers a confirmation email from formsubmit.co
- * to info@disseldesign.nl — click the link in that email to activate the endpoint,
+ * to info@disseldesign.com — click the link in that email to activate the endpoint,
  * after that every submission lands directly in your inbox.
  */
 export const contact = {
-  endpoint: "https://formsubmit.co/ajax/info@disseldesign.nl",
+  endpoint: "https://formsubmit.co/ajax/info@disseldesign.com",
   projectTypes: [
     { value: "", label: "Waar kan ik je mee helpen?" },
     { value: "Website / landing page", label: "Website / landing page" },
