@@ -240,13 +240,9 @@ export const socials = [
 export const contact = {
   endpoint: "https://formsubmit.co/ajax/info@disseldesign.com",
   projectTypes: [
-    { value: "", label: "Waar kan ik je mee helpen?" },
-    { value: "Website / landing page", label: "Website / landing page" },
-    { value: "Product / app design", label: "Product / app design" },
-    { value: "Web app / SaaS", label: "Web app / SaaS" },
-    { value: "Mobile app", label: "Mobile app" },
-    { value: "Brand & identity", label: "Brand & identity" },
-    { value: "UX audit / consulting", label: "UX audit / consulting" },
-    { value: "Anders", label: "Iets anders" },
+    { value: "Branding", label: "Branding" },
+    { value: "Web design", label: "Web design" },
+    { value: "Development", label: "Development" },
+    { value: "Anders", label: "Anders" },
   ],
 };
