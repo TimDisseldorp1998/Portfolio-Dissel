@@ -1,20 +1,12 @@
 "use client";
 
-import {
-  Twitter,
-  Github,
-  Linkedin,
-  Dribbble,
-  type LucideIcon,
-} from "lucide-react";
 import { nav, site, socials } from "@/lib/content";
 import { Container } from "./ui/Container";
+import { LinkedinFilled, InstagramFilled } from "./ui/BrandIcons";
 
-const socialIcons: Record<string, LucideIcon> = {
-  Twitter,
-  Github,
-  Linkedin,
-  Dribbble,
+const brandIcons: Record<string, (props: { size?: number }) => JSX.Element> = {
+  Linkedin: LinkedinFilled,
+  Instagram: InstagramFilled,
 };
 
 export function Footer() {
@@ -92,7 +84,8 @@ export function Footer() {
           </p>
           <div className="flex gap-1">
             {socials.map((s) => {
-              const Icon = socialIcons[s.icon] ?? Twitter;
+              const Icon = brandIcons[s.icon];
+              if (!Icon) return null;
               return (
                 <a
                   key={s.label}
@@ -102,7 +95,7 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="inline-flex h-9 w-9 items-center justify-center rounded-full text-ink-soft transition-all hover:bg-black/[0.04] hover:text-primary"
                 >
-                  <Icon size={15} />
+                  <Icon size={16} />
                 </a>
               );
             })}

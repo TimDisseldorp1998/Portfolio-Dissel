@@ -1,39 +1,79 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { ArrowRight, Mail } from "lucide-react";
-import { site, socials } from "@/lib/content";
+import { ArrowRight, ChevronDown, Mail } from "lucide-react";
+import { contact, site, socials } from "@/lib/content";
 import { Section } from "./ui/Section";
 import { Container } from "./ui/Container";
 import { Reveal } from "./ui/Reveal";
+import { LinkedinFilled, InstagramFilled } from "./ui/BrandIcons";
 import { cn } from "@/lib/cn";
-import {
-  Twitter,
-  Github,
-  Linkedin,
-  Dribbble,
-  type LucideIcon,
-} from "lucide-react";
 
-const socialIcons: Record<string, LucideIcon> = {
-  Twitter,
-  Github,
-  Linkedin,
-  Dribbble,
+type Status = "idle" | "submitting" | "sent" | "error";
+
+const brandIcons: Record<string, (props: { size?: number }) => JSX.Element> = {
+  Linkedin: LinkedinFilled,
+  Instagram: InstagramFilled,
 };
 
 export function Contact() {
-  const [status, setStatus] = useState<"idle" | "submitting" | "sent">("idle");
+  const [status, setStatus] = useState<Status>("idle");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    // Honeypot — bots often fill hidden fields
+    if (data.get("_honey")) {
+      return;
+    }
+
     setStatus("submitting");
-    // Placeholder handler — swap for your real endpoint.
-    await new Promise((r) => setTimeout(r, 800));
-    setStatus("sent");
-    (e.currentTarget as HTMLFormElement).reset();
-    setTimeout(() => setStatus("idle"), 3200);
+    setErrorMessage(null);
+
+    const payload = {
+      name: (data.get("name") as string) || "—",
+      email: data.get("email") as string,
+      project_type:
+        (data.get("project_type") as string) || "Niet gespecificeerd",
+      message: data.get("message") as string,
+      _subject: `Nieuw bericht via portfolio — ${
+        (data.get("project_type") as string) || "algemeen"
+      }`,
+      _template: "table",
+      _captcha: "false",
+    };
+
+    try {
+      const res = await fetch(contact.endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      const json = (await res.json().catch(() => ({}))) as {
+        success?: string;
+        message?: string;
+      };
+      if (!res.ok || json.success !== "true") {
+        throw new Error(json.message || "Er ging iets mis. Probeer opnieuw.");
+      }
+      setStatus("sent");
+      form.reset();
+      window.setTimeout(() => setStatus("idle"), 5000);
+    } catch (err) {
+      setStatus("error");
+      setErrorMessage(
+        err instanceof Error ? err.message : "Er ging iets mis. Probeer opnieuw."
+      );
+    }
   }
+
+  const isSubmitting = status === "submitting";
 
   return (
     <Section id="contact" variant="light" className="pb-32">
@@ -49,8 +89,8 @@ export function Contact() {
                 <span className="text-gradient">memorable</span>.
               </h2>
               <p className="mb-8 text-lg leading-relaxed text-ink-muted">
-                Working on something exciting, or just want to say hi? I&apos;d
-                love to hear from you.
+                Werk je aan iets interessants, of wil je gewoon even hi zeggen?
+                Ik hoor het graag.
               </p>
 
               <a
@@ -71,7 +111,8 @@ export function Contact() {
                 </p>
                 <div className="flex gap-2">
                   {socials.map((s) => {
-                    const Icon = socialIcons[s.icon] ?? Mail;
+                    const Icon = brandIcons[s.icon];
+                    if (!Icon) return null;
                     return (
                       <a
                         key={s.label}
@@ -81,7 +122,7 @@ export function Contact() {
                         rel="noopener noreferrer"
                         className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/[0.08] bg-white text-ink-muted transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:text-primary hover:shadow-glow"
                       >
-                        <Icon size={16} />
+                        <Icon size={18} />
                       </a>
                     );
                   })}
@@ -95,42 +136,81 @@ export function Contact() {
               <form
                 onSubmit={onSubmit}
                 className="rounded-3xl border border-black/[0.06] bg-white p-6 shadow-soft md:p-10"
+                noValidate
               >
+                {/* Honeypot — hidden from users, visible to bots */}
+                <input
+                  type="text"
+                  name="_honey"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  className="hidden"
+                  aria-hidden
+                />
+
                 <div className="grid gap-5 sm:grid-cols-2">
-                  <Field label="Name" name="name" placeholder="Your name" />
+                  <Field
+                    label="Name"
+                    name="name"
+                    placeholder="Your name"
+                    required={false}
+                  />
                   <Field
                     label="Email"
                     name="email"
                     type="email"
                     placeholder="you@domain.com"
+                    required
                   />
                 </div>
+
+                <div className="mt-5">
+                  <SelectField
+                    label="Project type"
+                    name="project_type"
+                    options={contact.projectTypes}
+                  />
+                </div>
+
                 <div className="mt-5">
                   <Field
                     as="textarea"
                     label="Message"
                     name="message"
-                    placeholder="Tell me a little about what you have in mind…"
+                    placeholder="Vertel me kort waar je mee bezig bent…"
                     rows={5}
+                    required
                   />
                 </div>
 
                 <div className="mt-6 flex flex-col-reverse items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <p className="text-xs text-ink-soft">
-                    Typical reply within a day or two.
-                  </p>
+                  <div className="text-xs">
+                    {status === "error" ? (
+                      <p className="text-red-600" role="alert">
+                        {errorMessage}
+                      </p>
+                    ) : status === "sent" ? (
+                      <p className="text-emerald-600">
+                        Bedankt — ik hoor je binnen een dag of twee terug.
+                      </p>
+                    ) : (
+                      <p className="text-ink-soft">
+                        Ik reageer meestal binnen een dag of twee.
+                      </p>
+                    )}
+                  </div>
                   <button
                     type="submit"
-                    disabled={status === "submitting"}
+                    disabled={isSubmitting}
                     className={cn(
                       "inline-flex h-11 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-medium text-white shadow-glow transition-all duration-200",
-                      "hover:-translate-y-0.5 hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:opacity-60"
+                      "hover:-translate-y-0.5 hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:opacity-60 disabled:hover:translate-y-0"
                     )}
                   >
                     {status === "sent"
-                      ? "Sent — talk soon"
-                      : status === "submitting"
-                      ? "Sending…"
+                      ? "Verstuurd — talk soon"
+                      : isSubmitting
+                      ? "Bezig met versturen…"
                       : "Send message"}
                     {status === "idle" && <ArrowRight size={16} />}
                   </button>
@@ -151,6 +231,7 @@ interface FieldProps {
   placeholder?: string;
   rows?: number;
   as?: "input" | "textarea";
+  required?: boolean;
 }
 
 function Field({
@@ -160,20 +241,22 @@ function Field({
   placeholder,
   rows,
   as = "input",
+  required = false,
 }: FieldProps) {
   const base =
     "block w-full rounded-xl border border-black/[0.08] bg-white/60 px-4 py-3 text-sm text-ink placeholder:text-ink-soft transition-all duration-200 focus:border-primary/40 focus:bg-white focus:outline-none focus:ring-4 focus:ring-primary/10";
   return (
     <label className="block">
-      <span className="mb-2 block text-xs font-medium uppercase tracking-[0.18em] text-ink-soft">
+      <span className="mb-2 flex items-center gap-1 text-xs font-medium uppercase tracking-[0.18em] text-ink-soft">
         {label}
+        {required && <span className="text-primary">*</span>}
       </span>
       {as === "textarea" ? (
         <textarea
           name={name}
           placeholder={placeholder}
           rows={rows}
-          required
+          required={required}
           className={cn(base, "resize-none")}
         />
       ) : (
@@ -181,10 +264,44 @@ function Field({
           type={type}
           name={name}
           placeholder={placeholder}
-          required
+          required={required}
           className={base}
         />
       )}
+    </label>
+  );
+}
+
+interface SelectFieldProps {
+  label: string;
+  name: string;
+  options: { value: string; label: string }[];
+}
+
+function SelectField({ label, name, options }: SelectFieldProps) {
+  return (
+    <label className="block">
+      <span className="mb-2 flex items-center gap-1 text-xs font-medium uppercase tracking-[0.18em] text-ink-soft">
+        {label}
+      </span>
+      <div className="relative">
+        <select
+          name={name}
+          defaultValue=""
+          className="block w-full appearance-none rounded-xl border border-black/[0.08] bg-white/60 px-4 py-3 pr-10 text-sm text-ink transition-all duration-200 focus:border-primary/40 focus:bg-white focus:outline-none focus:ring-4 focus:ring-primary/10"
+        >
+          {options.map((opt) => (
+            <option key={opt.label} value={opt.value} disabled={opt.value === ""}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
+        <ChevronDown
+          size={16}
+          className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-ink-soft"
+          aria-hidden
+        />
+      </div>
     </label>
   );
 }
