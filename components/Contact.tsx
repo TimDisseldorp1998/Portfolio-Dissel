@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { ArrowRight, ChevronDown, Mail, Phone } from "lucide-react";
+import { ArrowRight, ChevronDown, Mail } from "lucide-react";
 import { contact, site, socials } from "@/lib/content";
 import { Section } from "./ui/Section";
 import { Container } from "./ui/Container";
@@ -93,30 +93,17 @@ export function Contact() {
                 Ik hoor het graag.
               </p>
 
-              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <a
-                  href={`mailto:${site.email}`}
-                  className="group inline-flex items-center gap-3 rounded-full border border-black/[0.08] bg-white px-5 py-3 text-sm font-medium shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:shadow-glow"
-                >
-                  <Mail size={16} className="text-primary" />
-                  <span>{site.email}</span>
-                  <ArrowRight
-                    size={14}
-                    className="transition-transform duration-300 group-hover:translate-x-0.5"
-                  />
-                </a>
-                <a
-                  href={`tel:${site.phone}`}
-                  className="group inline-flex items-center gap-3 rounded-full border border-black/[0.08] bg-white px-5 py-3 text-sm font-medium shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:shadow-glow"
-                >
-                  <Phone size={16} className="text-primary" />
-                  <span>{site.phoneDisplay}</span>
-                  <ArrowRight
-                    size={14}
-                    className="transition-transform duration-300 group-hover:translate-x-0.5"
-                  />
-                </a>
-              </div>
+              <a
+                href={`mailto:${site.email}`}
+                className="group inline-flex items-center gap-3 rounded-full border border-black/[0.08] bg-white px-5 py-3 text-sm font-medium shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:shadow-glow"
+              >
+                <Mail size={16} className="text-primary" />
+                <span>{site.email}</span>
+                <ArrowRight
+                  size={14}
+                  className="transition-transform duration-300 group-hover:translate-x-0.5"
+                />
+              </a>
 
               <div className="mt-10">
                 <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-ink-soft">

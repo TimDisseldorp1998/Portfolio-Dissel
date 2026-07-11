@@ -67,24 +67,12 @@ export function Footer() {
             <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-ink-soft">
               Say hello
             </p>
-            <ul className="space-y-2">
-              <li>
-                <a
-                  href={`mailto:${site.email}`}
-                  className="text-sm text-ink-muted transition-colors hover:text-ink"
-                >
-                  {site.email}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`tel:${site.phone}`}
-                  className="text-sm text-ink-muted transition-colors hover:text-ink"
-                >
-                  {site.phoneDisplay}
-                </a>
-              </li>
-            </ul>
+            <a
+              href={`mailto:${site.email}`}
+              className="text-sm text-ink-muted transition-colors hover:text-ink"
+            >
+              {site.email}
+            </a>
           </div>
         </div>
       </Container>
