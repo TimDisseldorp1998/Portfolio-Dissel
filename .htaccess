@@ -1,0 +1,22 @@
+# Serve the statically-built Next.js output from /out/ as if it were the site root.
+# Hostinger points public_html/ at this repo, so requests come in at "/", but the
+# actual HTML lives in /out/ after next build. This rewrite bridges the two.
+
+DirectoryIndex out/index.html
+
+RewriteEngine On
+RewriteBase /
+
+# Don't rewrite requests that are already inside /out/ — they resolve normally.
+RewriteRule ^out/ - [L]
+
+# Root request → out/index.html
+RewriteRule ^$ out/index.html [L]
+
+# Anything that isn't an existing file/directory → look inside /out/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ out/$1 [L]
+
+# Fallback for trailing-slash URLs that Next generates as directories.
+ErrorDocument 404 /out/404.html
