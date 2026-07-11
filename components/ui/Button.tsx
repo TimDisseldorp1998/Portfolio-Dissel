@@ -2,7 +2,7 @@ import { cn } from "@/lib/cn";
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react";
 import { forwardRef } from "react";
 
-type Variant = "primary" | "ghost" | "outline";
+type Variant = "primary" | "secondary" | "ghost" | "outline";
 type Size = "md" | "lg";
 
 const base =
@@ -11,6 +11,8 @@ const base =
 const variants: Record<Variant, string> = {
   primary:
     "text-white bg-primary hover:bg-primary-600 shadow-glow hover:-translate-y-0.5",
+  secondary:
+    "text-white bg-secondary hover:bg-secondary-600 shadow-[0_0_0_1px_rgba(255,131,61,0.16),_0_20px_60px_-20px_rgba(255,131,61,0.5)] hover:-translate-y-0.5",
   outline:
     "text-white border border-white/30 hover:border-white/70 hover:bg-white/5 backdrop-blur-sm hover:-translate-y-0.5",
   ghost:

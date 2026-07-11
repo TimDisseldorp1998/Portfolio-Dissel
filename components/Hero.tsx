@@ -54,7 +54,7 @@ export function Hero() {
           {...rise(0.5)}
           className="mt-10 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4"
         >
-          <Button href={site.hero.primaryCta.href} variant="primary" size="lg">
+          <Button href={site.hero.primaryCta.href} variant="secondary" size="lg">
             {site.hero.primaryCta.label}
             <ArrowRight size={18} />
           </Button>
