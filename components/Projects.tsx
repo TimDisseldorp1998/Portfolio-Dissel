@@ -1,10 +1,13 @@
 "use client";
 
+import { useRef, useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { projects, type Project } from "@/lib/content";
 import { Section } from "./ui/Section";
 import { Container } from "./ui/Container";
 import { Reveal, RevealStagger, RevealItem } from "./ui/Reveal";
+import { ProjectDetailPanel } from "./ProjectDetailPanel";
 import { cn } from "@/lib/cn";
 
 // Radial-gradient accents tuned for the dark surface. Cyan is the brand
@@ -18,6 +21,23 @@ const accentBg: Record<Project["accent"], string> = {
 };
 
 export function Projects() {
+  const [active, setActive] = useState<Project | null>(null);
+  // Card that opened the panel — focus returns here on close (a11y).
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
+
+  function openProject(
+    project: Project,
+    e: React.MouseEvent<HTMLButtonElement>
+  ) {
+    triggerRef.current = e.currentTarget;
+    setActive(project);
+  }
+
+  function closeProject() {
+    setActive(null);
+    triggerRef.current?.focus();
+  }
+
   return (
     <Section id="work" variant="dark">
       <Container>
@@ -42,9 +62,11 @@ export function Projects() {
         <RevealStagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((p) => (
             <RevealItem key={p.title}>
-              <a
-                href={p.href}
-                className="group relative block overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.06]"
+              <button
+                type="button"
+                onClick={(e) => openProject(p, e)}
+                aria-haspopup="dialog"
+                className="group relative block w-full overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] text-left backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
               >
                 <div
                   className={cn(
@@ -60,8 +82,6 @@ export function Projects() {
                       </span>
                     </div>
                   </div>
-                  {/* subtle glow border on hover */}
-                  <div className="pointer-events-none absolute inset-0 rounded-3xl ring-0 ring-primary/0 transition-all duration-300 group-hover:ring-2 group-hover:ring-primary/30" />
                 </div>
 
                 <div className="flex flex-col gap-3 p-6">
@@ -69,7 +89,7 @@ export function Projects() {
                     <h3 className="font-heading text-lg font-semibold leading-snug text-white">
                       {p.title}
                     </h3>
-                    <span className="mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/[0.06] text-white/70 transition-all duration-300 group-hover:bg-primary group-hover:text-ink">
+                    <span className="mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-all duration-300 group-hover:bg-secondary group-hover:text-white">
                       <ArrowUpRight size={16} />
                     </span>
                   </div>
@@ -87,11 +107,17 @@ export function Projects() {
                     ))}
                   </div>
                 </div>
-              </a>
+              </button>
             </RevealItem>
           ))}
         </RevealStagger>
       </Container>
+
+      <AnimatePresence>
+        {active && (
+          <ProjectDetailPanel project={active} onClose={closeProject} />
+        )}
+      </AnimatePresence>
     </Section>
   );
 }

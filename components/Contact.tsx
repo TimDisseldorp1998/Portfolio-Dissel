@@ -13,6 +13,7 @@ import {
   AlertCircle,
   ArrowRight,
   Check,
+  Clock,
   Copy,
   Loader2,
   Mail,
@@ -428,8 +429,13 @@ export function Contact() {
                                   </button>
                                 </p>
                               ) : (
-                                <p className="text-white/60">
-                                  Ik reageer meestal binnen een dag of twee.
+                                <p className="flex items-center gap-1.5 text-white/60">
+                                  <Clock
+                                    size={14}
+                                    className="shrink-0 text-primary"
+                                    aria-hidden
+                                  />
+                                  <span>Reactie binnen 24–48 uur.</span>
                                 </p>
                               )}
                             </div>
@@ -437,8 +443,8 @@ export function Contact() {
                               type="submit"
                               disabled={isSubmitting}
                               className={cn(
-                                "group inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-primary px-7 text-sm font-medium text-ink shadow-glow transition-all duration-200 sm:w-auto",
-                                "hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30",
+                                "group inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-secondary px-7 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,131,61,0.16),_0_20px_60px_-20px_rgba(255,131,61,0.5)] transition-all duration-200 sm:w-auto",
+                                "hover:bg-secondary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-secondary/40",
                                 "disabled:cursor-not-allowed disabled:opacity-70"
                               )}
                             >
@@ -509,7 +515,7 @@ function SuccessCard({ onReset }: { onReset: () => void }) {
           Bedankt!
         </p>
         <p className="mt-2 max-w-sm text-white/70">
-          Ik reageer meestal binnen een dag of twee.
+          Je bericht is verstuurd — je hoort binnen 24–48 uur van me.
         </p>
       </div>
       <button
