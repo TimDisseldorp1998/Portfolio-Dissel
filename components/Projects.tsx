@@ -7,32 +7,34 @@ import { Container } from "./ui/Container";
 import { Reveal, RevealStagger, RevealItem } from "./ui/Reveal";
 import { cn } from "@/lib/cn";
 
+// Radial-gradient accents tuned for the dark surface. Cyan is the brand
+// primary; secondary orange and their mix provide variety across cards.
 const accentBg: Record<Project["accent"], string> = {
   primary:
-    "bg-[radial-gradient(circle_at_20%_20%,rgba(86,58,218,0.55),transparent_60%),radial-gradient(circle_at_80%_80%,rgba(86,58,218,0.15),transparent_60%)]",
+    "bg-[radial-gradient(circle_at_20%_20%,rgba(92,221,255,0.45),transparent_60%),radial-gradient(circle_at_80%_80%,rgba(92,221,255,0.14),transparent_60%)]",
   secondary:
-    "bg-[radial-gradient(circle_at_20%_20%,rgba(255,131,61,0.55),transparent_60%),radial-gradient(circle_at_80%_80%,rgba(255,131,61,0.15),transparent_60%)]",
-  mix: "bg-[radial-gradient(circle_at_25%_20%,rgba(86,58,218,0.55),transparent_55%),radial-gradient(circle_at_80%_80%,rgba(255,131,61,0.5),transparent_60%)]",
+    "bg-[radial-gradient(circle_at_20%_20%,rgba(255,131,61,0.45),transparent_60%),radial-gradient(circle_at_80%_80%,rgba(255,131,61,0.14),transparent_60%)]",
+  mix: "bg-[radial-gradient(circle_at_25%_20%,rgba(92,221,255,0.42),transparent_55%),radial-gradient(circle_at_80%_80%,rgba(255,131,61,0.4),transparent_60%)]",
 };
 
 export function Projects() {
   return (
-    <Section id="work" variant="alt">
+    <Section id="work" variant="dark">
       <Container>
         <Reveal>
           <div className="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <div>
-              <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-primary-700">
+              <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-primary">
                 Selected work
               </p>
-              <h2 className="max-w-2xl font-heading text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
+              <h2 className="max-w-2xl font-heading text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-5xl">
                 A few things I&apos;ve had the pleasure of{" "}
                 <span className="text-gradient">making</span>.
               </h2>
             </div>
-            <p className="max-w-sm text-sm leading-relaxed text-ink-muted">
-              A short selection — reach out for the full case studies and
-              the stories behind each one.
+            <p className="max-w-sm text-sm leading-relaxed text-white/60">
+              A short selection — reach out for the full case studies and the
+              stories behind each one.
             </p>
           </div>
         </Reveal>
@@ -42,7 +44,7 @@ export function Projects() {
             <RevealItem key={p.title}>
               <a
                 href={p.href}
-                className="group relative block overflow-hidden rounded-3xl border border-black/[0.06] bg-white shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-glow"
+                className="group relative block overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.06]"
               >
                 <div
                   className={cn(
@@ -51,34 +53,34 @@ export function Projects() {
                   )}
                 >
                   <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-105">
-                    <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.15)_100%)]" />
+                    <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.08)_100%)]" />
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="font-heading text-4xl font-semibold text-white/85 mix-blend-overlay">
+                      <span className="font-heading text-4xl font-semibold text-white/70 mix-blend-overlay">
                         {p.title}
                       </span>
                     </div>
                   </div>
-                  {/* subtle gradient border on hover */}
-                  <div className="pointer-events-none absolute inset-0 rounded-3xl ring-0 ring-primary/0 transition-all duration-300 group-hover:ring-2 group-hover:ring-primary/20" />
+                  {/* subtle glow border on hover */}
+                  <div className="pointer-events-none absolute inset-0 rounded-3xl ring-0 ring-primary/0 transition-all duration-300 group-hover:ring-2 group-hover:ring-primary/30" />
                 </div>
 
                 <div className="flex flex-col gap-3 p-6">
                   <div className="flex items-start justify-between gap-3">
-                    <h3 className="font-heading text-lg font-semibold leading-snug">
+                    <h3 className="font-heading text-lg font-semibold leading-snug text-white">
                       {p.title}
                     </h3>
-                    <span className="mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-black/[0.04] text-ink-muted transition-all duration-300 group-hover:bg-primary group-hover:text-white">
+                    <span className="mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/[0.06] text-white/70 transition-all duration-300 group-hover:bg-primary group-hover:text-ink">
                       <ArrowUpRight size={16} />
                     </span>
                   </div>
-                  <p className="text-sm leading-relaxed text-ink-muted">
+                  <p className="text-sm leading-relaxed text-white/60">
                     {p.description}
                   </p>
                   <div className="mt-2 flex flex-wrap gap-1.5">
                     {p.tags.map((t) => (
                       <span
                         key={t}
-                        className="rounded-full border border-black/[0.06] bg-black/[0.03] px-2.5 py-1 text-[11px] font-medium uppercase tracking-wider text-ink-muted"
+                        className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[11px] font-medium uppercase tracking-wider text-white/60"
                       >
                         {t}
                       </span>
