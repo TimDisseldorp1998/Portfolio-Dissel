@@ -43,7 +43,13 @@ export function Hero() {
           {...rise(0.1)}
           className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.18em] text-white/70 backdrop-blur"
         >
-          <span className="h-1.5 w-1.5 rounded-full bg-secondary shadow-[0_0_12px_2px_rgba(255,131,61,0.7)]" />
+          <span
+            aria-label="Beschikbaar voor werk"
+            className="relative flex h-2 w-2 items-center justify-center"
+          >
+            <span className="absolute inset-0 rounded-full bg-[#3EE68B] opacity-70 motion-safe:animate-ping" />
+            <span className="relative h-2 w-2 rounded-full bg-[#3EE68B] shadow-[0_0_10px_2px_rgba(62,230,139,0.8)]" />
+          </span>
           {site.hero.eyebrow}
         </motion.p>
 
