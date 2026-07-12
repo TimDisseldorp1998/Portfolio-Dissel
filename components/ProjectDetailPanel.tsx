@@ -1,0 +1,344 @@
+"use client";
+
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  Award,
+  Briefcase,
+  Calendar,
+  ChevronLeft,
+  ChevronRight,
+  MonitorSmartphone,
+  X,
+} from "lucide-react";
+import type { Project } from "@/lib/content";
+import { cn } from "@/lib/cn";
+
+/**
+ * Shared design tokens for every project popup (spec: consistency).
+ * Tweak here and all panels follow.
+ */
+const panelTokens = {
+  "--panel-radius": "24px",
+  "--panel-bg": "#0B0B11",
+  "--panel-border": "rgba(255,255,255,0.10)",
+  "--meta-bg": "rgba(255,255,255,0.04)",
+  "--meta-border": "rgba(255,255,255,0.08)",
+  "--meta-label": "rgba(255,255,255,0.45)",
+  "--meta-value": "rgba(255,255,255,0.92)",
+  "--meta-pill-text": "#B79FFF",
+  "--meta-pill-border": "rgba(142,92,224,0.55)",
+} as CSSProperties;
+
+const FOCUSABLE =
+  'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+interface ProjectDetailPanelProps {
+  project: Project;
+  onClose: () => void;
+}
+
+export function ProjectDetailPanel({
+  project,
+  onClose,
+}: ProjectDetailPanelProps) {
+  const prefersReducedMotion = useReducedMotion();
+  const panelRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [slide, setSlide] = useState(0);
+  const [atScrollEnd, setAtScrollEnd] = useState(false);
+
+  const { detail } = project;
+  const titleId = "project-detail-title";
+  const slideCount = detail.slides.length;
+
+  const prevSlide = useCallback(
+    () => setSlide((s) => (s - 1 + slideCount) % slideCount),
+    [slideCount]
+  );
+  const nextSlide = useCallback(
+    () => setSlide((s) => (s + 1) % slideCount),
+    [slideCount]
+  );
+
+  // Keyboard: ESC closes, arrows drive the carousel, Tab is trapped inside.
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+        return;
+      }
+      if (e.key === "ArrowLeft") prevSlide();
+      if (e.key === "ArrowRight") nextSlide();
+      if (e.key === "Tab") {
+        const focusables =
+          panelRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE);
+        if (!focusables?.length) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [onClose, prevSlide, nextSlide]);
+
+  // Body scroll lock while open + initial focus on the close button.
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeButtonRef.current?.focus();
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, []);
+
+  // Scroll affordance: hide the bottom fade once the user reaches the end.
+  const onScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setAtScrollEnd(el.scrollTop + el.clientHeight >= el.scrollHeight - 8);
+  }, []);
+
+  useEffect(() => {
+    onScroll();
+  }, [onScroll]);
+
+  return (
+    <div className="fixed inset-0 z-[70]" style={panelTokens}>
+      {/* Backdrop — click closes */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
+        onClick={onClose}
+        aria-hidden
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+      />
+
+      {/* Panel */}
+      <motion.div
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        initial={{ opacity: 0, x: prefersReducedMotion ? 0 : 48 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: prefersReducedMotion ? 0 : 48 }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
+        className="absolute inset-y-0 right-0 flex w-full flex-col border-l border-[color:var(--panel-border)] bg-[color:var(--panel-bg)] text-white sm:max-w-[640px] sm:rounded-l-[var(--panel-radius)]"
+      >
+        <div
+          ref={scrollRef}
+          onScroll={onScroll}
+          className="panel-scroll relative flex-1 overflow-y-auto p-6 md:p-10"
+        >
+          {/* Title row */}
+          <div className="mb-6 flex items-center justify-between gap-4">
+            <h2
+              id={titleId}
+              className="font-heading text-2xl font-semibold leading-tight md:text-3xl"
+            >
+              {project.title}
+            </h2>
+            <button
+              ref={closeButtonRef}
+              type="button"
+              onClick={onClose}
+              aria-label="Close project details"
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/[0.08] hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+            >
+              <X size={20} />
+            </button>
+          </div>
+
+          {/* Project facts bar */}
+          <dl className="mb-8 flex flex-wrap items-stretch gap-x-8 gap-y-4 rounded-xl border border-[color:var(--meta-border)] bg-[color:var(--meta-bg)] px-5 py-3.5">
+            <div>
+              <dt className="mb-1 flex items-center gap-1.5 text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-[color:var(--meta-label)]">
+                <Briefcase size={14} aria-hidden />
+                Company
+              </dt>
+              <dd className="text-base font-semibold text-[color:var(--meta-value)]">
+                {detail.company}
+              </dd>
+            </div>
+            <div aria-hidden className="hidden w-px self-stretch bg-[color:var(--meta-border)] sm:block" />
+            <div>
+              <dt className="mb-1 flex items-center gap-1.5 text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-[color:var(--meta-label)]">
+                <Calendar size={14} aria-hidden />
+                Year
+              </dt>
+              <dd className="text-base font-semibold text-[color:var(--meta-value)]">
+                {detail.year}
+              </dd>
+            </div>
+            <div aria-hidden className="hidden w-px self-stretch bg-[color:var(--meta-border)] sm:block" />
+            <div>
+              <dt className="mb-1 flex items-center gap-1.5 text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-[color:var(--meta-label)]">
+                <MonitorSmartphone size={14} aria-hidden />
+                Type
+              </dt>
+              <dd>
+                <span className="inline-flex items-center rounded-full border border-[color:var(--meta-pill-border)] px-3 py-0.5 text-sm font-semibold uppercase tracking-wide text-[color:var(--meta-pill-text)]">
+                  {detail.type}
+                </span>
+              </dd>
+            </div>
+          </dl>
+
+          {/* Carousel */}
+          <div
+            role="group"
+            aria-roledescription="carousel"
+            aria-label={`${project.title} images`}
+            className="relative overflow-hidden rounded-2xl"
+          >
+            <div className="relative aspect-[16/10] bg-black/40">
+              {detail.slides.map((s, i) => (
+                <div
+                  key={s.label}
+                  aria-hidden={i !== slide}
+                  className={cn(
+                    "absolute inset-0 flex items-end bg-gradient-to-br p-6 transition-opacity duration-500",
+                    s.gradient,
+                    i === slide ? "opacity-100" : "opacity-0"
+                  )}
+                >
+                  <p className="text-sm font-medium uppercase tracking-[0.18em] text-white/80">
+                    {s.label}
+                  </p>
+                </div>
+              ))}
+
+              {/* Award badge — labeled, keyboard-focusable */}
+              {detail.award && (
+                <a
+                  href={detail.award.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group absolute right-4 top-4 flex h-11 items-center gap-0 rounded-full border border-white/15 bg-black/60 px-3 text-white backdrop-blur-md transition-all hover:gap-2 focus-visible:gap-2 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+                >
+                  <Award size={18} aria-hidden />
+                  <span className="max-w-0 overflow-hidden whitespace-nowrap text-xs font-medium transition-all duration-300 group-hover:max-w-[140px] group-focus-visible:max-w-[140px]">
+                    {detail.award.label}
+                  </span>
+                </a>
+              )}
+
+              {slideCount > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={prevSlide}
+                    aria-label="Previous image"
+                    className="absolute left-3 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/55 text-white transition-colors hover:bg-black/80 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={nextSlide}
+                    aria-label="Next image"
+                    className="absolute right-3 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/55 text-white transition-colors hover:bg-black/80 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                </>
+              )}
+            </div>
+
+            {slideCount > 1 && (
+              <div className="mt-4 flex justify-center gap-1.5">
+                {detail.slides.map((s, i) => (
+                  <button
+                    key={s.label}
+                    type="button"
+                    onClick={() => setSlide(i)}
+                    aria-label={`Go to image ${i + 1} of ${slideCount}`}
+                    aria-current={i === slide || undefined}
+                    className={cn(
+                      "h-2 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+                      i === slide
+                        ? "w-5 bg-white"
+                        : "w-2 bg-white/30 hover:bg-white/60"
+                    )}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Overview */}
+          <div className="mt-8">
+            <h3 className="mb-3 text-xs font-medium uppercase tracking-[0.22em] text-white/45">
+              Overview
+            </h3>
+            <p className="leading-relaxed text-white/75">{detail.overview}</p>
+          </div>
+
+          {/* Contribution — bold lead for scannability */}
+          <div className="mt-8">
+            <h3 className="mb-3 text-xs font-medium uppercase tracking-[0.22em] text-white/45">
+              My contribution
+            </h3>
+            <ul className="space-y-3">
+              {detail.contribution.map((c) => (
+                <li
+                  key={c.lead}
+                  className="flex gap-3 text-sm leading-relaxed text-white/65"
+                >
+                  <span
+                    aria-hidden
+                    className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
+                  />
+                  <p>
+                    <strong className="font-semibold text-white/90">
+                      {c.lead}
+                    </strong>
+                    {c.rest}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mt-6 flex flex-wrap gap-1.5 pb-4">
+            {project.tags.map((t) => (
+              <span
+                key={t}
+                className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[11px] font-medium uppercase tracking-wider text-white/60"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+
+          {/* Scroll affordance — fades out at scroll end */}
+          <div
+            aria-hidden
+            className={cn(
+              "pointer-events-none sticky bottom-0 -mx-6 -mb-6 h-16 bg-gradient-to-t from-[#0B0B11] to-transparent transition-opacity duration-300 md:-mx-10 md:-mb-10",
+              atScrollEnd ? "opacity-0" : "opacity-100"
+            )}
+          />
+        </div>
+      </motion.div>
+    </div>
+  );
+}

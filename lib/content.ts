@@ -98,12 +98,28 @@ export const bento = {
   ],
 };
 
+/**
+ * Contribution bullets are split into `lead` (the action, rendered bold for
+ * scannability) and `rest` — keep the lead to the first 3–5 words.
+ */
+export type ProjectDetail = {
+  company: string;
+  year: string;
+  type: string;
+  overview: string;
+  contribution: { lead: string; rest: string }[];
+  slides: { label: string; gradient: string }[];
+  /** Award link (e.g. Awwwards). Omit for projects without honors. */
+  award?: { label: string; href: string };
+};
+
 export type Project = {
   title: string;
   description: string;
   tags: string[];
   href: string;
   accent: "primary" | "secondary" | "mix";
+  detail: ProjectDetail;
 };
 
 export const projects: Project[] = [
@@ -114,6 +130,33 @@ export const projects: Project[] = [
     tags: ["Branding", "Web", "Motion"],
     href: "#",
     accent: "primary",
+    detail: {
+      company: "Northwind",
+      year: "2025",
+      type: "Branding",
+      overview:
+        "A full brand and product refresh for a design studio — from a new identity system to the marketing site and product surfaces that carry it.",
+      contribution: [
+        {
+          lead: "Led the identity redesign",
+          rest: " across logo, typography, and a flexible color system that scales from print to product.",
+        },
+        {
+          lead: "Designed and built",
+          rest: " the new marketing site in Next.js with a motion language that echoes the brand.",
+        },
+        {
+          lead: "Documented the design system",
+          rest: " so the in-house team could extend it without agency support.",
+        },
+      ],
+      slides: [
+        { label: "Identity", gradient: "from-primary/70 via-primary-700/50 to-[#8E5CE0]/60" },
+        { label: "Website", gradient: "from-[#8E5CE0]/60 via-primary/40 to-primary-800" },
+        { label: "Product UI", gradient: "from-primary-400/60 via-[#8E5CE0]/40 to-primary-900" },
+      ],
+      award: { label: "Awwwards Honors", href: "https://www.awwwards.com/" },
+    },
   },
   {
     title: "Lumen Health",
@@ -122,6 +165,32 @@ export const projects: Project[] = [
     tags: ["Product", "React", "Design System"],
     href: "#",
     accent: "secondary",
+    detail: {
+      company: "Lumen Health",
+      year: "2024",
+      type: "Mobile",
+      overview:
+        "An end-to-end consumer health platform: appointment booking, medication tracking, and care-team chat in one calm, accessible app.",
+      contribution: [
+        {
+          lead: "Partnered with the care team",
+          rest: " to map the patient journey and cut the booking flow from nine steps to four.",
+        },
+        {
+          lead: "Owned the design system",
+          rest: " — tokens, components, and accessibility patterns used across iOS, Android, and web.",
+        },
+        {
+          lead: "Prototyped and user-tested",
+          rest: " the medication reminders feature with 24 patients across three rounds.",
+        },
+      ],
+      slides: [
+        { label: "Onboarding", gradient: "from-secondary/70 via-secondary-700/50 to-primary-900" },
+        { label: "Booking flow", gradient: "from-secondary-400/60 via-secondary/40 to-[#8E5CE0]/50" },
+        { label: "Care chat", gradient: "from-primary/50 via-secondary/50 to-secondary-800" },
+      ],
+    },
   },
   {
     title: "Aperture OS",
@@ -130,6 +199,33 @@ export const projects: Project[] = [
     tags: ["Next.js", "Marketing", "Dashboard"],
     href: "#",
     accent: "mix",
+    detail: {
+      company: "Aperture",
+      year: "2024",
+      type: "Web",
+      overview:
+        "Marketing site and product dashboard for a developer-tools startup — one visual language from the first landing-page visit to daily dashboard use.",
+      contribution: [
+        {
+          lead: "Designed the marketing site",
+          rest: " with a component library shared 1:1 with the product dashboard.",
+        },
+        {
+          lead: "Built interactive demos",
+          rest: " that let visitors try the core product without signing up.",
+        },
+        {
+          lead: "Improved dashboard information density",
+          rest: " based on session recordings and power-user interviews.",
+        },
+      ],
+      slides: [
+        { label: "Landing", gradient: "from-primary/60 via-[#8E5CE0]/50 to-secondary/50" },
+        { label: "Dashboard", gradient: "from-primary-800 via-primary/40 to-secondary/40" },
+        { label: "Docs", gradient: "from-[#8E5CE0]/50 via-primary-700/40 to-primary/60" },
+      ],
+      award: { label: "Awwwards Honors", href: "https://www.awwwards.com/" },
+    },
   },
   {
     title: "Field Notes",
@@ -138,6 +234,27 @@ export const projects: Project[] = [
     tags: ["App", "SaaS", "Realtime"],
     href: "#",
     accent: "primary",
+    detail: {
+      company: "Field Notes",
+      year: "2023",
+      type: "SaaS",
+      overview:
+        "A minimal, offline-first writing app for research teams — real-time collaboration without the visual noise of a full document suite.",
+      contribution: [
+        {
+          lead: "Defined the product principles",
+          rest: " with the founders: calm by default, keyboard-first, zero modal dialogs.",
+        },
+        {
+          lead: "Designed the editor experience",
+          rest: " including presence, comments, and conflict-free offline merging.",
+        },
+      ],
+      slides: [
+        { label: "Editor", gradient: "from-primary/60 via-primary-800 to-[#8E5CE0]/40" },
+        { label: "Presence", gradient: "from-primary-400/50 via-primary/30 to-primary-900" },
+      ],
+    },
   },
   {
     title: "Kiln Coffee",
@@ -146,6 +263,27 @@ export const projects: Project[] = [
     tags: ["E-commerce", "Shopify", "Brand"],
     href: "#",
     accent: "secondary",
+    detail: {
+      company: "Kiln",
+      year: "2023",
+      type: "E-commerce",
+      overview:
+        "A storytelling-first e-commerce experience for a specialty roaster — every bag of beans gets the origin story it deserves.",
+      contribution: [
+        {
+          lead: "Reworked the product pages",
+          rest: " around origin stories, brewing guides, and tasting notes instead of specs.",
+        },
+        {
+          lead: "Designed a subscription flow",
+          rest: " that lifted repeat purchases by 28% in the first quarter.",
+        },
+      ],
+      slides: [
+        { label: "Product page", gradient: "from-secondary/70 via-secondary-800 to-primary-900" },
+        { label: "Subscription", gradient: "from-secondary-400/60 via-secondary/30 to-[#8E5CE0]/40" },
+      ],
+    },
   },
   {
     title: "Orbit Analytics",
@@ -154,6 +292,27 @@ export const projects: Project[] = [
     tags: ["Data Viz", "Product", "TypeScript"],
     href: "#",
     accent: "mix",
+    detail: {
+      company: "Orbit",
+      year: "2022",
+      type: "Web",
+      overview:
+        "Data-visualization surfaces for a growth analytics platform — dashboards that surface the story in the numbers, not just the numbers.",
+      contribution: [
+        {
+          lead: "Designed the charting language",
+          rest: " — a consistent visual grammar for twelve chart types across the product.",
+        },
+        {
+          lead: "Paired with engineers",
+          rest: " to build a TypeScript chart kit with theming and reduced-motion support.",
+        },
+      ],
+      slides: [
+        { label: "Dashboards", gradient: "from-primary/50 via-[#8E5CE0]/40 to-secondary/50" },
+        { label: "Chart kit", gradient: "from-secondary/50 via-primary-700/40 to-primary/50" },
+      ],
+    },
   },
 ];
 

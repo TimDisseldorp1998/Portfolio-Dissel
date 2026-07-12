@@ -69,6 +69,22 @@
   }
 }
 
+/* Thin custom scrollbar for the project detail panel */
+.panel-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+.panel-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.panel-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.panel-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   html {
