@@ -21,7 +21,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-[100svh] w-full flex-col justify-end overflow-hidden bg-surface-dark pb-20 pt-32 text-white md:pb-28"
+      className="relative flex min-h-[100svh] w-full flex-col justify-center overflow-hidden bg-surface-dark pb-24 pt-28 text-white"
     >
       <AuroraBackground
         colors={{

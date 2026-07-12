@@ -43,6 +43,12 @@
     outline-offset: 3px;
     border-radius: 4px;
   }
+
+  /* Anchor targets land below the floating pill nav (pill ~60px + 16px top). */
+  section[id],
+  footer[id] {
+    scroll-margin-top: 6rem;
+  }
 }
 
 @layer components {
