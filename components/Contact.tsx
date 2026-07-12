@@ -129,24 +129,29 @@ export function Contact() {
     setStatus("submitting");
     setErrorMessage(null);
 
-    const payload = {
-      name: values.name.trim() || "—",
-      email: values.email.trim(),
-      project_type: projectType || "Niet gespecificeerd",
-      message: values.message.trim(),
-      _subject: `Nieuw bericht via portfolio — ${projectType || "algemeen"}`,
-      _template: "table",
-      _captcha: "false",
-    };
+    // Send as x-www-form-urlencoded (a CORS "simple request"), NOT JSON.
+    // JSON triggers an OPTIONS preflight that Safari + content blockers
+    // often reject, causing the generic "Load failed" TypeError.
+    const body = new URLSearchParams();
+    body.set("name", values.name.trim() || "—");
+    body.set("email", values.email.trim());
+    body.set("project_type", projectType || "Niet gespecificeerd");
+    body.set("message", values.message.trim());
+    body.set(
+      "_subject",
+      `Nieuw bericht via portfolio — ${projectType || "algemeen"}`
+    );
+    body.set("_template", "table");
+    body.set("_captcha", "false");
 
     try {
       const res = await fetch(contact.endpoint, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(payload),
+        // Deliberately no Content-Type header: the browser will set
+        // application/x-www-form-urlencoded automatically, keeping this
+        // a "simple" CORS request without a preflight OPTIONS.
+        headers: { Accept: "application/json" },
+        body,
       });
       const json = (await res.json().catch(() => ({}))) as {
         success?: string;
@@ -154,16 +159,15 @@ export function Contact() {
       };
       if (!res.ok || json.success !== "true") {
         throw new Error(
-          json.message || "Er ging iets mis bij het versturen. Probeer opnieuw."
+          json.message || "Er ging iets mis bij het versturen."
         );
       }
       setStatus("sent");
-    } catch (err) {
+    } catch {
+      // Any failure (network, CORS, blocker) → friendly fallback with mailto.
       setStatus("error");
       setErrorMessage(
-        err instanceof Error
-          ? err.message
-          : "Er ging iets mis bij het versturen. Probeer opnieuw."
+        `We konden je bericht niet direct versturen. Mail me rechtstreeks op ${site.email}.`
       );
     }
   }
@@ -399,22 +403,29 @@ export function Contact() {
                               className="min-h-[1.25rem] text-xs"
                             >
                               {status === "error" ? (
-                                <p className="flex items-center gap-1.5 text-red-600">
-                                  <AlertCircle
-                                    size={14}
-                                    className="shrink-0"
-                                    aria-hidden
-                                  />
-                                  <span>
-                                    {errorMessage}{" "}
-                                    <button
-                                      type="button"
-                                      onClick={() => setStatus("idle")}
-                                      className="font-medium underline underline-offset-2 hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300 rounded"
-                                    >
-                                      Opnieuw proberen
-                                    </button>
+                                <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-red-600">
+                                  <span className="flex items-center gap-1.5">
+                                    <AlertCircle
+                                      size={14}
+                                      className="shrink-0"
+                                      aria-hidden
+                                    />
+                                    <span>{errorMessage}</span>
                                   </span>
+                                  <a
+                                    href={`mailto:${site.email}`}
+                                    className="font-medium underline underline-offset-2 hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300 rounded"
+                                  >
+                                    Mail me direct
+                                  </a>
+                                  <span aria-hidden className="text-red-300">·</span>
+                                  <button
+                                    type="button"
+                                    onClick={() => setStatus("idle")}
+                                    className="font-medium underline underline-offset-2 hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300 rounded"
+                                  >
+                                    Opnieuw proberen
+                                  </button>
                                 </p>
                               ) : (
                                 <p className="text-ink-muted">
