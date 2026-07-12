@@ -12,7 +12,7 @@ export const site = {
   tagline:
     "I design and build calm, considered digital products — where craft meets clarity.",
   hero: {
-    eyebrow: "Portfolio · 2026",
+    eyebrow: "Booking for Q3 2026",
     headline: "Hi, ik ben Tim creatieve digitale product designer",
     subtitle:
       "I'm a designer and developer crafting premium products with a focus on typography, motion, and detail.",

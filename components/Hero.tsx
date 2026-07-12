@@ -41,7 +41,7 @@ export function Hero() {
       <Container className="relative z-10 flex flex-col items-start text-left">
         <motion.p
           {...rise(0.1)}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.18em] text-white/70 backdrop-blur"
+          className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.18em] text-[#3EE68B] backdrop-blur"
         >
           <span
             aria-label="Beschikbaar voor werk"
