@@ -11,24 +11,24 @@ const brandIcons: Record<string, (props: { size?: number }) => JSX.Element> = {
 
 export function Footer() {
   return (
-    <footer className="relative border-t border-black/[0.06] bg-surface-alt">
+    <footer className="relative border-t border-white/10 bg-surface-dark text-white">
       <Container className="flex flex-col gap-10 py-14 md:flex-row md:items-start md:justify-between">
         <div className="max-w-sm">
           <a
             href="#top"
-            className="font-heading text-lg font-semibold tracking-tight"
+            className="font-heading text-lg font-semibold tracking-tight text-white"
           >
             {site.shortName}
-            <span className="text-primary-700">.</span>
+            <span className="text-primary">.</span>
           </a>
-          <p className="mt-3 text-sm leading-relaxed text-ink-muted">
+          <p className="mt-3 text-sm leading-relaxed text-white/60">
             {site.tagline}
           </p>
         </div>
 
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 md:gap-16">
           <div>
-            <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-ink-soft">
+            <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-white/45">
               Navigate
             </p>
             <ul className="space-y-2">
@@ -36,7 +36,7 @@ export function Footer() {
                 <li key={n.href}>
                   <a
                     href={n.href}
-                    className="text-sm text-ink-muted transition-colors hover:text-ink"
+                    className="text-sm text-white/70 transition-colors hover:text-white"
                   >
                     {n.label}
                   </a>
@@ -45,7 +45,7 @@ export function Footer() {
             </ul>
           </div>
           <div>
-            <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-ink-soft">
+            <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-white/45">
               Elsewhere
             </p>
             <ul className="space-y-2">
@@ -55,7 +55,7 @@ export function Footer() {
                     href={s.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-ink-muted transition-colors hover:text-ink"
+                    className="text-sm text-white/70 transition-colors hover:text-white"
                   >
                     {s.label}
                   </a>
@@ -64,12 +64,12 @@ export function Footer() {
             </ul>
           </div>
           <div>
-            <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-ink-soft">
+            <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-white/45">
               Say hello
             </p>
             <a
               href={`mailto:${site.email}`}
-              className="text-sm text-ink-muted transition-colors hover:text-ink"
+              className="text-sm text-white/70 transition-colors hover:text-white"
             >
               {site.email}
             </a>
@@ -77,9 +77,9 @@ export function Footer() {
         </div>
       </Container>
 
-      <div className="border-t border-black/[0.06]">
+      <div className="border-t border-white/10">
         <Container className="flex flex-col items-center justify-between gap-3 py-6 sm:flex-row">
-          <p className="text-xs text-ink-soft">
+          <p className="text-xs text-white/45">
             © {new Date().getFullYear()} {site.name}. All rights reserved.
           </p>
           <div className="flex gap-1">
@@ -93,7 +93,7 @@ export function Footer() {
                   aria-label={s.label}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-ink-soft transition-all hover:bg-black/[0.04] hover:text-primary-700"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white/50 transition-all hover:bg-white/[0.06] hover:text-primary"
                 >
                   <Icon size={16} />
                 </a>

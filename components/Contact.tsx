@@ -175,20 +175,20 @@ export function Contact() {
   const isSubmitting = status === "submitting";
 
   return (
-    <Section id="contact" variant="light" className="pb-32">
+    <Section id="contact" variant="dark" className="pb-32">
       <Container>
         <div className="grid gap-14 md:grid-cols-12">
           {/* Left column: intro + socials */}
           <div className="md:col-span-5">
             <Reveal>
-              <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-primary-700">
+              <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-primary">
                 Contact
               </p>
-              <h2 className="mb-6 font-heading text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
+              <h2 className="mb-6 font-heading text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-5xl">
                 Let&apos;s make something{" "}
                 <span className="text-gradient">memorable</span>.
               </h2>
-              <p className="mb-8 text-lg leading-relaxed text-ink-muted">
+              <p className="mb-8 text-lg leading-relaxed text-white/70">
                 Werk je aan iets interessants, of wil je gewoon even hi zeggen?
                 Ik hoor het graag.
               </p>
@@ -197,9 +197,9 @@ export function Contact() {
               <div className="flex flex-wrap items-center gap-2">
                 <a
                   href={`mailto:${site.email}`}
-                  className="group inline-flex min-h-[44px] items-center gap-3 rounded-full border border-black/[0.08] bg-white px-5 py-3 text-sm font-medium shadow-soft transition-all duration-300 hover:border-primary/30 focus-visible:border-primary/40 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/15"
+                  className="group inline-flex min-h-[44px] items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:border-primary/40 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25"
                 >
-                  <Mail size={16} className="text-primary-700" />
+                  <Mail size={16} className="text-primary" />
                   <span>{site.email}</span>
                   <ArrowRight
                     size={14}
@@ -213,7 +213,7 @@ export function Contact() {
                     aria-label={
                       copied ? "E-mailadres gekopieerd" : "Kopieer e-mailadres"
                     }
-                    className="inline-flex h-[44px] w-[44px] items-center justify-center rounded-full border border-black/[0.08] bg-white text-ink-muted transition-all duration-200 hover:border-primary/30 hover:text-primary-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/15"
+                    className="inline-flex h-[44px] w-[44px] items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-all duration-200 hover:border-primary/40 hover:bg-white/[0.06] hover:text-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25"
                   >
                     <AnimatePresence mode="wait" initial={false}>
                       {copied ? (
@@ -223,7 +223,7 @@ export function Contact() {
                           animate={{ scale: 1, opacity: 1 }}
                           exit={{ scale: 0.6, opacity: 0 }}
                           transition={{ duration: 0.15 }}
-                          className="text-primary-700"
+                          className="text-primary"
                         >
                           <Check size={16} />
                         </motion.span>
@@ -249,7 +249,7 @@ export function Contact() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 4 }}
                         transition={{ duration: 0.18 }}
-                        className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-ink px-2.5 py-1 text-[11px] font-medium text-white shadow-lg"
+                        className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-white px-2.5 py-1 text-[11px] font-medium text-ink shadow-lg"
                       >
                         Gekopieerd!
                       </motion.span>
@@ -260,7 +260,7 @@ export function Contact() {
 
               {/* Socials */}
               <div className="mt-10">
-                <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-ink-muted">
+                <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-white/50">
                   Elsewhere
                 </p>
                 <div className="flex gap-2">
@@ -274,7 +274,7 @@ export function Contact() {
                         aria-label={`${s.label} — opent in nieuw tabblad`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/[0.08] bg-white text-ink-muted transition-all duration-200 hover:border-primary/40 hover:text-primary-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/15"
+                        className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-all duration-200 hover:border-primary/40 hover:bg-white/[0.06] hover:text-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25"
                       >
                         <Icon size={18} />
                       </a>
@@ -288,7 +288,7 @@ export function Contact() {
           {/* Right column: form / success card */}
           <div className="md:col-span-7">
             <Reveal delay={0.15}>
-              <div className="rounded-3xl border border-black/[0.06] bg-white p-6 shadow-soft md:p-10">
+              <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm md:p-10">
                 <AnimatePresence mode="wait" initial={false}>
                   {status === "sent" ? (
                     <SuccessCard key="sent" onReset={resetForm} />
@@ -342,9 +342,9 @@ export function Contact() {
 
                         <RevealItem>
                           <fieldset>
-                            <legend className="mb-2 flex items-baseline gap-1.5 text-xs font-medium uppercase tracking-[0.18em] text-ink-muted">
+                            <legend className="mb-2 flex items-baseline gap-1.5 text-xs font-medium uppercase tracking-[0.18em] text-white/60">
                               Project type
-                              <span className="text-[10px] normal-case tracking-normal text-ink-muted">
+                              <span className="text-[10px] normal-case tracking-normal text-white/40">
                                 (optioneel)
                               </span>
                             </legend>
@@ -365,10 +365,10 @@ export function Contact() {
                                       setProjectType(selected ? "" : opt.value)
                                     }
                                     className={cn(
-                                      "min-h-[40px] rounded-full border px-4 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20",
+                                      "min-h-[40px] rounded-full border px-4 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25",
                                       selected
-                                        ? "border-primary bg-primary text-white shadow-glow"
-                                        : "border-black/[0.1] bg-white text-ink hover:border-primary/40 hover:text-primary-700"
+                                        ? "border-primary bg-primary text-ink shadow-glow"
+                                        : "border-white/15 bg-white/[0.04] text-white/80 hover:border-primary/40 hover:bg-white/[0.06] hover:text-primary"
                                     )}
                                   >
                                     {opt.label}
@@ -403,7 +403,7 @@ export function Contact() {
                               className="min-h-[1.25rem] text-xs"
                             >
                               {status === "error" ? (
-                                <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-red-600">
+                                <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-red-400">
                                   <span className="flex items-center gap-1.5">
                                     <AlertCircle
                                       size={14}
@@ -414,21 +414,21 @@ export function Contact() {
                                   </span>
                                   <a
                                     href={`mailto:${site.email}`}
-                                    className="font-medium underline underline-offset-2 hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300 rounded"
+                                    className="font-medium underline underline-offset-2 hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400/50 rounded"
                                   >
                                     Mail me direct
                                   </a>
-                                  <span aria-hidden className="text-red-300">·</span>
+                                  <span aria-hidden className="text-red-400/40">·</span>
                                   <button
                                     type="button"
                                     onClick={() => setStatus("idle")}
-                                    className="font-medium underline underline-offset-2 hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300 rounded"
+                                    className="font-medium underline underline-offset-2 hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400/50 rounded"
                                   >
                                     Opnieuw proberen
                                   </button>
                                 </p>
                               ) : (
-                                <p className="text-ink-muted">
+                                <p className="text-white/60">
                                   Ik reageer meestal binnen een dag of twee.
                                 </p>
                               )}
@@ -437,8 +437,8 @@ export function Contact() {
                               type="submit"
                               disabled={isSubmitting}
                               className={cn(
-                                "group inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-primary px-7 text-sm font-medium text-white shadow-glow transition-all duration-200 sm:w-auto",
-                                "hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25",
+                                "group inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-primary px-7 text-sm font-medium text-ink shadow-glow transition-all duration-200 sm:w-auto",
+                                "hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30",
                                 "disabled:cursor-not-allowed disabled:opacity-70"
                               )}
                             >
@@ -500,20 +500,22 @@ function SuccessCard({ onReset }: { onReset: () => void }) {
           delay: 0.1,
           ease: [0.34, 1.56, 0.64, 1],
         }}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary-700"
+        className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/15 text-primary"
       >
         <Check size={28} strokeWidth={2.5} aria-hidden />
       </motion.div>
       <div>
-        <p className="font-heading text-2xl font-semibold">Bedankt!</p>
-        <p className="mt-2 max-w-sm text-ink-muted">
+        <p className="font-heading text-2xl font-semibold text-white">
+          Bedankt!
+        </p>
+        <p className="mt-2 max-w-sm text-white/70">
           Ik reageer meestal binnen een dag of twee.
         </p>
       </div>
       <button
         type="button"
         onClick={onReset}
-        className="mt-2 rounded text-sm font-medium text-primary-700 underline underline-offset-4 hover:no-underline focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20"
+        className="mt-2 rounded text-sm font-medium text-primary underline underline-offset-4 hover:no-underline focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25"
       >
         Nog een bericht sturen
       </button>
@@ -572,28 +574,28 @@ function Field(props: FieldProps) {
   const describedBy = error ? errorId : undefined;
 
   const controlClasses = cn(
-    "block w-full rounded-xl border bg-white/60 px-4 py-3 text-sm text-ink transition-all duration-200",
-    "placeholder:text-ink-muted/80",
-    "focus:bg-white focus:outline-none",
+    "block w-full rounded-xl border bg-white/[0.04] px-4 py-3 text-sm text-white transition-all duration-200",
+    "placeholder:text-white/40",
+    "focus:bg-white/[0.06] focus:outline-none",
     error
-      ? "border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-100"
-      : "border-black/[0.08] focus:border-primary/50 focus:ring-4 focus:ring-primary/15"
+      ? "border-red-400/70 focus:border-red-400 focus:ring-4 focus:ring-red-400/20"
+      : "border-white/10 focus:border-primary/60 focus:ring-4 focus:ring-primary/25"
   );
 
   return (
     <div>
       <label
         htmlFor={id}
-        className="mb-2 flex items-baseline gap-1.5 text-xs font-medium uppercase tracking-[0.18em] text-ink-muted"
+        className="mb-2 flex items-baseline gap-1.5 text-xs font-medium uppercase tracking-[0.18em] text-white/60"
       >
         <span>{label}</span>
         {required && (
-          <span aria-hidden className="text-primary-700">
+          <span aria-hidden className="text-primary">
             *
           </span>
         )}
         {optional && (
-          <span className="text-[10px] normal-case tracking-normal text-ink-muted">
+          <span className="text-[10px] normal-case tracking-normal text-white/40">
             (optioneel)
           </span>
         )}
@@ -647,7 +649,7 @@ function Field(props: FieldProps) {
             animate={{ opacity: 1, y: 0, height: "auto" }}
             exit={{ opacity: 0, y: -4, height: 0 }}
             transition={{ duration: 0.18 }}
-            className="mt-1.5 flex items-center gap-1.5 overflow-hidden text-xs text-red-600"
+            className="mt-1.5 flex items-center gap-1.5 overflow-hidden text-xs text-red-400"
           >
             <AlertCircle size={12} className="shrink-0" aria-hidden />
             <span>{error}</span>
