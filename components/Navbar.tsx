@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   User,
@@ -34,15 +34,32 @@ const items = [...nav, { label: "Let's talk", href: "#contact" }].map((n) => ({
 
 const SECTION_IDS = items.map((i) => i.href.slice(1));
 
+/** Idle delay (ms) before the mobile nav grows back to its resting size. */
+const IDLE_AFTER = 220;
+
 export function Navbar() {
   const prefersReducedMotion = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
   const [active, setActive] = useState<string | null>(null);
+  const scrollingRef = useRef(false);
 
-  // rAF-throttled scroll listener with hysteresis.
+  // rAF-throttled scroll listener with hysteresis, plus an idle debounce that
+  // drives the mobile grow/shrink: compact while scrolling, larger at rest.
   useEffect(() => {
     let raf = 0;
+    let idleTimer = 0;
     const onScroll = () => {
+      if (!scrollingRef.current) {
+        scrollingRef.current = true;
+        setIsScrolling(true);
+      }
+      window.clearTimeout(idleTimer);
+      idleTimer = window.setTimeout(() => {
+        scrollingRef.current = false;
+        setIsScrolling(false);
+      }, IDLE_AFTER);
+
       if (raf) return;
       raf = requestAnimationFrame(() => {
         raf = 0;
@@ -50,10 +67,10 @@ export function Navbar() {
         setScrolled((prev) => (prev ? y > REST_AT : y >= SCROLLED_AT));
       });
     };
-    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
+      window.clearTimeout(idleTimer);
       if (raf) cancelAnimationFrame(raf);
     };
   }, []);
@@ -97,10 +114,15 @@ export function Navbar() {
       <nav
         aria-label="Main"
         className={cn(
-          "flex w-auto items-center gap-1 rounded-full border border-white/10 px-2 py-1 text-white transition-all duration-[250ms] sm:px-2.5",
+          "flex w-auto origin-bottom items-center gap-1 rounded-full border border-white/10 px-2 py-1 text-white transition-all duration-[250ms] sm:px-2.5 lg:origin-top",
           scrolled
             ? "bg-[#12121A]/85 shadow-[0_8px_32px_rgba(0,0,0,0.55)] backdrop-blur-[12px]"
-            : "bg-[#12121A] shadow-[0_4px_24px_rgba(0,0,0,0.4)]"
+            : "bg-[#12121A] shadow-[0_4px_24px_rgba(0,0,0,0.4)]",
+          // Mobile reading comfort: grow at rest, compact while scrolling.
+          // Desktop (lg+) keeps a fixed size.
+          !prefersReducedMotion && !isScrolling
+            ? "scale-[1.15] lg:scale-100"
+            : "scale-100"
         )}
       >
         {/* Logo — mark only */}
