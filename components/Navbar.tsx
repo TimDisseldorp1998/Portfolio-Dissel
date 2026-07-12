@@ -3,9 +3,10 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { nav, site } from "@/lib/content";
+import { nav } from "@/lib/content";
 import { cn } from "@/lib/cn";
 import { Container } from "./ui/Container";
+import { Logo } from "./Logo";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -30,16 +31,16 @@ export function Navbar() {
           : "bg-transparent"
       )}
     >
-      <Container className="flex h-16 items-center justify-between md:h-20">
+      <Container className="flex h-20 items-center justify-between">
         <a
           href="#top"
+          aria-label="DisselDesign — naar boven"
           className={cn(
-            "font-heading text-lg font-semibold tracking-tight transition-colors",
+            "inline-flex items-center rounded transition-colors focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25",
             scrolled ? "text-ink" : "text-white"
           )}
         >
-          {site.shortName}
-          <span className="text-primary">.</span>
+          <Logo className="h-[42px] w-auto md:h-12" />
         </a>
 
         <nav className="hidden items-center gap-8 md:flex">
