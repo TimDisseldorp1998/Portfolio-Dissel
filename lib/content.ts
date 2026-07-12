@@ -6,7 +6,7 @@
 export const site = {
   name: "Tim Disseldorp",
   shortName: "Tim",
-  role: "Designer & Developer",
+  role: "UX Designer & Developer",
   location: "Amsterdam, NL",
   email: "info@disseldesign.com",
   tagline:

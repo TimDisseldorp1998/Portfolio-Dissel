@@ -12,7 +12,7 @@ export function About() {
         <div className="grid gap-16 md:grid-cols-12">
           <div className="md:col-span-5">
             <Reveal>
-              <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-primary">
+              <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-primary-700">
                 About
               </p>
               <h2 className="mb-6 font-heading text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">

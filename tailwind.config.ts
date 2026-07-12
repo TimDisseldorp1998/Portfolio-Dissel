@@ -10,17 +10,17 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#563ADA",
-          50: "#EEEAFB",
-          100: "#DBD3F7",
-          200: "#B7A7EF",
-          300: "#937BE7",
-          400: "#6F4FDF",
-          500: "#563ADA",
-          600: "#4028B0",
-          700: "#301E84",
-          800: "#201458",
-          900: "#100A2C",
+          DEFAULT: "#5CDDFF",
+          50: "#EBFAFF",
+          100: "#D6F5FF",
+          200: "#ADEBFF",
+          300: "#85E1FF",
+          400: "#71DEFF",
+          500: "#5CDDFF",
+          600: "#34C4EA",
+          700: "#2199BD",
+          800: "#14688B",
+          900: "#0A3341",
         },
         secondary: {
           DEFAULT: "#FF833D",
@@ -79,13 +79,13 @@ const config: Config = {
       },
       backgroundImage: {
         "gradient-brand":
-          "linear-gradient(135deg, #563ADA 0%, #8E5CE0 45%, #FF833D 100%)",
+          "linear-gradient(135deg, #5CDDFF 0%, #8E5CE0 45%, #FF833D 100%)",
         "gradient-brand-soft":
-          "linear-gradient(135deg, rgba(86,58,218,0.12) 0%, rgba(255,131,61,0.12) 100%)",
+          "linear-gradient(135deg, rgba(92,221,255,0.14) 0%, rgba(255,131,61,0.12) 100%)",
       },
       boxShadow: {
         soft: "0 20px 60px -20px rgba(17, 17, 20, 0.12)",
-        glow: "0 0 0 1px rgba(86, 58, 218, 0.14), 0 20px 60px -20px rgba(86, 58, 218, 0.35)",
+        glow: "0 0 0 1px rgba(92, 221, 255, 0.22), 0 20px 60px -20px rgba(92, 221, 255, 0.55)",
       },
     },
   },
