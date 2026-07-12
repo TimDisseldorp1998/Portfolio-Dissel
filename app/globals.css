@@ -63,9 +63,9 @@
   }
 
   .glass-dark {
-    background: rgba(10, 10, 15, 0.55);
-    backdrop-filter: saturate(180%) blur(14px);
-    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    background: rgba(10, 10, 15, 0.65);
+    backdrop-filter: saturate(160%) blur(18px);
+    -webkit-backdrop-filter: saturate(160%) blur(18px);
   }
 }
 
