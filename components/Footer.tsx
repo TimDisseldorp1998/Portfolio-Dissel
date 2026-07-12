@@ -19,7 +19,7 @@ export function Footer() {
             className="font-heading text-lg font-semibold tracking-tight"
           >
             {site.shortName}
-            <span className="text-primary">.</span>
+            <span className="text-primary-700">.</span>
           </a>
           <p className="mt-3 text-sm leading-relaxed text-ink-muted">
             {site.tagline}
@@ -93,7 +93,7 @@ export function Footer() {
                   aria-label={s.label}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-ink-soft transition-all hover:bg-black/[0.04] hover:text-primary"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-ink-soft transition-all hover:bg-black/[0.04] hover:text-primary-700"
                 >
                   <Icon size={16} />
                 </a>

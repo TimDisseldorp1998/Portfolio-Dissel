@@ -22,7 +22,7 @@ export function Projects() {
         <Reveal>
           <div className="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <div>
-              <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-primary">
+              <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-primary-700">
                 Selected work
               </p>
               <h2 className="max-w-2xl font-heading text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">

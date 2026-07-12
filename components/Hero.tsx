@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { site } from "@/lib/content";
-import { Aurora } from "./Aurora";
+import { AuroraBackground } from "./AuroraBackground";
 import { Container } from "./ui/Container";
 import { Button } from "./ui/Button";
 
@@ -23,7 +23,18 @@ export function Hero() {
       id="top"
       className="relative flex min-h-[100svh] w-full flex-col justify-end overflow-hidden bg-surface-dark pb-20 pt-32 text-white md:pb-28"
     >
-      <Aurora />
+      <AuroraBackground
+        colors={{
+          color1: "#5CDDFF",
+          color2: "#7C5CFF",
+          color3: "#2A34D8",
+          color4: "",
+          background: "#050508",
+        }}
+        speed={2}
+        intensity={0.6}
+        spread={0.5}
+      />
       {/* Top fade so navbar contrast stays crisp */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/40 to-transparent" />
 
@@ -54,7 +65,7 @@ export function Hero() {
           {...rise(0.5)}
           className="mt-10 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4"
         >
-          <Button href={site.hero.primaryCta.href} variant="secondary" size="lg">
+          <Button href={site.hero.primaryCta.href} variant="primary" size="lg">
             {site.hero.primaryCta.label}
             <ArrowRight size={18} />
           </Button>

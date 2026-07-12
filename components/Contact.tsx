@@ -177,7 +177,7 @@ export function Contact() {
           {/* Left column: intro + socials */}
           <div className="md:col-span-5">
             <Reveal>
-              <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-primary">
+              <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-primary-700">
                 Contact
               </p>
               <h2 className="mb-6 font-heading text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
@@ -195,7 +195,7 @@ export function Contact() {
                   href={`mailto:${site.email}`}
                   className="group inline-flex min-h-[44px] items-center gap-3 rounded-full border border-black/[0.08] bg-white px-5 py-3 text-sm font-medium shadow-soft transition-all duration-300 hover:border-primary/30 focus-visible:border-primary/40 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/15"
                 >
-                  <Mail size={16} className="text-primary" />
+                  <Mail size={16} className="text-primary-700" />
                   <span>{site.email}</span>
                   <ArrowRight
                     size={14}
@@ -209,7 +209,7 @@ export function Contact() {
                     aria-label={
                       copied ? "E-mailadres gekopieerd" : "Kopieer e-mailadres"
                     }
-                    className="inline-flex h-[44px] w-[44px] items-center justify-center rounded-full border border-black/[0.08] bg-white text-ink-muted transition-all duration-200 hover:border-primary/30 hover:text-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/15"
+                    className="inline-flex h-[44px] w-[44px] items-center justify-center rounded-full border border-black/[0.08] bg-white text-ink-muted transition-all duration-200 hover:border-primary/30 hover:text-primary-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/15"
                   >
                     <AnimatePresence mode="wait" initial={false}>
                       {copied ? (
@@ -219,7 +219,7 @@ export function Contact() {
                           animate={{ scale: 1, opacity: 1 }}
                           exit={{ scale: 0.6, opacity: 0 }}
                           transition={{ duration: 0.15 }}
-                          className="text-primary"
+                          className="text-primary-700"
                         >
                           <Check size={16} />
                         </motion.span>
@@ -270,7 +270,7 @@ export function Contact() {
                         aria-label={`${s.label} — opent in nieuw tabblad`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/[0.08] bg-white text-ink-muted transition-all duration-200 hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/15"
+                        className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/[0.08] bg-white text-ink-muted transition-all duration-200 hover:border-primary/40 hover:text-primary-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/15"
                       >
                         <Icon size={18} />
                       </a>
@@ -364,7 +364,7 @@ export function Contact() {
                                       "min-h-[40px] rounded-full border px-4 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20",
                                       selected
                                         ? "border-primary bg-primary text-white shadow-glow"
-                                        : "border-black/[0.1] bg-white text-ink hover:border-primary/40 hover:text-primary"
+                                        : "border-black/[0.1] bg-white text-ink hover:border-primary/40 hover:text-primary-700"
                                     )}
                                   >
                                     {opt.label}
@@ -489,7 +489,7 @@ function SuccessCard({ onReset }: { onReset: () => void }) {
           delay: 0.1,
           ease: [0.34, 1.56, 0.64, 1],
         }}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary"
+        className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary-700"
       >
         <Check size={28} strokeWidth={2.5} aria-hidden />
       </motion.div>
@@ -502,7 +502,7 @@ function SuccessCard({ onReset }: { onReset: () => void }) {
       <button
         type="button"
         onClick={onReset}
-        className="mt-2 rounded text-sm font-medium text-primary underline underline-offset-4 hover:no-underline focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20"
+        className="mt-2 rounded text-sm font-medium text-primary-700 underline underline-offset-4 hover:no-underline focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20"
       >
         Nog een bericht sturen
       </button>
@@ -577,7 +577,7 @@ function Field(props: FieldProps) {
       >
         <span>{label}</span>
         {required && (
-          <span aria-hidden className="text-primary">
+          <span aria-hidden className="text-primary-700">
             *
           </span>
         )}
