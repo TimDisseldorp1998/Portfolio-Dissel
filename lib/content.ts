@@ -18,6 +18,22 @@ export const site = {
       "I'm a designer and developer crafting premium products with a focus on typography, motion, and detail.",
     primaryCta: { label: "See my work", href: "#work" },
     secondaryCta: { label: "Get in touch", href: "#contact" },
+    /**
+     * Logo strip under the hero CTAs. Placeholder wordmarks — swap the names
+     * for real clients, or replace the <li> in Hero.tsx with real SVG logos.
+     * The className tweaks per item mimic distinct brand typography.
+     */
+    trustedBy: {
+      label: "Trusted by teams building real products:",
+      logos: [
+        { name: "NORTHWIND", className: "text-sm tracking-[0.22em]" },
+        { name: "Lumen", className: "text-xl italic" },
+        { name: "aperture", className: "text-xl lowercase tracking-tight" },
+        { name: "Kiln", className: "font-serif text-xl font-medium" },
+        { name: "ORBIT", className: "text-base tracking-[0.14em]" },
+        { name: "Field Notes", className: "text-lg" },
+      ],
+    },
   },
 };
 
