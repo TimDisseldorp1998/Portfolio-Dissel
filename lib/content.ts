@@ -15,7 +15,7 @@ export const site = {
     eyebrow: "Booking for Q3 2026",
     headline: "Hi, ik ben Tim creatieve digitale product designer",
     subtitle:
-      "I'm a designer and developer crafting premium products with a focus on typography, motion, and detail.",
+      "I'm a designer and developer crafting premium products with a focus on typography, motion, and detail. — Dev-test: deployment werkt ✓",
     primaryCta: { label: "See my work", href: "#work" },
     secondaryCta: { label: "Get in touch", href: "#contact" },
     /**
