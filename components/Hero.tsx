@@ -3,7 +3,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { site } from "@/lib/content";
-import { cn } from "@/lib/cn";
 import { AuroraBackground } from "./AuroraBackground";
 import { Container } from "./ui/Container";
 import { Button } from "./ui/Button";
@@ -86,16 +85,16 @@ export function Hero() {
           <p className="mb-5 text-sm text-white/40">
             {site.hero.trustedBy.label}
           </p>
-          <ul className="flex flex-wrap items-center gap-x-7 gap-y-4 sm:gap-x-12 sm:gap-y-5">
+          <ul className="flex flex-wrap items-center gap-x-8 gap-y-5 sm:gap-x-10 sm:gap-y-6">
             {site.hero.trustedBy.logos.map((logo) => (
-              <li
-                key={logo.name}
-                className={cn(
-                  "select-none font-heading font-semibold leading-none text-white/45 transition-colors duration-300 hover:text-white/80",
-                  logo.className
-                )}
-              >
-                {logo.name}
+              <li key={logo.src}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={logo.src}
+                  alt={logo.alt}
+                  loading="lazy"
+                  className="h-7 w-auto select-none opacity-50 transition-opacity duration-300 hover:opacity-100 sm:h-8"
+                />
               </li>
             ))}
           </ul>

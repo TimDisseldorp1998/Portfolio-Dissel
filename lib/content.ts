@@ -19,19 +19,17 @@ export const site = {
     primaryCta: { label: "Bekijk mijn werk", href: "#work" },
     secondaryCta: { label: "Neem contact op", href: "#contact" },
     /**
-     * Logo strip under the hero CTAs. Placeholder wordmarks — swap the names
-     * for real clients, or replace the <li> in Hero.tsx with real SVG logos.
-     * The className tweaks per item mimic distinct brand typography.
+     * Client logo strip under the hero CTAs. SVGs live in /public/logos/
+     * (all white/monochrome, so they sit muted on the dark hero).
      */
     trustedBy: {
       label: "Vertrouwd door teams die echte producten bouwen:",
       logos: [
-        { name: "NORTHWIND", className: "text-sm tracking-[0.22em]" },
-        { name: "Lumen", className: "text-xl italic" },
-        { name: "aperture", className: "text-xl lowercase tracking-tight" },
-        { name: "Kiln", className: "font-serif text-xl font-medium" },
-        { name: "ORBIT", className: "text-base tracking-[0.14em]" },
-        { name: "Field Notes", className: "text-lg" },
+        { src: "/logos/1608-logo.svg", alt: "1608" },
+        { src: "/logos/airforce-logo.svg", alt: "Airforce" },
+        { src: "/logos/dtx-logo.svg", alt: "DTX" },
+        { src: "/logos/marktzicht-logo.svg", alt: "Marktzicht" },
+        { src: "/logos/new-edition-logo.svg", alt: "New Edition" },
       ],
     },
   },
