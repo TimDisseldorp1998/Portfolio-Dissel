@@ -128,7 +128,7 @@ export function Bento() {
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-5">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-3">
           {/* Column 1 */}
           <div className="flex flex-col gap-4 md:gap-5">
             {/* Intro card */}
@@ -183,16 +183,16 @@ export function Bento() {
               ))}
             </BentoCard>
 
-            {/* Slider card */}
-            <BentoCard className="p-0">
+            {/* Slider card — grows to close any height gap in this column */}
+            <BentoCard className="flex-1 p-0">
               <Slider />
             </BentoCard>
           </div>
 
           {/* Column 2 */}
           <div className="flex flex-col gap-4 md:gap-5">
-            {/* Portrait card */}
-            <BentoCard className="min-h-[460px] p-0">
+            {/* Portrait card — grows to close any height gap in this column */}
+            <BentoCard className="min-h-[460px] flex-1 p-0">
               <div className="relative flex-1 overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-800 via-neutral-900 to-black">
                 {/* Placeholder portrait — swap with real image at /public/portrait.jpg */}
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -215,27 +215,6 @@ export function Bento() {
                   </span>
                 </div>
               </div>
-            </BentoCard>
-
-            {/* Education card */}
-            <BentoCard>
-              <CardLabel>Education</CardLabel>
-              <ul className="space-y-4">
-                {bento.education.map((ed) => (
-                  <li
-                    key={ed.degree}
-                    className="grid grid-cols-[110px_1fr] items-baseline gap-3"
-                  >
-                    <span className="text-xs text-white/40">{ed.period}</span>
-                    <div>
-                      <p className="text-sm font-medium leading-tight">
-                        {ed.degree}
-                      </p>
-                      <p className="mt-0.5 text-xs text-white/50">{ed.school}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
             </BentoCard>
 
             {/* Spotify card */}
@@ -275,8 +254,8 @@ export function Bento() {
             </BentoCard>
           </div>
 
-          {/* Column 3 */}
-          <div className="flex flex-col gap-4 md:gap-5">
+          {/* Column 3 — full-width on tablet (2-col grid), stacked column on desktop */}
+          <div className="flex flex-col gap-4 md:col-span-2 md:grid md:grid-cols-2 md:gap-5 lg:col-span-1 lg:flex lg:flex-col">
             {/* Experience card */}
             <BentoCard>
               <CardLabel>Experience</CardLabel>
@@ -300,8 +279,8 @@ export function Bento() {
               </ul>
             </BentoCard>
 
-            {/* Tools card */}
-            <BentoCard>
+            {/* Tools card — full-width bottom row on tablet, middle of the stack on desktop */}
+            <BentoCard className="md:order-last md:col-span-2 lg:order-none">
               <CardLabel>Tool Stack</CardLabel>
               <div className="grid grid-cols-5 gap-2.5">
                 {bento.tools.map((tool) => (
@@ -320,6 +299,27 @@ export function Bento() {
               <p className="mt-4 text-xs text-white/40">
                 Van Figma-mock tot production-code.
               </p>
+            </BentoCard>
+
+            {/* Education card — next to Experience on tablet, bottom of the stack on desktop */}
+            <BentoCard>
+              <CardLabel>Education</CardLabel>
+              <ul className="space-y-4">
+                {bento.education.map((ed) => (
+                  <li
+                    key={ed.degree}
+                    className="grid grid-cols-[110px_1fr] items-baseline gap-3"
+                  >
+                    <span className="text-xs text-white/40">{ed.period}</span>
+                    <div>
+                      <p className="text-sm font-medium leading-tight">
+                        {ed.degree}
+                      </p>
+                      <p className="mt-0.5 text-xs text-white/50">{ed.school}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
             </BentoCard>
           </div>
         </div>
