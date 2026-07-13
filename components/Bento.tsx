@@ -70,27 +70,39 @@ function Slider() {
   }, [prefersReducedMotion]);
 
   return (
-    <div className="relative min-h-[220px] flex-1 overflow-hidden rounded-2xl bg-black/40">
+    <div className="group/slider relative min-h-[220px] flex-1 overflow-hidden rounded-2xl bg-black/40">
       {bento.slider.map((slide, idx) => (
         <div
           key={idx}
           aria-hidden={idx !== i}
           className={cn(
-            "absolute inset-0 flex items-end bg-gradient-to-br p-6 transition-opacity duration-1000",
-            slide.gradient,
+            "absolute inset-0 transition-opacity duration-1000",
             idx === i ? "opacity-100" : "opacity-0"
           )}
         >
-          <div>
-            <p className="text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-white/70">
-              {String(idx + 1).padStart(2, "0")} /{" "}
-              {String(bento.slider.length).padStart(2, "0")}
-            </p>
-            <p className="mt-1 text-xl font-medium text-white">{slide.label}</p>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={slide.src}
+            alt={slide.alt}
+            loading="lazy"
+            className="h-full w-full object-cover"
+          />
+          {/* Caption overlay — only on hover, over a soft gradient */}
+          <div className="absolute inset-0 flex items-end p-6 opacity-0 transition-opacity duration-300 group-hover/slider:opacity-100">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            <div className="relative">
+              <p className="text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-white/70">
+                {String(idx + 1).padStart(2, "0")} /{" "}
+                {String(bento.slider.length).padStart(2, "0")}
+              </p>
+              <p className="mt-1 text-xl font-medium text-white">
+                {slide.label}
+              </p>
+            </div>
           </div>
         </div>
       ))}
-      <div className="absolute bottom-4 right-4 flex gap-1.5">
+      <div className="absolute bottom-4 right-4 z-10 flex gap-1.5">
         {bento.slider.map((_, idx) => (
           <button
             key={idx}
