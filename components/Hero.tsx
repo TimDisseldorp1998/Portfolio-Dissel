@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { site } from "@/lib/content";
+import { cn } from "@/lib/cn";
 import { AuroraBackground } from "./AuroraBackground";
 import { Container } from "./ui/Container";
 import { Button } from "./ui/Button";
@@ -78,6 +79,26 @@ export function Hero() {
           <Button href={site.hero.secondaryCta.href} variant="outline" size="lg">
             {site.hero.secondaryCta.label}
           </Button>
+        </motion.div>
+
+        {/* Trusted-by logo strip */}
+        <motion.div {...rise(0.65)} className="mt-14 w-full sm:mt-16">
+          <p className="mb-5 text-sm text-white/40">
+            {site.hero.trustedBy.label}
+          </p>
+          <ul className="flex flex-wrap items-center gap-x-7 gap-y-4 sm:gap-x-12 sm:gap-y-5">
+            {site.hero.trustedBy.logos.map((logo) => (
+              <li
+                key={logo.name}
+                className={cn(
+                  "select-none font-heading font-semibold leading-none text-white/45 transition-colors duration-300 hover:text-white/80",
+                  logo.className
+                )}
+              >
+                {logo.name}
+              </li>
+            ))}
+          </ul>
         </motion.div>
       </Container>
     </section>
