@@ -1,7 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useInView,
+  useReducedMotion,
+} from "framer-motion";
 import { Download, Mail, Play } from "lucide-react";
 import { bento, experience, site } from "@/lib/content";
 import { Container } from "./ui/Container";
@@ -120,6 +125,90 @@ function Slider() {
   );
 }
 
+/**
+ * Chat-style intro that plays when the About section scrolls into view:
+ * messages appear one by one, all three hold together, then clear and the
+ * cycle repeats. Respects prefers-reduced-motion by showing them statically.
+ */
+function ChatMessages() {
+  const prefersReducedMotion = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { amount: 0.5 });
+  const messages = bento.portrait.messages;
+  const [visibleCount, setVisibleCount] = useState(0);
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setVisibleCount(messages.length);
+      return;
+    }
+    if (!inView) {
+      setVisibleCount(0);
+      return;
+    }
+
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    let cancelled = false;
+
+    const runCycle = () => {
+      if (cancelled) return;
+      // Reveal messages one by one (~900ms apart).
+      messages.forEach((_, idx) => {
+        timers.push(
+          setTimeout(() => setVisibleCount(idx + 1), 400 + idx * 900)
+        );
+      });
+      // Hold all three for ~3.5s, then clear.
+      const clearAt = 400 + messages.length * 900 + 3500;
+      timers.push(setTimeout(() => setVisibleCount(0), clearAt));
+      // Restart after a short pause.
+      timers.push(setTimeout(runCycle, clearAt + 1200));
+    };
+
+    runCycle();
+    return () => {
+      cancelled = true;
+      timers.forEach(clearTimeout);
+    };
+  }, [inView, prefersReducedMotion, messages]);
+
+  return (
+    <div
+      ref={ref}
+      className="absolute bottom-6 left-6 right-6 flex flex-col items-start gap-2"
+    >
+      <AnimatePresence>
+        {messages.slice(0, visibleCount).map((msg, idx) => (
+          <motion.span
+            key={msg}
+            layout
+            initial={
+              prefersReducedMotion
+                ? { opacity: 1 }
+                : { opacity: 0, y: 10, scale: 0.9 }
+            }
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={
+              prefersReducedMotion
+                ? { opacity: 0 }
+                : { opacity: 0, y: 8, transition: { duration: 0.25 } }
+            }
+            transition={{
+              type: "spring",
+              stiffness: 420,
+              damping: 28,
+              delay: idx === visibleCount - 1 ? 0 : 0,
+            }}
+            className="max-w-[85%] rounded-2xl rounded-bl-md bg-black/50 px-3.5 py-2 text-xs text-white/90 shadow-lg backdrop-blur-md"
+          >
+            {msg}
+          </motion.span>
+        ))}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export function Bento() {
   return (
     <section
@@ -215,17 +304,7 @@ export function Bento() {
                     T
                   </p>
                 </div>
-                <div className="absolute bottom-6 left-6 flex flex-col items-start gap-2">
-                  <span className="inline-flex items-center gap-2 rounded-full bg-black/40 px-3 py-1 text-xs text-white/90 backdrop-blur-md">
-                    {bento.portrait.greeting}
-                  </span>
-                  <span className="inline-flex items-center gap-2 rounded-full bg-black/40 px-3 py-1 text-xs text-white/90 backdrop-blur-md">
-                    {bento.portrait.line1}
-                  </span>
-                  <span className="inline-flex items-center gap-2 rounded-full bg-black/40 px-3 py-1 text-xs text-white/90 backdrop-blur-md">
-                    {bento.portrait.line2}
-                  </span>
-                </div>
+                <ChatMessages />
               </div>
             </BentoCard>
 

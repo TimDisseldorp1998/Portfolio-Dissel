@@ -79,9 +79,12 @@ export const bento = {
     ],
   },
   portrait: {
-    greeting: "Hey there!",
-    line1: "Mijn naam is Tim Disseldorp.",
-    line2: "Grab my email, and get in touch.",
+    // Chat-style messages that animate in one by one, hold, then clear.
+    messages: [
+      "Hoi daar! 👋",
+      "Mijn naam is Tim Disseldorp.",
+      "Stuur me gerust een berichtje!",
+    ],
   },
   // Slider photos live in /public/bento/*.webp (1200×900). label + number
   // only show on hover, over a soft gradient.
