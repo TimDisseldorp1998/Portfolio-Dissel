@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { site } from "@/lib/content";
+import { cn } from "@/lib/cn";
 import { AuroraBackground } from "./AuroraBackground";
 import { Container } from "./ui/Container";
 import { Button } from "./ui/Button";
@@ -93,7 +94,10 @@ export function Hero() {
                   src={logo.src}
                   alt={logo.alt}
                   loading="lazy"
-                  className="h-7 w-auto select-none opacity-50 transition-opacity duration-300 hover:opacity-100 sm:h-8"
+                  className={cn(
+                    "w-auto select-none opacity-50 transition-opacity duration-300 hover:opacity-100",
+                    logo.size
+                  )}
                 />
               </li>
             ))}

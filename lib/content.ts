@@ -21,15 +21,15 @@ export const site = {
     /**
      * Client logo strip under the hero CTAs. SVGs live in /public/logos/
      * (all white/monochrome, so they sit muted on the dark hero).
+     * `size` tweaks per-logo height so the marks are optically balanced.
      */
     trustedBy: {
       label: "Vertrouwd door teams die echte producten bouwen:",
       logos: [
-        { src: "/logos/1608-logo.svg", alt: "1608" },
-        { src: "/logos/airforce-logo.svg", alt: "Airforce" },
-        { src: "/logos/dtx-logo.svg", alt: "DTX" },
-        { src: "/logos/marktzicht-logo.svg", alt: "Marktzicht" },
-        { src: "/logos/new-edition-logo.svg", alt: "New Edition" },
+        { src: "/logos/1608-logo.svg", alt: "1608", size: "h-5 sm:h-6" },
+        { src: "/logos/airforce-logo.svg", alt: "Airforce", size: "h-10 sm:h-11" },
+        { src: "/logos/dtx-logo.svg", alt: "DTX", size: "h-7 sm:h-8" },
+        { src: "/logos/new-edition-logo.svg", alt: "New Edition", size: "h-7 sm:h-8" },
       ],
     },
   },
