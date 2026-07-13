@@ -79,15 +79,20 @@ export const bento = {
     ],
   },
   portrait: {
-    greeting: "Hey there!",
-    line1: "Mijn naam is Tim Disseldorp.",
-    line2: "Grab my email, and get in touch.",
+    // Chat-style messages that animate in one by one, hold, then clear.
+    messages: [
+      "Hoi daar! 👋",
+      "Mijn naam is Tim Disseldorp.",
+      "Stuur me gerust een berichtje!",
+    ],
   },
+  // Slider photos live in /public/bento/*.webp (1200×900). label + number
+  // only show on hover, over a soft gradient.
   slider: [
-    { label: "Studio", gradient: "from-primary/70 via-primary-400/50 to-secondary/60" },
-    { label: "Op reis", gradient: "from-secondary/70 via-primary/40 to-primary-700" },
-    { label: "Werkplek", gradient: "from-primary-400 via-secondary/50 to-primary/70" },
-    { label: "Side project", gradient: "from-primary-700 via-primary to-secondary/60" },
+    { label: "Start", src: "/bento/start.webp", alt: "Tim met het KvK-boekje 'Hoera, een eigen bedrijf'" },
+    { label: "Focus", src: "/bento/focus.webp", alt: "Tim aan het werk achter zijn scherm" },
+    { label: "Avontuur", src: "/bento/avontuur.webp", alt: "Tim bij het meer van Bled in Slovenië" },
+    { label: "Werkplek", src: "/bento/werkplek.webp", alt: "Tim's werkplek met dubbele monitoren" },
   ],
   education: [
     { period: "2015 — 2019", degree: "BSc Interaction Design", school: "TU Delft" },

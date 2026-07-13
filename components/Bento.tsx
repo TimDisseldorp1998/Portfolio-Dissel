@@ -1,7 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useInView,
+  useReducedMotion,
+} from "framer-motion";
 import { Download, Mail, Play } from "lucide-react";
 import { bento, experience, site } from "@/lib/content";
 import { Container } from "./ui/Container";
@@ -70,27 +75,39 @@ function Slider() {
   }, [prefersReducedMotion]);
 
   return (
-    <div className="relative min-h-[220px] flex-1 overflow-hidden rounded-2xl bg-black/40">
+    <div className="group/slider relative min-h-[220px] flex-1 overflow-hidden rounded-2xl bg-black/40">
       {bento.slider.map((slide, idx) => (
         <div
           key={idx}
           aria-hidden={idx !== i}
           className={cn(
-            "absolute inset-0 flex items-end bg-gradient-to-br p-6 transition-opacity duration-1000",
-            slide.gradient,
+            "absolute inset-0 transition-opacity duration-1000",
             idx === i ? "opacity-100" : "opacity-0"
           )}
         >
-          <div>
-            <p className="text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-white/70">
-              {String(idx + 1).padStart(2, "0")} /{" "}
-              {String(bento.slider.length).padStart(2, "0")}
-            </p>
-            <p className="mt-1 text-xl font-medium text-white">{slide.label}</p>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={slide.src}
+            alt={slide.alt}
+            loading="lazy"
+            className="h-full w-full object-cover"
+          />
+          {/* Caption overlay — only on hover, over a soft gradient */}
+          <div className="absolute inset-0 flex items-end p-6 opacity-0 transition-opacity duration-300 group-hover/slider:opacity-100">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            <div className="relative">
+              <p className="text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-white/70">
+                {String(idx + 1).padStart(2, "0")} /{" "}
+                {String(bento.slider.length).padStart(2, "0")}
+              </p>
+              <p className="mt-1 text-xl font-medium text-white">
+                {slide.label}
+              </p>
+            </div>
           </div>
         </div>
       ))}
-      <div className="absolute bottom-4 right-4 flex gap-1.5">
+      <div className="absolute bottom-4 right-4 z-10 flex gap-1.5">
         {bento.slider.map((_, idx) => (
           <button
             key={idx}
@@ -104,6 +121,90 @@ function Slider() {
           />
         ))}
       </div>
+    </div>
+  );
+}
+
+/**
+ * Chat-style intro that plays when the About section scrolls into view:
+ * messages appear one by one, all three hold together, then clear and the
+ * cycle repeats. Respects prefers-reduced-motion by showing them statically.
+ */
+function ChatMessages() {
+  const prefersReducedMotion = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { amount: 0.5 });
+  const messages = bento.portrait.messages;
+  const [visibleCount, setVisibleCount] = useState(0);
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setVisibleCount(messages.length);
+      return;
+    }
+    if (!inView) {
+      setVisibleCount(0);
+      return;
+    }
+
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    let cancelled = false;
+
+    const runCycle = () => {
+      if (cancelled) return;
+      // Reveal messages one by one (~900ms apart).
+      messages.forEach((_, idx) => {
+        timers.push(
+          setTimeout(() => setVisibleCount(idx + 1), 400 + idx * 900)
+        );
+      });
+      // Hold all three for ~3.5s, then clear.
+      const clearAt = 400 + messages.length * 900 + 3500;
+      timers.push(setTimeout(() => setVisibleCount(0), clearAt));
+      // Restart after a short pause.
+      timers.push(setTimeout(runCycle, clearAt + 1200));
+    };
+
+    runCycle();
+    return () => {
+      cancelled = true;
+      timers.forEach(clearTimeout);
+    };
+  }, [inView, prefersReducedMotion, messages]);
+
+  return (
+    <div
+      ref={ref}
+      className="absolute bottom-6 left-6 right-6 flex flex-col items-start gap-2"
+    >
+      <AnimatePresence>
+        {messages.slice(0, visibleCount).map((msg, idx) => (
+          <motion.span
+            key={msg}
+            layout
+            initial={
+              prefersReducedMotion
+                ? { opacity: 1 }
+                : { opacity: 0, y: 10, scale: 0.9 }
+            }
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={
+              prefersReducedMotion
+                ? { opacity: 0 }
+                : { opacity: 0, y: 8, transition: { duration: 0.25 } }
+            }
+            transition={{
+              type: "spring",
+              stiffness: 420,
+              damping: 28,
+              delay: idx === visibleCount - 1 ? 0 : 0,
+            }}
+            className="max-w-[85%] rounded-2xl rounded-bl-md bg-black/50 px-3.5 py-2 text-xs text-white/90 shadow-lg backdrop-blur-md"
+          >
+            {msg}
+          </motion.span>
+        ))}
+      </AnimatePresence>
     </div>
   );
 }
@@ -203,17 +304,7 @@ export function Bento() {
                     T
                   </p>
                 </div>
-                <div className="absolute bottom-6 left-6 flex flex-col items-start gap-2">
-                  <span className="inline-flex items-center gap-2 rounded-full bg-black/40 px-3 py-1 text-xs text-white/90 backdrop-blur-md">
-                    {bento.portrait.greeting}
-                  </span>
-                  <span className="inline-flex items-center gap-2 rounded-full bg-black/40 px-3 py-1 text-xs text-white/90 backdrop-blur-md">
-                    {bento.portrait.line1}
-                  </span>
-                  <span className="inline-flex items-center gap-2 rounded-full bg-black/40 px-3 py-1 text-xs text-white/90 backdrop-blur-md">
-                    {bento.portrait.line2}
-                  </span>
-                </div>
+                <ChatMessages />
               </div>
             </BentoCard>
 
