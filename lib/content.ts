@@ -12,19 +12,19 @@ export const site = {
   tagline:
     "I design and build calm, considered digital products — where craft meets clarity.",
   hero: {
-    eyebrow: "Booking for Q3 2026",
-    headline: "Hi, ik ben Tim creatieve digitale product designer",
+    eyebrow: "Freelance · Nederland",
+    headline: "Product designer & developer voor ambitieuze merken.",
     subtitle:
-      "I'm a designer and developer crafting premium products with a focus on typography, motion, and detail.",
-    primaryCta: { label: "See my work", href: "#work" },
-    secondaryCta: { label: "Get in touch", href: "#contact" },
+      "Ik ontwerp en bouw conversiegerichte websites, web-apps en merkidentiteiten die je bedrijf laten groeien. Een strak design dat snel is opgeleverd zonder gedoe.",
+    primaryCta: { label: "Bekijk mijn werk", href: "#work" },
+    secondaryCta: { label: "Neem contact op", href: "#contact" },
     /**
      * Logo strip under the hero CTAs. Placeholder wordmarks — swap the names
      * for real clients, or replace the <li> in Hero.tsx with real SVG logos.
      * The className tweaks per item mimic distinct brand typography.
      */
     trustedBy: {
-      label: "Trusted by teams building real products:",
+      label: "Vertrouwd door teams die echte producten bouwen:",
       logos: [
         { name: "NORTHWIND", className: "text-sm tracking-[0.22em]" },
         { name: "Lumen", className: "text-xl italic" },

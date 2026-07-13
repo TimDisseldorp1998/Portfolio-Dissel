@@ -17,9 +17,9 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Tim Disseldorp — Designer & Developer",
+  title: "Tim Dissel — Digitale Product Designer | Dissel Design",
   description:
-    "A modern, design-forward portfolio showcasing selected work, experience, and services.",
+    "Freelance digitale product designer uit Nederland. Ik ontwerp en bouw conversiegerichte websites, web-apps en merkidentiteiten die ambitieuze merken laten groeien.",
   openGraph: {
     title: "Tim Disseldorp — Designer & Developer",
     description:
@@ -38,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${poppins.variable} ${jakarta.variable}`}>
+    <html lang="nl" className={`${poppins.variable} ${jakarta.variable}`}>
       <body className="min-h-screen bg-surface text-ink antialiased">
         {children}
       </body>
