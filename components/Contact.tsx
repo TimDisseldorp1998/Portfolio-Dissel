@@ -178,9 +178,9 @@ export function Contact() {
   return (
     <Section id="contact" variant="dark" className="pb-32">
       <Container>
-        <div className="grid gap-14 md:grid-cols-12">
+        <div className="grid gap-14 lg:grid-cols-12">
           {/* Left column: intro + socials */}
-          <div className="md:col-span-5">
+          <div className="lg:col-span-5">
             <Reveal>
               <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-primary">
                 Contact
@@ -287,7 +287,7 @@ export function Contact() {
           </div>
 
           {/* Right column: form / success card */}
-          <div className="md:col-span-7">
+          <div className="lg:col-span-7">
             <Reveal delay={0.15}>
               <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm md:p-10">
                 <AnimatePresence mode="wait" initial={false}>
