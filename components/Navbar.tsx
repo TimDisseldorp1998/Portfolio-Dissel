@@ -5,7 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import {
   User,
   Eye,
-  Sparkles,
+  LayoutGrid,
   MessageCircle,
   type LucideIcon,
 } from "lucide-react";
@@ -21,15 +21,15 @@ const SCROLLED_AT = 80;
 const REST_AT = 40;
 
 const iconMap: Record<string, LucideIcon> = {
+  "#services": LayoutGrid,
   "#about": User,
   "#work": Eye,
-  "#skills": Sparkles,
   "#contact": MessageCircle,
 };
 
-const items = [...nav, { label: "Let's talk", href: "#contact" }].map((n) => ({
+const items = [...nav, { label: "Contact", href: "#contact" }].map((n) => ({
   ...n,
-  icon: iconMap[n.href] ?? Sparkles,
+  icon: iconMap[n.href] ?? LayoutGrid,
 }));
 
 const SECTION_IDS = items.map((i) => i.href.slice(1));
