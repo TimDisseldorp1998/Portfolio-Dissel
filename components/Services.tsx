@@ -1,15 +1,22 @@
+import { PenTool, Code2, Sparkles, TrendingUp, type LucideIcon } from "lucide-react";
 import { Section } from "./ui/Section";
 import { Container } from "./ui/Container";
 
 /**
- * Services section (server component — no "use client", so the headings and
- * lists are rendered straight into the static HTML for SEO). Left: heading +
- * intro. Right: four service columns. Stacks on mobile, four across on desktop.
+ * Services section (server component — no "use client", so the headings, icons
+ * and lists render straight into the static HTML for SEO). Subheading + heading
+ * span the top; below sits the intro (left) with the four service cards in a
+ * 2×2 grid (right), each in its own bordered frame. Stacks on mobile.
  */
 
-const serviceColumns = [
+const serviceColumns: {
+  title: string;
+  icon: LucideIcon;
+  items: string[];
+}[] = [
   {
     title: "Webdesign & UX/UI",
+    icon: PenTool,
     items: [
       "UX/UI design",
       "Webdesign",
@@ -21,6 +28,7 @@ const serviceColumns = [
   },
   {
     title: "Webdevelopment",
+    icon: Code2,
     items: [
       "Websites laten maken",
       "Web-apps",
@@ -32,6 +40,7 @@ const serviceColumns = [
   },
   {
     title: "Merk & huisstijl",
+    icon: Sparkles,
     items: [
       "Merkidentiteit",
       "Logo-ontwerp",
@@ -43,6 +52,7 @@ const serviceColumns = [
   },
   {
     title: "Vindbaarheid & conversie",
+    icon: TrendingUp,
     items: [
       "SEO",
       "Conversie-optimalisatie",
@@ -58,49 +68,58 @@ export function Services() {
   return (
     <Section id="services" variant="dark">
       <Container>
-        <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
-          {/* Left — heading + intro */}
-          <div className="lg:col-span-4">
-            <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-primary">
-              Diensten
+        {/* Subheading + heading on top */}
+        <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-primary">
+          Diensten
+        </p>
+        <h2 className="max-w-3xl font-heading text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
+          <span className="text-white/35">Van klik tot klant,</span>{" "}
+          <span className="text-white">met design dat converteert</span>
+        </h2>
+
+        {/* Intro left, service cards (2×2) right */}
+        <div className="mt-14 grid items-start gap-14 lg:grid-cols-12 lg:gap-16">
+          <div className="space-y-4 text-base leading-relaxed text-white/70 lg:col-span-4">
+            <p>
+              Een mooie website is pas het halve werk. Ik ontwerp en bouw
+              digitale producten die er professioneel uitzien én meetbaar meer
+              opleveren. Voor merken die willen groeien, van startups tot
+              corporate bedrijven.
             </p>
-            <h2 className="font-heading text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-[2.75rem]">
-              Van klik tot klant, met design dat converteert
-            </h2>
-            <div className="mt-6 space-y-4 text-base leading-relaxed text-white/70">
-              <p>
-                Een mooie website is pas het halve werk. Ik ontwerp en bouw
-                digitale producten die er professioneel uitzien én meetbaar meer
-                opleveren. Voor merken die willen groeien, van startups tot
-                corporate bedrijven.
-              </p>
-              <p>
-                Design en development onder één dak, korte lijnen en snelle
-                oplevering. Geen eindeloze trajecten of losse eindjes. Gewoon
-                design en development dat je bezoekers omzet in klanten.
-              </p>
-            </div>
+            <p>
+              Design en development onder één dak, korte lijnen en snelle
+              oplevering. Geen eindeloze trajecten of losse eindjes. Gewoon
+              design en development dat je bezoekers omzet in klanten.
+            </p>
           </div>
 
-          {/* Right — four service columns */}
-          <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:col-span-8 lg:grid-cols-4">
-            {serviceColumns.map((column) => (
-              <div key={column.title}>
-                <h3 className="mb-4 border-b border-white/10 pb-3 font-heading text-base font-semibold text-white">
-                  {column.title}
-                </h3>
-                <ul className="space-y-2.5">
-                  {column.items.map((item) => (
-                    <li
-                      key={item}
-                      className="text-sm leading-snug text-white/60"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:col-span-8">
+            {serviceColumns.map((column) => {
+              const Icon = column.icon;
+              return (
+                <div
+                  key={column.title}
+                  className="group flex h-full flex-col rounded-3xl border border-white/10 bg-white/[0.04] p-7 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.06]"
+                >
+                  <span className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-secondary/10 text-secondary transition-colors duration-300 group-hover:bg-primary/10 group-hover:text-primary">
+                    <Icon size={22} strokeWidth={1.75} aria-hidden />
+                  </span>
+                  <h3 className="mb-4 font-heading text-lg font-semibold text-white">
+                    {column.title}
+                  </h3>
+                  <ul className="space-y-2.5">
+                    {column.items.map((item) => (
+                      <li
+                        key={item}
+                        className="text-sm leading-snug text-white/60"
+                      >
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
           </div>
         </div>
       </Container>
