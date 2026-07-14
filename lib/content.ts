@@ -371,28 +371,28 @@ export const skills = [
 
 export const experience = [
   {
-    role: "Senior Product Designer",
-    company: "Northwind",
-    period: "2023 — Present",
-    body: "Leading product design across the platform. Building a scalable design system and shipping high-impact features.",
+    role: "UX & UI Designer",
+    company: "ShopCommerce",
+    period: "2024 — heden",
+    location: "Alkmaar",
   },
   {
-    role: "Design Engineer",
-    company: "Lumen Health",
-    period: "2020 — 2023",
-    body: "Bridged design and engineering. Owned the front-end architecture and prototyped upcoming product surfaces.",
+    role: "UX & UI Designer",
+    company: "Touch Creative",
+    period: "2023 — 2024",
+    location: "Amsterdam",
   },
   {
-    role: "Freelance Designer",
-    company: "Independent",
-    period: "2017 — 2020",
-    body: "Worked with startups on brand, product, and marketing — from zero-to-one launches to design system rebuilds.",
+    role: "Allround Designer",
+    company: "yourdutchmedia",
+    period: "2021 — 2023",
+    location: "Zwaag, Hoorn",
   },
   {
-    role: "Product Design Intern",
-    company: "Aperture",
-    period: "2016 — 2017",
-    body: "Contributed to the design system, marketing site, and first version of the product dashboard.",
+    role: "Webdesigner",
+    company: "Brickzero",
+    period: "2020",
+    location: "Castricum",
   },
 ];
 

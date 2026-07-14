@@ -44,10 +44,13 @@
     border-radius: 4px;
   }
 
-  /* Anchor targets land below the floating pill nav (pill ~60px + 16px top). */
+  /* Anchor targets: sections already carry ~96–128px of internal top padding,
+     so only a small scroll-margin is needed. On desktop the floating pill sits
+     at the top (its clearance comes from the section padding); on mobile the
+     pill is at the bottom, so a large top margin would just leave an empty gap. */
   section[id],
   footer[id] {
-    scroll-margin-top: 6rem;
+    scroll-margin-top: 2rem;
   }
 }
 

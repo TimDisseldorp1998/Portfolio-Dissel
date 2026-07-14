@@ -104,6 +104,52 @@ export function Navbar() {
     };
   }, []);
 
+  /**
+   * Smooth-scroll a nav target into view: center the section when it fits the
+   * viewport, otherwise put its heading just below the top (40px on mobile
+   * where the pill sits at the bottom, ~90px on desktop to clear the top pill).
+   * This keeps the previous section (e.g. the blue hero) from peeking in.
+   */
+  function scrollToSection(
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) {
+    if (!href.startsWith("#")) return;
+    const behavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
+    const id = href.slice(1);
+
+    if (id === "top") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior });
+      history.replaceState(null, "", window.location.pathname);
+      return;
+    }
+
+    const el = document.getElementById(id);
+    if (!el) return;
+    e.preventDefault();
+
+    const rect = el.getBoundingClientRect();
+    const absoluteTop = window.scrollY + rect.top;
+    const vh = window.innerHeight;
+    const isDesktop = window.innerWidth >= 1024;
+    const topClearance = isDesktop ? 90 : 40;
+
+    let target: number;
+    if (rect.height <= vh) {
+      // Fits — center the block in the viewport.
+      target = absoluteTop - (vh - rect.height) / 2;
+    } else {
+      // Taller than the viewport — heading near the top.
+      const heading = el.querySelector("h2") ?? el;
+      const headingTop = window.scrollY + heading.getBoundingClientRect().top;
+      target = headingTop - topClearance;
+    }
+
+    window.scrollTo({ top: Math.max(0, target), behavior });
+    history.replaceState(null, "", href);
+  }
+
   return (
     <motion.header
       initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
@@ -128,6 +174,7 @@ export function Navbar() {
         {/* Logo — mark only */}
         <a
           href="#top"
+          onClick={(e) => scrollToSection(e, "#top")}
           aria-label="DisselDesign — terug naar boven"
           className="flex min-h-[44px] shrink-0 items-center rounded-full px-2 transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
         >
@@ -142,6 +189,7 @@ export function Navbar() {
               <li key={item.href}>
                 <a
                   href={item.href}
+                  onClick={(e) => scrollToSection(e, item.href)}
                   aria-label={item.label}
                   aria-current={isActive ? "true" : undefined}
                   className={cn(
