@@ -101,7 +101,7 @@ export function Services() {
                   key={column.title}
                   className="group flex h-full flex-col rounded-3xl border border-white/10 bg-white/[0.04] p-7 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.06]"
                 >
-                  <span className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-secondary/10 text-secondary transition-colors duration-300 group-hover:bg-primary/10 group-hover:text-primary">
+                  <span className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.12] to-white/[0.02] text-secondary transition-colors duration-300 group-hover:text-primary">
                     <Icon size={22} strokeWidth={1.75} aria-hidden />
                   </span>
                   <h3 className="mb-4 font-heading text-lg font-semibold text-white">

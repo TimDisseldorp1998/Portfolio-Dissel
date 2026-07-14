@@ -37,9 +37,9 @@ export const site = {
 };
 
 export const nav = [
-  { label: "About", href: "#about" },
-  { label: "Work", href: "#work" },
-  { label: "Skills", href: "#skills" },
+  { label: "Diensten", href: "#services" },
+  { label: "Werk", href: "#work" },
+  { label: "Over mij", href: "#about" },
 ];
 
 export const about = {
