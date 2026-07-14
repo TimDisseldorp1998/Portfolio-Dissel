@@ -30,6 +30,7 @@ export const site = {
         { src: "/logos/airforce-logo.svg", alt: "Airforce", size: "h-10 sm:h-11" },
         { src: "/logos/dtx-logo.svg", alt: "DTX", size: "h-7 sm:h-8" },
         { src: "/logos/new-edition-logo.svg", alt: "New Edition", size: "h-7 sm:h-8" },
+        { src: "/logos/ziggodome-logo.svg", alt: "Ziggo Dome", size: "h-9 sm:h-10" },
       ],
     },
   },
