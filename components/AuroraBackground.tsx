@@ -148,7 +148,7 @@ float snoise(vec3 v) {
 float fbm(vec3 p) {
   float sum = 0.0;
   float amp = 0.5;
-  for (int i = 0; i < 4; i++) {
+  for (int i = 0; i < 3; i++) {
     sum += amp * snoise(p);
     p *= 2.0;
     amp *= 0.5;
@@ -200,8 +200,8 @@ void main() {
 
   // Optional film grain against banding.
   if (uGrain > 0.5) {
-    float g = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233)) + uTime * 0.01) * 43758.5453);
-    color += (g - 0.5) * 0.035;
+    float g = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);
+    color += (g - 0.5) * 0.02;
   }
 
   gl_FragColor = vec4(color, 1.0);
@@ -328,16 +328,18 @@ export function AuroraBackground({
     gl.uniform1f(uSpread, spread);
     gl.uniform1f(uGrain, grain ? 1 : 0);
 
-    // Resize handling with DPR capping.
+    // Resolution scaling. The aurora is a soft, blurry gradient, so we render
+    // it well below native resolution: the quality loss is invisible, but it
+    // slashes fragment-shader work. This is what keeps it cheap on weak GPUs and
+    // in lab tools (Lighthouse) that render WebGL in software on the CPU.
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
-    const maxDPR = isMobile ? 1.5 : 2;
+    const quality = isMobile ? 0.75 : 0.9;
 
     function resize() {
       if (!canvas) return;
       const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, maxDPR);
-      const w = Math.max(1, Math.floor(rect.width * dpr));
-      const h = Math.max(1, Math.floor(rect.height * dpr));
+      const w = Math.max(1, Math.round(rect.width * quality));
+      const h = Math.max(1, Math.round(rect.height * quality));
       if (canvas.width !== w || canvas.height !== h) {
         canvas.width = w;
         canvas.height = h;
@@ -356,15 +358,22 @@ export function AuroraBackground({
     let tabVisible = !document.hidden;
     const start = performance.now();
 
+    // Cap the animation at ~30fps. The drift is slow, so 30fps is visually
+    // identical to 60fps but halves the shader work per second.
+    const FRAME_MS = 1000 / 30;
+    let lastDraw = 0;
+
     function drawStatic() {
       gl!.uniform1f(uTime, 12.0); // any fixed value gives a nice frozen aurora
       gl!.drawArrays(gl!.TRIANGLES, 0, 6);
     }
 
     function frame(now: number) {
+      raf = requestAnimationFrame(frame);
+      if (now - lastDraw < FRAME_MS) return;
+      lastDraw = now;
       gl!.uniform1f(uTime, (now - start) / 1000);
       gl!.drawArrays(gl!.TRIANGLES, 0, 6);
-      raf = requestAnimationFrame(frame);
     }
 
     function sync() {
@@ -450,6 +459,13 @@ export function AuroraBackground({
           width: "100%",
           height: "100%",
           display: "block",
+          // The buffer renders below native resolution for performance; a hair
+          // of blur (with a tiny upscale to push the blurred edge past the
+          // clipped container) smooths the upscale so there's no visible
+          // pixelation or grain-speckle on the gradient.
+          filter: "blur(1.5px)",
+          transform: "scale(1.04)",
+          transformOrigin: "center",
         }}
       />
       {/* CSS fallback for no-WebGL devices — hidden by default, shown by JS if needed. */}
