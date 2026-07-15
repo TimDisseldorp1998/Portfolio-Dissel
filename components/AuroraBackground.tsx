@@ -347,46 +347,72 @@ export function AuroraBackground({
     }
     resize();
 
-    // Animation loop.
+    // Animation loop — only runs while the hero is on-screen AND the tab is
+    // visible. Pausing when scrolled away (or hidden) frees the GPU/CPU so the
+    // rest of the page and smooth-scrolling back to the top stay snappy.
     let raf = 0;
-    let running = true;
+    let running = false;
+    let inView = true;
+    let tabVisible = !document.hidden;
     const start = performance.now();
 
+    function drawStatic() {
+      gl!.uniform1f(uTime, 12.0); // any fixed value gives a nice frozen aurora
+      gl!.drawArrays(gl!.TRIANGLES, 0, 6);
+    }
+
     function frame(now: number) {
-      if (!running) return;
-      resize();
       gl!.uniform1f(uTime, (now - start) / 1000);
       gl!.drawArrays(gl!.TRIANGLES, 0, 6);
       raf = requestAnimationFrame(frame);
     }
 
-    if (prefersReducedMotion) {
-      // Render a single static frame — no animation loop.
-      gl.uniform1f(uTime, 12.0); // any fixed value gives a nice frozen aurora
-      gl.drawArrays(gl.TRIANGLES, 0, 6);
-      running = false;
-    } else {
-      raf = requestAnimationFrame(frame);
-    }
-
-    // Pause when tab hidden.
-    function onVisibility() {
-      if (document.hidden) {
-        running = false;
-        cancelAnimationFrame(raf);
-      } else if (!prefersReducedMotion) {
+    function sync() {
+      const shouldRun = !prefersReducedMotion && tabVisible && inView;
+      if (shouldRun && !running) {
         running = true;
         raf = requestAnimationFrame(frame);
+      } else if (!shouldRun && running) {
+        running = false;
+        cancelAnimationFrame(raf);
       }
     }
+
+    if (prefersReducedMotion) {
+      drawStatic();
+    } else {
+      sync();
+    }
+
+    function onVisibility() {
+      tabVisible = !document.hidden;
+      sync();
+    }
+
+    // Pause the shader once the hero scrolls out of view.
+    const io = new IntersectionObserver(
+      (entries) => {
+        inView = entries[0]?.isIntersecting ?? true;
+        sync();
+      },
+      { threshold: 0 }
+    );
+    io.observe(canvas);
+
+    function onResize() {
+      resize();
+      if (prefersReducedMotion) drawStatic();
+    }
+
     document.addEventListener("visibilitychange", onVisibility);
-    window.addEventListener("resize", resize);
+    window.addEventListener("resize", onResize);
 
     return () => {
       running = false;
       cancelAnimationFrame(raf);
+      io.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
-      window.removeEventListener("resize", resize);
+      window.removeEventListener("resize", onResize);
       if (program) gl.deleteProgram(program);
       if (vs) gl.deleteShader(vs);
       if (fs) gl.deleteShader(fs);
