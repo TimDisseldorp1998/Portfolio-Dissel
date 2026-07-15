@@ -7,7 +7,7 @@ import {
   useInView,
   useReducedMotion,
 } from "framer-motion";
-import { Download, Mail, Play } from "lucide-react";
+import { Download, Mail, Minus, Plus } from "lucide-react";
 import { bento, experience, site } from "@/lib/content";
 import { Container } from "./ui/Container";
 import { Reveal } from "./ui/Reveal";
@@ -59,6 +59,154 @@ function SocialIconLink({
     >
       {children}
     </a>
+  );
+}
+
+/** Common working-set rep targets for the 1RM calculator. */
+const REP_OPTIONS = [2, 4, 6, 8, 12, 16, 20];
+
+/** Per-unit plate increment and sensible min/max for the 1RM input. */
+const LBS_PER_KG = 2.20462;
+const UNITS = {
+  kg: { inc: 2.5, min: 20, max: 400 },
+  lbs: { inc: 5, min: 45, max: 900 },
+} as const;
+type Unit = keyof typeof UNITS;
+
+/**
+ * 1RM training calculator. From a one-rep max it estimates the working weight
+ * for a chosen rep target using the Epley formula (1RM = w · (1 + reps/30), so
+ * weight = 1RM / (1 + reps/30)), with a single rep pinned to exactly 100% (the
+ * lift equals the 1RM). Epley stays realistic across the full 1–20 rep range.
+ * Works in kg or lbs — switching converts the entered max. The working weight
+ * is shown to one decimal (matching a standard 1RM percentage table); the input
+ * steppers move by the unit's plate increment (2.5 kg / 5 lbs).
+ */
+function OneRepMaxCalculator() {
+  const [unit, setUnit] = useState<Unit>("kg");
+  const [oneRm, setOneRm] = useState(100);
+  const [reps, setReps] = useState(8);
+
+  const cfg = UNITS[unit];
+  const clamp = (v: number, lo: number, hi: number) =>
+    Math.min(hi, Math.max(lo, v));
+  const snap = (v: number) => Math.round(v / cfg.inc) * cfg.inc;
+
+  const pct = reps === 1 ? 1 : 1 / (1 + reps / 30);
+  const weight = Math.max(0, oneRm * pct);
+  const pctLabel = Math.round(pct * 100);
+
+  const step = (delta: number) =>
+    setOneRm((v) => clamp(snap(v + delta), cfg.min, cfg.max));
+
+  const switchUnit = (next: Unit) => {
+    if (next === unit) return;
+    setOneRm((v) => {
+      const converted = next === "lbs" ? v * LBS_PER_KG : v / LBS_PER_KG;
+      const c = UNITS[next];
+      return clamp(Math.round(converted / c.inc) * c.inc, c.min, c.max);
+    });
+    setUnit(next);
+  };
+
+  return (
+    <>
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <p className="text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-white/40">
+          1RM Calculator
+        </p>
+        {/* kg / lbs toggle */}
+        <div className="flex items-center rounded-lg border border-white/10 bg-white/[0.03] p-0.5 text-xs font-medium">
+          {(Object.keys(UNITS) as Unit[]).map((u) => (
+            <button
+              key={u}
+              type="button"
+              onClick={() => switchUnit(u)}
+              aria-pressed={unit === u}
+              className={cn(
+                "rounded-md px-2 py-1 transition-colors",
+                unit === u
+                  ? "bg-secondary/15 text-secondary"
+                  : "text-white/50 hover:text-white"
+              )}
+            >
+              {u}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* One-rep max input with unit-aware steppers */}
+      <label htmlFor="orm-input" className="mb-1.5 block text-xs text-white/50">
+        Jouw 1 rep max
+      </label>
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={() => step(-cfg.inc)}
+          aria-label="Verlaag 1 rep max"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] text-white/70 transition-colors hover:bg-white/[0.08] hover:text-white"
+        >
+          <Minus size={15} aria-hidden />
+        </button>
+        <div className="flex flex-1 items-baseline justify-center gap-1 rounded-xl border border-white/10 bg-white/[0.03] py-2">
+          <input
+            id="orm-input"
+            type="number"
+            inputMode="numeric"
+            value={oneRm}
+            onChange={(e) =>
+              setOneRm(clamp(Number(e.target.value) || 0, 0, cfg.max))
+            }
+            className="w-16 bg-transparent text-center text-lg font-semibold text-white outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+          />
+          <span className="text-sm text-white/40">{unit}</span>
+        </div>
+        <button
+          type="button"
+          onClick={() => step(cfg.inc)}
+          aria-label="Verhoog 1 rep max"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] text-white/70 transition-colors hover:bg-white/[0.08] hover:text-white"
+        >
+          <Plus size={15} aria-hidden />
+        </button>
+      </div>
+
+      {/* Rep target */}
+      <p className="mb-1.5 mt-4 text-xs text-white/50">Herhalingen per set</p>
+      <div className="flex flex-wrap gap-1.5">
+        {REP_OPTIONS.map((r) => (
+          <button
+            key={r}
+            type="button"
+            onClick={() => setReps(r)}
+            aria-pressed={reps === r}
+            className={cn(
+              "min-w-[2.25rem] rounded-lg border px-2.5 py-1.5 text-sm font-medium transition-colors",
+              reps === r
+                ? "border-primary/50 bg-primary/15 text-primary"
+                : "border-white/10 bg-white/[0.04] text-white/60 hover:border-white/25 hover:bg-white/[0.08] hover:text-white"
+            )}
+          >
+            {r}
+          </button>
+        ))}
+      </div>
+
+      {/* Result */}
+      <div className="mt-4 rounded-2xl border border-primary/20 bg-primary/[0.06] p-4">
+        <p className="text-xs text-white/50">
+          Werkgewicht voor {reps} {reps === 1 ? "rep" : "reps"}
+        </p>
+        <p className="mt-0.5 font-heading text-3xl font-semibold leading-none text-white">
+          {weight.toFixed(1)}
+          <span className="ml-1 text-lg font-normal text-white/50">{unit}</span>
+        </p>
+        <p className="mt-2 text-xs text-white/40">
+          ≈ {pctLabel}% van je 1RM · ideaal voor 3 werksets van {reps}
+        </p>
+      </div>
+    </>
   );
 }
 
@@ -270,7 +418,7 @@ export function Bento() {
 
             {/* Background card */}
             <BentoCard>
-              <CardLabel>My Background</CardLabel>
+              <CardLabel>Mijn achtergrond</CardLabel>
               {bento.background.paragraphs.map((p, idx) => (
                 <p
                   key={idx}
@@ -308,40 +456,9 @@ export function Bento() {
               </div>
             </BentoCard>
 
-            {/* Spotify card */}
+            {/* 1RM strength calculator card */}
             <BentoCard>
-              <CardLabel>Favorite Tracks</CardLabel>
-              <ul className="space-y-1">
-                {bento.tracks.map((track) => (
-                  <li key={track.title}>
-                    <button
-                      type="button"
-                      className="group/track flex w-full items-center gap-3 rounded-xl p-2 transition-colors hover:bg-white/5"
-                    >
-                      <div
-                        className={cn(
-                          "h-10 w-10 shrink-0 rounded-lg bg-gradient-to-br shadow-sm",
-                          track.color
-                        )}
-                      />
-                      <div className="min-w-0 flex-1 text-left">
-                        <p className="truncate text-sm font-medium">
-                          {track.title}
-                        </p>
-                        <p className="truncate text-xs text-white/50">
-                          {track.artist}
-                        </p>
-                      </div>
-                      <span
-                        aria-hidden
-                        className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-black opacity-0 transition-all group-hover/track:opacity-100"
-                      >
-                        <Play size={12} fill="currentColor" />
-                      </span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
+              <OneRepMaxCalculator />
             </BentoCard>
           </div>
 
@@ -349,7 +466,7 @@ export function Bento() {
           <div className="flex flex-col gap-4 md:col-span-2 md:grid md:grid-cols-2 md:gap-5 lg:col-span-1 lg:flex lg:flex-col">
             {/* Experience card */}
             <BentoCard>
-              <CardLabel>Experience</CardLabel>
+              <CardLabel>Werkervaring</CardLabel>
               <ul className="space-y-5">
                 {experience.map((exp) => (
                   <li
@@ -375,7 +492,7 @@ export function Bento() {
 
             {/* Tools card — full-width bottom row on tablet, middle of the stack on desktop */}
             <BentoCard className="md:order-last md:col-span-2 lg:order-none">
-              <CardLabel>Tool Stack</CardLabel>
+              <CardLabel>Toolstack</CardLabel>
               <div className="grid grid-cols-5 gap-2.5">
                 {bento.tools.map((tool) => (
                   <div
@@ -397,7 +514,7 @@ export function Bento() {
 
             {/* Education card — next to Experience on tablet, bottom of the stack on desktop */}
             <BentoCard>
-              <CardLabel>Education</CardLabel>
+              <CardLabel>Opleidingen</CardLabel>
               <ul className="space-y-4">
                 {bento.education.map((ed) => (
                   <li
@@ -406,6 +523,9 @@ export function Bento() {
                   >
                     <span className="text-xs text-white/40">{ed.period}</span>
                     <div>
+                      {ed.type ? (
+                        <p className="text-xs text-white/40">{ed.type}</p>
+                      ) : null}
                       <p className="text-sm font-medium leading-tight">
                         {ed.degree}
                       </p>
