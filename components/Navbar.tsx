@@ -37,6 +37,35 @@ const SECTION_IDS = items.map((i) => i.href.slice(1));
 /** Idle delay (ms) before the mobile nav grows back to its resting size. */
 const IDLE_AFTER = 220;
 
+/**
+ * Custom rAF smooth-scroll. Scrolls each frame with `behavior: "instant"`, so
+ * it bypasses the CSS `scroll-behavior: smooth` on <html> — the native
+ * `scrollTo({ behavior: "smooth" })` silently fails over long distances when
+ * both are set, which made "back to top" feel broken. Fixed duration keeps it
+ * fast and consistent regardless of how far the target is.
+ */
+let scrollRAF = 0;
+function animateScrollTo(targetY: number, duration = 600) {
+  cancelAnimationFrame(scrollRAF);
+  const startY = window.scrollY;
+  const distance = targetY - startY;
+  if (Math.abs(distance) < 2) {
+    window.scrollTo({ top: targetY, behavior: "instant" as ScrollBehavior });
+    return;
+  }
+  const startTime = performance.now();
+  const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+  function step(now: number) {
+    const t = Math.min(1, (now - startTime) / duration);
+    window.scrollTo({
+      top: startY + distance * easeOutCubic(t),
+      behavior: "instant" as ScrollBehavior,
+    });
+    if (t < 1) scrollRAF = requestAnimationFrame(step);
+  }
+  scrollRAF = requestAnimationFrame(step);
+}
+
 export function Navbar() {
   const prefersReducedMotion = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
@@ -115,12 +144,15 @@ export function Navbar() {
     href: string
   ) {
     if (!href.startsWith("#")) return;
-    const behavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
     const id = href.slice(1);
+    const goTo = (y: number) =>
+      prefersReducedMotion
+        ? window.scrollTo({ top: y, behavior: "instant" as ScrollBehavior })
+        : animateScrollTo(y);
 
     if (id === "top") {
       e.preventDefault();
-      window.scrollTo({ top: 0, behavior });
+      goTo(0);
       history.replaceState(null, "", window.location.pathname);
       return;
     }
@@ -146,7 +178,7 @@ export function Navbar() {
       target = headingTop - topClearance;
     }
 
-    window.scrollTo({ top: Math.max(0, target), behavior });
+    goTo(Math.max(0, target));
     history.replaceState(null, "", href);
   }
 
