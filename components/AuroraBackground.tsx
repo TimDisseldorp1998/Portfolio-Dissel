@@ -333,27 +333,13 @@ export function AuroraBackground({
     // slashes fragment-shader work. This is what keeps it cheap on weak GPUs and
     // in lab tools (Lighthouse) that render WebGL in software on the CPU.
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
-    const quality = isMobile ? 0.75 : 0.7;
-    // Hard cap on the drawing-buffer's long edge. On wide desktop monitors the
-    // hero canvas would otherwise become very large, and since the shader is
-    // heavy — and renders in software in lab tools like Lighthouse — that pixel
-    // count dominates the cost. Capping it keeps the work bounded regardless of
-    // screen size; the blur below hides that it's upscaled.
-    const maxEdge = isMobile ? 900 : 820;
+    const quality = isMobile ? 0.75 : 0.9;
 
     function resize() {
       if (!canvas) return;
       const rect = canvas.getBoundingClientRect();
-      let w = rect.width * quality;
-      let h = rect.height * quality;
-      const longEdge = Math.max(w, h);
-      if (longEdge > maxEdge) {
-        const s = maxEdge / longEdge;
-        w *= s;
-        h *= s;
-      }
-      w = Math.max(1, Math.round(w));
-      h = Math.max(1, Math.round(h));
+      const w = Math.max(1, Math.round(rect.width * quality));
+      const h = Math.max(1, Math.round(rect.height * quality));
       if (canvas.width !== w || canvas.height !== h) {
         canvas.width = w;
         canvas.height = h;
