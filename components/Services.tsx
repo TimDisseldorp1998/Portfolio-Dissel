@@ -81,7 +81,8 @@ export function Services() {
         <div className="mt-14 grid items-start gap-14 lg:grid-cols-12 lg:gap-16">
           <div className="space-y-4 text-base leading-relaxed text-white/70 lg:col-span-4">
             <p>
-              Een mooie website is pas het halve werk. Ik ontwerp en bouw
+              Een mooie website is pas het halve werk.{" "}
+              <span className="whitespace-nowrap">Ik ontwerp</span> en bouw
               digitale producten die er professioneel uitzien én meetbaar meer
               opleveren. Voor merken die willen groeien, van startups tot
               corporate bedrijven.

@@ -219,7 +219,7 @@ export function Bento() {
         <Reveal>
           <div className="mb-12 flex items-end justify-between gap-6">
             <div>
-              <p className="mb-3 text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-white/40">
+              <p className="mb-3 text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-primary">
                 About
               </p>
               <h2 className="max-w-2xl font-heading text-3xl font-semibold leading-tight md:text-4xl">
@@ -354,7 +354,7 @@ export function Bento() {
                 {experience.map((exp) => (
                   <li
                     key={exp.company}
-                    className="grid grid-cols-[110px_1fr] items-baseline gap-3"
+                    className="grid grid-cols-[90px_1fr] items-baseline gap-3"
                   >
                     <span className="text-xs text-white/40">{exp.period}</span>
                     <div>
@@ -363,6 +363,9 @@ export function Bento() {
                       </p>
                       <p className="mt-0.5 text-xs text-white/50">
                         {exp.company}
+                      </p>
+                      <p className="mt-0.5 text-xs text-white/40">
+                        {exp.location}
                       </p>
                     </div>
                   </li>

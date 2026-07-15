@@ -12,9 +12,9 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   AlertCircle,
   ArrowRight,
+  CalendarDays,
   Check,
   Clock,
-  Copy,
   Loader2,
   Mail,
 } from "lucide-react";
@@ -51,7 +51,6 @@ export function Contact() {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Errors>({});
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [copied, setCopied] = useState(false);
   const [projectType, setProjectType] = useState<string>("");
   const [values, setValues] = useState({
     name: "",
@@ -69,16 +68,6 @@ export function Contact() {
     const next = Math.max(130, Math.min(ta.scrollHeight, 300));
     ta.style.height = `${next}px`;
   }, [values.message]);
-
-  async function copyEmail() {
-    try {
-      await navigator.clipboard.writeText(site.email);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1500);
-    } catch {
-      /* ignore — some browsers block without user gesture context */
-    }
-  }
 
   function updateField(name: keyof typeof values, val: string) {
     setValues((v) => ({ ...v, [name]: val }));
@@ -185,84 +174,37 @@ export function Contact() {
               <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-primary">
                 Contact
               </p>
-              <h2 className="mb-6 font-heading text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-5xl">
-                Let&apos;s make something{" "}
-                <span className="text-gradient">memorable</span>.
+              <h2 className="mb-6 font-heading text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
+                <span className="text-white/35">Klaar om te groeien?</span>{" "}
+                <span className="text-white">Plan een gesprek.</span>
               </h2>
               <p className="mb-8 text-lg leading-relaxed text-white/70">
-                Werk je aan iets interessants, of wil je gewoon even hi zeggen?
-                Ik hoor het graag.
+                Plan een vrijblijvend gesprek van 20 minuten.
+                <br />
+                Vertel me waar je naartoe wilt met je merk of product. Ik denk
+                direct met je mee over hoe we daar sneller komen. Geen
+                verplichtingen, gewoon een goed gesprek.
               </p>
 
-              {/* Mailto + copy row */}
-              <div className="flex flex-wrap items-center gap-2">
-                <a
-                  href={`mailto:${site.email}`}
-                  className="group inline-flex min-h-[44px] items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:border-primary/40 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25"
-                >
-                  <Mail size={16} className="text-primary" />
-                  <span>{site.email}</span>
-                  <ArrowRight
-                    size={14}
-                    className="transition-transform duration-200 group-hover:translate-x-1"
-                  />
-                </a>
-                <div className="relative">
-                  <button
-                    type="button"
-                    onClick={copyEmail}
-                    aria-label={
-                      copied ? "E-mailadres gekopieerd" : "Kopieer e-mailadres"
-                    }
-                    className="inline-flex h-[44px] w-[44px] items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-all duration-200 hover:border-primary/40 hover:bg-white/[0.06] hover:text-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25"
-                  >
-                    <AnimatePresence mode="wait" initial={false}>
-                      {copied ? (
-                        <motion.span
-                          key="check"
-                          initial={{ scale: 0.6, opacity: 0 }}
-                          animate={{ scale: 1, opacity: 1 }}
-                          exit={{ scale: 0.6, opacity: 0 }}
-                          transition={{ duration: 0.15 }}
-                          className="text-primary"
-                        >
-                          <Check size={16} />
-                        </motion.span>
-                      ) : (
-                        <motion.span
-                          key="copy"
-                          initial={{ scale: 0.6, opacity: 0 }}
-                          animate={{ scale: 1, opacity: 1 }}
-                          exit={{ scale: 0.6, opacity: 0 }}
-                          transition={{ duration: 0.15 }}
-                        >
-                          <Copy size={16} />
-                        </motion.span>
-                      )}
-                    </AnimatePresence>
-                  </button>
-                  <AnimatePresence>
-                    {copied && (
-                      <motion.span
-                        role="status"
-                        aria-live="polite"
-                        initial={{ opacity: 0, y: 4 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 4 }}
-                        transition={{ duration: 0.18 }}
-                        className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-white px-2.5 py-1 text-[11px] font-medium text-ink shadow-lg"
-                      >
-                        Gekopieerd!
-                      </motion.span>
-                    )}
-                  </AnimatePresence>
-                </div>
-              </div>
+              {/* Schedule CTA — TODO: point href at the Calendly/Cal.com link
+                  once the scheduling tool is set up. Falls back to email. */}
+              <a
+                href={`mailto:${site.email}?subject=${encodeURIComponent("Plan een gesprek")}`}
+                className="group mb-4 inline-flex min-h-[48px] items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-ink shadow-glow transition-all duration-200 hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+              >
+                <CalendarDays size={16} aria-hidden />
+                Plan een gesprek
+                <ArrowRight
+                  size={16}
+                  className="transition-transform duration-200 group-hover:translate-x-1"
+                  aria-hidden
+                />
+              </a>
 
               {/* Socials */}
               <div className="mt-10">
                 <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-white/50">
-                  Elsewhere
+                  Socials
                 </p>
                 <div className="flex gap-2">
                   {socials.map((s) => {
@@ -281,6 +223,13 @@ export function Contact() {
                       </a>
                     );
                   })}
+                  <a
+                    href={`mailto:${site.email}`}
+                    aria-label="Stuur me direct een e-mail"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-all duration-200 hover:border-primary/40 hover:bg-white/[0.06] hover:text-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25"
+                  >
+                    <Mail size={18} />
+                  </a>
                 </div>
               </div>
             </Reveal>
