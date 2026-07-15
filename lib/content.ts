@@ -94,15 +94,10 @@ export const bento = {
     { label: "Werkplek", src: "/bento/werkplek.webp", alt: "Tim's werkplek met dubbele monitoren" },
   ],
   education: [
-    { period: "2015 — 2019", degree: "BSc Interaction Design", school: "TU Delft" },
-    { period: "2019 — 2021", degree: "MSc Digital Product Design", school: "Design Academy Eindhoven" },
-    { period: "2022", degree: "UX Research Bootcamp", school: "Nielsen Norman Group" },
-  ],
-  tracks: [
-    { title: "Midnight City", artist: "M83", color: "from-fuchsia-500 to-purple-600" },
-    { title: "Redbone", artist: "Childish Gambino", color: "from-amber-500 to-red-600" },
-    { title: "Nights", artist: "Frank Ocean", color: "from-sky-500 to-indigo-600" },
-    { title: "Weightless", artist: "Marconi Union", color: "from-teal-400 to-emerald-600" },
+    { period: "2018 — 2022", type: "Bachelor", degree: "Communicatie en Multimedia Design", school: "Hogeschool van Amsterdam" },
+    { period: "2021 — 2021", type: "Minor", degree: "Visueel Interface Design", school: "Hogeschool van Amsterdam" },
+    { period: "2014 — 2017", type: "", degree: "Havo diploma (VAVO)", school: "R.O.C. Horizon College" },
+    { period: "2010 — 2014", type: "", degree: "Mavo diploma", school: "Jac. P. Thijsse College" },
   ],
   tools: [
     { label: "Fg", name: "Figma", gradient: "from-purple-500 via-pink-500 to-orange-500" },
@@ -389,9 +384,9 @@ export const experience = [
     location: "Zwaag, Hoorn",
   },
   {
-    role: "Webdesigner",
-    company: "Brickzero",
-    period: "2020",
+    role: "UX Designer stage",
+    company: "Brick Zero",
+    period: "2020 — 2020",
     location: "Castricum",
   },
 ];
