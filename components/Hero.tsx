@@ -7,6 +7,7 @@ import { cn } from "@/lib/cn";
 import { AuroraBackground } from "./AuroraBackground";
 import { Container } from "./ui/Container";
 import { Button } from "./ui/Button";
+import { Typewriter } from "./ui/Typewriter";
 
 export function Hero() {
   const prefersReducedMotion = useReducedMotion();
@@ -56,9 +57,10 @@ export function Hero() {
 
         <motion.h1
           {...rise(0.2)}
-          className="max-w-4xl font-heading text-4xl font-semibold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
+          className="max-w-4xl font-heading text-[2rem] font-semibold leading-[1.15] tracking-tight text-white sm:text-[2.75rem] md:text-[3.5rem] lg:text-[4.25rem]"
         >
-          {site.hero.headline}
+          {site.hero.headlinePrefix}
+          <Typewriter phrases={site.hero.headlineRotating} />
         </motion.h1>
 
         <motion.p

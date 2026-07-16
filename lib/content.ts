@@ -13,7 +13,14 @@ export const site = {
     "I design and build calm, considered digital products — where craft meets clarity.",
   hero: {
     eyebrow: "Freelance · Nederland",
-    headline: "Product designer & developer voor ambitieuze merken.",
+    // The headline ends with a rotating word that types in/out (see Typewriter).
+    // The first phrase is what renders server-side (SEO + no-JS fallback).
+    headlinePrefix: "Digitale product designer voor ",
+    headlineRotating: [
+      "groeiende bedrijven",
+      "ambitieuze merken",
+      "innovatieve startups",
+    ],
     subtitle:
       "Ik ontwerp en bouw conversiegerichte websites, web-apps en merkidentiteiten die je bedrijf laten groeien. Een strak design dat snel is opgeleverd zonder gedoe.",
     primaryCta: { label: "Bekijk mijn werk", href: "#work" },
