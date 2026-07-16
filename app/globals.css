@@ -95,6 +95,21 @@
   border-radius: 9999px;
 }
 
+/* Typewriter caret */
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+.caret-blink {
+  animation: caret-blink 1.1s step-end infinite;
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   html {
