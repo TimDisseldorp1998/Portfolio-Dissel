@@ -26,11 +26,12 @@ export const site = {
     trustedBy: {
       label: "Vertrouwd door teams die echte producten bouwen:",
       logos: [
-        { src: "/logos/1608-logo.svg", alt: "1608", size: "h-5 sm:h-6" },
-        { src: "/logos/airforce-logo.svg", alt: "Airforce", size: "h-10 sm:h-11" },
-        { src: "/logos/dtx-logo.svg", alt: "DTX", size: "h-7 sm:h-8" },
+        { src: "/logos/ziggodome-logo.svg", alt: "Ziggo Dome", size: "h-10 sm:h-11" },
         { src: "/logos/new-edition-logo.svg", alt: "New Edition", size: "h-7 sm:h-8" },
-        { src: "/logos/ziggodome-logo.svg", alt: "Ziggo Dome", size: "h-9 sm:h-10" },
+        { src: "/logos/dtx-logo.svg", alt: "DTX", size: "h-8 sm:h-9" },
+        { src: "/logos/1608-logo.svg", alt: "1608", size: "h-5 sm:h-6" },
+        { src: "/logos/de-stock-logo.svg", alt: "De-Stock", size: "h-3 sm:h-3.5" },
+        { src: "/logos/marktzicht-logo.svg", alt: "Marktzicht", size: "h-5 sm:h-6" },
       ],
     },
   },
