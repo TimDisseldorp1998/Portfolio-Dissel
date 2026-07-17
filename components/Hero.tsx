@@ -57,9 +57,10 @@ export function Hero() {
 
         <motion.h1
           {...rise(0.2)}
-          className="max-w-4xl font-heading text-[2rem] font-semibold leading-[1.15] tracking-tight text-white sm:text-[2.75rem] md:text-[3.5rem] lg:text-[4.25rem]"
+          className="max-w-4xl font-heading text-[2.5rem] font-semibold leading-[1.25] tracking-tight text-white sm:text-[3.25rem] md:text-[4rem] lg:text-[4.75rem]"
         >
           {site.hero.headlinePrefix}
+          <br />
           <Typewriter phrases={site.hero.headlineRotating} />
         </motion.h1>
 

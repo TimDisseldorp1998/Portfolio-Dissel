@@ -15,7 +15,7 @@ export const site = {
     eyebrow: "Freelance · Nederland",
     // The headline ends with a rotating word that types in/out (see Typewriter).
     // The first phrase is what renders server-side (SEO + no-JS fallback).
-    headlinePrefix: "Digitale product designer voor ",
+    headlinePrefix: "Product designer voor ",
     headlineRotating: [
       "groeiende bedrijven",
       "ambitieuze merken",
