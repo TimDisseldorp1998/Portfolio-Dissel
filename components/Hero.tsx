@@ -20,6 +20,14 @@ export function Hero() {
           transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1], delay },
         };
 
+  // Split the fixed prefix into a head ("Digitale product") and its last word
+  // ("designer"). On phones we force the head onto line 1 and the last word +
+  // "voor" onto line 2, so the heading is a stable 3 lines at any phone width
+  // (no orphaned "voor"). From tablet up the prefix sits on one line again.
+  const prefixWords = site.hero.headlinePrefix.trim().split(" ");
+  const prefixLast = prefixWords.pop() ?? "";
+  const prefixHead = prefixWords.join(" ");
+
   return (
     <section
       id="top"
@@ -57,13 +65,14 @@ export function Hero() {
 
         <motion.h1
           {...rise(0.2)}
-          className="min-h-[3.75em] max-w-4xl font-heading text-[1.9375rem] font-semibold leading-[1.25] tracking-tight text-white sm:min-h-0 sm:text-[2.75rem] md:text-[3.25rem] lg:text-[4.25rem]"
+          className="min-h-[3.75em] max-w-4xl font-heading text-[clamp(1.9375rem,8.6vw,2.75rem)] font-semibold leading-[1.25] tracking-tight text-white sm:min-h-0 sm:text-[2.75rem] md:text-[3.25rem] lg:text-[4.25rem]"
         >
-          {site.hero.headlinePrefix}{" "}
-          {/* Break points differ per breakpoint. Phones: prefix + "voor" flow
-              across lines 1-2 and the rotating word gets its own line 3. From
-              tablet up: prefix on line 1, "voor" + word together on line 2.
-              "voor" is fixed text — only the words after it type in and out. */}
+          {/* Phones: 3 lines — "Digitale product" / "designer voor" / word.
+              Tablet+ (sm): 2 lines — "Digitale product designer" / "voor" + word.
+              "voor" is fixed text; only the rotating word types in and out. */}
+          {prefixHead}{" "}
+          <br className="sm:hidden" />
+          {prefixLast}{" "}
           <br className="hidden sm:block" />
           {site.hero.headlineConnector}{" "}
           <br className="sm:hidden" />
