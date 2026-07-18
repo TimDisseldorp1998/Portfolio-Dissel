@@ -12,7 +12,7 @@ export const site = {
   tagline:
     "I design and build calm, considered digital products — where craft meets clarity.",
   hero: {
-    eyebrow: "Freelance · Nederland",
+    eyebrow: "Gevestigd in Noord-Holland",
     // The headline ends with a rotating tail that types in/out (see Typewriter).
     // The first phrase is what renders server-side (SEO + no-JS fallback).
     headlinePrefix: "Digitale product designer",
