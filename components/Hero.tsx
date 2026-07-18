@@ -57,11 +57,19 @@ export function Hero() {
 
         <motion.h1
           {...rise(0.2)}
-          className="max-w-4xl font-heading text-[2.5rem] font-semibold leading-[1.25] tracking-tight text-white sm:text-[3.25rem] md:text-[4rem] lg:text-[4.75rem]"
+          className="min-h-[3.75em] max-w-4xl font-heading text-[1.9375rem] font-semibold leading-[1.25] tracking-tight text-white sm:min-h-0 sm:text-[2.75rem] md:text-[3.25rem] lg:text-[4.25rem]"
         >
-          {site.hero.headlinePrefix}
-          <br />
-          <Typewriter phrases={site.hero.headlineRotating} />
+          {site.hero.headlinePrefix}{" "}
+          {/* Break points differ per breakpoint. Phones: prefix + "voor" flow
+              across lines 1-2 and the rotating word gets its own line 3. From
+              tablet up: prefix on line 1, "voor" + word together on line 2.
+              "voor" is fixed text — only the words after it type in and out. */}
+          <br className="hidden sm:block" />
+          {site.hero.headlineConnector}{" "}
+          <br className="sm:hidden" />
+          <span className="whitespace-nowrap">
+            <Typewriter phrases={site.hero.headlineRotating} />
+          </span>
         </motion.h1>
 
         <motion.p

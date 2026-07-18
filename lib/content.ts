@@ -16,12 +16,15 @@ export const site = {
     // The headline ends with a rotating tail that types in/out (see Typewriter).
     // The first phrase is what renders server-side (SEO + no-JS fallback).
     headlinePrefix: "Digitale product designer",
+    // "voor" is vaste tekst (wordt niet steeds opnieuw getypt); alleen de
+    // woorden erna roteren via de Typewriter.
+    headlineConnector: "voor",
     headlineRotating: [
-      "voor lokale ondernemers",
-      "voor ondernemers in de regio",
+      "lokale ondernemers",
+      "regionale bedrijven",
     ],
     subtitle:
-      "Ik ontwerp en bouw websites voor lokale ondernemers, van huisstijl tot live site. Strak design, snel opgeleverd, zonder gedoe. Met één doel: meer klanten die contact opnemen.",
+      "Ik ontwerp en bouw websites voor lokale ondernemers, van huisstijl tot live site. Strak design, snel opgeleverd, zonder gedoe. Met één doel: meer bezoekers die klant worden.",
     primaryCta: { label: "Bekijk mijn werk", href: "#work" },
     secondaryCta: { label: "Neem contact op", href: "#contact" },
     /**
