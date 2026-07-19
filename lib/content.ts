@@ -261,7 +261,7 @@ export const projects: Project[] = [
   {
     title: "Ziggo Dome",
     description:
-      "Mobile-first herontwerp van de Ziggo Dome-website. De belangrijkste acties liggen onder je duim en de agenda duwt de eerstvolgende events naar voren.",
+      "Mobile-first herontwerp van de Ziggo Dome-website. De belangrijkste acties liggen onder je duim, de agenda vooraan.",
     tags: ["Mobile-first", "UX-research", "Responsive"],
     href: "https://www.ziggodome.nl",
     accent: "mix",
