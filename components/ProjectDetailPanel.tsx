@@ -196,7 +196,7 @@ export function ProjectDetailPanel({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Bekijk de live site van ${project.title} (opent in een nieuw tabblad)`}
-                  className="ml-auto inline-flex h-10 w-10 items-center justify-center rounded-lg border border-secondary bg-secondary-100 text-secondary transition-colors hover:bg-secondary-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-secondary/40"
+                  className="ml-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-colors hover:bg-secondary hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-secondary/40"
                 >
                   <ExternalLink size={18} aria-hidden />
                 </a>
