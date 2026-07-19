@@ -236,7 +236,7 @@ export const projects: Project[] = [
     accent: "mix",
     detail: {
       company: "Ziggo Dome",
-      role: "Mobile-first redesign",
+      role: "Mobile-first",
       year: "2024",
       type: "Web",
       overview:
