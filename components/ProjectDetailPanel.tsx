@@ -251,7 +251,7 @@ export function ProjectDetailPanel({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Bekijk de live site van ${project.title} (opent in een nieuw tabblad)`}
-                  className="flex shrink-0 items-center justify-center gap-2 rounded-xl border border-[color:var(--meta-border)] bg-[color:var(--meta-bg)] px-5 py-3 text-sm font-medium text-white/80 transition-colors hover:border-white/25 hover:bg-white/[0.08] hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+                  className="flex shrink-0 items-center justify-center gap-2 rounded-xl bg-secondary/10 px-5 py-3 text-sm font-medium text-secondary transition-colors hover:bg-secondary hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-secondary/40"
                 >
                   Bekijk live site
                   <ExternalLink size={16} aria-hidden />
