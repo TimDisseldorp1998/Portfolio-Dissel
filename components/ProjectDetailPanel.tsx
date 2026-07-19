@@ -190,7 +190,7 @@ export function ProjectDetailPanel({
             aria-label={`${project.title} afbeeldingen`}
             className="relative -mx-6 md:-mx-10"
           >
-            <div className="relative aspect-[16/10] overflow-hidden bg-black/40">
+            <div className="relative aspect-[4/3] overflow-hidden bg-black/40 md:aspect-[16/10]">
               {detail.slides.map((s, i) => (
                 <div
                   key={s.label}
@@ -216,29 +216,44 @@ export function ProjectDetailPanel({
               {/* Project facts, laid over the top of the image */}
               <dl className="absolute inset-x-0 top-0 flex flex-wrap items-start gap-x-6 gap-y-3 p-5 md:gap-x-10 md:p-6">
                 <div>
-                  <dt className="mb-1 flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.14em] text-white/50 md:text-[11px]">
+                  <dt className="sr-only md:not-sr-only md:mb-1 md:flex md:items-center md:gap-1.5 md:text-[11px] md:font-medium md:uppercase md:tracking-[0.14em] md:text-white/50">
                     <Briefcase size={12} aria-hidden />
                     {detail.role ? "Rol" : "Bedrijf"}
                   </dt>
-                  <dd className="text-sm font-semibold text-white md:text-base">
+                  <dd className="flex items-center gap-1.5 text-sm font-semibold text-white md:text-base">
+                    <Briefcase
+                      size={12}
+                      aria-hidden
+                      className="shrink-0 text-white/50 md:hidden"
+                    />
                     {detail.role ?? detail.company}
                   </dd>
                 </div>
                 <div>
-                  <dt className="mb-1 flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.14em] text-white/50 md:text-[11px]">
+                  <dt className="sr-only md:not-sr-only md:mb-1 md:flex md:items-center md:gap-1.5 md:text-[11px] md:font-medium md:uppercase md:tracking-[0.14em] md:text-white/50">
                     <Calendar size={12} aria-hidden />
                     Jaar
                   </dt>
-                  <dd className="text-sm font-semibold text-white md:text-base">
+                  <dd className="flex items-center gap-1.5 text-sm font-semibold text-white md:text-base">
+                    <Calendar
+                      size={12}
+                      aria-hidden
+                      className="shrink-0 text-white/50 md:hidden"
+                    />
                     {detail.year}
                   </dd>
                 </div>
                 <div>
-                  <dt className="mb-1 flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.14em] text-white/50 md:text-[11px]">
+                  <dt className="sr-only md:not-sr-only md:mb-1 md:flex md:items-center md:gap-1.5 md:text-[11px] md:font-medium md:uppercase md:tracking-[0.14em] md:text-white/50">
                     <MonitorSmartphone size={12} aria-hidden />
                     Type
                   </dt>
-                  <dd>
+                  <dd className="flex items-center gap-1.5">
+                    <MonitorSmartphone
+                      size={12}
+                      aria-hidden
+                      className="shrink-0 text-white/50 md:hidden"
+                    />
                     <span className="inline-flex items-center rounded-full border border-white/40 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-white md:text-sm">
                       {detail.type}
                     </span>
