@@ -129,12 +129,20 @@ export const bento = {
  * Contribution bullets are split into `lead` (the action, rendered bold for
  * scannability) and `rest` — keep the lead to the first 3–5 words.
  */
+export type CaseSection = { heading: string; paragraphs: string[] };
+
 export type ProjectDetail = {
   company: string;
+  /** What I did — shown as "Rol" in the meta bar instead of the company name
+   *  (which already appears as the drawer title). Falls back to `company`. */
+  role?: string;
   year: string;
   type: string;
   overview: string;
-  contribution: { lead: string; rest: string }[];
+  /** Full prose case (challenge / approach / result …). When present, the
+   *  panel renders these sections instead of the contribution bullets. */
+  body?: CaseSection[];
+  contribution?: { lead: string; rest: string }[];
   slides: { label: string; gradient: string }[];
   /** Award link (e.g. Awwwards). Omit for projects without honors. */
   award?: { label: string; href: string };
@@ -153,191 +161,300 @@ export const projects: Project[] = [
   {
     title: "Northwind Studio",
     description:
-      "A brand & product refresh for a design studio — identity, site, and product surfaces.",
+      "Merk- en productvernieuwing voor een designstudio: nieuwe identiteit, website en productschermen.",
     tags: ["Branding", "Web", "Motion"],
     href: "#",
     accent: "primary",
     detail: {
       company: "Northwind",
+      role: "Merkidentiteit",
       year: "2025",
       type: "Branding",
       overview:
-        "A full brand and product refresh for a design studio — from a new identity system to the marketing site and product surfaces that carry it.",
-      contribution: [
+        "Een volledige merk- en productvernieuwing voor een designstudio, van een nieuw identiteitssysteem tot de website en productschermen die het dragen.",
+      body: [
         {
-          lead: "Led the identity redesign",
-          rest: " across logo, typography, and a flexible color system that scales from print to product.",
+          heading: "De uitdaging",
+          paragraphs: [
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+          ],
         },
         {
-          lead: "Designed and built",
-          rest: " the new marketing site in Next.js with a motion language that echoes the brand.",
+          heading: "De aanpak",
+          paragraphs: [
+            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.",
+          ],
         },
         {
-          lead: "Documented the design system",
-          rest: " so the in-house team could extend it without agency support.",
+          heading: "Het resultaat",
+          paragraphs: [
+            "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos.",
+          ],
+        },
+        {
+          heading: "Zelf zoiets?",
+          paragraphs: [
+            "Loopt jouw project ergens vast? Vertel me erover, dan kijk ik met je mee. Een vrijblijvend gesprek is zo gepland.",
+          ],
         },
       ],
       slides: [
-        { label: "Identity", gradient: "from-primary/70 via-primary-700/50 to-[#8E5CE0]/60" },
+        { label: "Identiteit", gradient: "from-primary/70 via-primary-700/50 to-[#8E5CE0]/60" },
         { label: "Website", gradient: "from-[#8E5CE0]/60 via-primary/40 to-primary-800" },
-        { label: "Product UI", gradient: "from-primary-400/60 via-[#8E5CE0]/40 to-primary-900" },
+        { label: "Product-UI", gradient: "from-primary-400/60 via-[#8E5CE0]/40 to-primary-900" },
       ],
-      award: { label: "Awwwards Honors", href: "https://www.awwwards.com/" },
     },
   },
   {
     title: "Lumen Health",
     description:
-      "Consumer health platform — end-to-end design and front-end architecture.",
+      "Gezondheidsapp voor consumenten: van eerste ontwerp tot front-end architectuur.",
     tags: ["Product", "React", "Design System"],
     href: "#",
     accent: "secondary",
     detail: {
       company: "Lumen Health",
+      role: "Product design",
       year: "2024",
       type: "Mobile",
       overview:
-        "An end-to-end consumer health platform: appointment booking, medication tracking, and care-team chat in one calm, accessible app.",
-      contribution: [
+        "Een gezondheidsapp voor consumenten: afspraken maken, medicatie bijhouden en contact met je zorgteam in één rustige, toegankelijke app.",
+      body: [
         {
-          lead: "Partnered with the care team",
-          rest: " to map the patient journey and cut the booking flow from nine steps to four.",
+          heading: "De uitdaging",
+          paragraphs: [
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+          ],
         },
         {
-          lead: "Owned the design system",
-          rest: " — tokens, components, and accessibility patterns used across iOS, Android, and web.",
+          heading: "De aanpak",
+          paragraphs: [
+            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.",
+          ],
         },
         {
-          lead: "Prototyped and user-tested",
-          rest: " the medication reminders feature with 24 patients across three rounds.",
+          heading: "Het resultaat",
+          paragraphs: [
+            "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos.",
+          ],
+        },
+        {
+          heading: "Zelf zoiets?",
+          paragraphs: [
+            "Loopt jouw project ergens vast? Vertel me erover, dan kijk ik met je mee. Een vrijblijvend gesprek is zo gepland.",
+          ],
         },
       ],
       slides: [
         { label: "Onboarding", gradient: "from-secondary/70 via-secondary-700/50 to-primary-900" },
-        { label: "Booking flow", gradient: "from-secondary-400/60 via-secondary/40 to-[#8E5CE0]/50" },
-        { label: "Care chat", gradient: "from-primary/50 via-secondary/50 to-secondary-800" },
+        { label: "Boekingsflow", gradient: "from-secondary-400/60 via-secondary/40 to-[#8E5CE0]/50" },
+        { label: "Zorg-chat", gradient: "from-primary/50 via-secondary/50 to-secondary-800" },
       ],
     },
   },
   {
-    title: "Aperture OS",
+    title: "Ziggo Dome",
     description:
-      "Marketing site and product dashboard for a developer-tools startup.",
-    tags: ["Next.js", "Marketing", "Dashboard"],
-    href: "#",
+      "Mobile-first herontwerp van de Ziggo Dome-website — gebouwd rond de duim, met een agenda die de eerstvolgende events naar voren duwt en een interactieve 3D-plattegrond.",
+    tags: ["Mobile-first", "UX-research", "Responsive"],
+    href: "https://www.ziggodome.nl",
     accent: "mix",
     detail: {
-      company: "Aperture",
+      company: "Ziggo Dome",
+      role: "Mobile-first",
       year: "2024",
       type: "Web",
       overview:
-        "Marketing site and product dashboard for a developer-tools startup — one visual language from the first landing-page visit to daily dashboard use.",
-      contribution: [
+        "77% van de bezoekers kwam binnen op een telefoon. De site kwam uit 2015, werd in 2020 nog uitgeroepen tot beste website van het jaar, maar was nooit voor die telefoon gebouwd. Dat verschil los je niet op met een likje verf. Ik pakte de Ziggo Dome website aan als een compleet mobile-first website redesign: opnieuw opgebouwd vanaf het scherm waar de meeste mensen echt op zitten.",
+      body: [
         {
-          lead: "Designed the marketing site",
-          rest: " with a component library shared 1:1 with the product dashboard.",
+          heading: "De uitdaging",
+          paragraphs: [
+            "Een geliefde site die stilletjes veroudert. De techniek onder de motorkap liep achter, features haperden, de laadtijd zakte weg. En al die tijd groeide het mobiele verkeer door op een fundament dat daar niet op was berekend.",
+            "De doelgroep maakte het scherper. De grootste groep zit tussen de 25 en 34, maar het opvallende was dat écht elke leeftijd op mobiel binnenkwam, tot de oudere bezoeker aan toe. Geen kleine niche om voor te ontwerpen, wel de meerderheid. Dus daar begon het.",
+          ],
         },
         {
-          lead: "Built interactive demos",
-          rest: " that let visitors try the core product without signing up.",
+          heading: "De aanpak",
+          paragraphs: [
+            "Eerst luisteren. Ik sprak met medewerkers, met de organisatie en met bezoekers die maandelijks of jaarlijks kaarten kopen. Daaruit kwamen de keuzes die het redesign sturen.",
+            "Mobile-first, letterlijk vanaf de duim. In tien jaar zijn telefoonschermen verdubbeld, waardoor de bovenkant onbereikbaar werd zonder je hand te verleggen. Ik verplaatste de belangrijkste acties naar een bottom-navigatie, binnen de zone die je duim moeiteloos haalt. De secundaire dingen schoven naar boven. Navigeren voelt daardoor rustig in één hand.",
+            "De agenda werd het hart van de site. Events komen prominenter op de homepage, de eventpagina's zijn persoonlijker. Daaromheen een interface in de stijl van Netflix en Videoland: grote beelden die overgaan in video, dynamic scrolling, card-transitions, dark mode en micro-interacties die precies laten zien dat je actie is aangekomen. Geen los opgeplakte trends, wel bewegingen die de flow soepeler maken.",
+            "Voor bezoekers die de zaal nog niet kennen bouwde ik een interactieve 3D-plattegrond. Drie verdiepingen, met gestures door de Ziggo Dome heen, van de begane grond tot het uitzicht vanaf de tribune op het podium. Rondkijken voordat je een kaartje koopt.",
+            "Wireframes toetste ik wekelijks met de developers van Touch Creative, zodat elke keuze ook echt te bouwen was. Alle regels legde ik vast in een styleguide: kleuren, typografie, iconen, knoppen en hun hover-states, de micro-animaties. Eén document waar het team zonder ruis mee verder kon. Responsive was daarbij geen sluitstuk maar het uitgangspunt: consistent en bruikbaar op elk formaat.",
+          ],
         },
         {
-          lead: "Improved dashboard information density",
-          rest: " based on session recordings and power-user interviews.",
+          heading: "Het resultaat",
+          paragraphs: [
+            "Een site die doet wat de bezoeker verwacht op de plek waar hij hem gebruikt. De belangrijkste acties liggen onder je duim, de agenda duwt de eerstvolgende events naar voren en de 3D-plattegrond laat je binnenlopen voordat je koopt. Waar de oude site tegenwerkte op mobiel, werkt deze mee.",
+          ],
+        },
+        {
+          heading: "Zelf zoiets?",
+          paragraphs: [
+            "Loopt jouw site achter op je bezoekers? Vertel me over je project, dan kijk ik met je mee. Een vrijblijvend gesprek is zo gepland.",
+          ],
         },
       ],
       slides: [
-        { label: "Landing", gradient: "from-primary/60 via-[#8E5CE0]/50 to-secondary/50" },
-        { label: "Dashboard", gradient: "from-primary-800 via-primary/40 to-secondary/40" },
-        { label: "Docs", gradient: "from-[#8E5CE0]/50 via-primary-700/40 to-primary/60" },
+        { label: "Mobile-first home", gradient: "from-primary/60 via-[#8E5CE0]/50 to-secondary/50" },
+        { label: "Bottom-navigatie", gradient: "from-primary-800 via-primary/40 to-secondary/40" },
+        { label: "Agenda", gradient: "from-[#8E5CE0]/50 via-primary-700/40 to-primary/60" },
+        { label: "3D-plattegrond", gradient: "from-primary/50 via-[#8E5CE0]/40 to-secondary/50" },
       ],
-      award: { label: "Awwwards Honors", href: "https://www.awwwards.com/" },
     },
   },
   {
     title: "Field Notes",
     description:
-      "A minimal writing app for research teams. Real-time editing, offline-first.",
+      "Minimalistische schrijf-app voor onderzoeksteams. Realtime en offline-first.",
     tags: ["App", "SaaS", "Realtime"],
     href: "#",
     accent: "primary",
     detail: {
       company: "Field Notes",
+      role: "App-ontwerp",
       year: "2023",
       type: "SaaS",
       overview:
-        "A minimal, offline-first writing app for research teams — real-time collaboration without the visual noise of a full document suite.",
-      contribution: [
+        "Een minimalistische, offline-first schrijf-app voor onderzoeksteams, met realtime samenwerken zonder de visuele ruis van een volledige tekstverwerker.",
+      body: [
         {
-          lead: "Defined the product principles",
-          rest: " with the founders: calm by default, keyboard-first, zero modal dialogs.",
+          heading: "De uitdaging",
+          paragraphs: [
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+          ],
         },
         {
-          lead: "Designed the editor experience",
-          rest: " including presence, comments, and conflict-free offline merging.",
+          heading: "De aanpak",
+          paragraphs: [
+            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.",
+          ],
+        },
+        {
+          heading: "Het resultaat",
+          paragraphs: [
+            "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos.",
+          ],
+        },
+        {
+          heading: "Zelf zoiets?",
+          paragraphs: [
+            "Loopt jouw project ergens vast? Vertel me erover, dan kijk ik met je mee. Een vrijblijvend gesprek is zo gepland.",
+          ],
         },
       ],
       slides: [
         { label: "Editor", gradient: "from-primary/60 via-primary-800 to-[#8E5CE0]/40" },
-        { label: "Presence", gradient: "from-primary-400/50 via-primary/30 to-primary-900" },
+        { label: "Aanwezigheid", gradient: "from-primary-400/50 via-primary/30 to-primary-900" },
       ],
     },
   },
   {
     title: "Kiln Coffee",
     description:
-      "E-commerce experience for a specialty roaster, focused on story and craft.",
+      "E-commerce voor een speciality-branderij, gebouwd rond verhaal en vakmanschap.",
     tags: ["E-commerce", "Shopify", "Brand"],
     href: "#",
     accent: "secondary",
     detail: {
       company: "Kiln",
+      role: "E-commerce design",
       year: "2023",
       type: "E-commerce",
       overview:
-        "A storytelling-first e-commerce experience for a specialty roaster — every bag of beans gets the origin story it deserves.",
-      contribution: [
+        "Een e-commerce-ervaring waarin het verhaal vooropstaat: elke zak bonen krijgt de herkomst en het vakmanschap dat hij verdient.",
+      body: [
         {
-          lead: "Reworked the product pages",
-          rest: " around origin stories, brewing guides, and tasting notes instead of specs.",
+          heading: "De uitdaging",
+          paragraphs: [
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+          ],
         },
         {
-          lead: "Designed a subscription flow",
-          rest: " that lifted repeat purchases by 28% in the first quarter.",
+          heading: "De aanpak",
+          paragraphs: [
+            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.",
+          ],
+        },
+        {
+          heading: "Het resultaat",
+          paragraphs: [
+            "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos.",
+          ],
+        },
+        {
+          heading: "Zelf zoiets?",
+          paragraphs: [
+            "Loopt jouw project ergens vast? Vertel me erover, dan kijk ik met je mee. Een vrijblijvend gesprek is zo gepland.",
+          ],
         },
       ],
       slides: [
-        { label: "Product page", gradient: "from-secondary/70 via-secondary-800 to-primary-900" },
-        { label: "Subscription", gradient: "from-secondary-400/60 via-secondary/30 to-[#8E5CE0]/40" },
+        { label: "Productpagina", gradient: "from-secondary/70 via-secondary-800 to-primary-900" },
+        { label: "Abonnement", gradient: "from-secondary-400/60 via-secondary/30 to-[#8E5CE0]/40" },
       ],
     },
   },
   {
     title: "Orbit Analytics",
     description:
-      "Data visualization surfaces for a growth analytics platform.",
+      "Datavisualisatie voor een groei-analyseplatform.",
     tags: ["Data Viz", "Product", "TypeScript"],
     href: "#",
     accent: "mix",
     detail: {
       company: "Orbit",
+      role: "Data-visualisatie",
       year: "2022",
       type: "Web",
       overview:
-        "Data-visualization surfaces for a growth analytics platform — dashboards that surface the story in the numbers, not just the numbers.",
-      contribution: [
+        "Datavisualisatie-schermen voor een groei-analyseplatform: dashboards die het verhaal achter de cijfers laten zien, niet alleen de cijfers.",
+      body: [
         {
-          lead: "Designed the charting language",
-          rest: " — a consistent visual grammar for twelve chart types across the product.",
+          heading: "De uitdaging",
+          paragraphs: [
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+          ],
         },
         {
-          lead: "Paired with engineers",
-          rest: " to build a TypeScript chart kit with theming and reduced-motion support.",
+          heading: "De aanpak",
+          paragraphs: [
+            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.",
+          ],
+        },
+        {
+          heading: "Het resultaat",
+          paragraphs: [
+            "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos.",
+          ],
+        },
+        {
+          heading: "Zelf zoiets?",
+          paragraphs: [
+            "Loopt jouw project ergens vast? Vertel me erover, dan kijk ik met je mee. Een vrijblijvend gesprek is zo gepland.",
+          ],
         },
       ],
       slides: [
         { label: "Dashboards", gradient: "from-primary/50 via-[#8E5CE0]/40 to-secondary/50" },
-        { label: "Chart kit", gradient: "from-secondary/50 via-primary-700/40 to-primary/50" },
+        { label: "Grafiek-kit", gradient: "from-secondary/50 via-primary-700/40 to-primary/50" },
       ],
     },
   },

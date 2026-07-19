@@ -9,16 +9,19 @@ import {
 } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import {
+  ArrowRight,
   Award,
   Briefcase,
   Calendar,
   ChevronLeft,
   ChevronRight,
+  ExternalLink,
   MonitorSmartphone,
   X,
 } from "lucide-react";
 import type { Project } from "@/lib/content";
 import { cn } from "@/lib/cn";
+import { Button } from "./ui/Button";
 
 /**
  * Shared design tokens for every project popup (spec: consistency).
@@ -30,7 +33,7 @@ const panelTokens = {
   "--panel-border": "rgba(255,255,255,0.10)",
   "--meta-bg": "rgba(255,255,255,0.04)",
   "--meta-border": "rgba(255,255,255,0.08)",
-  "--meta-label": "rgba(255,255,255,0.45)",
+  "--meta-label": "rgba(255,255,255,0.6)",
   "--meta-value": "rgba(255,255,255,0.92)",
   "--meta-pill-text": "#B79FFF",
   "--meta-pill-border": "rgba(142,92,224,0.55)",
@@ -141,7 +144,7 @@ export function ProjectDetailPanel({
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: prefersReducedMotion ? 0 : 48 }}
         transition={{ duration: 0.2, ease: "easeOut" }}
-        className="absolute inset-y-0 right-0 flex w-full flex-col border-l border-[color:var(--panel-border)] bg-[color:var(--panel-bg)] text-white sm:max-w-[640px] sm:rounded-l-[var(--panel-radius)]"
+        className="absolute inset-y-0 right-0 flex w-full flex-col border-l border-[color:var(--panel-border)] bg-[color:var(--panel-bg)] text-white md:w-1/2"
       >
         <div
           ref={scrollRef}
@@ -160,56 +163,111 @@ export function ProjectDetailPanel({
               ref={closeButtonRef}
               type="button"
               onClick={onClose}
-              aria-label="Close project details"
-              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/[0.08] hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+              aria-label="Sluit projectdetails"
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] text-white/90 transition-colors hover:bg-white/[0.08] hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30 xl:border-transparent xl:bg-transparent xl:text-white/70"
             >
               <X size={20} />
             </button>
           </div>
 
-          {/* Project facts bar */}
-          <dl className="mb-8 flex flex-wrap items-stretch gap-x-8 gap-y-4 rounded-xl border border-[color:var(--meta-border)] bg-[color:var(--meta-bg)] px-5 py-3.5">
-            <div>
-              <dt className="mb-1 flex items-center gap-1.5 text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-[color:var(--meta-label)]">
-                <Briefcase size={14} aria-hidden />
-                Company
-              </dt>
-              <dd className="text-base font-semibold text-[color:var(--meta-value)]">
-                {detail.company}
-              </dd>
-            </div>
-            <div aria-hidden className="hidden w-px self-stretch bg-[color:var(--meta-border)] sm:block" />
-            <div>
-              <dt className="mb-1 flex items-center gap-1.5 text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-[color:var(--meta-label)]">
-                <Calendar size={14} aria-hidden />
-                Year
-              </dt>
-              <dd className="text-base font-semibold text-[color:var(--meta-value)]">
+          {/* Meta — compact values on phone/tablet, labelled box on desktop (xl+) */}
+          <div className="mb-5">
+            {/* Phone + tablet: values only, no labels/icons, live-site icon at the edge */}
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm xl:hidden">
+              <span className="font-medium text-[color:var(--meta-value)]">
+                {detail.role ?? detail.company}
+              </span>
+              <span aria-hidden className="text-white/25">
+                ·
+              </span>
+              <span className="font-medium text-[color:var(--meta-value)]">
                 {detail.year}
-              </dd>
+              </span>
+              <span aria-hidden className="text-white/25">
+                ·
+              </span>
+              <span className="inline-flex items-center rounded-full border border-[color:var(--meta-pill-border)] px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-[color:var(--meta-pill-text)]">
+                {detail.type}
+              </span>
+
+              {project.href && project.href !== "#" && (
+                <a
+                  href={project.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Bekijk de live site van ${project.title} (opent in een nieuw tabblad)`}
+                  className="ml-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-colors hover:bg-secondary hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-secondary/40"
+                >
+                  <ExternalLink size={18} aria-hidden />
+                </a>
+              )}
             </div>
-            <div aria-hidden className="hidden w-px self-stretch bg-[color:var(--meta-border)] sm:block" />
-            <div>
-              <dt className="mb-1 flex items-center gap-1.5 text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-[color:var(--meta-label)]">
-                <MonitorSmartphone size={14} aria-hidden />
-                Type
-              </dt>
-              <dd>
-                <span className="inline-flex items-center rounded-full border border-[color:var(--meta-pill-border)] px-3 py-0.5 text-sm font-semibold uppercase tracking-wide text-[color:var(--meta-pill-text)]">
-                  {detail.type}
-                </span>
-              </dd>
+
+            {/* Desktop: labelled facts box (icons + labels + subtle bg) + live-site button */}
+            <div className="hidden items-stretch gap-3 xl:flex">
+              <dl className="flex flex-1 flex-wrap items-center gap-x-8 gap-y-3 rounded-xl border border-[color:var(--meta-border)] bg-[color:var(--meta-bg)] px-5 py-3">
+                <div>
+                  <dt className="mb-1 flex items-center gap-1.5 text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-[color:var(--meta-label)]">
+                    <Briefcase size={13} aria-hidden />
+                    {detail.role ? "Rol" : "Bedrijf"}
+                  </dt>
+                  <dd className="text-base font-semibold text-[color:var(--meta-value)]">
+                    {detail.role ?? detail.company}
+                  </dd>
+                </div>
+                <div
+                  aria-hidden
+                  className="w-px self-stretch bg-[color:var(--meta-border)]"
+                />
+                <div>
+                  <dt className="mb-1 flex items-center gap-1.5 text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-[color:var(--meta-label)]">
+                    <Calendar size={13} aria-hidden />
+                    Jaar
+                  </dt>
+                  <dd className="text-base font-semibold text-[color:var(--meta-value)]">
+                    {detail.year}
+                  </dd>
+                </div>
+                <div
+                  aria-hidden
+                  className="w-px self-stretch bg-[color:var(--meta-border)]"
+                />
+                <div>
+                  <dt className="mb-1 flex items-center gap-1.5 text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-[color:var(--meta-label)]">
+                    <MonitorSmartphone size={13} aria-hidden />
+                    Type
+                  </dt>
+                  <dd>
+                    <span className="inline-flex items-center rounded-full border border-[color:var(--meta-pill-border)] px-3 py-0.5 text-sm font-semibold uppercase tracking-wide text-[color:var(--meta-pill-text)]">
+                      {detail.type}
+                    </span>
+                  </dd>
+                </div>
+              </dl>
+
+              {project.href && project.href !== "#" && (
+                <a
+                  href={project.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Bekijk de live site van ${project.title} (opent in een nieuw tabblad)`}
+                  className="flex shrink-0 items-center justify-center gap-2 rounded-xl bg-secondary/10 px-5 py-3 text-sm font-medium text-secondary transition-colors hover:bg-secondary hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-secondary/40"
+                >
+                  Bekijk live site
+                  <ExternalLink size={16} aria-hidden />
+                </a>
+              )}
             </div>
-          </dl>
+          </div>
 
           {/* Carousel */}
           <div
             role="group"
             aria-roledescription="carousel"
-            aria-label={`${project.title} images`}
-            className="relative overflow-hidden rounded-2xl"
+            aria-label={`${project.title} afbeeldingen`}
+            className="relative"
           >
-            <div className="relative aspect-[16/10] bg-black/40">
+            <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-black/40">
               {detail.slides.map((s, i) => (
                 <div
                   key={s.label}
@@ -246,7 +304,7 @@ export function ProjectDetailPanel({
                   <button
                     type="button"
                     onClick={prevSlide}
-                    aria-label="Previous image"
+                    aria-label="Vorige afbeelding"
                     className="absolute left-3 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/55 text-white transition-colors hover:bg-black/80 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
                   >
                     <ChevronLeft size={20} />
@@ -254,7 +312,7 @@ export function ProjectDetailPanel({
                   <button
                     type="button"
                     onClick={nextSlide}
-                    aria-label="Next image"
+                    aria-label="Volgende afbeelding"
                     className="absolute right-3 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/55 text-white transition-colors hover:bg-black/80 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
                   >
                     <ChevronRight size={20} />
@@ -270,7 +328,7 @@ export function ProjectDetailPanel({
                     key={s.label}
                     type="button"
                     onClick={() => setSlide(i)}
-                    aria-label={`Go to image ${i + 1} of ${slideCount}`}
+                    aria-label={`Ga naar afbeelding ${i + 1} van ${slideCount}`}
                     aria-current={i === slide || undefined}
                     className={cn(
                       "h-2 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
@@ -286,37 +344,57 @@ export function ProjectDetailPanel({
 
           {/* Overview */}
           <div className="mt-8">
-            <h3 className="mb-3 text-xs font-medium uppercase tracking-[0.22em] text-white/45">
-              Overview
+            <h3 className="mb-3 text-xs font-medium uppercase tracking-[0.22em] text-white/60">
+              Overzicht
             </h3>
-            <p className="leading-relaxed text-white/75">{detail.overview}</p>
+            <p className="max-w-[68ch] leading-relaxed text-white/75">
+              {detail.overview}
+            </p>
           </div>
 
-          {/* Contribution — bold lead for scannability */}
-          <div className="mt-8">
-            <h3 className="mb-3 text-xs font-medium uppercase tracking-[0.22em] text-white/45">
-              My contribution
-            </h3>
-            <ul className="space-y-3">
-              {detail.contribution.map((c) => (
-                <li
-                  key={c.lead}
-                  className="flex gap-3 text-sm leading-relaxed text-white/65"
-                >
-                  <span
-                    aria-hidden
-                    className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
-                  />
-                  <p>
-                    <strong className="font-semibold text-white/90">
-                      {c.lead}
-                    </strong>
-                    {c.rest}
+          {/* Full case sections (challenge / approach / result …), when present */}
+          {detail.body?.map((section) => (
+            <div key={section.heading} className="mt-8">
+              <h3 className="mb-3 text-xs font-medium uppercase tracking-[0.22em] text-white/60">
+                {section.heading}
+              </h3>
+              <div className="max-w-[68ch] space-y-4">
+                {section.paragraphs.map((p, i) => (
+                  <p key={i} className="leading-relaxed text-white/75">
+                    {p}
                   </p>
-                </li>
-              ))}
-            </ul>
-          </div>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          {/* Contribution bullets — only when there's no full case body */}
+          {!detail.body && detail.contribution && (
+            <div className="mt-8">
+              <h3 className="mb-3 text-xs font-medium uppercase tracking-[0.22em] text-white/60">
+                Mijn bijdrage
+              </h3>
+              <ul className="max-w-[68ch] space-y-3">
+                {detail.contribution.map((c) => (
+                  <li
+                    key={c.lead}
+                    className="flex gap-3 text-sm leading-relaxed text-white/65"
+                  >
+                    <span
+                      aria-hidden
+                      className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
+                    />
+                    <p>
+                      <strong className="font-semibold text-white/90">
+                        {c.lead}
+                      </strong>
+                      {c.rest}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <div className="mt-6 flex flex-wrap gap-1.5 pb-4">
             {project.tags.map((t) => (
@@ -327,6 +405,33 @@ export function ProjectDetailPanel({
                 {t}
               </span>
             ))}
+          </div>
+
+          {/* Contact CTA — closes the drawer, then lands the visitor on the form */}
+          <div className="mt-12 border-t border-white/10 pt-8">
+            <h3 className="font-heading text-xl font-semibold text-white">
+              Zoiets voor jou?
+            </h3>
+            <Button
+              href="#contact-form"
+              onClick={(e) => {
+                e.preventDefault();
+                onClose();
+                // Wait for the drawer to close (exit anim + body-scroll unlock),
+                // then scroll the form into view (respects its scroll-mt-24).
+                window.setTimeout(() => {
+                  document
+                    .getElementById("contact-form")
+                    ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }, 320);
+              }}
+              variant="primary"
+              size="lg"
+              className="mt-5"
+            >
+              Plan een kennismaking
+              <ArrowRight size={18} />
+            </Button>
           </div>
 
           {/* Scroll affordance — fades out at scroll end */}
