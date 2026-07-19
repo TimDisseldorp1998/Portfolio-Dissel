@@ -80,12 +80,12 @@ export const about = {
 export const bento = {
   intro: {
     title:
-      "Creatieve digitale product designer met een oog voor detail — ik ontwerp en bouw producten die net zo goed presteren als ze eruitzien.",
+      "Creatieve digitale product designer met een oog voor detail. Ik ontwerp en bouw producten die net zo goed presteren als ze eruitzien.",
     resumeHref: "#",
   },
   background: {
     paragraphs: [
-      "Opgegroeid in Amsterdam, altijd al gefascineerd door de kruising tussen esthetiek en engineering — mijn vader was fotograaf, mijn moeder marketeer.",
+      "Opgegroeid in Amsterdam, altijd al gefascineerd door de kruising tussen esthetiek en engineering. Mijn vader was fotograaf, mijn moeder marketeer.",
       "Ik studeerde Interaction Design en spendeerde de laatste jaren tussen product-teams en freelance-projecten, altijd zoekend naar dat detail dat een interface écht laat resoneren.",
     ],
   },
@@ -261,7 +261,7 @@ export const projects: Project[] = [
   {
     title: "Ziggo Dome",
     description:
-      "Mobile-first herontwerp van de Ziggo Dome-website — gebouwd rond de duim, met een agenda die de eerstvolgende events naar voren duwt en een interactieve 3D-plattegrond.",
+      "Mobile-first herontwerp van de Ziggo Dome-website. Gebouwd rond de duim, met een agenda die de eerstvolgende events naar voren duwt en een interactieve 3D-plattegrond.",
     tags: ["Mobile-first", "UX-research", "Responsive"],
     href: "https://www.ziggodome.nl",
     accent: "mix",
