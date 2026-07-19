@@ -164,7 +164,7 @@ export function ProjectDetailPanel({
               type="button"
               onClick={onClose}
               aria-label="Sluit projectdetails"
-              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/[0.08] hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] text-white/90 transition-colors hover:bg-white/[0.08] hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30 xl:border-transparent xl:bg-transparent xl:text-white/70"
             >
               <X size={20} />
             </button>
@@ -196,7 +196,7 @@ export function ProjectDetailPanel({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Bekijk de live site van ${project.title} (opent in een nieuw tabblad)`}
-                  className="ml-auto inline-flex h-10 w-10 items-center justify-center rounded-lg text-white/55 transition-colors hover:bg-white/[0.08] hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+                  className="ml-auto inline-flex h-10 w-10 items-center justify-center rounded-lg border border-secondary bg-secondary-100 text-secondary transition-colors hover:bg-secondary-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-secondary/40"
                 >
                   <ExternalLink size={18} aria-hidden />
                 </a>
