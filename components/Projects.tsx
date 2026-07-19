@@ -45,16 +45,16 @@ export function Projects() {
           <div className="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <div>
               <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-primary">
-                Selected work
+                Geselecteerd werk
               </p>
               <h2 className="max-w-2xl font-heading text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-5xl">
-                A few things I&apos;ve had the pleasure of{" "}
-                <span className="text-gradient">making</span>.
+                Een paar dingen die ik met plezier heb{" "}
+                <span className="text-gradient">gemaakt</span>.
               </h2>
             </div>
             <p className="max-w-sm text-sm leading-relaxed text-white/60">
-              A short selection — reach out for the full case studies and the
-              stories behind each one.
+              Een korte selectie — vraag gerust naar de volledige cases en de
+              verhalen erachter.
             </p>
           </div>
         </Reveal>
