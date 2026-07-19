@@ -11,9 +11,12 @@ import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   Award,
+  Briefcase,
+  Calendar,
   ChevronLeft,
   ChevronRight,
   ExternalLink,
+  MonitorSmartphone,
   X,
 } from "lucide-react";
 import type { Project } from "@/lib/content";
@@ -167,35 +170,94 @@ export function ProjectDetailPanel({
             </button>
           </div>
 
-          {/* Compact meta line: values only (no labels/icons), live-site icon at the trailing edge */}
-          <div className="mb-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
-            <span className="font-medium text-[color:var(--meta-value)]">
-              {detail.role ?? detail.company}
-            </span>
-            <span aria-hidden className="text-white/25">
-              ·
-            </span>
-            <span className="font-medium text-[color:var(--meta-value)]">
-              {detail.year}
-            </span>
-            <span aria-hidden className="text-white/25">
-              ·
-            </span>
-            <span className="inline-flex items-center rounded-full border border-[color:var(--meta-pill-border)] px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-[color:var(--meta-pill-text)]">
-              {detail.type}
-            </span>
+          {/* Meta — compact values on phone/tablet, labelled box on desktop (xl+) */}
+          <div className="mb-5">
+            {/* Phone + tablet: values only, no labels/icons, live-site icon at the edge */}
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm xl:hidden">
+              <span className="font-medium text-[color:var(--meta-value)]">
+                {detail.role ?? detail.company}
+              </span>
+              <span aria-hidden className="text-white/25">
+                ·
+              </span>
+              <span className="font-medium text-[color:var(--meta-value)]">
+                {detail.year}
+              </span>
+              <span aria-hidden className="text-white/25">
+                ·
+              </span>
+              <span className="inline-flex items-center rounded-full border border-[color:var(--meta-pill-border)] px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-[color:var(--meta-pill-text)]">
+                {detail.type}
+              </span>
 
-            {project.href && project.href !== "#" && (
-              <a
-                href={project.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Bekijk de live site van ${project.title} (opent in een nieuw tabblad)`}
-                className="ml-auto inline-flex h-10 w-10 items-center justify-center rounded-lg text-white/55 transition-colors hover:bg-white/[0.08] hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
-              >
-                <ExternalLink size={18} aria-hidden />
-              </a>
-            )}
+              {project.href && project.href !== "#" && (
+                <a
+                  href={project.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Bekijk de live site van ${project.title} (opent in een nieuw tabblad)`}
+                  className="ml-auto inline-flex h-10 w-10 items-center justify-center rounded-lg text-white/55 transition-colors hover:bg-white/[0.08] hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+                >
+                  <ExternalLink size={18} aria-hidden />
+                </a>
+              )}
+            </div>
+
+            {/* Desktop: labelled facts box (icons + labels + subtle bg) + live-site button */}
+            <div className="hidden items-stretch gap-3 xl:flex">
+              <dl className="flex flex-1 flex-wrap items-center gap-x-8 gap-y-3 rounded-xl border border-[color:var(--meta-border)] bg-[color:var(--meta-bg)] px-5 py-3">
+                <div>
+                  <dt className="mb-1 flex items-center gap-1.5 text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-[color:var(--meta-label)]">
+                    <Briefcase size={13} aria-hidden />
+                    {detail.role ? "Rol" : "Bedrijf"}
+                  </dt>
+                  <dd className="text-base font-semibold text-[color:var(--meta-value)]">
+                    {detail.role ?? detail.company}
+                  </dd>
+                </div>
+                <div
+                  aria-hidden
+                  className="w-px self-stretch bg-[color:var(--meta-border)]"
+                />
+                <div>
+                  <dt className="mb-1 flex items-center gap-1.5 text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-[color:var(--meta-label)]">
+                    <Calendar size={13} aria-hidden />
+                    Jaar
+                  </dt>
+                  <dd className="text-base font-semibold text-[color:var(--meta-value)]">
+                    {detail.year}
+                  </dd>
+                </div>
+                <div
+                  aria-hidden
+                  className="w-px self-stretch bg-[color:var(--meta-border)]"
+                />
+                <div>
+                  <dt className="mb-1 flex items-center gap-1.5 text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-[color:var(--meta-label)]">
+                    <MonitorSmartphone size={13} aria-hidden />
+                    Type
+                  </dt>
+                  <dd>
+                    <span className="inline-flex items-center rounded-full border border-[color:var(--meta-pill-border)] px-3 py-0.5 text-sm font-semibold uppercase tracking-wide text-[color:var(--meta-pill-text)]">
+                      {detail.type}
+                    </span>
+                  </dd>
+                </div>
+              </dl>
+
+              {project.href && project.href !== "#" && (
+                <a
+                  href={project.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Bekijk de live site van ${project.title} (opent in een nieuw tabblad)`}
+                  className="flex shrink-0 items-center justify-center gap-2 rounded-xl border border-[color:var(--meta-border)] bg-[color:var(--meta-bg)] px-5 py-3 text-sm font-medium text-white/80 transition-colors hover:border-white/25 hover:bg-white/[0.08] hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+                >
+                  Bekijk live site
+                  <ExternalLink size={16} aria-hidden />
+                </a>
+              )}
+            </div>
           </div>
 
           {/* Carousel */}
