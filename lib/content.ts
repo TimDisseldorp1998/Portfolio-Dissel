@@ -25,8 +25,10 @@ export const site = {
     ],
     subtitle:
       "Ik ontwerp en bouw websites voor lokale ondernemers, van huisstijl tot live site. Strak design, snel opgeleverd, zonder gedoe. Met één doel: meer bezoekers die klant worden.",
-    primaryCta: { label: "Bekijk mijn werk", href: "#work" },
-    secondaryCta: { label: "Neem contact op", href: "#contact" },
+    // Contact is the primary (filled) action; work is the secondary (ghost) one.
+    // The contact CTA targets the form anchor directly so the form lands in view.
+    contactCta: { label: "Plan een kennismaking", href: "#contact-form" },
+    workCta: { label: "Bekijk mijn werk", href: "#work" },
     /**
      * Client logo strip under the hero CTAs. SVGs live in /public/logos/
      * (all white/monochrome, so they sit muted on the dark hero).

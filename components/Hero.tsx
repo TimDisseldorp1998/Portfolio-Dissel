@@ -92,12 +92,14 @@ export function Hero() {
           {...rise(0.5)}
           className="mt-10 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4"
         >
-          <Button href={site.hero.primaryCta.href} variant="primary" size="lg">
-            {site.hero.primaryCta.label}
-            <ArrowRight size={18} />
+          {/* DOM order unchanged (work first, contact second) — only the styles
+              swap: contact is now the primary/filled CTA and carries the arrow. */}
+          <Button href={site.hero.workCta.href} variant="outline" size="lg">
+            {site.hero.workCta.label}
           </Button>
-          <Button href={site.hero.secondaryCta.href} variant="outline" size="lg">
-            {site.hero.secondaryCta.label}
+          <Button href={site.hero.contactCta.href} variant="primary" size="lg">
+            {site.hero.contactCta.label}
+            <ArrowRight size={18} />
           </Button>
         </motion.div>
 

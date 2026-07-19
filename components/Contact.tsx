@@ -235,8 +235,10 @@ export function Contact() {
             </Reveal>
           </div>
 
-          {/* Right column: form / success card */}
-          <div className="lg:col-span-7">
+          {/* Right column: form / success card. `contact-form` anchor is the
+              hero contact CTA's target, so the form lands in view on any device
+              (on mobile the form stacks below the intro). */}
+          <div id="contact-form" className="scroll-mt-24 lg:col-span-7">
             <Reveal delay={0.15}>
               <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm md:p-10">
                 <AnimatePresence mode="wait" initial={false}>
