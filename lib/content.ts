@@ -150,6 +150,9 @@ export type ProjectDetail = {
 
 export type Project = {
   title: string;
+  /** Tekst in de case-kaart op de landingspagina. Maximaal 120 tekens —
+   *  dit wordt afgedwongen door scripts/check-content.mjs, dat vóór elke
+   *  build draait. Te lang = de build faalt. */
   description: string;
   tags: string[];
   href: string;
