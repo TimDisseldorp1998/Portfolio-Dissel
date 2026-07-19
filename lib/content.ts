@@ -80,12 +80,12 @@ export const about = {
 export const bento = {
   intro: {
     title:
-      "Creatieve digitale product designer met een oog voor detail — ik ontwerp en bouw producten die net zo goed presteren als ze eruitzien.",
+      "Creatieve digitale product designer met een oog voor detail. Ik ontwerp en bouw producten die net zo goed presteren als ze eruitzien.",
     resumeHref: "#",
   },
   background: {
     paragraphs: [
-      "Opgegroeid in Amsterdam, altijd al gefascineerd door de kruising tussen esthetiek en engineering — mijn vader was fotograaf, mijn moeder marketeer.",
+      "Opgegroeid in Amsterdam, altijd al gefascineerd door de kruising tussen esthetiek en engineering. Mijn vader was fotograaf, mijn moeder marketeer.",
       "Ik studeerde Interaction Design en spendeerde de laatste jaren tussen product-teams en freelance-projecten, altijd zoekend naar dat detail dat een interface écht laat resoneren.",
     ],
   },
@@ -150,6 +150,9 @@ export type ProjectDetail = {
 
 export type Project = {
   title: string;
+  /** Tekst in de case-kaart op de landingspagina. Maximaal 120 tekens —
+   *  dit wordt afgedwongen door scripts/check-content.mjs, dat vóór elke
+   *  build draait. Te lang = de build faalt. */
   description: string;
   tags: string[];
   href: string;
@@ -261,7 +264,7 @@ export const projects: Project[] = [
   {
     title: "Ziggo Dome",
     description:
-      "Mobile-first herontwerp van de Ziggo Dome-website — gebouwd rond de duim, met een agenda die de eerstvolgende events naar voren duwt en een interactieve 3D-plattegrond.",
+      "Mobile-first herontwerp van de Ziggo Dome-website. De belangrijkste acties liggen onder je duim, de agenda vooraan.",
     tags: ["Mobile-first", "UX-research", "Responsive"],
     href: "https://www.ziggodome.nl",
     accent: "mix",
@@ -312,51 +315,54 @@ export const projects: Project[] = [
     },
   },
   {
-    title: "Field Notes",
+    title: "New Edition",
     description:
-      "Minimalistische schrijf-app voor onderzoeksteams. Realtime en offline-first.",
-    tags: ["App", "SaaS", "Realtime"],
-    href: "#",
+      "Nieuwe huisstijl doorvertaald naar een B2B-website, met een heldere route naar de Order Portal voor verkooppunten.",
+    tags: ["Huisstijl", "Webdesign", "UX-onderzoek"],
+    href: "https://www.newedition.nl/en/",
     accent: "primary",
     detail: {
-      company: "Field Notes",
-      role: "App-ontwerp",
+      company: "New Edition",
+      role: "Webdesign",
       year: "2023",
-      type: "SaaS",
+      type: "Web",
       overview:
-        "Een minimalistische, offline-first schrijf-app voor onderzoeksteams, met realtime samenwerken zonder de visuele ruis van een volledige tekstverwerker.",
+        "De nieuwe merkidentiteit stond. Nu moest de website hem waarmaken. Ik ontwierp de site die de frisse huisstijl van New Edition doorvertaalt naar het scherm, met een heldere route naar de Order Portal voor bestaande en nieuwe verkooppunten. Twee latere projecten bouwden voort op dit webdesign.",
       body: [
         {
           heading: "De uitdaging",
           paragraphs: [
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "New Edition ontwikkelt al tien jaar woon- en lifestyleproducten voor merken als Pip Studio en VT Wonen. Servies, bestek, tassen, loungewear. Een klein team dat wereldwijd concepten neerzet, gedreven door hun passie voor wonen.",
+            "Na tien jaar paste het oude merk niet meer bij wie ze waren geworden. De uitstraling was strak en zakelijk, terwijl het bedrijf juist persoonlijk werkt. De website moest daarin mee: geen digitaal visitekaartje, wel een toegangspoort voor verkooppunten die in een paar klikken bij de Order Portal uitkomen. En de bezoekers zoeken niet hetzelfde. De een wil bedrijfsinformatie, de ander wil meteen de beeldbank in.",
           ],
         },
         {
           heading: "De aanpak",
           paragraphs: [
-            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.",
+            "De identiteit kwam eerst. Het team van Touch Creative herontwierp het logo en de huisstijl van strak en zakelijk naar verfijnd en persoonlijk, met de ampersand als kern: het symbool voor Niels en Wouter, de twee mannen achter het bedrijf. Neutrale kleuren houden de aandacht bij de merken waarvoor ze werken, zonder zelf de show te stelen. Om het verhaal echt te maken schoten we op kantoor, zodat je de mensen en het proces achter de collecties ziet.",
+            "Toen die identiteit goedgekeurd was, begon mijn deel: de website. Ik startte met gebruikersonderzoek om de verschillende bezoekers in kaart te brengen. Daaruit ontwierp ik een navigatie die simpel blijft, of je nu op laptop, tablet of telefoon kijkt. De wireframes liepen via een strak schema, elke fase afgesloten met één gerichte feedbackronde, zodat we snel en helder bleven.",
+            "Alles legde ik vast in een uitgebreide styleguide. De afronding lag bij externe developers, dus die gids moest hún leidraad zijn: kleuren, typografie, componenten, één bron waar geen twijfel over bestaat. Verder voegde ik een productpagina toe die eerdere projecten laat zien. Geen verhaal over kwaliteit, maar het bewijs ervan, meteen zichtbaar voor een potentiële klant.",
           ],
         },
         {
           heading: "Het resultaat",
           paragraphs: [
-            "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos.",
+            "Een website die de nieuwe identiteit vasthoudt en tegelijk werkt als toegangspoort. Verkooppunten vinden hun weg naar de Order Portal zonder zoeken, de navigatie blijft rustig op elk scherm en de productpagina laat direct zien wat New Edition kan. Wat het bedrijf op kantoor uitstraalt, straalt de site nu ook uit.",
           ],
         },
         {
           heading: "Zelf zoiets?",
           paragraphs: [
-            "Loopt jouw project ergens vast? Vertel me erover, dan kijk ik met je mee. Een vrijblijvend gesprek is zo gepland.",
+            "Heb je een frisse huisstijl die nog niet online tot leven komt? Vertel me over je project, dan vertaal ik hem door naar een site die klopt. Een vrijblijvend gesprek is zo gepland.",
           ],
         },
       ],
       slides: [
-        { label: "Editor", gradient: "from-primary/60 via-primary-800 to-[#8E5CE0]/40" },
-        { label: "Aanwezigheid", gradient: "from-primary-400/50 via-primary/30 to-primary-900" },
+        { label: "Homepage", gradient: "from-primary/60 via-primary-800 to-[#8E5CE0]/40" },
+        { label: "Logo & ampersand", gradient: "from-[#8E5CE0]/50 via-primary/40 to-primary-900" },
+        { label: "Responsive navigatie", gradient: "from-primary-400/50 via-primary/30 to-primary-900" },
+        { label: "Order Portal", gradient: "from-primary/50 via-[#8E5CE0]/40 to-secondary/40" },
+        { label: "Productpagina", gradient: "from-primary-800 via-primary/40 to-[#8E5CE0]/50" },
       ],
     },
   },

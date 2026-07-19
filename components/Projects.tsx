@@ -53,7 +53,7 @@ export function Projects() {
               </h2>
             </div>
             <p className="max-w-sm text-sm leading-relaxed text-white/60">
-              Een korte selectie — vraag gerust naar de volledige cases en de
+              Een korte selectie. Vraag gerust naar de volledige cases en de
               verhalen erachter.
             </p>
           </div>

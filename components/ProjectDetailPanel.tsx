@@ -151,7 +151,7 @@ export function ProjectDetailPanel({
           onScroll={onScroll}
           className="panel-scroll relative flex-1 overflow-y-auto p-6 md:p-10"
         >
-          {/* Title row */}
+          {/* Title row — live-site link sits next to the close button */}
           <div className="mb-6 flex items-center justify-between gap-4">
             <h2
               id={titleId}
@@ -159,115 +159,38 @@ export function ProjectDetailPanel({
             >
               {project.title}
             </h2>
-            <button
-              ref={closeButtonRef}
-              type="button"
-              onClick={onClose}
-              aria-label="Sluit projectdetails"
-              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] text-white/90 transition-colors hover:bg-white/[0.08] hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30 xl:border-transparent xl:bg-transparent xl:text-white/70"
-            >
-              <X size={20} />
-            </button>
-          </div>
-
-          {/* Meta — compact values on phone/tablet, labelled box on desktop (xl+) */}
-          <div className="mb-5">
-            {/* Phone + tablet: values only, no labels/icons, live-site icon at the edge */}
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm xl:hidden">
-              <span className="font-medium text-[color:var(--meta-value)]">
-                {detail.role ?? detail.company}
-              </span>
-              <span aria-hidden className="text-white/25">
-                ·
-              </span>
-              <span className="font-medium text-[color:var(--meta-value)]">
-                {detail.year}
-              </span>
-              <span aria-hidden className="text-white/25">
-                ·
-              </span>
-              <span className="inline-flex items-center rounded-full border border-[color:var(--meta-pill-border)] px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-[color:var(--meta-pill-text)]">
-                {detail.type}
-              </span>
-
+            <div className="flex shrink-0 items-center gap-2">
               {project.href && project.href !== "#" && (
                 <a
                   href={project.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Bekijk de live site van ${project.title} (opent in een nieuw tabblad)`}
-                  className="ml-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-colors hover:bg-secondary hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-secondary/40"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-colors hover:bg-secondary hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-secondary/40"
                 >
                   <ExternalLink size={18} aria-hidden />
                 </a>
               )}
-            </div>
-
-            {/* Desktop: labelled facts box (icons + labels + subtle bg) + live-site button */}
-            <div className="hidden items-stretch gap-3 xl:flex">
-              <dl className="flex flex-1 flex-wrap items-center gap-x-8 gap-y-3 rounded-xl border border-[color:var(--meta-border)] bg-[color:var(--meta-bg)] px-5 py-3">
-                <div>
-                  <dt className="mb-1 flex items-center gap-1.5 text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-[color:var(--meta-label)]">
-                    <Briefcase size={13} aria-hidden />
-                    {detail.role ? "Rol" : "Bedrijf"}
-                  </dt>
-                  <dd className="text-base font-semibold text-[color:var(--meta-value)]">
-                    {detail.role ?? detail.company}
-                  </dd>
-                </div>
-                <div
-                  aria-hidden
-                  className="w-px self-stretch bg-[color:var(--meta-border)]"
-                />
-                <div>
-                  <dt className="mb-1 flex items-center gap-1.5 text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-[color:var(--meta-label)]">
-                    <Calendar size={13} aria-hidden />
-                    Jaar
-                  </dt>
-                  <dd className="text-base font-semibold text-[color:var(--meta-value)]">
-                    {detail.year}
-                  </dd>
-                </div>
-                <div
-                  aria-hidden
-                  className="w-px self-stretch bg-[color:var(--meta-border)]"
-                />
-                <div>
-                  <dt className="mb-1 flex items-center gap-1.5 text-[0.6875rem] font-medium uppercase tracking-[0.1em] text-[color:var(--meta-label)]">
-                    <MonitorSmartphone size={13} aria-hidden />
-                    Type
-                  </dt>
-                  <dd>
-                    <span className="inline-flex items-center rounded-full border border-[color:var(--meta-pill-border)] px-3 py-0.5 text-sm font-semibold uppercase tracking-wide text-[color:var(--meta-pill-text)]">
-                      {detail.type}
-                    </span>
-                  </dd>
-                </div>
-              </dl>
-
-              {project.href && project.href !== "#" && (
-                <a
-                  href={project.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Bekijk de live site van ${project.title} (opent in een nieuw tabblad)`}
-                  className="flex shrink-0 items-center justify-center gap-2 rounded-xl bg-secondary/10 px-5 py-3 text-sm font-medium text-secondary transition-colors hover:bg-secondary hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-secondary/40"
-                >
-                  Bekijk live site
-                  <ExternalLink size={16} aria-hidden />
-                </a>
-              )}
+              <button
+                ref={closeButtonRef}
+                type="button"
+                onClick={onClose}
+                aria-label="Sluit projectdetails"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] text-white/90 transition-colors hover:bg-white/[0.12] hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+              >
+                <X size={20} />
+              </button>
             </div>
           </div>
 
-          {/* Carousel */}
+          {/* Carousel — full-bleed, with the project facts laid over the image */}
           <div
             role="group"
             aria-roledescription="carousel"
             aria-label={`${project.title} afbeeldingen`}
-            className="relative"
+            className="relative -mx-6 md:-mx-10"
           >
-            <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-black/40">
+            <div className="relative aspect-[4/3] overflow-hidden bg-black/40 md:aspect-[16/10]">
               {detail.slides.map((s, i) => (
                 <div
                   key={s.label}
@@ -283,6 +206,60 @@ export function ProjectDetailPanel({
                   </p>
                 </div>
               ))}
+
+              {/* Scrim — keeps the overlaid facts legible on light images */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/60 via-black/25 to-transparent"
+              />
+
+              {/* Project facts, laid over the top of the image */}
+              <dl className="absolute inset-x-0 top-0 flex flex-wrap items-start gap-x-6 gap-y-3 p-5 md:gap-x-10 md:p-6">
+                <div>
+                  <dt className="sr-only md:not-sr-only md:mb-1 md:flex md:items-center md:gap-1.5 md:text-[11px] md:font-medium md:uppercase md:tracking-[0.14em] md:text-white/50">
+                    <Briefcase size={12} aria-hidden />
+                    {detail.role ? "Rol" : "Bedrijf"}
+                  </dt>
+                  <dd className="flex items-center gap-1.5 text-sm font-semibold text-white md:text-base">
+                    <Briefcase
+                      size={12}
+                      aria-hidden
+                      className="shrink-0 text-white/50 md:hidden"
+                    />
+                    {detail.role ?? detail.company}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="sr-only md:not-sr-only md:mb-1 md:flex md:items-center md:gap-1.5 md:text-[11px] md:font-medium md:uppercase md:tracking-[0.14em] md:text-white/50">
+                    <Calendar size={12} aria-hidden />
+                    Jaar
+                  </dt>
+                  <dd className="flex items-center gap-1.5 text-sm font-semibold text-white md:text-base">
+                    <Calendar
+                      size={12}
+                      aria-hidden
+                      className="shrink-0 text-white/50 md:hidden"
+                    />
+                    {detail.year}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="sr-only md:not-sr-only md:mb-1 md:flex md:items-center md:gap-1.5 md:text-[11px] md:font-medium md:uppercase md:tracking-[0.14em] md:text-white/50">
+                    <MonitorSmartphone size={12} aria-hidden />
+                    Type
+                  </dt>
+                  <dd className="flex items-center gap-1.5">
+                    <MonitorSmartphone
+                      size={12}
+                      aria-hidden
+                      className="shrink-0 text-white/50 md:hidden"
+                    />
+                    <span className="inline-flex items-center rounded-full border border-white/40 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-white md:text-sm">
+                      {detail.type}
+                    </span>
+                  </dd>
+                </div>
+              </dl>
 
               {/* Award badge — labeled, keyboard-focusable */}
               {detail.award && (

@@ -43,7 +43,7 @@ function validateEmail(v: string): string | undefined {
 
 function validateMessage(v: string): string | undefined {
   if (!v.trim()) return "Vertel me even waar het over gaat.";
-  if (v.trim().length < 3) return "Iets meer graag — een paar woorden helpen.";
+  if (v.trim().length < 3) return "Iets meer graag. Een paar woorden helpen.";
   return undefined;
 }
 
@@ -466,7 +466,7 @@ function SuccessCard({ onReset }: { onReset: () => void }) {
           Bedankt!
         </p>
         <p className="mt-2 max-w-sm text-white/70">
-          Je bericht is verstuurd — je hoort binnen 24–48 uur van me.
+          Je bericht is verstuurd. Je hoort binnen 24 tot 48 uur van me.
         </p>
       </div>
       <button
