@@ -212,52 +212,54 @@ export const projects: Project[] = [
     },
   },
   {
-    title: "Lumen Health",
+    title: "De-Stock",
     description:
-      "Gezondheidsapp voor consumenten: van eerste ontwerp tot front-end architectuur.",
-    tags: ["Product", "React", "Design System"],
-    href: "#",
+      "Huisstijl en website voor groothandel De-Stock, opgebouwd vanaf één logo en gericht op één stap: voorraad aanbieden.",
+    tags: ["Branding", "Webdesign", "UX"],
+    href: "https://de-stock.nl/",
     accent: "secondary",
     detail: {
-      company: "Lumen Health",
-      role: "Product design",
-      year: "2024",
-      type: "Mobile",
+      company: "De-Stock",
+      role: "Branding & webdesign",
+      year: "2025",
+      type: "Web",
       overview:
-        "Een gezondheidsapp voor consumenten: afspraken maken, medicatie bijhouden en contact met je zorgteam in één rustige, toegankelijke app.",
+        "De-Stock koopt restpartijen en overtollige voorraad van bedrijven op. Ze kwamen bij me met precies één ding: een logo. Geen huisstijl, geen site, geen structuur. Daar ontwierp ik een complete website omheen, van merk tot live pagina's, met één actie in het middelpunt: je voorraad aanbieden. Rustig en strak, en gemaakt om vertrouwen te wekken bij een bedrijf dat je nog niet kent.",
       body: [
         {
           heading: "De uitdaging",
           paragraphs: [
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "Een nieuw bedrijf in een markt die er online vaak rommelig uitziet. Kijk naar de meeste opkopers en je ziet volgestampte pagina's, muren van tekst en een verkooppraatje dat over je heen komt. De-Stock moest er vanaf dag één staan als een partij die je durft te bellen met een volle vrachtwagen incourante voorraad. Betrouwbaar en professioneel, zonder poeha. En het belangrijkste: iemand met stilstaande voorraad moest die in een paar stappen kunnen aanbieden, zonder te verdwalen.",
           ],
         },
         {
           heading: "De aanpak",
           paragraphs: [
-            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.",
+            "Eerst de structuur. Samen met Sjoerd bouwde ik de sitemap: welke pagina's, welke volgorde, en hoe iemand van binnenkomst naar het aanbiedformulier loopt. Korte lijntjes, snel schakelen. Hij leverde de content, ik zorgde dat alles op de juiste plek belandde.",
+            "Daarna het merk. Van dat ene logo maakte ik een volledige huisstijl: kleur, typografie, knoppen, de hele look. Strak en professioneel, zodat een onbekend bedrijf meteen serieus overkomt.",
+            "Voor de vorm koos ik een bento-grid. Losse blokken in een rustig raster, waarin de belangrijkste info direct te scannen is. Geen muur van tekst zoals bij de concurrent, wel een pagina die je in één oogopslag snapt.",
+            "En de kern: het formulier waarmee bedrijven hun voorraad aanbieden. Dat is waar het werk binnenkomt, dus dat kreeg de hoofdrol. Elke pagina duwt de bezoeker naar die ene stap, van de homepage tot de aparte opkoper-pagina's per type partij.",
+            "De techniek pakte ik samen met developer Lucas op. Hij bouwde de front-end en back-end en maakte het formulier en het menu werkend. Ik hield het concept, de branding en de flow in handen: hoe de site eruitziet en hoe je erdoorheen loopt.",
           ],
         },
         {
           heading: "Het resultaat",
           paragraphs: [
-            "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos.",
+            "Waar De-Stock begon met alleen een logo, staat er nu een compleet merk en een werkende website. De vorm is rustig en professioneel, en de hele opzet leidt de bezoeker naar één stap: zijn voorraad aanbieden. Elk type partij heeft een eigen opkoper-pagina, dus de site groeit mee met wat er binnenkomt zonder dat het rommelig wordt.",
           ],
         },
         {
           heading: "Zelf zoiets?",
           paragraphs: [
-            "Loopt jouw project ergens vast? Vertel me erover, dan kijk ik met je mee. Een vrijblijvend gesprek is zo gepland.",
+            "Begin je met niet meer dan een logo, of loopt je huidige site achter op wat je bedrijf nodig heeft? Vertel me over je project, dan kijk ik met je mee. Een vrijblijvend gesprek is zo gepland.",
           ],
         },
       ],
       slides: [
-        { label: "Onboarding", gradient: "from-secondary/70 via-secondary-700/50 to-primary-900" },
-        { label: "Boekingsflow", gradient: "from-secondary-400/60 via-secondary/40 to-[#8E5CE0]/50" },
-        { label: "Zorg-chat", gradient: "from-primary/50 via-secondary/50 to-secondary-800" },
+        { label: "Homepage", gradient: "from-secondary/70 via-secondary-700/50 to-primary-900" },
+        { label: "Huisstijl", gradient: "from-secondary-400/60 via-secondary/40 to-[#8E5CE0]/50" },
+        { label: "Aanbiedformulier", gradient: "from-primary/50 via-secondary/50 to-secondary-800" },
+        { label: "Opkoper-pagina", gradient: "from-secondary-800 via-secondary/40 to-primary-900" },
       ],
     },
   },
