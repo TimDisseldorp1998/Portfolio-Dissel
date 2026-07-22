@@ -41,8 +41,6 @@ export const site = {
         { src: "/logos/new-edition-logo.svg", alt: "New Edition", size: "h-7 sm:h-8" },
         { src: "/logos/dtx-logo.svg", alt: "DTX", size: "h-8 sm:h-9" },
         { src: "/logos/1608-logo.svg", alt: "1608", size: "h-5 sm:h-6" },
-        { src: "/logos/de-stock-logo.svg", alt: "De-Stock", size: "h-3 sm:h-3.5" },
-        { src: "/logos/marktzicht-logo.svg", alt: "Marktzicht", size: "h-5 sm:h-6" },
       ],
     },
   },
