@@ -35,7 +35,7 @@ export const site = {
      * `size` tweaks per-logo height so the marks are optically balanced.
      */
     trustedBy: {
-      label: "Vertrouwd door teams die echte producten bouwen:",
+      label: "Merken waar ik de afgelopen jaren aan werkte",
       logos: [
         { src: "/logos/ziggodome-logo.svg", alt: "Ziggo Dome", size: "h-10 sm:h-11" },
         { src: "/logos/new-edition-logo.svg", alt: "New Edition", size: "h-7 sm:h-8" },
