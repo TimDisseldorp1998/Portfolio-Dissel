@@ -162,52 +162,55 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    title: "Northwind Studio",
+    title: "Kleintjes van Alkmaar",
     description:
-      "Merk- en productvernieuwing voor een designstudio: nieuwe identiteit, website en productschermen.",
-    tags: ["Branding", "Web", "Motion"],
-    href: "#",
+      "Van idee naar merk en een tweezijdig oppasplatform: huisstijl, UX en alle schermen voor ouders én oppassers.",
+    tags: ["Branding", "UX/UI", "Webdesign"],
+    href: "https://kleintjesvanalkmaar.nl/",
     accent: "primary",
     detail: {
-      company: "Northwind",
-      role: "Merkidentiteit",
+      company: "Kleintjes van Alkmaar",
+      role: "Branding & UX/UI",
       year: "2025",
-      type: "Branding",
+      type: "Web",
       overview:
-        "Een volledige merk- en productvernieuwing voor een designstudio, van een nieuw identiteitssysteem tot de website en productschermen die het dragen.",
+        "Kleintjes van Alkmaar koppelt ouders aan een oppas, en oppassers aan een klusje waarmee ze wat bijverdienen. Het begon met een idee in de hoofden van de oprichters, verder was er niets: geen merk, geen schermen, geen structuur. Samen met developer Lucas werkte ik dat idee uit tot een compleet platform, van de huisstijl tot het laatste scherm.",
       body: [
         {
           heading: "De uitdaging",
           paragraphs: [
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "Een idee dat nog nergens stond, en een platform met twee heel verschillende kanten. Aan de ene kant ouders die een betrouwbare oppas zoeken. Aan de andere kant oppassers die zich aanbieden en wat willen bijverdienen. Allebei moeten ze zich meteen thuis voelen en snappen waar ze zijn. En omdat ouders hun kinderen uit handen geven, moet alles rust en vertrouwen uitstralen. Geen kille app, wel iets warms waar je je kleintjes met een gerust hart achterlaat.",
           ],
         },
         {
           heading: "De aanpak",
           paragraphs: [
-            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.",
+            "Het begon klein. Een paar zaterdagochtenden zaten we samen om tafel, de oprichters, Lucas en ik, om het idee uit te denken. Meedenken met de klant en een idee echt zien landen, dat vind ik het mooiste deel van het werk.",
+            "Daarna ging ik schetsen. Eerst wireframes en de functies die er sowieso op moesten. Toen de huisstijl, want ook die was er nog niet: typografie, kleuren, knoppen, hiërarchie, ik mocht het helemaal zelf bepalen. Om zeker te weten dat de look-and-feel klopte met wat zij in hun hoofd hadden, maakte ik twee richtingen. Ze kozen versie A, en daarmee ontwierp ik de rest van de site.",
+            "Voor de twee kanten van het platform gaf ik elke doelgroep een eigen kleur. Groen voor de oppassers, bruin voor de ouders. Zo zie je meteen op welke kant je zit en maak je minder snel een verkeerde klik.",
+            "Ik werkte alle schermen uit voor mobiel en desktop, en voor de secties die lastig meebewegen ook een iPad-versie. Alles leverde ik aan als PDF zodat ze overal op konden schieten, met een sitemap en styleguide erbij zodat de stijl vastlag. Bij elke fase liet ik secties tussentijds zien en vroeg ik wat ze ervan vonden, zodat we snel konden bijsturen en door-itereren.",
+            "Toen mijn ontwerp stond, pakte Lucas door. Hij bouwde de front-end en maakte het hele platform aan de achterkant werkend. De flow van die achterkant bedachten we samen, en ik ontwierp een paar schermen om ook de binnenkant er verzorgd uit te laten zien.",
           ],
         },
         {
           heading: "Het resultaat",
           paragraphs: [
-            "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos.",
+            "Van een idee op een zaterdagochtend naar een werkend platform dat ouders en oppassers bij elkaar brengt. Er staat nu een compleet merk waar eerst niets was, en een site die op elk scherm klopt, van de eerste schets tot de laatste knop.",
+            "Voor mij een van de leukste projecten die ik voor mijn eigen bedrijf heb mogen doen. We konden goed met elkaar praten, gingen samen los op hun idee, en het eindresultaat mag er zijn.",
           ],
         },
         {
           heading: "Zelf zoiets?",
           paragraphs: [
-            "Loopt jouw project ergens vast? Vertel me erover, dan kijk ik met je mee. Een vrijblijvend gesprek is zo gepland.",
+            "Heb je een idee in je hoofd dat nog nergens staat? Vertel me over je project, dan kijk ik met je mee. Een vrijblijvend gesprek is zo gepland.",
           ],
         },
       ],
       slides: [
-        { label: "Identiteit", gradient: "from-primary/70 via-primary-700/50 to-[#8E5CE0]/60" },
-        { label: "Website", gradient: "from-[#8E5CE0]/60 via-primary/40 to-primary-800" },
-        { label: "Product-UI", gradient: "from-primary-400/60 via-[#8E5CE0]/40 to-primary-900" },
+        { label: "Homepage", gradient: "from-primary/70 via-primary-700/50 to-[#8E5CE0]/60" },
+        { label: "Huisstijl", gradient: "from-[#8E5CE0]/60 via-primary/40 to-primary-800" },
+        { label: "Twee kanten", gradient: "from-primary-400/60 via-[#8E5CE0]/40 to-primary-900" },
+        { label: "Responsive schermen", gradient: "from-primary/60 via-primary-800 to-[#8E5CE0]/40" },
       ],
     },
   },
