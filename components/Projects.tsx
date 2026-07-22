@@ -42,7 +42,7 @@ export function Projects() {
     <Section id="work" variant="dark">
       <Container>
         <Reveal>
-          <div className="mb-14">
+          <div className="mb-6 md:mb-12">
             <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-primary">
               Recent werk
             </p>

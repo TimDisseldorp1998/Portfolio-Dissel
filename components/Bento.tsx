@@ -365,7 +365,7 @@ export function Bento() {
     >
       <Container>
         <Reveal>
-          <div className="mb-12 flex items-end justify-between gap-6">
+          <div className="mb-6 flex items-end justify-between gap-6 md:mb-12">
             <div>
               <p className="mb-3 text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-primary">
                 About
