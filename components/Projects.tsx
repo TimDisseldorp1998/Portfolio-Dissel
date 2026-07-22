@@ -48,7 +48,7 @@ export function Projects() {
             </p>
             <h2 className="font-heading text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-5xl">
               Zo ziet het eruit als{" "}
-              <span className="whitespace-nowrap text-white/50">het werkt</span>.
+              <span className="whitespace-nowrap text-white/50">het werkt.</span>
             </h2>
           </div>
         </Reveal>
