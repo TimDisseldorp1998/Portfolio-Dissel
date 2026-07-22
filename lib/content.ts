@@ -43,6 +43,24 @@ export const site = {
         { src: "/logos/1608-logo.svg", alt: "1608", size: "h-5 sm:h-6" },
       ],
     },
+    /**
+     * Subtiele klantreviews rechtsonder in de hero (dark glassmorphism, geen
+     * sterren). De quotes zijn placeholder: vervang ze door de echte reviews.
+     */
+    reviews: [
+      {
+        quote:
+          "[ Voorbeeldzin. Plaats hier de echte review, maximaal twee regels. ]",
+        name: "De-Stock.nl",
+        initials: "D",
+      },
+      {
+        quote:
+          "[ Voorbeeldzin. Plaats hier de echte review, maximaal twee regels. ]",
+        name: "De kleintjes van Alkmaar",
+        initials: "K",
+      },
+    ],
   },
 };
 

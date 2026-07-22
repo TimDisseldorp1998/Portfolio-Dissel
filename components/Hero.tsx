@@ -125,6 +125,36 @@ export function Hero() {
             ))}
           </ul>
         </motion.div>
+
+        {/* Subtle client reviews — bottom-right on desktop, in flow below the
+            logo strip on mobile. Dark glassmorphism over the aurora. */}
+        <motion.div
+          {...rise(0.8)}
+          aria-label="Klantreviews"
+          className="mt-12 flex w-full flex-col gap-3 sm:max-w-sm lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[300px]"
+        >
+          {site.hero.reviews.map((review) => (
+            <figure
+              key={review.name}
+              className="rounded-2xl border border-white/10 bg-white/[0.05] p-4 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.85)] backdrop-blur-xl"
+            >
+              <blockquote className="text-sm italic leading-relaxed text-white/60">
+                {review.quote}
+              </blockquote>
+              <figcaption className="mt-3 flex items-center gap-2.5">
+                <span
+                  aria-hidden
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-xs font-semibold text-white/80"
+                >
+                  {review.initials}
+                </span>
+                <span className="text-sm font-semibold text-white">
+                  {review.name}
+                </span>
+              </figcaption>
+            </figure>
+          ))}
+        </motion.div>
       </Container>
     </section>
   );
