@@ -78,7 +78,7 @@ export function Services() {
         </h2>
 
         {/* Intro left, service cards (2×2) right */}
-        <div className="mt-14 grid items-start gap-14 lg:grid-cols-12 lg:gap-16">
+        <div className="mt-6 grid items-start gap-14 md:mt-12 lg:grid-cols-12 lg:gap-16">
           <div className="space-y-4 text-base leading-relaxed text-white/70 lg:col-span-4">
             <p>
               Een mooie website is pas het halve werk.{" "}

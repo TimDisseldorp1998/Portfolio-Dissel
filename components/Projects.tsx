@@ -42,20 +42,14 @@ export function Projects() {
     <Section id="work" variant="dark">
       <Container>
         <Reveal>
-          <div className="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
-            <div>
-              <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-primary">
-                Geselecteerd werk
-              </p>
-              <h2 className="max-w-2xl font-heading text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-5xl">
-                Een paar dingen die ik met plezier heb{" "}
-                <span className="text-gradient">gemaakt</span>.
-              </h2>
-            </div>
-            <p className="max-w-sm text-sm leading-relaxed text-white/60">
-              Een korte selectie. Vraag gerust naar de volledige cases en de
-              verhalen erachter.
+          <div className="mb-6 md:mb-12">
+            <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-primary">
+              Recent werk
             </p>
+            <h2 className="font-heading text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-5xl">
+              Zo ziet het eruit als{" "}
+              <span className="whitespace-nowrap text-white/50">het werkt.</span>
+            </h2>
           </div>
         </Reveal>
 
