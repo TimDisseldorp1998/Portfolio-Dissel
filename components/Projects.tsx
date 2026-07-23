@@ -76,14 +76,6 @@ export function Projects() {
                       </span>
                     </div>
                   </div>
-
-                  {/* Hover-overlay (alleen desktop): 'Bekijk project'-pill over een zachte blur */}
-                  <div className="pointer-events-none absolute inset-0 hidden items-center justify-center bg-black/30 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 group-hover:opacity-100 lg:flex">
-                    <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-5 py-2.5 text-sm font-semibold text-white shadow-lg backdrop-blur-md">
-                      Bekijk project
-                      <ArrowUpRight size={16} aria-hidden />
-                    </span>
-                  </div>
                 </div>
 
                 <div className="flex flex-col gap-3 p-6">
