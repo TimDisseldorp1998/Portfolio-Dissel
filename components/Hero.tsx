@@ -183,7 +183,7 @@ export function Hero() {
         <motion.div
           {...rise(0.8)}
           aria-label="Klantreviews"
-          className="mt-[max(2rem,calc(100svh-640px))] w-full sm:max-w-md lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[400px]"
+          className="mt-[max(2rem,calc(100svh-688px))] w-full sm:max-w-md lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[400px]"
         >
           {prefersReducedMotion ? (
             <div className="flex flex-col gap-3">
