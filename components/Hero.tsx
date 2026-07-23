@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { site } from "@/lib/content";
 import { cn } from "@/lib/cn";
@@ -11,6 +12,56 @@ import { Typewriter } from "./ui/Typewriter";
 
 export function Hero() {
   const prefersReducedMotion = useReducedMotion();
+
+  // One review shows at a time; it crossfades to the next every ~7s.
+  // With reduced motion we skip the timer and stack both statically instead.
+  const [activeReview, setActiveReview] = useState(0);
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+    const id = window.setInterval(() => {
+      setActiveReview((i) => (i + 1) % site.hero.reviews.length);
+    }, 7000);
+    return () => window.clearInterval(id);
+  }, [prefersReducedMotion]);
+
+  const reviewCardClass =
+    "rounded-2xl border border-white/10 bg-white/[0.05] p-5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.85)] backdrop-blur-xl transition-colors duration-200 max-lg:hover:border-white/25 max-lg:hover:bg-white/[0.09] max-lg:active:border-white/25 max-lg:active:bg-white/[0.09]";
+  const reviewBody = (review: (typeof site.hero.reviews)[number]) => (
+    <>
+      <blockquote className="text-[0.95rem] leading-relaxed text-white/65">
+        {review.quote}
+      </blockquote>
+      <figcaption className="mt-3.5 flex items-center gap-2.5">
+        {/* Logo overlays the monogram; if the file is missing, onError hides it
+            and the initials fall back into view. */}
+        <span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/[0.06] text-sm font-semibold text-white/80">
+          <span aria-hidden>{review.initials}</span>
+          {review.logo && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={review.logo}
+              alt=""
+              className="absolute inset-0 h-full w-full object-contain"
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+              }}
+            />
+          )}
+        </span>
+        <span className="min-w-0">
+          <span className="block text-[0.95rem] font-semibold text-white">
+            {review.author}
+          </span>
+          {review.role && (
+            <span className="mt-0.5 block text-[0.8125rem] text-white/50">
+              {review.role}
+            </span>
+          )}
+        </span>
+      </figcaption>
+    </>
+  );
+
   const rise = (delay: number) =>
     prefersReducedMotion
       ? { initial: { opacity: 1 }, animate: { opacity: 1 } }
@@ -48,7 +99,7 @@ export function Hero() {
       {/* Top fade so navbar contrast stays crisp */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/40 to-transparent" />
 
-      <Container className="relative z-10 flex flex-col items-start text-left">
+      <Container className="relative z-10 flex -translate-y-8 flex-col items-start text-left">
         <motion.p
           {...rise(0.1)}
           className="mb-6 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[0.625rem] font-medium uppercase leading-4 tracking-[0.16em] text-[#3EE68B] backdrop-blur"
@@ -124,6 +175,38 @@ export function Hero() {
               </li>
             ))}
           </ul>
+        </motion.div>
+
+        {/* Subtle client reviews — bottom-right on desktop, in flow below the
+            logo strip on mobile. Dark glassmorphism over the aurora. One shows
+            at a time and crossfades to the next every ~7s. */}
+        <motion.div
+          {...rise(0.8)}
+          aria-label="Klantreviews"
+          className="mt-[max(2rem,calc(100svh-640px))] w-full sm:max-w-md lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[400px]"
+        >
+          {prefersReducedMotion ? (
+            <div className="flex flex-col gap-3">
+              {site.hero.reviews.map((review) => (
+                <figure key={review.author} className={reviewCardClass}>
+                  {reviewBody(review)}
+                </figure>
+              ))}
+            </div>
+          ) : (
+            <AnimatePresence mode="wait">
+              <motion.figure
+                key={activeReview}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+                className={reviewCardClass}
+              >
+                {reviewBody(site.hero.reviews[activeReview])}
+              </motion.figure>
+            </AnimatePresence>
+          )}
         </motion.div>
       </Container>
     </section>
