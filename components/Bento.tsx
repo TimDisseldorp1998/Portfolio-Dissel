@@ -418,7 +418,7 @@ export function Bento() {
 
             {/* Background card */}
             <BentoCard>
-              <CardLabel>Mijn achtergrond</CardLabel>
+              <CardLabel>Zo werk ik</CardLabel>
               {bento.background.paragraphs.map((p, idx) => (
                 <p
                   key={idx}

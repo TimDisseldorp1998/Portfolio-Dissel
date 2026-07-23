@@ -105,8 +105,9 @@ export const bento = {
   },
   background: {
     paragraphs: [
-      "Opgegroeid in Amsterdam, altijd al gefascineerd door de kruising tussen esthetiek en engineering. Mijn vader was fotograaf, mijn moeder marketeer.",
-      "Ik studeerde Interaction Design en spendeerde de laatste jaren tussen product-teams en freelance-projecten, altijd zoekend naar dat detail dat een interface écht laat resoneren.",
+      "Ik ben Tim Disseldorp, product designer. Alweer 6+ jaar ervaring en sinds 2024 voor mezelf begonnen. Daarnaast actief bij een e-commercebureau in Alkmaar. Disseldesign is geen team, geen manager, geen doorgeefluik. Je praat met de persoon die het ook daadwerkelijk maakt. Sprintklusjes binnen een week, marathonprojecten in twee tot vier weken. Nooit half af.",
+      "Ik ontwerp websites voor lokale ondernemers en regionale bedrijven. Maar eerlijk: iedereen is welkom, van eenmanszaak tot groot merk. Ik ontwierp de website van de Ziggo Dome, die van de kapper om de hoek en hielp een vriend met zijn retailbedrijf. Dezelfde vragen, dezelfde tests, dezelfde tijd en aandacht.",
+      "Zin in een koffie en wil je praten over je ambitie? Ik reageer ook op zondagavond. 😉",
     ],
   },
   portrait: {
