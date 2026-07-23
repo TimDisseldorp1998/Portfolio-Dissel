@@ -60,7 +60,7 @@ export function Projects() {
                 type="button"
                 onClick={(e) => openProject(p, e)}
                 aria-haspopup="dialog"
-                className="group relative block w-full overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] text-left backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+                className="group relative block w-full cursor-pointer overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] text-left backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
               >
                 <div
                   className={cn(
