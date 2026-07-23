@@ -175,7 +175,7 @@ export function Contact() {
                 Contact
               </p>
               <h2 className="mb-6 font-heading text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
-                <span className="text-white/35">Klaar om te groeien?</span>{" "}
+                <span className="text-white/[0.55]">Klaar om te groeien?</span>{" "}
                 <span className="text-white">Plan een gesprek.</span>
               </h2>
               <p className="mb-8 text-lg leading-relaxed text-white/70">
