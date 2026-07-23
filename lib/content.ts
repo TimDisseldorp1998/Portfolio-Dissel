@@ -52,17 +52,17 @@ export const site = {
         quote:
           "Super blij met de stijl van de website, precies zoals we het in ons hoofd hadden. Erg fijne samenwerking gehad en we hebben inmiddels de eerste oppasdiensten via het platform lopen.",
         author: "Madelief",
-        role: "Oprichter de Kleintjes van Alkmaar",
+        role: "Founder de Kleintjes van Alkmaar",
         initials: "K",
         logo: "/logos/kleintjes-van-alkmaar-logo.png",
       },
       {
         quote:
-          "[ Voorbeeldzin. Plaats hier de echte review, maximaal twee regels. ]",
-        author: "De-Stock.nl",
-        role: "",
+          "Vanuit alleen een logo en paar kleuren, en snel geschakeld met Tim. De website ziet er professioneel en modern uit en werkt top.",
+        author: "Sjoerd Avis",
+        role: "Founder De-Stock.nl",
         initials: "D",
-        logo: "",
+        logo: "/logos/de-stock-logo.png",
       },
     ],
   },
