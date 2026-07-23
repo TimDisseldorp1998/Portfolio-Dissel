@@ -370,8 +370,8 @@ export function Bento() {
               <p className="mb-3 text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-primary">
                 About
               </p>
-              <h2 className="max-w-2xl font-heading text-3xl font-semibold leading-tight md:text-4xl">
-                Wie ik ben, waar ik vandaan kom, en waarmee ik werk.
+              <h2 className="max-w-2xl font-heading text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
+                Even voorstellen
               </h2>
             </div>
           </div>
