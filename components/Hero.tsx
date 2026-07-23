@@ -25,7 +25,7 @@ export function Hero() {
   }, [prefersReducedMotion]);
 
   const reviewCardClass =
-    "rounded-2xl border border-white/10 bg-white/[0.05] p-5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.85)] backdrop-blur-xl";
+    "rounded-2xl border border-white/10 bg-white/[0.05] p-5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.85)] backdrop-blur-xl transition-colors duration-200 max-lg:hover:border-white/25 max-lg:hover:bg-white/[0.09] max-lg:active:border-white/25 max-lg:active:bg-white/[0.09]";
   const reviewBody = (review: (typeof site.hero.reviews)[number]) => (
     <>
       <blockquote className="text-[0.95rem] leading-relaxed text-white/65">
@@ -34,7 +34,7 @@ export function Hero() {
       <figcaption className="mt-3.5 flex items-center gap-2.5">
         {/* Logo overlays the monogram; if the file is missing, onError hides it
             and the initials fall back into view. */}
-        <span className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/[0.06] text-sm font-semibold text-white/80">
+        <span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/[0.06] text-sm font-semibold text-white/80">
           <span aria-hidden>{review.initials}</span>
           {review.logo && (
             // eslint-disable-next-line @next/next/no-img-element
@@ -183,7 +183,7 @@ export function Hero() {
         <motion.div
           {...rise(0.8)}
           aria-label="Klantreviews"
-          className="mt-[max(2rem,calc(100svh-640px))] w-full sm:max-w-md lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[380px]"
+          className="mt-[max(2rem,calc(100svh-640px))] w-full sm:max-w-md lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[400px]"
         >
           {prefersReducedMotion ? (
             <div className="flex flex-col gap-3">
