@@ -74,7 +74,7 @@ export function Services() {
         </p>
         <h2 className="max-w-3xl font-heading text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
           <span className="text-white/35">Van klik tot klant,</span>{" "}
-          <span className="text-white">met design dat converteert</span>
+          <span className="text-white">met design dat converteert.</span>
         </h2>
 
         {/* Intro left, service cards (2×2) right */}

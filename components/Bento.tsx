@@ -371,7 +371,7 @@ export function Bento() {
                 About
               </p>
               <h2 className="max-w-2xl font-heading text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
-                Even voorstellen
+                Even voorstellen.
               </h2>
             </div>
           </div>
