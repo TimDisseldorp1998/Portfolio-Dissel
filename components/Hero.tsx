@@ -42,7 +42,7 @@ export function Hero() {
               src={review.logo}
               alt=""
               loading="lazy"
-              className="absolute inset-0 h-full w-full bg-white object-contain"
+              className="absolute inset-0 h-full w-full object-contain"
               onError={(e) => {
                 e.currentTarget.style.display = "none";
               }}
