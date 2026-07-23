@@ -28,7 +28,7 @@ export function Hero() {
     "rounded-2xl border border-white/10 bg-white/[0.05] p-5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.85)] backdrop-blur-xl transition-colors duration-200 max-lg:hover:border-white/25 max-lg:hover:bg-white/[0.09] max-lg:active:border-white/25 max-lg:active:bg-white/[0.09]";
   const reviewBody = (review: (typeof site.hero.reviews)[number]) => (
     <>
-      <blockquote className="text-[0.95rem] leading-relaxed text-white/65">
+      <blockquote className="text-[0.875rem] leading-relaxed text-white/65 lg:text-[0.95rem]">
         {review.quote}
       </blockquote>
       <figcaption className="mt-3.5 flex items-center gap-2.5">
@@ -134,14 +134,14 @@ export function Hero() {
 
         <motion.p
           {...rise(0.35)}
-          className="mt-6 max-w-xl text-base text-white/70 sm:text-lg"
+          className="mt-4 max-w-xl text-base text-white/70 sm:mt-6 sm:text-lg"
         >
           {site.hero.subtitle}
         </motion.p>
 
         <motion.div
           {...rise(0.5)}
-          className="mt-10 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4"
+          className="mt-6 flex flex-col items-stretch gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-4"
         >
           {/* DOM order unchanged (work first, contact second) — only the styles
               swap: contact is now the primary/filled CTA and carries the arrow. */}
@@ -183,7 +183,7 @@ export function Hero() {
         <motion.div
           {...rise(0.8)}
           aria-label="Klantreviews"
-          className="mt-[max(2rem,calc(100svh-640px))] w-full sm:max-w-md lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[400px]"
+          className="mt-12 w-full sm:max-w-md lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[400px]"
         >
           {prefersReducedMotion ? (
             <div className="flex flex-col gap-3">
