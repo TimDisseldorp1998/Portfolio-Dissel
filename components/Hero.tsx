@@ -32,14 +32,32 @@ export function Hero() {
         {review.quote}
       </blockquote>
       <figcaption className="mt-3.5 flex items-center gap-2.5">
-        <span
-          aria-hidden
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-sm font-semibold text-white/80"
-        >
-          {review.initials}
+        {/* Logo overlays the monogram; if the file is missing, onError hides it
+            and the initials fall back into view. */}
+        <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/[0.06] text-sm font-semibold text-white/80">
+          <span aria-hidden>{review.initials}</span>
+          {review.logo && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={review.logo}
+              alt=""
+              loading="lazy"
+              className="absolute inset-0 h-full w-full bg-white object-contain"
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+              }}
+            />
+          )}
         </span>
-        <span className="text-[0.95rem] font-semibold text-white">
-          {review.name}
+        <span className="min-w-0">
+          <span className="block text-[0.95rem] font-semibold text-white">
+            {review.author}
+          </span>
+          {review.role && (
+            <span className="mt-0.5 block text-xs text-white/50">
+              {review.role}
+            </span>
+          )}
         </span>
       </figcaption>
     </>
@@ -171,7 +189,7 @@ export function Hero() {
           {prefersReducedMotion ? (
             <div className="flex flex-col gap-3">
               {site.hero.reviews.map((review) => (
-                <figure key={review.name} className={reviewCardClass}>
+                <figure key={review.author} className={reviewCardClass}>
                   {reviewBody(review)}
                 </figure>
               ))}

@@ -50,15 +50,19 @@ export const site = {
     reviews: [
       {
         quote:
-          "[ Voorbeeldzin. Plaats hier de echte review, maximaal twee regels. ]",
-        name: "De-Stock.nl",
-        initials: "D",
+          "Super blij met de stijl van de website, precies zoals we het in ons hoofd hadden. Erg fijne samenwerking gehad en we hebben inmiddels de eerste oppasdiensten via het platform lopen.",
+        author: "Madelief",
+        role: "Oprichter de Kleintjes van Alkmaar",
+        initials: "K",
+        logo: "/logos/kleintjes-van-alkmaar-logo.png",
       },
       {
         quote:
           "[ Voorbeeldzin. Plaats hier de echte review, maximaal twee regels. ]",
-        name: "De kleintjes van Alkmaar",
-        initials: "K",
+        author: "De-Stock.nl",
+        role: "",
+        initials: "D",
+        logo: "",
       },
     ],
   },
