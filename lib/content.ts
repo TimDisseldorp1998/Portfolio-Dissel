@@ -444,51 +444,54 @@ export const projects: Project[] = [
     },
   },
   {
-    title: "Orbit Analytics",
+    title: "16.08 Streetwear",
     description:
-      "Datavisualisatie voor een groei-analyseplatform.",
-    tags: ["Data Viz", "Product", "TypeScript"],
+      "Volledig herontwerp van de webshop van 16.08 Streetwear: nieuwe huisstijl, heldere categorieën en kortere checkout.",
+    tags: ["Branding", "UX/UI", "Webdesign"],
     href: "#",
     accent: "mix",
     detail: {
-      company: "Orbit",
-      role: "Data-visualisatie",
-      year: "2022",
+      company: "16.08 Streetwear",
+      role: "Branding & UX/UI",
+      year: "2025",
       type: "Web",
       overview:
-        "Datavisualisatie-schermen voor een groei-analyseplatform: dashboards die het verhaal achter de cijfers laten zien, niet alleen de cijfers.",
+        "Een webshop laten ontwerpen voor een kledingmerk begint bij de vraag wat iemand op dat moment probeert te doen: iets zoeken, iets vergelijken of afrekenen. 16.08 Streetwear groeide, de webshop liep achter. Versie 2.0 is een volledig herontwerp, van huisstijl tot checkout.",
       body: [
         {
           heading: "De uitdaging",
           paragraphs: [
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "De oude shop kwam uit een eerdere fase van het merk. De structuur was verouderd en een aantal functies deed niet meer wat het moest. Wie een specifiek item zocht, moest te veel klikken: categorieën liepen door elkaar, filters hielpen nauwelijks en afrekenen kostte meer stappen dan nodig. Voor een merk dat groeit is dat het verschil tussen een bestelling en iemand die afhaakt.",
           ],
         },
         {
           heading: "De aanpak",
           paragraphs: [
-            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.",
+            "Ik ben begonnen met job stories. In plaats van een persona te beschrijven leg je vast wat iemand in een bepaalde situatie voor elkaar wil krijgen, en waarom. Dat geeft elk scherm een duidelijke opdracht: wat moet hier lukken, en wat staat er in de weg. Vanuit die stories heb ik de navigatie, de categorieën en de filters opnieuw ingedeeld en het afrekenen teruggebracht tot de stappen die er echt toe doen.",
+            "Daarnaast heb ik de merkidentiteit uitgewerkt en vastgelegd in een huisstijlhandboek: logo, kleurgebruik, typografie, iconen, button states, invoervelden, web-elementen en illustraties. Dat handboek is opgezet met de developers in gedachten. Geen losse screenshots, wel een set die ze direct kunnen bouwen.",
+            "Tot slot heb ik micro-interacties ontworpen en in de shop verwerkt. Kleine dingen: een knop die reageert, een filter dat laat zien dat hij aanstaat, een overgang die vertelt waar je terechtkomt. Ze vallen niet op als ze goed zijn, wel als ze ontbreken.",
           ],
         },
         {
           heading: "Het resultaat",
           paragraphs: [
-            "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos.",
+            "De shop is nu opgebouwd rond wat een bezoeker komt doen: zoeken, kiezen, afrekenen. Elk scherm heeft één taak en werkt op elk formaat. De developers bouwen uit één handboek, dus wat in het ontwerp staat komt ook zo live, en nieuwe pagina's passen er vanzelf bij.",
           ],
         },
         {
           heading: "Zelf zoiets?",
           paragraphs: [
-            "Loopt jouw project ergens vast? Vertel me erover, dan kijk ik met je mee. Een vrijblijvend gesprek is zo gepland.",
+            "Loopt je webshop achter op je merk, of haken mensen af voordat ze afrekenen? Vertel me waar het misgaat, dan kijk ik met je mee.",
           ],
         },
       ],
       slides: [
-        { label: "Dashboards", gradient: "from-primary/50 via-[#8E5CE0]/40 to-secondary/50" },
-        { label: "Grafiek-kit", gradient: "from-secondary/50 via-primary-700/40 to-primary/50" },
+        { label: "Homepage", gradient: "from-primary/50 via-[#8E5CE0]/40 to-secondary/50" },
+        { label: "Huisstijl", gradient: "from-secondary/50 via-primary-700/40 to-primary/50" },
+        { label: "Componenten", gradient: "from-[#8E5CE0]/50 via-secondary/40 to-primary/60" },
+        { label: "Categorieën", gradient: "from-primary-400/60 via-[#8E5CE0]/40 to-primary-900" },
+        { label: "Checkout", gradient: "from-secondary/60 via-secondary-800 to-primary-900" },
+        { label: "Micro-interacties", gradient: "from-primary/60 via-secondary/40 to-[#8E5CE0]/50" },
       ],
     },
   },
