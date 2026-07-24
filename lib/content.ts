@@ -393,51 +393,53 @@ export const projects: Project[] = [
     },
   },
   {
-    title: "Kiln Coffee",
+    title: "Marktzicht Eten & Drinken",
     description:
-      "E-commerce voor een speciality-branderij, gebouwd rond verhaal en vakmanschap.",
-    tags: ["E-commerce", "Shopify", "Brand"],
+      "Restaurantwebsite voor Marktzicht: mobile-first ontwerp, nieuwe huisstijl en een CMS om zelf het menu bij te werken.",
+    tags: ["Branding", "UX/UI", "Webdesign"],
     href: "#",
     accent: "secondary",
     detail: {
-      company: "Kiln",
-      role: "E-commerce design",
-      year: "2023",
-      type: "E-commerce",
+      company: "Marktzicht Eten & Drinken",
+      role: "Branding & webdesign",
+      year: "2025",
+      type: "Web",
       overview:
-        "Een e-commerce-ervaring waarin het verhaal vooropstaat: elke zak bonen krijgt de herkomst en het vakmanschap dat hij verdient.",
+        "Een website laten maken voor een restaurant begint bij de vraag wat een gast eigenlijk komt doen. Bij Marktzicht Eten & Drinken was dat één ding: een tafel reserveren. Ik ontwierp de site opnieuw vanaf de telefoon, trok een nieuwe huisstijl door vanuit hun eigen menukaart en ontwierp de interface van het CMS waarmee ze het menu zelf bijhouden.",
       body: [
         {
           heading: "De uitdaging",
           paragraphs: [
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "Een restaurantsite is geen brochure. Mensen kijken op hun telefoon, vaak onderweg, en willen weten wat er op de kaart staat en of ze vanavond terecht kunnen. Bij Marktzicht stond die informatie verspreid over de site, en het menu bijwerken kostte elke keer een omweg. Reserveren was daardoor niet de vanzelfsprekende volgende stap, terwijl dat wel het punt van de hele site is.",
           ],
         },
         {
           heading: "De aanpak",
           paragraphs: [
-            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.",
+            "De huisstijl lag er al voor een deel: eerder maakte ik een template voor hun menukaart. Die vormtaal heb ik doorgetrokken naar het web, met het bestaande logo als vast punt. Zo herkent een gast de zaak van tafel tot scherm.",
+            "Daarna heb ik de informatiearchitectuur opnieuw ingedeeld en een heldere sitemap gemaakt, zodat elke pagina één taak heeft. Het ontwerp is mobile first: de telefoonversie is het uitgangspunt, niet het restje. De navigatie is teruggebracht tot wat mensen echt zoeken, en reserveren staat overal binnen handbereik.",
+            "Voor het menu ontwierp ik de beheerinterface. De developers bouwden het CMS, ik zorgde dat het scherm waar Marktzicht wekelijks in werkt logisch werkt: inloggen, gerecht aanpassen, klaar. Geen mailtje sturen bij elke wisseling van de kaart, wel zelf de kaart bijwerken. Het beeld komt uit hun eigen social media, dus wat je op de site ziet is wat er die week op tafel staat. De teksten heb ik opnieuw geschreven, in de toon van de zaak.",
           ],
         },
         {
           heading: "Het resultaat",
           paragraphs: [
-            "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos.",
+            "Marktzicht beheert de kaart nu zelf en een wijziging staat dezelfde dag online. Bezoekers zien op hun telefoon meteen waar ze aan toe zijn en zitten in een paar stappen in het reserveringsproces. De site, de menukaart en het beeld op social media vertellen hetzelfde verhaal.",
           ],
         },
         {
           heading: "Zelf zoiets?",
           paragraphs: [
-            "Loopt jouw project ergens vast? Vertel me erover, dan kijk ik met je mee. Een vrijblijvend gesprek is zo gepland.",
+            "Heb je een zaak waar mensen vooral op hun telefoon naar kijken, en wil je dat ze daarna ook echt reserveren of contact opnemen? Vertel me wat je in gedachten hebt.",
           ],
         },
       ],
       slides: [
-        { label: "Productpagina", gradient: "from-secondary/70 via-secondary-800 to-primary-900" },
-        { label: "Abonnement", gradient: "from-secondary-400/60 via-secondary/30 to-[#8E5CE0]/40" },
+        { label: "Homepage", gradient: "from-secondary/70 via-secondary-700/50 to-primary-900" },
+        { label: "Huisstijl", gradient: "from-secondary-400/60 via-secondary/40 to-[#8E5CE0]/50" },
+        { label: "Menu", gradient: "from-primary/50 via-secondary/50 to-secondary-800" },
+        { label: "CMS", gradient: "from-secondary-800 via-secondary/40 to-primary-900" },
+        { label: "Reserveren", gradient: "from-[#8E5CE0]/50 via-secondary/40 to-primary/60" },
       ],
     },
   },
