@@ -447,7 +447,7 @@ export const projects: Project[] = [
     title: "16.08 Streetwear",
     description:
       "Volledig herontwerp van de webshop van 16.08 Streetwear: nieuwe huisstijl, heldere categorieën en kortere checkout.",
-    tags: ["Branding", "UX/UI", "Webdesign"],
+    tags: ["Branding", "UX/UI", "Webshop"],
     href: "#",
     accent: "mix",
     detail: {
