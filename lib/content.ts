@@ -393,100 +393,105 @@ export const projects: Project[] = [
     },
   },
   {
-    title: "Kiln Coffee",
+    title: "Marktzicht Eten & Drinken",
     description:
-      "E-commerce voor een speciality-branderij, gebouwd rond verhaal en vakmanschap.",
-    tags: ["E-commerce", "Shopify", "Brand"],
+      "Restaurantwebsite voor Marktzicht: mobile-first ontwerp, nieuwe huisstijl en een CMS om zelf het menu bij te werken.",
+    tags: ["Branding", "UX/UI", "Webdesign"],
     href: "#",
     accent: "secondary",
     detail: {
-      company: "Kiln",
-      role: "E-commerce design",
-      year: "2023",
-      type: "E-commerce",
+      company: "Marktzicht Eten & Drinken",
+      role: "Branding & webdesign",
+      year: "2025",
+      type: "Web",
       overview:
-        "Een e-commerce-ervaring waarin het verhaal vooropstaat: elke zak bonen krijgt de herkomst en het vakmanschap dat hij verdient.",
+        "Een website laten maken voor een restaurant begint bij de vraag wat een gast eigenlijk komt doen. Bij Marktzicht Eten & Drinken was dat één ding: een tafel reserveren. Ik ontwierp de site opnieuw vanaf de telefoon, trok een nieuwe huisstijl door vanuit hun eigen menukaart en ontwierp de interface van het CMS waarmee ze het menu zelf bijhouden.",
       body: [
         {
           heading: "De uitdaging",
           paragraphs: [
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "Een restaurantsite is geen brochure. Mensen kijken op hun telefoon, vaak onderweg, en willen weten wat er op de kaart staat en of ze vanavond terecht kunnen. Bij Marktzicht stond die informatie verspreid over de site, en het menu bijwerken kostte elke keer een omweg. Reserveren was daardoor niet de vanzelfsprekende volgende stap, terwijl dat wel het punt van de hele site is.",
           ],
         },
         {
           heading: "De aanpak",
           paragraphs: [
-            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.",
+            "De huisstijl lag er al voor een deel: eerder maakte ik een template voor hun menukaart. Die vormtaal heb ik doorgetrokken naar het web, met het bestaande logo als vast punt. Zo herkent een gast de zaak van tafel tot scherm.",
+            "Daarna heb ik de informatiearchitectuur opnieuw ingedeeld en een heldere sitemap gemaakt, zodat elke pagina één taak heeft. Het ontwerp is mobile first: de telefoonversie is het uitgangspunt, niet het restje. De navigatie is teruggebracht tot wat mensen echt zoeken, en reserveren staat overal binnen handbereik.",
+            "Voor het menu ontwierp ik de beheerinterface. De developers bouwden het CMS, ik zorgde dat het scherm waar Marktzicht wekelijks in werkt logisch werkt: inloggen, gerecht aanpassen, klaar. Geen mailtje sturen bij elke wisseling van de kaart, wel zelf de kaart bijwerken. Het beeld komt uit hun eigen social media, dus wat je op de site ziet is wat er die week op tafel staat. De teksten heb ik opnieuw geschreven, in de toon van de zaak.",
           ],
         },
         {
           heading: "Het resultaat",
           paragraphs: [
-            "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos.",
+            "Marktzicht beheert de kaart nu zelf en een wijziging staat dezelfde dag online. Bezoekers zien op hun telefoon meteen waar ze aan toe zijn en zitten in een paar stappen in het reserveringsproces. De site, de menukaart en het beeld op social media vertellen hetzelfde verhaal.",
           ],
         },
         {
           heading: "Zelf zoiets?",
           paragraphs: [
-            "Loopt jouw project ergens vast? Vertel me erover, dan kijk ik met je mee. Een vrijblijvend gesprek is zo gepland.",
+            "Heb je een zaak waar mensen vooral op hun telefoon naar kijken, en wil je dat ze daarna ook echt reserveren of contact opnemen? Vertel me wat je in gedachten hebt.",
           ],
         },
       ],
       slides: [
-        { label: "Productpagina", gradient: "from-secondary/70 via-secondary-800 to-primary-900" },
-        { label: "Abonnement", gradient: "from-secondary-400/60 via-secondary/30 to-[#8E5CE0]/40" },
+        { label: "Homepage", gradient: "from-secondary/70 via-secondary-700/50 to-primary-900" },
+        { label: "Huisstijl", gradient: "from-secondary-400/60 via-secondary/40 to-[#8E5CE0]/50" },
+        { label: "Menu", gradient: "from-primary/50 via-secondary/50 to-secondary-800" },
+        { label: "CMS", gradient: "from-secondary-800 via-secondary/40 to-primary-900" },
+        { label: "Reserveren", gradient: "from-[#8E5CE0]/50 via-secondary/40 to-primary/60" },
       ],
     },
   },
   {
-    title: "Orbit Analytics",
+    title: "16.08 Streetwear",
     description:
-      "Datavisualisatie voor een groei-analyseplatform.",
-    tags: ["Data Viz", "Product", "TypeScript"],
+      "Volledig herontwerp van de webshop van 16.08 Streetwear: nieuwe huisstijl, heldere categorieën en kortere checkout.",
+    tags: ["Branding", "UX/UI", "Webshop"],
     href: "#",
     accent: "mix",
     detail: {
-      company: "Orbit",
-      role: "Data-visualisatie",
-      year: "2022",
+      company: "16.08 Streetwear",
+      role: "Branding & UX/UI",
+      year: "2025",
       type: "Web",
       overview:
-        "Datavisualisatie-schermen voor een groei-analyseplatform: dashboards die het verhaal achter de cijfers laten zien, niet alleen de cijfers.",
+        "Een webshop laten ontwerpen voor een kledingmerk begint bij de vraag wat iemand op dat moment probeert te doen: iets zoeken, iets vergelijken of afrekenen. 16.08 Streetwear groeide, de webshop liep achter. Versie 2.0 is een volledig herontwerp, van huisstijl tot checkout.",
       body: [
         {
           heading: "De uitdaging",
           paragraphs: [
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "De oude shop kwam uit een eerdere fase van het merk. De structuur was verouderd en een aantal functies deed niet meer wat het moest. Wie een specifiek item zocht, moest te veel klikken: categorieën liepen door elkaar, filters hielpen nauwelijks en afrekenen kostte meer stappen dan nodig. Voor een merk dat groeit is dat het verschil tussen een bestelling en iemand die afhaakt.",
           ],
         },
         {
           heading: "De aanpak",
           paragraphs: [
-            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.",
+            "Ik ben begonnen met job stories. In plaats van een persona te beschrijven leg je vast wat iemand in een bepaalde situatie voor elkaar wil krijgen, en waarom. Dat geeft elk scherm een duidelijke opdracht: wat moet hier lukken, en wat staat er in de weg. Vanuit die stories heb ik de navigatie, de categorieën en de filters opnieuw ingedeeld en het afrekenen teruggebracht tot de stappen die er echt toe doen.",
+            "Daarnaast heb ik de merkidentiteit uitgewerkt en vastgelegd in een huisstijlhandboek: logo, kleurgebruik, typografie, iconen, button states, invoervelden, web-elementen en illustraties. Dat handboek is opgezet met de developers in gedachten. Geen losse screenshots, wel een set die ze direct kunnen bouwen.",
+            "Tot slot heb ik micro-interacties ontworpen en in de shop verwerkt. Kleine dingen: een knop die reageert, een filter dat laat zien dat hij aanstaat, een overgang die vertelt waar je terechtkomt. Ze vallen niet op als ze goed zijn, wel als ze ontbreken.",
           ],
         },
         {
           heading: "Het resultaat",
           paragraphs: [
-            "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos.",
+            "De shop is nu opgebouwd rond wat een bezoeker komt doen: zoeken, kiezen, afrekenen. Elk scherm heeft één taak en werkt op elk formaat. De developers bouwen uit één handboek, dus wat in het ontwerp staat komt ook zo live, en nieuwe pagina's passen er vanzelf bij.",
           ],
         },
         {
           heading: "Zelf zoiets?",
           paragraphs: [
-            "Loopt jouw project ergens vast? Vertel me erover, dan kijk ik met je mee. Een vrijblijvend gesprek is zo gepland.",
+            "Loopt je webshop achter op je merk, of haken mensen af voordat ze afrekenen? Vertel me waar het misgaat, dan kijk ik met je mee.",
           ],
         },
       ],
       slides: [
-        { label: "Dashboards", gradient: "from-primary/50 via-[#8E5CE0]/40 to-secondary/50" },
-        { label: "Grafiek-kit", gradient: "from-secondary/50 via-primary-700/40 to-primary/50" },
+        { label: "Homepage", gradient: "from-primary/50 via-[#8E5CE0]/40 to-secondary/50" },
+        { label: "Huisstijl", gradient: "from-secondary/50 via-primary-700/40 to-primary/50" },
+        { label: "Componenten", gradient: "from-[#8E5CE0]/50 via-secondary/40 to-primary/60" },
+        { label: "Categorieën", gradient: "from-primary-400/60 via-[#8E5CE0]/40 to-primary-900" },
+        { label: "Checkout", gradient: "from-secondary/60 via-secondary-800 to-primary-900" },
+        { label: "Micro-interacties", gradient: "from-primary/60 via-secondary/40 to-[#8E5CE0]/50" },
       ],
     },
   },
