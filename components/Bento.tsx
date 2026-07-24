@@ -440,8 +440,8 @@ export function Bento() {
 
           {/* Column 2 */}
           <div className="flex flex-col gap-4 md:gap-5">
-            {/* Portrait card — grows to close any height gap in this column */}
-            <BentoCard className="min-h-[460px] flex-1 p-0">
+            {/* Portrait card — fills the column below lg; fixed 80px shorter on desktop */}
+            <BentoCard className="min-h-[460px] flex-1 p-0 lg:h-[590px] lg:flex-none">
               <div className="relative flex-1 overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-800 via-neutral-900 to-black">
                 {/* Placeholder portrait — swap with real image at /public/portrait.jpg */}
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -456,8 +456,9 @@ export function Bento() {
               </div>
             </BentoCard>
 
-            {/* 1RM strength calculator card */}
-            <BentoCard>
+            {/* 1RM strength calculator card — grows to fill the space freed by the
+                capped portrait card on desktop, so the column has no bottom gap */}
+            <BentoCard className="lg:flex-1">
               <OneRepMaxCalculator />
             </BentoCard>
           </div>
