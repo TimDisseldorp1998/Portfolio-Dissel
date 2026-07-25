@@ -18,12 +18,18 @@
 .DS_Store
 *.pem
 
+# agent skills (installed via `npx skills add`, not part of the site)
+/.agents/
+/.claude/skills/
+/skills-lock.json
+
 # debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
 .env*.local
 
 # vercel
