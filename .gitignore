@@ -31,6 +31,8 @@ yarn-error.log*
 # local env files
 .env
 .env*.local
+# .env.production wordt bewust wel gecommit (bevat alleen publieke Supabase-keys).
+!.env.production
 
 # vercel
 .vercel
