@@ -344,7 +344,7 @@ export const projects: Project[] = [
     title: "New Edition",
     description:
       "Nieuwe huisstijl doorvertaald naar een B2B-website, met een heldere route naar de Order Portal voor verkooppunten.",
-    tags: ["Huisstijl", "Webdesign", "UX-onderzoek"],
+    tags: ["Brandbook", "Webdesign", "UX"],
     href: "https://www.newedition.nl/en/",
     accent: "primary",
     detail: {
