@@ -19,6 +19,7 @@ import {
   Mail,
 } from "lucide-react";
 import { contact, site, socials } from "@/lib/content";
+import { createClient } from "@/lib/supabase/client";
 import { Section } from "./ui/Section";
 import { Container } from "./ui/Container";
 import { Reveal, RevealStagger, RevealItem } from "./ui/Reveal";
@@ -119,42 +120,64 @@ export function Contact() {
     setStatus("submitting");
     setErrorMessage(null);
 
-    // Send as x-www-form-urlencoded (a CORS "simple request"), NOT JSON.
-    // JSON triggers an OPTIONS preflight that Safari + content blockers
-    // often reject, causing the generic "Load failed" TypeError.
-    const body = new URLSearchParams();
-    body.set("name", values.name.trim() || "—");
-    body.set("email", values.email.trim());
-    body.set("project_type", projectType || "Niet gespecificeerd");
-    body.set("message", values.message.trim());
-    body.set(
-      "_subject",
-      `Nieuw bericht via portfolio — ${projectType || "algemeen"}`
-    );
-    body.set("_template", "table");
-    body.set("_captcha", "false");
-
-    try {
-      const res = await fetch(contact.endpoint, {
-        method: "POST",
-        // Deliberately no Content-Type header: the browser will set
-        // application/x-www-form-urlencoded automatically, keeping this
-        // a "simple" CORS request without a preflight OPTIONS.
-        headers: { Accept: "application/json" },
-        body,
-      });
-      const json = (await res.json().catch(() => ({}))) as {
-        success?: string;
-        message?: string;
-      };
-      if (!res.ok || json.success !== "true") {
-        throw new Error(
-          json.message || "Er ging iets mis bij het versturen."
-        );
+    // 1) Store the lead in Supabase. The site is a static export (no server),
+    //    so the browser writes directly with the public publishable key. RLS
+    //    lets anonymous visitors only INSERT, never read other submissions.
+    const storeInSupabase = async () => {
+      try {
+        const supabase = createClient();
+        const { error } = await supabase.from("contact_submissions").insert({
+          name: values.name.trim() || null,
+          email: values.email.trim(),
+          project_type: projectType || null,
+          message: values.message.trim(),
+        });
+        return !error;
+      } catch {
+        return false;
       }
+    };
+
+    // 2) Also fire the existing email notification via formsubmit.co, so a
+    //    submission still lands in the inbox. Sent as x-www-form-urlencoded
+    //    (a CORS "simple request"), NOT JSON, to avoid a preflight OPTIONS
+    //    that Safari + content blockers often reject.
+    const sendEmail = async () => {
+      try {
+        const body = new URLSearchParams();
+        body.set("name", values.name.trim() || "—");
+        body.set("email", values.email.trim());
+        body.set("project_type", projectType || "Niet gespecificeerd");
+        body.set("message", values.message.trim());
+        body.set(
+          "_subject",
+          `Nieuw bericht via portfolio — ${projectType || "algemeen"}`
+        );
+        body.set("_template", "table");
+        body.set("_captcha", "false");
+        const res = await fetch(contact.endpoint, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body,
+        });
+        const json = (await res.json().catch(() => ({}))) as {
+          success?: string;
+        };
+        return res.ok && json.success === "true";
+      } catch {
+        return false;
+      }
+    };
+
+    const [stored, emailed] = await Promise.all([
+      storeInSupabase(),
+      sendEmail(),
+    ]);
+
+    // The message got through if at least one channel succeeded.
+    if (stored || emailed) {
       setStatus("sent");
-    } catch {
-      // Any failure (network, CORS, blocker) → friendly fallback with mailto.
+    } else {
       setStatus("error");
       setErrorMessage(
         `We konden je bericht niet direct versturen. Mail me rechtstreeks op ${site.email}.`
