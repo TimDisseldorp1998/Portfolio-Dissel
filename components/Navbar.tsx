@@ -192,7 +192,7 @@ export function Navbar() {
       <nav
         aria-label="Main"
         className={cn(
-          "flex w-auto origin-bottom items-center gap-1 rounded-full border border-white/10 px-2 py-1 text-white transition-all duration-[250ms] sm:px-2.5 lg:origin-top",
+          "flex w-auto origin-bottom items-center gap-1 rounded-full border border-white/10 px-2.5 py-1.5 text-white transition-all duration-[250ms] sm:py-1 lg:origin-top",
           scrolled
             ? "bg-[#12121A]/85 shadow-[0_8px_32px_rgba(0,0,0,0.55)] backdrop-blur-[12px]"
             : "bg-[#12121A] shadow-[0_4px_24px_rgba(0,0,0,0.4)]",
@@ -208,9 +208,9 @@ export function Navbar() {
           href="#top"
           onClick={(e) => scrollToSection(e, "#top")}
           aria-label="DisselDesign — terug naar boven"
-          className="flex min-h-[44px] shrink-0 items-center rounded-full px-2 transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
+          className="flex min-h-[50px] shrink-0 items-center rounded-full px-2 transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40 sm:min-h-[44px]"
         >
-          <LogoMark className="h-7 w-auto" />
+          <LogoMark className="h-8 w-auto sm:h-7" />
         </a>
 
         <ul className="flex items-center gap-0.5 sm:gap-1">
@@ -225,14 +225,23 @@ export function Navbar() {
                   aria-label={item.label}
                   aria-current={isActive ? "true" : undefined}
                   className={cn(
-                    "flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-full px-3 text-[15px] font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40 sm:min-w-0 sm:px-3.5",
+                    "flex min-h-[50px] min-w-[50px] items-center justify-center gap-1.5 rounded-full px-3.5 text-[15px] font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40 sm:min-h-[44px] sm:min-w-0 sm:px-3.5",
                     isActive
                       ? "bg-primary/15 text-primary ring-1 ring-primary/30"
                       : "text-white/60 hover:bg-white/[0.07] hover:text-white"
                   )}
                 >
-                  <Icon size={17} strokeWidth={2} aria-hidden />
-                  <span className="hidden sm:inline">{item.label}</span>
+                  <Icon
+                    size={20}
+                    strokeWidth={2}
+                    aria-hidden
+                    className="sm:h-[17px] sm:w-[17px]"
+                  />
+                  {/* On mobile only the active section shows its name; from sm up
+                      every item shows its label. */}
+                  <span className={cn(isActive ? "inline" : "hidden sm:inline")}>
+                    {item.label}
+                  </span>
                 </a>
               </li>
             );
