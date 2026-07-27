@@ -440,10 +440,20 @@ export function Bento() {
 
           {/* Column 2 */}
           <div className="flex flex-col gap-4 md:gap-5">
-            {/* Portrait card — fills the column below lg; fixed 80px shorter on desktop */}
-            <BentoCard className="min-h-[460px] flex-1 p-0 lg:h-[590px] lg:flex-none">
-              <div className="relative flex-1 overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-800 via-neutral-900 to-black">
-                {/* Placeholder portrait — swap with real image at /public/portrait.jpg */}
+            {/* Portrait card — fixed 3:4 (360x480) ratio; the image fills the whole
+                container edge-to-edge. `!p-0` beats BentoCard's base p-6 (cn is
+                clsx-only, so a plain p-0 would lose to p-6). */}
+            <BentoCard className="aspect-[3/4] !p-0">
+              <div className="relative h-full w-full overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-800 via-neutral-900 to-black">
+                {/* Real portrait fills the container (bg-cover = no letterbox, no
+                    black bars). Drop the file at /public/portrait.jpg. As a CSS
+                    background there's no broken-image icon when it's missing — the
+                    gradient below simply shows instead. */}
+                <div
+                  aria-hidden
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: "url('/portrait.jpg')" }}
+                />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="h-64 w-64 rounded-full bg-gradient-to-br from-primary/40 to-secondary/30 blur-3xl" />
                 </div>
@@ -456,9 +466,9 @@ export function Bento() {
               </div>
             </BentoCard>
 
-            {/* 1RM strength calculator card — grows to fill the space freed by the
-                capped portrait card on desktop, so the column has no bottom gap */}
-            <BentoCard className="lg:flex-1">
+            {/* 1RM strength calculator card — natural height (does not grow to
+                fill the column). */}
+            <BentoCard>
               <OneRepMaxCalculator />
             </BentoCard>
           </div>
