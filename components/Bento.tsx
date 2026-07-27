@@ -467,8 +467,9 @@ export function Bento() {
             </BentoCard>
 
             {/* 1RM strength calculator card — grows to fill the space freed by the
-                capped portrait card on desktop, so the column has no bottom gap */}
-            <BentoCard className="lg:flex-1">
+                capped portrait card on desktop; content is centred so the extra
+                room splits evenly top and bottom (equal padding). */}
+            <BentoCard className="lg:flex-1 lg:justify-center">
               <OneRepMaxCalculator />
             </BentoCard>
           </div>
