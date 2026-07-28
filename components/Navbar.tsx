@@ -45,12 +45,21 @@ const IDLE_AFTER = 220;
  * fast and consistent regardless of how far the target is.
  */
 let scrollRAF = 0;
+/**
+ * True while a nav-tap smooth-scroll is running. The scroll listener reads it
+ * to skip the compact-while-scrolling shrink — tapping a nav item should keep
+ * the pill at its resting size; only a real finger/wheel scroll compacts it.
+ */
+let programmaticScroll = false;
+
 function animateScrollTo(targetY: number, duration = 600) {
   cancelAnimationFrame(scrollRAF);
+  programmaticScroll = true;
   const startY = window.scrollY;
   const distance = targetY - startY;
   if (Math.abs(distance) < 2) {
     window.scrollTo({ top: targetY, behavior: "instant" as ScrollBehavior });
+    programmaticScroll = false;
     return;
   }
   const startTime = performance.now();
@@ -61,7 +70,15 @@ function animateScrollTo(targetY: number, duration = 600) {
       top: startY + distance * easeOutCubic(t),
       behavior: "instant" as ScrollBehavior,
     });
-    if (t < 1) scrollRAF = requestAnimationFrame(step);
+    if (t < 1) {
+      scrollRAF = requestAnimationFrame(step);
+    } else {
+      // Let the last settling scroll events flush before re-arming the
+      // gesture-driven shrink, so the tail of the scroll doesn't blip the pill.
+      window.setTimeout(() => {
+        programmaticScroll = false;
+      }, 80);
+    }
   }
   scrollRAF = requestAnimationFrame(step);
 }
@@ -79,6 +96,19 @@ export function Navbar() {
     let raf = 0;
     let idleTimer = 0;
     const onScroll = () => {
+      // Blur/shadow state tracks scroll position regardless of what moved it.
+      if (!raf) {
+        raf = requestAnimationFrame(() => {
+          raf = 0;
+          const y = window.scrollY;
+          setScrolled((prev) => (prev ? y > REST_AT : y >= SCROLLED_AT));
+        });
+      }
+
+      // The grow/shrink is a finger-scroll affordance only: tapping a nav item
+      // scrolls programmatically, and the pill must stay at its resting size.
+      if (programmaticScroll) return;
+
       if (!scrollingRef.current) {
         scrollingRef.current = true;
         setIsScrolling(true);
@@ -88,13 +118,6 @@ export function Navbar() {
         scrollingRef.current = false;
         setIsScrolling(false);
       }, IDLE_AFTER);
-
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        raf = 0;
-        const y = window.scrollY;
-        setScrolled((prev) => (prev ? y > REST_AT : y >= SCROLLED_AT));
-      });
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
@@ -192,7 +215,7 @@ export function Navbar() {
       <nav
         aria-label="Main"
         className={cn(
-          "flex w-auto origin-bottom items-center gap-1 rounded-full border border-white/10 px-2.5 py-1.5 text-white transition-all duration-[250ms] sm:py-1 lg:origin-top",
+          "flex w-auto origin-bottom items-center gap-1 rounded-full border border-white/10 px-2.5 py-1.5 text-white transition-[transform,background-color,box-shadow] duration-[320ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform sm:py-1 lg:origin-top",
           scrolled
             ? "bg-[#12121A]/85 shadow-[0_8px_32px_rgba(0,0,0,0.55)] backdrop-blur-[12px]"
             : "bg-[#12121A] shadow-[0_4px_24px_rgba(0,0,0,0.4)]",
