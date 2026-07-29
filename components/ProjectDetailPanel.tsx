@@ -201,7 +201,23 @@ export function ProjectDetailPanel({
                     i === slide ? "opacity-100" : "opacity-0"
                   )}
                 >
-                  <p className="text-sm font-medium uppercase tracking-[0.18em] text-white/80">
+                  {s.src && (
+                    <>
+                      <img
+                        src={s.src}
+                        alt={s.alt ?? ""}
+                        draggable={false}
+                        loading={i === 0 ? undefined : "lazy"}
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
+                      {/* Bottom scrim so the label stays legible over the image */}
+                      <div
+                        aria-hidden
+                        className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 to-transparent"
+                      />
+                    </>
+                  )}
+                  <p className="relative text-sm font-medium uppercase tracking-[0.18em] text-white/80">
                     {s.label}
                   </p>
                 </div>

@@ -164,7 +164,10 @@ export type ProjectDetail = {
    *  panel renders these sections instead of the contribution bullets. */
   body?: CaseSection[];
   contribution?: { lead: string; rest: string }[];
-  slides: { label: string; gradient: string }[];
+  /** Carousel slides. `gradient` is the base backdrop (shown while an image
+   *  loads, or on its own for placeholder slides); add `src`/`alt` to overlay
+   *  a real screenshot on top of it. */
+  slides: { label: string; gradient: string; src?: string; alt?: string }[];
   /** Award link (e.g. Awwwards). Omit for projects without honors. */
   award?: { label: string; href: string };
 };
@@ -333,6 +336,12 @@ export const projects: Project[] = [
         },
       ],
       slides: [
+        {
+          label: "Homepage op mobiel",
+          gradient: "from-primary/60 via-[#8E5CE0]/50 to-secondary/50",
+          src: "/mockup/ziggodome-homepage-screen.webp",
+          alt: "Mobiele homepage van de Ziggo Dome site",
+        },
         { label: "Mobile-first home", gradient: "from-primary/60 via-[#8E5CE0]/50 to-secondary/50" },
         { label: "Bottom-navigatie", gradient: "from-primary-800 via-primary/40 to-secondary/40" },
         { label: "Agenda", gradient: "from-[#8E5CE0]/50 via-primary-700/40 to-primary/60" },
