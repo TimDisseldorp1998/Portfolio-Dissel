@@ -504,17 +504,20 @@ export function Bento() {
             {/* Tools card — full-width bottom row on tablet, middle of the stack on desktop */}
             <BentoCard className="md:order-last md:col-span-2 lg:order-none">
               <CardLabel>Toolstack</CardLabel>
-              <div className="grid grid-cols-5 gap-2.5">
+              <div className="grid grid-cols-6 gap-2.5">
                 {bento.tools.map((tool) => (
                   <div
                     key={tool.name}
                     title={tool.name}
-                    className={cn(
-                      "flex aspect-square items-center justify-center rounded-xl bg-gradient-to-br text-[0.6875rem] font-semibold text-white shadow-sm transition-transform hover:-translate-y-0.5",
-                      tool.gradient
-                    )}
+                    className="flex aspect-square items-center justify-center transition-transform duration-200 ease-out hover:scale-[1.04]"
                   >
-                    {tool.label}
+                    <img
+                      src={tool.icon}
+                      alt={`${tool.name} logo`}
+                      loading="lazy"
+                      draggable={false}
+                      className="h-full w-full object-contain"
+                    />
                   </div>
                 ))}
               </div>
