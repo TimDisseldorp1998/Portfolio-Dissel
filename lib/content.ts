@@ -347,6 +347,12 @@ export const projects: Project[] = [
           alt: "Mobiele homepage van de Ziggo Dome site",
         },
         { label: "Mobile-first home", gradient: "from-primary/60 via-[#8E5CE0]/50 to-secondary/50" },
+        {
+          label: "Desktop en mobiel",
+          gradient: "from-primary/60 via-[#8E5CE0]/50 to-secondary/50",
+          src: "/mockup/ziggodome-mockup-handinmobile.webp",
+          alt: "De Ziggo Dome site op desktop en op een telefoon in de hand",
+        },
         { label: "Bottom-navigatie", gradient: "from-primary-800 via-primary/40 to-secondary/40" },
         { label: "Agenda", gradient: "from-[#8E5CE0]/50 via-primary-700/40 to-primary/60" },
         { label: "3D-plattegrond", gradient: "from-primary/50 via-[#8E5CE0]/40 to-secondary/50" },
