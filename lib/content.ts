@@ -132,17 +132,19 @@ export const bento = {
     { period: "2014 — 2017", type: "", degree: "Havo diploma (VAVO)", school: "R.O.C. Horizon College" },
     { period: "2010 — 2014", type: "", degree: "Mavo diploma", school: "Jac. P. Thijsse College" },
   ],
+  // Toolstack — voeg een tool toe of haal er een weg door hier een regel te
+  // wijzigen. `icon` verwijst naar een bestand in /public/icons/.
   tools: [
-    { label: "Fg", name: "Figma", gradient: "from-purple-500 via-pink-500 to-orange-500" },
-    { label: "Ps", name: "Photoshop", gradient: "from-blue-900 to-cyan-500" },
-    { label: "Ai", name: "Illustrator", gradient: "from-orange-500 to-yellow-400" },
-    { label: "Fr", name: "Framer", gradient: "from-blue-500 to-indigo-600" },
-    { label: "Nt", name: "Notion", gradient: "from-neutral-800 to-neutral-500" },
-    { label: "Vs", name: "VS Code", gradient: "from-sky-500 to-blue-600" },
-    { label: "Cs", name: "Cursor", gradient: "from-neutral-900 to-neutral-700" },
-    { label: "Ln", name: "Linear", gradient: "from-fuchsia-500 to-purple-600" },
-    { label: "Sp", name: "Spotify", gradient: "from-emerald-400 to-emerald-600" },
-    { label: "Sl", name: "Slack", gradient: "from-pink-500 to-yellow-500" },
+    { name: "Figma", icon: "/icons/figma.png" },
+    { name: "Photoshop", icon: "/icons/photoshop.png" },
+    { name: "Illustrator", icon: "/icons/illustrator.png" },
+    { name: "Miro", icon: "/icons/miro.png" },
+    { name: "Notion", icon: "/icons/notion.png" },
+    { name: "Claude", icon: "/icons/claude.png" },
+    { name: "ChatGPT", icon: "/icons/chatgpt.png" },
+    { name: "Google Analytics", icon: "/icons/analytics.png" },
+    { name: "Hotjar", icon: "/icons/hotjar.png" },
+    { name: "Spotify", icon: "/icons/spotify.png" },
   ],
 };
 
