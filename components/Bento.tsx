@@ -504,7 +504,7 @@ export function Bento() {
             {/* Tools card — full-width bottom row on tablet, middle of the stack on desktop */}
             <BentoCard className="md:order-last md:col-span-2 lg:order-none">
               <CardLabel>Toolstack</CardLabel>
-              <div className="grid grid-cols-3 gap-2.5 md:grid-cols-6">
+              <div className="grid grid-cols-6 gap-2.5">
                 {bento.tools.map((tool) => (
                   <div
                     key={tool.name}
