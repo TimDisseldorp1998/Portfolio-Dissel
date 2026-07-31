@@ -69,12 +69,26 @@ export function Projects() {
                   )}
                 >
                   <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-105">
-                    <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.08)_100%)]" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="font-heading text-4xl font-semibold text-white/70 mix-blend-overlay">
-                        {p.title}
-                      </span>
-                    </div>
+                    {p.detail.slides[0]?.src ? (
+                      // First slide image doubles as the card thumbnail — the
+                      // card and the case open on the same visual.
+                      <img
+                        src={p.detail.slides[0].src}
+                        alt=""
+                        loading="lazy"
+                        draggable={false}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <>
+                        <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.08)_100%)]" />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="font-heading text-4xl font-semibold text-white/70 mix-blend-overlay">
+                            {p.title}
+                          </span>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
 
