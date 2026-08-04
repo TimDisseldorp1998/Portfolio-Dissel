@@ -370,6 +370,12 @@ export const projects: Project[] = [
           src: "/mockup/zd-mockup-slider5-verkooppagina.webp",
           alt: "Desktop verkooppagina van een event in de Ziggo Dome met ticketprijzen",
         },
+        {
+          label: "Iconenset",
+          gradient: "from-primary-800 via-primary/40 to-secondary/40",
+          src: "/mockup/zd-mockup-slider6-Iconen.webp",
+          alt: "Set met de custom iconen die voor de Ziggo Dome site zijn ontworpen",
+        },
       ],
     },
   },
