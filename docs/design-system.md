@@ -217,20 +217,18 @@ altijd SVG, nooit emoji. Het verloop uit §1 is geen beeld maar een achtergrond.
 
 ## §9 — Copy
 
-Alle zichtbare tekst staat in `lib/content.ts` en wordt daar geïmporteerd — nooit hard in
+Deze site heeft geen losse copy-regels in de spec staan, en dat is met opzet. Alle
+zichtbare tekst leeft in `lib/content.ts` en wordt daaruit geïmporteerd — nooit hard in
 een component getypt.
 
-Kop van de Hero: staat in `site`.
+Waar wat staat:
 
-Introregel van de Hero: staat in `site`.
+- de kop, de introregel en de knoptekst van de Hero komen uit `site`
+- de sectiekoppen en introregels komen per sectie uit hetzelfde bestand
+- de contactgegevens en de formulierlabels komen uit `contact`
 
-Sectiekoppen en introregels: staan per sectie in `lib/content.ts`.
-
-Knoptekst van de primaire knop in de Hero: staat in `site`.
-
-Contactgegevens en formulierlabels: staan in `contact`.
-
-Nieuwe teksten horen dus eerst in `lib/content.ts` en dan pas in een component.
+Nieuwe teksten horen dus eerst in `lib/content.ts` en dan pas in een component. Wie de
+tekst van een sectie wil weten, leest dat bestand — niet deze spec.
 
 ## §10 — Openstaand
 
