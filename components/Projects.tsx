@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { projects, type Project } from "@/lib/content";
@@ -20,10 +20,40 @@ const accentBg: Record<Project["accent"], string> = {
   mix: "bg-[radial-gradient(circle_at_25%_20%,rgba(92,221,255,0.42),transparent_55%),radial-gradient(circle_at_80%_80%,rgba(255,131,61,0.4),transparent_60%)]",
 };
 
+const CASE_PARAM = "case";
+
+function caseFromUrl(): Project | null {
+  const slug = new URLSearchParams(window.location.search).get(CASE_PARAM);
+  if (!slug) return null;
+  return projects.find((p) => p.slug === slug) ?? null;
+}
+
 export function Projects() {
   const [active, setActive] = useState<Project | null>(null);
   // Card that opened the panel — focus returns here on close (a11y).
   const triggerRef = useRef<HTMLButtonElement | null>(null);
+  // Hebben wij zelf een history-entry gepusht voor deze case? Zo niet (iemand
+  // kwam binnen via een gedeelde link), dan is er niets om naar terug te gaan.
+  const pushedRef = useRef(false);
+
+  // Directe binnenkomst met ?case=<slug> opent meteen de juiste case.
+  useEffect(() => {
+    const fromUrl = caseFromUrl();
+    if (fromUrl) setActive(fromUrl);
+  }, []);
+
+  // Back en Forward bedienen de drawer. Alles blijft client-side op dezelfde
+  // pagina (static export), dus de scrollpositie eronder verandert niet.
+  useEffect(() => {
+    const onPopState = () => {
+      const fromUrl = caseFromUrl();
+      setActive(fromUrl);
+      pushedRef.current = fromUrl !== null;
+      if (!fromUrl) triggerRef.current?.focus({ preventScroll: true });
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
 
   function openProject(
     project: Project,
@@ -31,11 +61,22 @@ export function Projects() {
   ) {
     triggerRef.current = e.currentTarget;
     setActive(project);
+    window.history.pushState(null, "", `?${CASE_PARAM}=${project.slug}`);
+    pushedRef.current = true;
   }
 
   function closeProject() {
+    if (pushedRef.current) {
+      // Onze eigen entry terugdraaien; de popstate-handler sluit de drawer en
+      // zet de focus terug op de kaart.
+      pushedRef.current = false;
+      window.history.back();
+      return;
+    }
+    // Binnengekomen via een gedeelde link: alleen de param opruimen.
+    window.history.replaceState(null, "", window.location.pathname);
     setActive(null);
-    triggerRef.current?.focus();
+    triggerRef.current?.focus({ preventScroll: true });
   }
 
   return (
@@ -56,11 +97,12 @@ export function Projects() {
         <RevealStagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((p) => (
             <RevealItem key={p.title}>
-              <button
-                type="button"
-                onClick={(e) => openProject(p, e)}
-                aria-haspopup="dialog"
-                className="group relative block w-full cursor-pointer overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] text-left backdrop-blur-sm transition-[transform,background-color,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+              {/* De kaart zelf is geen knop meer: anders wordt de complete
+                  kaarttekst één lange toegankelijke naam en telt de h3 niet
+                  als kop. De knop is nu een overlay die de hele kaart bedekt,
+                  met een korte naam. Visueel en qua klikgebied identiek. */}
+              <article
+                className="group relative block w-full overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] text-left backdrop-blur-sm transition-[transform,background-color,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.06] has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-primary/30"
               >
                 <div
                   className={cn(
@@ -97,7 +139,10 @@ export function Projects() {
                     <h3 className="font-heading text-lg font-semibold leading-snug text-white">
                       {p.title}
                     </h3>
-                    <span className="mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-[background-color,color] duration-300 group-hover:bg-secondary group-hover:text-white">
+                    <span
+                      aria-hidden
+                      className="mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-[background-color,color] duration-300 group-hover:bg-secondary group-hover:text-white"
+                    >
                       <ArrowUpRight size={16} />
                     </span>
                   </div>
@@ -115,7 +160,16 @@ export function Projects() {
                     ))}
                   </div>
                 </div>
-              </button>
+
+                <button
+                  type="button"
+                  onClick={(e) => openProject(p, e)}
+                  aria-haspopup="dialog"
+                  className="absolute -inset-px z-10 cursor-pointer rounded-3xl focus:outline-none"
+                >
+                  <span className="sr-only">Bekijk case: {p.title}</span>
+                </button>
+              </article>
             </RevealItem>
           ))}
         </RevealStagger>

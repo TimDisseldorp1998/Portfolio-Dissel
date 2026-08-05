@@ -51,8 +51,11 @@ export default function RootLayout({
         >
           Naar hoofdinhoud
         </a>
-        {children}
+        {/* Vóór {children}: de cookiekeuze is met Tab direct na de skip link
+            bereikbaar in plaats van pas na de hele pagina. Hij staat fixed,
+            dus de DOM-volgorde verandert niets aan de weergave. */}
         <CookieConsent />
+        {children}
       </body>
     </html>
   );

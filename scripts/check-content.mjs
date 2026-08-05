@@ -15,8 +15,11 @@ const CONTENT_FILE = new URL("../lib/content.ts", import.meta.url);
 
 const source = readFileSync(CONTENT_FILE, "utf8");
 
-// Pakt elke `title: "..."` met de `description: "..."` die er direct op volgt.
-const pattern = /title:\s*"([^"]+)",\s*\n\s*description:\s*\n?\s*"([^"]+)"/g;
+// Pakt elke `title: "..."` met de `description: "..."` die erop volgt. Tussen
+// die twee mag alleen de `slug`-regel staan; alles anders laat de controle
+// bewust vastlopen, zodat een gewijzigde opmaak opvalt.
+const pattern =
+  /title:\s*"([^"]+)",\s*\n(?:\s*slug:\s*"[^"]+",\s*\n)?\s*description:\s*\n?\s*"([^"]+)"/g;
 
 const descriptions = [];
 let match;
