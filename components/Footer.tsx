@@ -69,15 +69,23 @@ export function Footer() {
           © {new Date().getFullYear()} {site.name}. All rights reserved.
           Designed &amp; built by {site.name}.
         </p>
-        {process.env.NEXT_PUBLIC_GA_ID ? (
-          <button
-            type="button"
-            onClick={reopenConsent}
+        <div className="flex items-center gap-5">
+          <a
+            href="/privacy/"
             className="rounded text-xs text-white/45 underline-offset-4 transition-colors hover:text-white/70 hover:underline focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
           >
-            Cookievoorkeuren
-          </button>
-        ) : null}
+            Privacy &amp; cookies
+          </a>
+          {process.env.NEXT_PUBLIC_GA_ID ? (
+            <button
+              type="button"
+              onClick={reopenConsent}
+              className="rounded text-xs text-white/45 underline-offset-4 transition-colors hover:text-white/70 hover:underline focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+            >
+              Cookievoorkeuren
+            </button>
+          ) : null}
+        </div>
       </Container>
     </footer>
   );
