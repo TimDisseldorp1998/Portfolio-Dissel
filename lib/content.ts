@@ -11,7 +11,7 @@ export const site = {
   email: "info@disseldesign.com",
   // Wordt getoond in de privacyverklaring (AVG: identiteit van de
   // verwerkingsverantwoordelijke). Leeg laten = regel valt weg.
-  kvk: "",
+  kvk: "94838852",
   tagline:
     "I design and build calm, considered digital products — where craft meets clarity.",
   hero: {
