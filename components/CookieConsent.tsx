@@ -34,7 +34,6 @@ export function reopenConsent() {
 export function CookieConsent() {
   // undefined = keuze nog niet uit storage gelezen (voorkomt hydration-flits)
   const [consent, setConsent] = useState<Consent | null | undefined>(undefined);
-  const acceptRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   // Op de privacy-pagina geen banner: die moet juist vrij leesbaar zijn
   // voordat iemand kiest. Terug op de site verschijnt de banner alsnog.
@@ -63,7 +62,9 @@ export function CookieConsent() {
     if (!bannerOpen) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    acceptRef.current?.focus();
+    // Focus op het blok zelf, niet op de knop: toetsenbord-gebruikers komen
+    // met Tab direct bij de opties, zonder zichtbare focus-ring bij openen.
+    dialogRef.current?.focus();
 
     function onKeyDown(e: KeyboardEvent) {
       if (e.key !== "Tab") return;
@@ -132,10 +133,11 @@ gtag('config', '${GA_ID}');`}
             role="dialog"
             aria-modal="true"
             aria-label="Cookievoorkeuren"
-            className="fixed inset-x-4 bottom-[calc(8rem+env(safe-area-inset-bottom))] z-[60] mx-auto flex max-w-md flex-col gap-4 rounded-2xl border border-white/10 bg-[#12121A]/95 p-6 text-white shadow-[0_8px_32px_rgba(0,0,0,0.55)] backdrop-blur-md sm:p-7 lg:bottom-6"
+            tabIndex={-1}
+            className="fixed inset-x-4 bottom-[calc(8rem+env(safe-area-inset-bottom))] z-[60] mx-auto flex max-w-xl flex-col gap-4 rounded-2xl border border-white/10 bg-[#12121A]/95 p-6 text-white shadow-[0_8px_32px_rgba(0,0,0,0.55)] outline-none backdrop-blur-md sm:p-7 lg:bottom-6"
           >
-            <p className="font-heading text-lg font-semibold">Cookies</p>
-            <p className="text-sm leading-relaxed text-white/75">
+            <p className="font-heading text-xl font-semibold">Cookies</p>
+            <p className="text-base leading-relaxed text-white/75">
               Met jouw toestemming gebruik ik cookies om verkeer te
               analyseren, advertenties te personaliseren en je ervaring te
               verbeteren. Lees meer in de{" "}
@@ -147,23 +149,24 @@ gtag('config', '${GA_ID}');`}
               </a>
               .
             </p>
-            {/* Zelfde hover als de site-CTA's: alleen een tint donkerder,
-                geen lift (ui/Button springt omhoog, dat oogt hier onrustig). */}
-            <button
-              ref={acceptRef}
-              type="button"
-              onClick={() => choose("granted")}
-              className="mt-2 inline-flex min-h-[52px] w-full items-center justify-center rounded-full bg-primary font-semibold text-ink shadow-glow transition-all duration-200 hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
-            >
-              Accepteren
-            </button>
-            <button
-              type="button"
-              onClick={() => choose("denied")}
-              className="mx-auto min-h-[44px] rounded px-4 text-sm text-white/50 underline-offset-4 transition-colors hover:text-white/80 hover:underline focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
-            >
-              Weigeren
-            </button>
+            <div className="mt-2 flex items-center gap-3">
+              {/* Zelfde hover als de site-CTA's: alleen een tint donkerder,
+                  geen lift (ui/Button springt omhoog, dat oogt hier onrustig). */}
+              <button
+                type="button"
+                onClick={() => choose("granted")}
+                className="inline-flex min-h-[52px] flex-1 items-center justify-center rounded-full bg-primary font-semibold text-ink shadow-glow transition-all duration-200 hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
+              >
+                Accepteren
+              </button>
+              <button
+                type="button"
+                onClick={() => choose("denied")}
+                className="min-h-[44px] shrink-0 rounded px-4 text-sm text-white/50 underline-offset-4 transition-colors hover:text-white/80 hover:underline focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+              >
+                Weigeren
+              </button>
+            </div>
           </div>
         </>
       )}
