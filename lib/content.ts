@@ -40,10 +40,14 @@ export const site = {
     trustedBy: {
       label: "Merken waar ik de afgelopen jaren aan werkte",
       logos: [
-        { src: "/logos/ziggodome-logo.svg", alt: "Ziggo Dome", size: "h-10 sm:h-11" },
-        { src: "/logos/new-edition-logo.svg", alt: "New Edition", size: "h-7 sm:h-8" },
-        { src: "/logos/dtx-logo.svg", alt: "DTX", size: "h-8 sm:h-9" },
-        { src: "/logos/1608-logo.svg", alt: "1608", size: "h-5 sm:h-6" },
+        // `w`/`h` zijn de intrinsieke maten uit de SVG's. Ze staan als
+        // width/height op de <img> zodat de browser de verhouding kent en de
+        // rij niet verspringt tijdens het laden; de zichtbare hoogte blijft
+        // via `size` geregeld.
+        { src: "/logos/ziggodome-logo.svg", alt: "Ziggo Dome", size: "h-10 sm:h-11", w: 242, h: 242 },
+        { src: "/logos/new-edition-logo.svg", alt: "New Edition", size: "h-7 sm:h-8", w: 160, h: 77 },
+        { src: "/logos/dtx-logo.svg", alt: "DTX", size: "h-8 sm:h-9", w: 120, h: 90 },
+        { src: "/logos/1608-logo.svg", alt: "1608", size: "h-5 sm:h-6", w: 160, h: 55 },
       ],
     },
     /**

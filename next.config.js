@@ -15,6 +15,14 @@ const nextConfig = {
   pageExtensions: isDev
     ? ["tsx", "ts", "jsx", "js", "dev.tsx"]
     : ["tsx", "ts", "jsx", "js"],
+  env: {
+    // Copyright-jaar wordt hier bij de build vastgezet en als letterlijke
+    // waarde in de bundle gebakken. `new Date()` in een client component zou
+    // op een statische export uiteenlopen: de HTML houdt het build-jaar vast
+    // terwijl de client het huidige jaar rendert (hydration-mismatch rond
+    // de jaarwisseling).
+    NEXT_PUBLIC_BUILD_YEAR: String(new Date().getFullYear()),
+  },
 };
 
 module.exports = nextConfig;

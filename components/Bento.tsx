@@ -12,6 +12,7 @@ import { bento, experience, site } from "@/lib/content";
 import { Container } from "./ui/Container";
 import { Reveal } from "./ui/Reveal";
 import { LinkedinFilled, InstagramFilled } from "./ui/BrandIcons";
+import { PauseButton } from "./ui/PauseButton";
 import { cn } from "@/lib/cn";
 
 type BentoCardProps = {
@@ -212,15 +213,16 @@ function OneRepMaxCalculator() {
 
 function Slider() {
   const [i, setI] = useState(0);
+  const [paused, setPaused] = useState(false);
   const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion || paused) return;
     const id = window.setInterval(() => {
       setI((v) => (v + 1) % bento.slider.length);
     }, 4200);
     return () => window.clearInterval(id);
-  }, [prefersReducedMotion]);
+  }, [prefersReducedMotion, paused]);
 
   return (
     <div className="group/slider relative min-h-[220px] flex-1 overflow-hidden rounded-2xl bg-black/40">
@@ -240,8 +242,9 @@ function Slider() {
             loading="lazy"
             className="h-full w-full object-cover"
           />
-          {/* Caption overlay — only on hover, over a soft gradient */}
-          <div className="absolute inset-0 flex items-end p-6 opacity-0 transition-opacity duration-300 group-hover/slider:opacity-100">
+          {/* Caption overlay — op hover, en ook zodra de focus in de slider
+              staat, zodat toetsenbordgebruikers hem ook te zien krijgen. */}
+          <div className="absolute inset-0 flex items-end p-6 opacity-0 transition-opacity duration-300 group-hover/slider:opacity-100 group-focus-within/slider:opacity-100">
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
             <div className="relative">
               <p className="text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-white/70">
@@ -255,6 +258,14 @@ function Slider() {
           </div>
         </div>
       ))}
+      {!prefersReducedMotion && (
+        <PauseButton
+          paused={paused}
+          onToggle={() => setPaused((p) => !p)}
+          label="Diavoorstelling"
+          className="absolute right-4 top-4 z-10 bg-black/40 backdrop-blur-sm"
+        />
+      )}
       <div className="absolute bottom-4 right-4 z-10 flex gap-1.5">
         {bento.slider.map((_, idx) => (
           <button
@@ -262,8 +273,11 @@ function Slider() {
             type="button"
             onClick={() => setI(idx)}
             aria-label={`Ga naar slide ${idx + 1}`}
+            aria-current={idx === i || undefined}
             className={cn(
-              "h-1.5 rounded-full transition-[width,background-color]",
+              // `before` rekt het tikbare gebied op tot 24x24 zonder de stip
+              // of de onderlinge afstand te veranderen.
+              "relative h-1.5 rounded-full transition-[width,background-color] before:absolute before:-inset-[9px] before:content-[''] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
               idx === i ? "w-6 bg-white" : "w-3 bg-white/30 hover:bg-white/60"
             )}
           />
@@ -284,6 +298,7 @@ function ChatMessages() {
   const inView = useInView(ref, { amount: 0.5 });
   const messages = bento.portrait.messages;
   const [visibleCount, setVisibleCount] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -294,6 +309,9 @@ function ChatMessages() {
       setVisibleCount(0);
       return;
     }
+    // Pauzeren bevriest de lus op de huidige stand; de cleanup hieronder
+    // ruimt de lopende timers op.
+    if (paused) return;
 
     const timers: ReturnType<typeof setTimeout>[] = [];
     let cancelled = false;
@@ -318,13 +336,21 @@ function ChatMessages() {
       cancelled = true;
       timers.forEach(clearTimeout);
     };
-  }, [inView, prefersReducedMotion, messages]);
+  }, [inView, prefersReducedMotion, messages, paused]);
 
   return (
     <div
       ref={ref}
       className="absolute bottom-6 left-6 right-6 flex flex-col items-start gap-2"
     >
+      {!prefersReducedMotion && (
+        <PauseButton
+          paused={paused}
+          onToggle={() => setPaused((p) => !p)}
+          label="Berichten"
+          className="absolute bottom-0 right-0 bg-black/50 backdrop-blur-md"
+        />
+      )}
       <AnimatePresence>
         {messages.slice(0, visibleCount).map((msg, idx) => (
           <motion.span
@@ -368,7 +394,7 @@ export function Bento() {
           <div className="mb-6 flex items-end justify-between gap-6 md:mb-12">
             <div>
               <p className="mb-3 text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-primary">
-                About
+                Over mij
               </p>
               <h2 className="max-w-2xl font-heading text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
                 Even voorstellen.
@@ -408,10 +434,11 @@ export function Bento() {
                 </div>
                 <a
                   href={bento.intro.resumeHref}
+                  download
                   className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-4 py-2 text-sm font-medium text-white transition-[transform,background-color,border-color] hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/10"
                 >
-                  <Download size={14} />
-                  Resume
+                  <Download size={14} aria-hidden />
+                  CV (PDF)
                 </a>
               </div>
             </BentoCard>
@@ -511,7 +538,6 @@ export function Bento() {
                 {bento.tools.map((tool) => (
                   <div
                     key={tool.name}
-                    title={tool.name}
                     className="flex aspect-square items-center justify-center transition-transform duration-200 ease-out hover:scale-[1.04]"
                   >
                     <img
