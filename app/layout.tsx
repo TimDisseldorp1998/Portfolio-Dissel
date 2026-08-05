@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Poppins, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import { CookieConsent } from "@/components/CookieConsent";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -41,6 +42,7 @@ export default function RootLayout({
     <html lang="nl" className={`${poppins.variable} ${jakarta.variable}`}>
       <body className="min-h-screen bg-surface text-ink antialiased">
         {children}
+        <CookieConsent />
       </body>
     </html>
   );
