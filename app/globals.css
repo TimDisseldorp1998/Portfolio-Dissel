@@ -95,6 +95,16 @@
   border-radius: 9999px;
 }
 
+/* Cookie-banner overlay fade */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* Typewriter caret */
 @keyframes caret-blink {
   0%,
