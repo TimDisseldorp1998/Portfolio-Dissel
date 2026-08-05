@@ -2,7 +2,10 @@
 # Hostinger points public_html/ at this repo, so requests come in at "/", but the
 # actual HTML lives in /out/ after next build. This rewrite bridges the two.
 
-DirectoryIndex out/index.html
+# `index.html` eerst: submappen zoals out/privacy/ hebben hun eigen index.html.
+# Zonder die eerste waarde zoekt Apache naar out/privacy/out/index.html, vindt
+# niets, weigert de directory listing en geeft 403 op elke subpagina.
+DirectoryIndex index.html out/index.html
 
 RewriteEngine On
 RewriteBase /
