@@ -23,7 +23,7 @@ function BentoCard({ children, className }: BentoCardProps) {
   return (
     <div
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm transition-all duration-500 hover:border-white/20 hover:bg-white/[0.06]",
+        "group relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm transition-[background-color,border-color] duration-500 hover:border-white/20 hover:bg-white/[0.06]",
         className
       )}
     >
@@ -55,7 +55,7 @@ function SocialIconLink({
       aria-label={label}
       target={href.startsWith("mailto:") ? undefined : "_blank"}
       rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
-      className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/70 transition-all hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/10 hover:text-white"
+      className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/70 transition-[transform,background-color,border-color,color] hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/10 hover:text-white"
     >
       {children}
     </a>
@@ -158,7 +158,7 @@ function OneRepMaxCalculator() {
             onChange={(e) =>
               setOneRm(clamp(Number(e.target.value) || 0, 0, cfg.max))
             }
-            className="w-16 bg-transparent text-center text-lg font-semibold text-white outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+            className="w-16 rounded bg-transparent text-center text-lg font-semibold text-white outline-none [appearance:textfield] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
           />
           <span className="text-sm text-white/40">{unit}</span>
         </div>
@@ -263,7 +263,7 @@ function Slider() {
             onClick={() => setI(idx)}
             aria-label={`Ga naar slide ${idx + 1}`}
             className={cn(
-              "h-1.5 rounded-full transition-all",
+              "h-1.5 rounded-full transition-[width,background-color]",
               idx === i ? "w-6 bg-white" : "w-3 bg-white/30 hover:bg-white/60"
             )}
           />
@@ -408,7 +408,7 @@ export function Bento() {
                 </div>
                 <a
                   href={bento.intro.resumeHref}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-4 py-2 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/10"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-4 py-2 text-sm font-medium text-white transition-[transform,background-color,border-color] hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/10"
                 >
                   <Download size={14} />
                   Resume
@@ -458,7 +458,10 @@ export function Bento() {
                   <div className="h-64 w-64 rounded-full bg-gradient-to-br from-primary/40 to-secondary/30 blur-3xl" />
                 </div>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <p className="font-heading text-[10rem] font-semibold leading-none text-white/[0.06]">
+                  <p
+                    aria-hidden
+                    className="font-heading text-[10rem] font-semibold leading-none text-white/[0.06]"
+                  >
                     T
                   </p>
                 </div>

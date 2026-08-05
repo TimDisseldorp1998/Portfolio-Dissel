@@ -60,7 +60,7 @@ export function Projects() {
                 type="button"
                 onClick={(e) => openProject(p, e)}
                 aria-haspopup="dialog"
-                className="group relative block w-full cursor-pointer overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] text-left backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+                className="group relative block w-full cursor-pointer overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] text-left backdrop-blur-sm transition-[transform,background-color,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
               >
                 <div
                   className={cn(
@@ -97,7 +97,7 @@ export function Projects() {
                     <h3 className="font-heading text-lg font-semibold leading-snug text-white">
                       {p.title}
                     </h3>
-                    <span className="mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-all duration-300 group-hover:bg-secondary group-hover:text-white">
+                    <span className="mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-[background-color,color] duration-300 group-hover:bg-secondary group-hover:text-white">
                       <ArrowUpRight size={16} />
                     </span>
                   </div>

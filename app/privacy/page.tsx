@@ -44,7 +44,7 @@ function Mail() {
 
 export default function PrivacyPage() {
   return (
-    <main className="min-h-screen bg-surface-dark text-white">
+    <main id="main" className="min-h-screen bg-surface-dark text-white">
       <Container className="py-12 md:py-16">
         <a
           href="/"

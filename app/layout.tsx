@@ -31,6 +31,9 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#0A0A0F",
+  // De site is donker: laat native scrollbars, formuliercontrols en autofill
+  // meekleuren in plaats van in lichte modus renderen.
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
@@ -41,6 +44,13 @@ export default function RootLayout({
   return (
     <html lang="nl" className={`${poppins.variable} ${jakarta.variable}`}>
       <body className="min-h-screen bg-surface text-ink antialiased">
+        {/* Eerste tabstop: laat toetsenbordgebruikers de navigatie overslaan. */}
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:inline-flex focus:min-h-[48px] focus:items-center focus:rounded-full focus:bg-primary focus:px-6 focus:text-sm focus:font-semibold focus:text-ink focus:outline-none focus:ring-4 focus:ring-primary/40"
+        >
+          Naar hoofdinhoud
+        </a>
         {children}
         <CookieConsent />
       </body>

@@ -110,7 +110,7 @@ gtag('config', '${GA_ID}');`}
               <button
                 type="button"
                 onClick={() => choose("granted")}
-                className="inline-flex min-h-[52px] flex-1 items-center justify-center rounded-full bg-primary font-semibold text-ink shadow-glow transition-all duration-200 hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
+                className="inline-flex min-h-[52px] flex-1 items-center justify-center rounded-full bg-primary font-semibold text-ink shadow-glow transition-[background-color,box-shadow] duration-200 hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
               >
                 Accepteren
               </button>

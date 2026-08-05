@@ -213,7 +213,7 @@ export function Contact() {
                   once the scheduling tool is set up. Falls back to email. */}
               <a
                 href={`mailto:${site.email}?subject=${encodeURIComponent("Plan een gesprek")}`}
-                className="group mb-4 inline-flex min-h-[48px] items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-ink shadow-glow transition-all duration-200 hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+                className="group mb-4 inline-flex min-h-[48px] items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-ink shadow-glow transition-[background-color,box-shadow] duration-200 hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
               >
                 <CalendarDays size={16} aria-hidden />
                 Plan een gesprek
@@ -240,7 +240,7 @@ export function Contact() {
                         aria-label={`${s.label} — opent in nieuw tabblad`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-all duration-200 hover:border-primary/40 hover:bg-white/[0.06] hover:text-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25"
+                        className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-[background-color,border-color,color,box-shadow] duration-200 hover:border-primary/40 hover:bg-white/[0.06] hover:text-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25"
                       >
                         <Icon size={18} />
                       </a>
@@ -249,7 +249,7 @@ export function Contact() {
                   <a
                     href={`mailto:${site.email}`}
                     aria-label="Stuur me direct een e-mail"
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-all duration-200 hover:border-primary/40 hover:bg-white/[0.06] hover:text-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-[background-color,border-color,color,box-shadow] duration-200 hover:border-primary/40 hover:bg-white/[0.06] hover:text-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25"
                   >
                     <Mail size={18} />
                   </a>
@@ -340,7 +340,7 @@ export function Contact() {
                                       setProjectType(selected ? "" : opt.value)
                                     }
                                     className={cn(
-                                      "min-h-[40px] rounded-full border px-4 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25",
+                                      "min-h-[40px] rounded-full border px-4 text-sm font-medium transition-[background-color,border-color,color,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25",
                                       selected
                                         ? "border-primary bg-primary text-ink shadow-glow"
                                         : "border-white/15 bg-white/[0.04] text-white/80 hover:border-primary/40 hover:bg-white/[0.06] hover:text-primary"
@@ -417,7 +417,7 @@ export function Contact() {
                               type="submit"
                               disabled={isSubmitting}
                               className={cn(
-                                "group inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-tertiary-600 px-7 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(142,92,224,0.2),_0_20px_60px_-20px_rgba(142,92,224,0.6)] transition-all duration-200 sm:w-auto",
+                                "group inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-tertiary-600 px-7 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(142,92,224,0.2),_0_20px_60px_-20px_rgba(142,92,224,0.6)] transition-[background-color,box-shadow,opacity] duration-200 sm:w-auto",
                                 "hover:bg-tertiary-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-tertiary/40",
                                 "disabled:cursor-not-allowed disabled:opacity-70"
                               )}
@@ -554,7 +554,7 @@ function Field(props: FieldProps) {
   const describedBy = error ? errorId : undefined;
 
   const controlClasses = cn(
-    "block w-full rounded-xl border bg-white/[0.04] px-4 py-3 text-sm text-white transition-all duration-200",
+    "block w-full rounded-xl border bg-white/[0.04] px-4 py-3 text-sm text-white transition-[background-color,border-color,box-shadow] duration-200",
     "placeholder:text-white/40",
     "focus:bg-white/[0.06] focus:outline-none",
     error
@@ -615,6 +615,7 @@ function Field(props: FieldProps) {
           aria-invalid={!!error || undefined}
           aria-describedby={describedBy}
           autoComplete={autoComplete}
+          spellCheck={false}
           className={cn(controlClasses, "min-h-[48px]")}
         />
       )}
