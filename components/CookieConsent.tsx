@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
-import { Button } from "./ui/Button";
 
 /**
  * GDPR/AVG-conforme, opt-in analytics. Google Analytics wordt PAS geladen
@@ -35,7 +34,7 @@ export function reopenConsent() {
 export function CookieConsent() {
   // undefined = keuze nog niet uit storage gelezen (voorkomt hydration-flits)
   const [consent, setConsent] = useState<Consent | null | undefined>(undefined);
-  const acceptRef = useRef<HTMLElement>(null);
+  const acceptRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   // Op de privacy-pagina geen banner: die moet juist vrij leesbaar zijn
   // voordat iemand kiest. Terug op de site verschijnt de banner alsnog.
@@ -133,13 +132,13 @@ gtag('config', '${GA_ID}');`}
             role="dialog"
             aria-modal="true"
             aria-label="Cookievoorkeuren"
-            className="fixed inset-x-4 bottom-[calc(8rem+env(safe-area-inset-bottom))] z-[60] mx-auto flex max-w-md flex-col gap-3 rounded-2xl border border-white/10 bg-[#12121A]/95 p-5 text-white shadow-[0_8px_32px_rgba(0,0,0,0.55)] backdrop-blur-md sm:p-6 lg:bottom-6"
+            className="fixed inset-x-4 bottom-[calc(8rem+env(safe-area-inset-bottom))] z-[60] mx-auto flex max-w-md flex-col gap-4 rounded-2xl border border-white/10 bg-[#12121A]/95 p-6 text-white shadow-[0_8px_32px_rgba(0,0,0,0.55)] backdrop-blur-md sm:p-7 lg:bottom-6"
           >
             <p className="font-heading text-lg font-semibold">Cookies</p>
             <p className="text-sm leading-relaxed text-white/75">
-              Ik gebruik Google Analytics om te zien hoe de site gebruikt
-              wordt. Dat plaatst cookies, alleen als jij dat goedvindt. Lees
-              meer in de{" "}
+              Met jouw toestemming gebruik ik cookies om verkeer te
+              analyseren, advertenties te personaliseren en je ervaring te
+              verbeteren. Lees meer in de{" "}
               <a
                 href="/privacy/"
                 className="text-white underline underline-offset-4 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
@@ -148,15 +147,16 @@ gtag('config', '${GA_ID}');`}
               </a>
               .
             </p>
-            <Button
+            {/* Zelfde hover als de site-CTA's: alleen een tint donkerder,
+                geen lift (ui/Button springt omhoog, dat oogt hier onrustig). */}
+            <button
               ref={acceptRef}
-              variant="primary"
-              size="lg"
-              className="w-full"
+              type="button"
               onClick={() => choose("granted")}
+              className="mt-2 inline-flex min-h-[52px] w-full items-center justify-center rounded-full bg-primary font-semibold text-ink shadow-glow transition-all duration-200 hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
             >
               Accepteren
-            </Button>
+            </button>
             <button
               type="button"
               onClick={() => choose("denied")}
