@@ -193,6 +193,24 @@ kolommen komen binnen via **Reveal**.
 Mobiel: één kolom. De gegevens staan boven het formulier, omdat mailen op een telefoon de
 kortste route is. Ruimte tussen de blokken is stap 6.
 
+### Call to action
+
+Doel: de bezoeker die tot hier gelezen heeft doorsturen naar het werk.
+
+Inhoud: een sectiekop, één introregel, en één **Button** in de primaire variant die naar
+`/werk` leidt.
+
+Desktop: een **Section** in de variant dark met een **Container**; één kolom, links
+uitgelijnd. De introregel is op 40 tekens gebroken zodat hij niet over de volle breedte
+loopt. De **Button** staat eronder met stap 10 ertussen. Het blok komt binnen via **Reveal**.
+
+Mobiel: dezelfde volgorde, één kolom.
+
+De variant is dark en niet alt, omdat de secties ernaast (Projects, Contact) dat ook zijn:
+`--color-surface-alt` scheelt maar 2% met `--color-surface` en leest dus als een gat in de
+rij in plaats van als afwisseling. Op dit vlak is de kop `--color-wit` en de introregel wit
+op 70% dekking; de knop houdt `--color-ink` op `--color-primary` uit §2.
+
 ## §7 — Beweging
 
 Er is één herhalend patroon: **Reveal**. Elk blok schuift bij binnenkomst een klein stukje omhoog (stap 6 uit

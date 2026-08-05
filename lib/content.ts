@@ -66,6 +66,11 @@ export const site = {
       },
     ],
   },
+  cta: {
+    kop: "Benieuwd naar het werk?",
+    intro: "Een paar projecten van dichtbij, met de keuzes die eronder zaten.",
+    knop: "Bekijk mijn werk",
+  },
 };
 
 export const nav = [
