@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
 
@@ -96,12 +97,12 @@ gtag('config', '${GA_ID}');`}
             <p className="text-base leading-relaxed text-white/75">
               Met jouw toestemming gebruik ik cookies om verkeer te analyseren
               en de site te verbeteren. Lees meer in de{" "}
-              <a
+              <Link
                 href="/privacy/"
                 className="text-white underline underline-offset-4 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
               >
                 privacyverklaring
-              </a>
+              </Link>
               .
             </p>
             <div className="mt-2 flex items-center gap-3">

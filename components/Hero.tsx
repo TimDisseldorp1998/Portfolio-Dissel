@@ -8,6 +8,7 @@ import { cn } from "@/lib/cn";
 import { AuroraBackground } from "./AuroraBackground";
 import { Container } from "./ui/Container";
 import { Button } from "./ui/Button";
+import { PauseButton } from "./ui/PauseButton";
 import { Typewriter } from "./ui/Typewriter";
 
 export function Hero() {
@@ -15,14 +16,17 @@ export function Hero() {
 
   // One review shows at a time; it crossfades to the next every ~7s.
   // With reduced motion we skip the timer and stack both statically instead.
+  // De rotatie is te pauzeren (WCAG 2.2.2: bewegende content langer dan 5s
+  // moet stopgezet kunnen worden).
   const [activeReview, setActiveReview] = useState(0);
+  const [reviewsPaused, setReviewsPaused] = useState(false);
   useEffect(() => {
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion || reviewsPaused) return;
     const id = window.setInterval(() => {
       setActiveReview((i) => (i + 1) % site.hero.reviews.length);
     }, 7000);
     return () => window.clearInterval(id);
-  }, [prefersReducedMotion]);
+  }, [prefersReducedMotion, reviewsPaused]);
 
   const reviewCardClass =
     "rounded-2xl border border-white/10 bg-white/[0.05] p-5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.85)] backdrop-blur-xl transition-colors duration-200 max-lg:hover:border-white/25 max-lg:hover:bg-white/[0.09] max-lg:active:border-white/25 max-lg:active:bg-white/[0.09]";
@@ -166,7 +170,8 @@ export function Hero() {
                 <img
                   src={logo.src}
                   alt={logo.alt}
-                  loading="lazy"
+                  width={logo.w}
+                  height={logo.h}
                   className={cn(
                     "w-auto select-none opacity-50 transition-opacity duration-300 hover:opacity-100",
                     logo.size
@@ -183,7 +188,7 @@ export function Hero() {
         <motion.section
           {...rise(0.8)}
           aria-label="Klantreviews"
-          className="mt-12 w-full sm:max-w-md lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[400px]"
+          className="relative mt-12 w-full sm:max-w-md lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[400px]"
         >
           {prefersReducedMotion ? (
             <div className="flex flex-col gap-3">
@@ -194,18 +199,26 @@ export function Hero() {
               ))}
             </div>
           ) : (
-            <AnimatePresence mode="wait">
-              <motion.figure
-                key={activeReview}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.6, ease: "easeInOut" }}
-                className={reviewCardClass}
-              >
-                {reviewBody(site.hero.reviews[activeReview])}
-              </motion.figure>
-            </AnimatePresence>
+            <>
+              <AnimatePresence mode="wait">
+                <motion.figure
+                  key={activeReview}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
+                  className={reviewCardClass}
+                >
+                  {reviewBody(site.hero.reviews[activeReview])}
+                </motion.figure>
+              </AnimatePresence>
+              <PauseButton
+                paused={reviewsPaused}
+                onToggle={() => setReviewsPaused((p) => !p)}
+                label="Reviews"
+                className="absolute bottom-4 right-4"
+              />
+            </>
           )}
         </motion.section>
       </Container>

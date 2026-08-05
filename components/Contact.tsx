@@ -323,19 +323,18 @@ export function Contact() {
                                 (optioneel)
                               </span>
                             </legend>
-                            <div
-                              role="radiogroup"
-                              aria-label="Project type"
-                              className="flex flex-wrap gap-2"
-                            >
+                            {/* Toggle-knoppen, geen radiogroep: een tweede klik
+                                zet de keuze weer uit, en dat kan een radio niet.
+                                De fieldset + legend zorgen al voor groepering
+                                en naam. */}
+                            <div className="flex flex-wrap gap-2">
                               {contact.projectTypes.map((opt) => {
                                 const selected = projectType === opt.value;
                                 return (
                                   <button
                                     key={opt.value}
                                     type="button"
-                                    role="radio"
-                                    aria-checked={selected}
+                                    aria-pressed={selected}
                                     onClick={() =>
                                       setProjectType(selected ? "" : opt.value)
                                     }

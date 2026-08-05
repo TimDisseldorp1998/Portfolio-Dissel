@@ -1,6 +1,9 @@
 "use client";
 
+import Link from "next/link";
+import { useReducedMotion } from "framer-motion";
 import { nav, site, socials } from "@/lib/content";
+import { scrollToSection } from "@/lib/scroll";
 import { Container } from "./ui/Container";
 import { Logo } from "./Logo";
 import { LinkedinFilled, InstagramFilled } from "./ui/BrandIcons";
@@ -14,12 +17,15 @@ const brandIcons: Record<string, (props: { size?: number }) => JSX.Element> = {
 const footerNav = [...nav, { label: "Contact", href: "#contact" }];
 
 export function Footer() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <footer className="relative border-t border-white/10 bg-surface-dark text-white">
       <Container className="grid grid-cols-1 items-center gap-10 py-14 md:grid-cols-3 md:gap-6">
         {/* Logo — left */}
         <a
           href="#top"
+          onClick={(e) => scrollToSection(e, "#top", prefersReducedMotion)}
           aria-label="DisselDesign — naar boven"
           className="justify-self-center rounded text-white transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30 md:justify-self-start"
         >
@@ -33,6 +39,9 @@ export function Footer() {
               <li key={n.href}>
                 <a
                   href={n.href}
+                  onClick={(e) =>
+                    scrollToSection(e, n.href, prefersReducedMotion)
+                  }
                   className="rounded text-sm text-white/70 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
                 >
                   {n.label}
@@ -66,16 +75,16 @@ export function Footer() {
       {/* Copyright — centered below */}
       <Container className="flex flex-col items-center gap-2 pb-10">
         <p className="text-center text-xs text-white/45">
-          © {new Date().getFullYear()} {site.name}. All rights reserved.
-          Designed &amp; built by {site.name}.
+          © {process.env.NEXT_PUBLIC_BUILD_YEAR} {site.name}. All rights
+          reserved. Designed &amp; built by {site.name}.
         </p>
         <div className="flex items-center gap-5">
-          <a
+          <Link
             href="/privacy/"
             className="rounded text-xs text-white/45 underline-offset-4 transition-colors hover:text-white/70 hover:underline focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
           >
             Privacy &amp; cookies
-          </a>
+          </Link>
           {process.env.NEXT_PUBLIC_GA_ID ? (
             <button
               type="button"

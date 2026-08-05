@@ -314,6 +314,12 @@ export function ProjectDetailPanel({
               )}
             </div>
 
+            {/* Kondigt de slidewissel aan; pijlen en dots geven anders geen
+                hoorbare terugkoppeling. */}
+            <p aria-live="polite" className="sr-only">
+              Afbeelding {slide + 1} van {slideCount}
+            </p>
+
             {slideCount > 1 && (
               <div className="mt-4 flex justify-center gap-1.5">
                 {detail.slides.map((s, i) => (
@@ -324,7 +330,11 @@ export function ProjectDetailPanel({
                     aria-label={`Ga naar afbeelding ${i + 1} van ${slideCount}`}
                     aria-current={i === slide || undefined}
                     className={cn(
-                      "h-2 rounded-full transition-[width,background-color,box-shadow] duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+                      // `before` rekt alleen het tikbare gebied op tot 24x24
+                      // (8px stip + 2x8px). Padding zou de rij breder maken en
+                      // de onderlinge afstand veranderen; zo blijft het bolletje
+                      // en de spacing exact zoals het was.
+                      "relative h-2 rounded-full transition-[width,background-color,box-shadow] duration-300 before:absolute before:-inset-2 before:content-[''] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
                       i === slide
                         ? "w-5 bg-white"
                         : "w-2 bg-white/30 hover:bg-white/60"
@@ -413,9 +423,10 @@ export function ProjectDetailPanel({
                 // Wait for the drawer to close (exit anim + body-scroll unlock),
                 // then scroll the form into view (respects its scroll-mt-24).
                 window.setTimeout(() => {
-                  document
-                    .getElementById("contact-form")
-                    ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  document.getElementById("contact-form")?.scrollIntoView({
+                    behavior: prefersReducedMotion ? "auto" : "smooth",
+                    block: "start",
+                  });
                 }, 320);
               }}
               variant="primary"
