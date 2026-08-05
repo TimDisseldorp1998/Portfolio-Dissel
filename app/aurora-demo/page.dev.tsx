@@ -55,7 +55,7 @@ export default function AuroraDemoPage() {
   }
 
   return (
-    <main className="fixed inset-0 overflow-hidden">
+    <main id="main" className="fixed inset-0 overflow-hidden">
       <AuroraBackground
         colors={{ color1, color2, color3, color4, background }}
         speed={speed}

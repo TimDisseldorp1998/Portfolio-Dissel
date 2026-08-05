@@ -105,7 +105,7 @@ export function Hero() {
           className="mb-6 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[0.625rem] font-medium uppercase leading-4 tracking-[0.16em] text-[#3EE68B] backdrop-blur"
         >
           <span
-            aria-label="Beschikbaar voor werk"
+            aria-hidden
             className="relative flex h-1.5 w-1.5 items-center justify-center"
           >
             <span className="absolute inset-0 rounded-full bg-[#3EE68B] opacity-70 motion-safe:animate-ping" />
@@ -180,7 +180,7 @@ export function Hero() {
         {/* Subtle client reviews — bottom-right on desktop, in flow below the
             logo strip on mobile. Dark glassmorphism over the aurora. One shows
             at a time and crossfades to the next every ~7s. */}
-        <motion.div
+        <motion.section
           {...rise(0.8)}
           aria-label="Klantreviews"
           className="mt-12 w-full sm:max-w-md lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[400px]"
@@ -207,7 +207,7 @@ export function Hero() {
               </motion.figure>
             </AnimatePresence>
           )}
-        </motion.div>
+        </motion.section>
       </Container>
     </section>
   );

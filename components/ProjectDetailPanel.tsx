@@ -283,10 +283,10 @@ export function ProjectDetailPanel({
                   href={detail.award.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group absolute right-4 top-4 flex h-11 items-center gap-0 rounded-full border border-white/15 bg-black/60 px-3 text-white backdrop-blur-md transition-all hover:gap-2 focus-visible:gap-2 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+                  className="group absolute right-4 top-4 flex h-11 items-center gap-0 rounded-full border border-white/15 bg-black/60 px-3 text-white backdrop-blur-md transition-[gap,box-shadow] hover:gap-2 focus-visible:gap-2 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
                 >
                   <Award size={18} aria-hidden />
-                  <span className="max-w-0 overflow-hidden whitespace-nowrap text-xs font-medium transition-all duration-300 group-hover:max-w-[140px] group-focus-visible:max-w-[140px]">
+                  <span className="max-w-0 overflow-hidden whitespace-nowrap text-xs font-medium transition-[max-width] duration-300 group-hover:max-w-[140px] group-focus-visible:max-w-[140px]">
                     {detail.award.label}
                   </span>
                 </a>
@@ -324,7 +324,7 @@ export function ProjectDetailPanel({
                     aria-label={`Ga naar afbeelding ${i + 1} van ${slideCount}`}
                     aria-current={i === slide || undefined}
                     className={cn(
-                      "h-2 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+                      "h-2 rounded-full transition-[width,background-color,box-shadow] duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
                       i === slide
                         ? "w-5 bg-white"
                         : "w-2 bg-white/30 hover:bg-white/60"
