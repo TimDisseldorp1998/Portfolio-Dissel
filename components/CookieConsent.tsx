@@ -88,8 +88,12 @@ gtag('config', '${GA_ID}');`}
 
       {bannerOpen && (
         <>
-          <div
-            role="dialog"
+          {/* Bewust een region en geen dialog: de banner blokkeert de site
+              niet, je kunt gewoon doorlezen en -klikken. Een dialog-rol belooft
+              focusbeheer en Escape die hier juist niet gewenst zijn. Het
+              component staat in de layout vóór {children}, dus met Tab kom je
+              er direct na de skip link al bij. */}
+          <section
             aria-label="Cookievoorkeuren"
             className="fixed inset-x-4 bottom-[calc(8rem+env(safe-area-inset-bottom))] z-[60] mx-auto flex max-w-xl flex-col gap-4 rounded-2xl border border-white/10 bg-[#12121A]/95 p-6 text-white shadow-[0_8px_32px_rgba(0,0,0,0.55)] backdrop-blur-md sm:p-7 lg:bottom-6"
           >
@@ -105,25 +109,26 @@ gtag('config', '${GA_ID}');`}
               </Link>
               .
             </p>
+            {/* Weigeren moet net zo makkelijk zijn als accepteren: gelijke
+                hoogte, breedte, vorm en tekstgewicht. Alleen de vulling
+                verschilt. Hover op beide: alleen een tint donkerder, geen lift. */}
             <div className="mt-2 flex items-center gap-3">
-              {/* Zelfde hover als de site-CTA's: alleen een tint donkerder,
-                  geen lift (ui/Button springt omhoog, dat oogt hier onrustig). */}
               <button
                 type="button"
                 onClick={() => choose("granted")}
-                className="inline-flex min-h-[52px] flex-1 items-center justify-center rounded-full bg-primary font-semibold text-ink shadow-glow transition-[background-color,box-shadow] duration-200 hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
+                className="inline-flex min-h-[52px] flex-1 items-center justify-center rounded-full border border-transparent bg-primary px-6 font-semibold text-ink shadow-glow transition-[background-color,box-shadow] duration-200 hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
               >
                 Accepteren
               </button>
               <button
                 type="button"
                 onClick={() => choose("denied")}
-                className="min-h-[44px] shrink-0 rounded px-4 text-sm text-white/50 underline-offset-4 transition-colors hover:text-white/80 hover:underline focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+                className="inline-flex min-h-[52px] flex-1 items-center justify-center rounded-full border border-white/25 bg-white/[0.06] px-6 font-semibold text-white transition-[background-color,border-color] duration-200 hover:border-white/50 hover:bg-white/[0.1] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
               >
                 Weigeren
               </button>
             </div>
-          </div>
+          </section>
         </>
       )}
     </>

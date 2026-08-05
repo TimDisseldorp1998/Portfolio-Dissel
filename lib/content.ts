@@ -185,6 +185,9 @@ export type ProjectDetail = {
 
 export type Project = {
   title: string;
+  /** Stabiele id in de URL (`?case=<slug>`), zodat een case deelbaar is.
+   *  Wijzigen breekt bestaande links. */
+  slug: string;
   /** Tekst in de case-kaart op de landingspagina. Maximaal 120 tekens —
    *  dit wordt afgedwongen door scripts/check-content.mjs, dat vóór elke
    *  build draait. Te lang = de build faalt. */
@@ -198,6 +201,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     title: "Kleintjes van Alkmaar",
+    slug: "kleintjes-van-alkmaar",
     description:
       "Van idee naar merk en een tweezijdig oppasplatform: huisstijl, UX en alle schermen voor ouders én oppassers.",
     tags: ["Branding", "UX/UI", "Webdesign"],
@@ -251,6 +255,7 @@ export const projects: Project[] = [
   },
   {
     title: "De-Stock",
+    slug: "de-stock",
     description:
       "Huisstijl en website voor groothandel De-Stock, opgebouwd vanaf één logo en gericht op één stap: voorraad aanbieden.",
     tags: ["Branding", "Webdesign", "UX"],
@@ -317,6 +322,7 @@ export const projects: Project[] = [
   },
   {
     title: "Ziggo Dome",
+    slug: "ziggo-dome",
     description:
       "Mobile-first herontwerp van de Ziggo Dome-website. De belangrijkste acties liggen onder je duim, de agenda vooraan.",
     tags: ["Mobile-first", "UX", "Animation"],
@@ -402,6 +408,7 @@ export const projects: Project[] = [
   },
   {
     title: "New Edition",
+    slug: "new-edition",
     description:
       "Nieuwe huisstijl doorvertaald naar een B2B-website, met een heldere route naar de Order Portal voor verkooppunten.",
     tags: ["Brandbook", "Webdesign", "UX"],
@@ -454,6 +461,7 @@ export const projects: Project[] = [
   },
   {
     title: "Marktzicht Eten & Drinken",
+    slug: "marktzicht-eten-en-drinken",
     description:
       "Restaurantwebsite voor Marktzicht: mobile-first ontwerp, nieuwe huisstijl en een CMS om zelf het menu bij te werken.",
     tags: ["Branding", "UX/UI", "Webdesign"],
@@ -505,6 +513,7 @@ export const projects: Project[] = [
   },
   {
     title: "16.08 Streetwear",
+    slug: "16-08-streetwear",
     description:
       "Volledig herontwerp van de webshop van 16.08 Streetwear: nieuwe huisstijl, heldere categorieën en kortere checkout.",
     tags: ["Branding", "UX/UI", "Webshop"],
