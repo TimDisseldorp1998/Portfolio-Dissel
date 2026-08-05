@@ -290,7 +290,12 @@ export const projects: Project[] = [
         },
       ],
       slides: [
-        { label: "Homepage", gradient: "from-secondary/70 via-secondary-700/50 to-primary-900" },
+        {
+          label: "Homepage",
+          gradient: "from-secondary/70 via-secondary-700/50 to-primary-900",
+          src: "/mockup/destock-dark-homepage-desktop-1slider.webp",
+          alt: "De homepage van De-Stock.nl op desktop, met de oproep om restvoorraad te verkopen",
+        },
         { label: "Huisstijl", gradient: "from-secondary-400/60 via-secondary/40 to-[#8E5CE0]/50" },
         { label: "Aanbiedformulier", gradient: "from-primary/50 via-secondary/50 to-secondary-800" },
         { label: "Opkoper-pagina", gradient: "from-secondary-800 via-secondary/40 to-primary-900" },
