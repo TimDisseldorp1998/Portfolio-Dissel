@@ -4,6 +4,7 @@ import { nav, site, socials } from "@/lib/content";
 import { Container } from "./ui/Container";
 import { Logo } from "./Logo";
 import { LinkedinFilled, InstagramFilled } from "./ui/BrandIcons";
+import { reopenConsent } from "./CookieConsent";
 
 const brandIcons: Record<string, (props: { size?: number }) => JSX.Element> = {
   Linkedin: LinkedinFilled,
@@ -63,11 +64,20 @@ export function Footer() {
       </Container>
 
       {/* Copyright — centered below */}
-      <Container className="pb-10">
+      <Container className="flex flex-col items-center gap-2 pb-10">
         <p className="text-center text-xs text-white/45">
           © {new Date().getFullYear()} {site.name}. All rights reserved.
           Designed &amp; built by {site.name}.
         </p>
+        {process.env.NEXT_PUBLIC_GA_ID ? (
+          <button
+            type="button"
+            onClick={reopenConsent}
+            className="rounded text-xs text-white/45 underline-offset-4 transition-colors hover:text-white/70 hover:underline focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+          >
+            Cookievoorkeuren
+          </button>
+        ) : null}
       </Container>
     </footer>
   );
