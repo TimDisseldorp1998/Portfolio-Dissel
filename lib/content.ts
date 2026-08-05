@@ -9,6 +9,9 @@ export const site = {
   role: "UX Designer & Developer",
   location: "Amsterdam, NL",
   email: "info@disseldesign.com",
+  // Wordt getoond in de privacyverklaring (AVG: identiteit van de
+  // verwerkingsverantwoordelijke). Leeg laten = regel valt weg.
+  kvk: "",
   tagline:
     "I design and build calm, considered digital products — where craft meets clarity.",
   hero: {
