@@ -19,7 +19,6 @@ import {
   Mail,
 } from "lucide-react";
 import { contact, site, socials } from "@/lib/content";
-import { createClient } from "@/lib/supabase/client";
 import { Section } from "./ui/Section";
 import { Container } from "./ui/Container";
 import { Reveal, RevealStagger, RevealItem } from "./ui/Reveal";
@@ -125,6 +124,9 @@ export function Contact() {
     //    lets anonymous visitors only INSERT, never read other submissions.
     const storeInSupabase = async () => {
       try {
+        // Dynamisch: Supabase hoort niet in de eerste bundel. De client wordt
+        // pas opgehaald op het moment dat iemand het formulier verstuurt.
+        const { createClient } = await import("@/lib/supabase/client");
         const supabase = createClient();
         const { error } = await supabase.from("contact_submissions").insert({
           name: values.name.trim() || null,
