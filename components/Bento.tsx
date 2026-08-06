@@ -35,7 +35,7 @@ function BentoCard({ children, className }: BentoCardProps) {
 
 function CardLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="mb-4 text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-white/40">
+    <p className="mb-4 text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-white/50">
       {children}
     </p>
   );
@@ -113,7 +113,7 @@ function OneRepMaxCalculator() {
   return (
     <>
       <div className="mb-4 flex items-center justify-between gap-3">
-        <p className="text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-white/40">
+        <p className="text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-white/50">
           1RM Calculator
         </p>
         {/* kg / lbs toggle */}
@@ -161,7 +161,7 @@ function OneRepMaxCalculator() {
             }
             className="w-16 rounded bg-transparent text-center text-lg font-semibold text-white outline-none [appearance:textfield] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
           />
-          <span className="text-sm text-white/40">{unit}</span>
+          <span className="text-sm text-white/50">{unit}</span>
         </div>
         <button
           type="button"
@@ -203,7 +203,7 @@ function OneRepMaxCalculator() {
           {weight.toFixed(1)}
           <span className="ml-1 text-lg font-normal text-white/50">{unit}</span>
         </p>
-        <p className="mt-2 text-xs text-white/40">
+        <p className="mt-2 text-xs text-white/50">
           ≈ {pctLabel}% van je 1RM · ideaal voor 3 werksets van {reps}
         </p>
       </div>
@@ -514,7 +514,7 @@ export function Bento() {
                     key={exp.company}
                     className="grid grid-cols-[90px_1fr] items-baseline gap-3"
                   >
-                    <span className="text-xs text-white/40">{exp.period}</span>
+                    <span className="text-xs text-white/50">{exp.period}</span>
                     <div>
                       <p className="text-sm font-medium leading-tight">
                         {exp.role}
@@ -522,7 +522,7 @@ export function Bento() {
                       <p className="mt-0.5 text-xs text-white/50">
                         {exp.company}
                       </p>
-                      <p className="mt-0.5 text-xs text-white/40">
+                      <p className="mt-0.5 text-xs text-white/50">
                         {exp.location}
                       </p>
                     </div>
@@ -550,7 +550,7 @@ export function Bento() {
                   </div>
                 ))}
               </div>
-              <p className="mt-4 text-xs text-white/40">
+              <p className="mt-4 text-xs text-white/50">
                 Van Figma-mock tot production-code.
               </p>
             </BentoCard>
@@ -564,10 +564,10 @@ export function Bento() {
                     key={ed.degree}
                     className="grid grid-cols-[110px_1fr] items-baseline gap-3"
                   >
-                    <span className="text-xs text-white/40">{ed.period}</span>
+                    <span className="text-xs text-white/50">{ed.period}</span>
                     <div>
                       {ed.type ? (
-                        <p className="text-xs text-white/40">{ed.type}</p>
+                        <p className="text-xs text-white/50">{ed.type}</p>
                       ) : null}
                       <p className="text-sm font-medium leading-tight">
                         {ed.degree}

@@ -160,7 +160,7 @@ export function Hero() {
 
         {/* Trusted-by logo strip */}
         <motion.div {...rise(0.65)} className="mt-14 w-full sm:mt-16">
-          <p className="mb-5 text-sm text-white/40">
+          <p className="mb-5 text-sm text-white/50">
             {site.hero.trustedBy.label}
           </p>
           <ul className="flex flex-wrap items-center gap-x-8 gap-y-5 sm:gap-x-10 sm:gap-y-6">

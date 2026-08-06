@@ -321,7 +321,7 @@ export function Contact() {
                           <fieldset>
                             <legend className="mb-2 flex items-baseline gap-1.5 text-xs font-medium uppercase tracking-[0.18em] text-white/60">
                               Project type
-                              <span className="text-[10px] normal-case tracking-normal text-white/40">
+                              <span className="text-[10px] normal-case tracking-normal text-white/50">
                                 (optioneel)
                               </span>
                             </legend>
@@ -556,7 +556,7 @@ function Field(props: FieldProps) {
 
   const controlClasses = cn(
     "block w-full rounded-xl border bg-white/[0.04] px-4 py-3 text-sm text-white transition-[background-color,border-color,box-shadow] duration-200",
-    "placeholder:text-white/40",
+    "placeholder:text-white/50",
     "focus:bg-white/[0.06] focus:outline-none",
     error
       ? "border-red-400/70 focus:border-red-400 focus:ring-4 focus:ring-red-400/20"
@@ -576,7 +576,7 @@ function Field(props: FieldProps) {
           </span>
         )}
         {optional && (
-          <span className="text-[10px] normal-case tracking-normal text-white/40">
+          <span className="text-[10px] normal-case tracking-normal text-white/50">
             (optioneel)
           </span>
         )}
