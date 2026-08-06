@@ -1,14 +1,20 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence } from "framer-motion";
+import dynamic from "next/dynamic";
 import { ArrowUpRight } from "lucide-react";
 import { projects, type Project } from "@/lib/content";
 import { Section } from "./ui/Section";
 import { Container } from "./ui/Container";
 import { Reveal, RevealStagger, RevealItem } from "./ui/Reveal";
-import { ProjectDetailPanel } from "./ProjectDetailPanel";
 import { cn } from "@/lib/cn";
+
+// De drawer en framer-motion worden pas opgehaald zodra iemand een case
+// opent. Ze stonden in de HTML toch nooit (de drawer is dicht bij het laden),
+// dus `ssr: false` kost hier niets aan vindbaarheid.
+const ProjectDetailOverlay = dynamic(() => import("./ProjectDetailOverlay"), {
+  ssr: false,
+});
 
 // Radial-gradient accents tuned for the dark surface. Cyan is the brand
 // primary; secondary orange and their mix provide variety across cards.
@@ -30,6 +36,9 @@ function caseFromUrl(): Project | null {
 
 export function Projects() {
   const [active, setActive] = useState<Project | null>(null);
+  // Blijft `true` zodra er één keer een case open is geweest: het overlay moet
+  // gemount blijven, anders kan AnimatePresence de sluit-animatie niet draaien.
+  const [hasOpened, setHasOpened] = useState(false);
   // Card that opened the panel — focus returns here on close (a11y).
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   // Hebben wij zelf een history-entry gepusht voor deze case? Zo niet (iemand
@@ -39,7 +48,10 @@ export function Projects() {
   // Directe binnenkomst met ?case=<slug> opent meteen de juiste case.
   useEffect(() => {
     const fromUrl = caseFromUrl();
-    if (fromUrl) setActive(fromUrl);
+    if (fromUrl) {
+      setActive(fromUrl);
+      setHasOpened(true);
+    }
   }, []);
 
   // Back en Forward bedienen de drawer. Alles blijft client-side op dezelfde
@@ -48,6 +60,7 @@ export function Projects() {
     const onPopState = () => {
       const fromUrl = caseFromUrl();
       setActive(fromUrl);
+      if (fromUrl) setHasOpened(true);
       pushedRef.current = fromUrl !== null;
       if (!fromUrl) triggerRef.current?.focus({ preventScroll: true });
     };
@@ -61,6 +74,7 @@ export function Projects() {
   ) {
     triggerRef.current = e.currentTarget;
     setActive(project);
+    setHasOpened(true);
     window.history.pushState(null, "", `?${CASE_PARAM}=${project.slug}`);
     pushedRef.current = true;
   }
@@ -175,11 +189,9 @@ export function Projects() {
         </RevealStagger>
       </Container>
 
-      <AnimatePresence>
-        {active && (
-          <ProjectDetailPanel project={active} onClose={closeProject} />
-        )}
-      </AnimatePresence>
+      {hasOpened && (
+        <ProjectDetailOverlay project={active} onClose={closeProject} />
+      )}
     </Section>
   );
 }
