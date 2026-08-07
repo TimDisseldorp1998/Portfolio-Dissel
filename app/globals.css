@@ -126,6 +126,47 @@
   }
 }
 
+/* Entree-animaties bij het laden (hero en navbar). Puur CSS: `both` houdt het
+   element verborgen tijdens de vertraging en houdt de eindstand vast, precies
+   zoals initial -> animate met een delay eerder deed. */
+@keyframes mount-rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes mount-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.mount-rise {
+  animation: mount-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--rise-delay, 0s)
+    both;
+}
+
+.mount-fade {
+  animation: mount-fade 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mount-rise,
+  .mount-fade {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Typewriter caret */
 @keyframes caret-blink {
   0%,

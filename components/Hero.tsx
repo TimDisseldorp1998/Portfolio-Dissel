@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useEffect, useState, type CSSProperties } from "react";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import { ArrowRight } from "lucide-react";
 import { site } from "@/lib/content";
 import { cn } from "@/lib/cn";
@@ -66,14 +66,13 @@ export function Hero() {
     </>
   );
 
-  const rise = (delay: number) =>
-    prefersReducedMotion
-      ? { initial: { opacity: 1 }, animate: { opacity: 1 } }
-      : {
-          initial: { opacity: 0, y: 20 },
-          animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1], delay },
-        };
+  /**
+   * Entree bij het laden: de animatie zelf staat als `.mount-rise` in
+   * globals.css, hier wordt alleen de vertraging doorgegeven. Verminderde
+   * beweging wordt daar door een media query afgevangen.
+   */
+  const riseDelay = (delay: number) =>
+    ({ "--rise-delay": `${delay}s` }) as CSSProperties;
 
   // Split the fixed prefix into a head ("Digitale product") and its last word
   // ("designer"). On phones we force the head onto line 1 and the last word +
@@ -104,9 +103,9 @@ export function Hero() {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/40 to-transparent" />
 
       <Container className="relative z-10 flex -translate-y-8 flex-col items-start text-left">
-        <motion.p
-          {...rise(0.1)}
-          className="mb-6 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[0.625rem] font-medium uppercase leading-4 tracking-[0.16em] text-[#3EE68B] backdrop-blur"
+        <p
+          style={riseDelay(0.1)}
+          className="mount-rise mb-6 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[0.625rem] font-medium uppercase leading-4 tracking-[0.16em] text-[#3EE68B] backdrop-blur"
         >
           <span
             aria-hidden
@@ -116,11 +115,11 @@ export function Hero() {
             <span className="relative h-1.5 w-1.5 rounded-full bg-[#3EE68B] shadow-[0_0_10px_2px_rgba(62,230,139,0.8)]" />
           </span>
           {site.hero.eyebrow}
-        </motion.p>
+        </p>
 
-        <motion.h1
-          {...rise(0.2)}
-          className="min-h-[3.75em] max-w-4xl font-heading text-[clamp(1.9375rem,8.6vw,2.75rem)] font-semibold leading-[1.25] tracking-tight text-white sm:min-h-0 sm:text-[2.75rem] md:text-[3.25rem] lg:text-[4.25rem]"
+        <h1
+          style={riseDelay(0.2)}
+          className="mount-rise min-h-[3.75em] max-w-4xl font-heading text-[clamp(1.9375rem,8.6vw,2.75rem)] font-semibold leading-[1.25] tracking-tight text-white sm:min-h-0 sm:text-[2.75rem] md:text-[3.25rem] lg:text-[4.25rem]"
         >
           {/* Phones: 3 lines — "Digitale product" / "designer voor" / word.
               Tablet+ (sm): 2 lines — "Digitale product designer" / "voor" + word.
@@ -134,18 +133,18 @@ export function Hero() {
           <span className="whitespace-nowrap">
             <Typewriter phrases={site.hero.headlineRotating} />
           </span>
-        </motion.h1>
+        </h1>
 
-        <motion.p
-          {...rise(0.35)}
-          className="mt-4 max-w-xl text-base text-white/70 sm:mt-6 sm:text-lg"
+        <p
+          style={riseDelay(0.35)}
+          className="mount-rise mt-4 max-w-xl text-base text-white/70 sm:mt-6 sm:text-lg"
         >
           {site.hero.subtitle}
-        </motion.p>
+        </p>
 
-        <motion.div
-          {...rise(0.5)}
-          className="mt-6 flex flex-col items-stretch gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-4"
+        <div
+          style={riseDelay(0.5)}
+          className="mount-rise mt-6 flex flex-col items-stretch gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-4"
         >
           {/* DOM order unchanged (work first, contact second) — only the styles
               swap: contact is now the primary/filled CTA and carries the arrow. */}
@@ -156,10 +155,13 @@ export function Hero() {
             {site.hero.contactCta.label}
             <ArrowRight size={18} />
           </Button>
-        </motion.div>
+        </div>
 
         {/* Trusted-by logo strip */}
-        <motion.div {...rise(0.65)} className="mt-14 w-full sm:mt-16">
+        <div
+          style={riseDelay(0.65)}
+          className="mount-rise mt-14 w-full sm:mt-16"
+        >
           <p className="mb-5 text-sm text-white/50">
             {site.hero.trustedBy.label}
           </p>
@@ -180,15 +182,15 @@ export function Hero() {
               </li>
             ))}
           </ul>
-        </motion.div>
+        </div>
 
         {/* Subtle client reviews — bottom-right on desktop, in flow below the
             logo strip on mobile. Dark glassmorphism over the aurora. One shows
             at a time and crossfades to the next every ~7s. */}
-        <motion.section
-          {...rise(0.8)}
+        <section
+          style={riseDelay(0.8)}
           aria-label="Klantreviews"
-          className="relative mt-12 w-full sm:max-w-md lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[400px]"
+          className="mount-rise relative mt-12 w-full sm:max-w-md lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[400px]"
         >
           {prefersReducedMotion ? (
             <div className="flex flex-col gap-3">
@@ -200,18 +202,31 @@ export function Hero() {
             </div>
           ) : (
             <>
-              <AnimatePresence mode="wait">
-                <motion.figure
-                  key={activeReview}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.6, ease: "easeInOut" }}
-                  className={reviewCardClass}
-                >
-                  {reviewBody(site.hero.reviews[activeReview])}
-                </motion.figure>
-              </AnimatePresence>
+              {/* Alle reviews staan in dezelfde grid-cel en liggen dus over
+                  elkaar heen; alleen de actieve is zichtbaar. Daardoor is de
+                  kaart zo hoog als de langste review en verspringt hij niet
+                  meer tijdens het wisselen. */}
+              <div className="grid">
+                {site.hero.reviews.map((review, index) => {
+                  const actief = index === activeReview;
+                  return (
+                    <figure
+                      key={review.author}
+                      aria-hidden={!actief}
+                      className={cn(
+                        reviewCardClass,
+                        // Zelfde curve als voorheen: dit is easeInOut zoals de
+                        // animatiebibliotheek hem definieerde, niet Tailwinds
+                        // ease-in-out (dat is een andere bezier).
+                        "col-start-1 row-start-1 transition-opacity duration-[600ms] ease-[cubic-bezier(0.42,0,0.58,1)]",
+                        actief ? "opacity-100" : "pointer-events-none opacity-0"
+                      )}
+                    >
+                      {reviewBody(review)}
+                    </figure>
+                  );
+                })}
+              </div>
               <PauseButton
                 paused={reviewsPaused}
                 onToggle={() => setReviewsPaused((p) => !p)}
@@ -220,7 +235,7 @@ export function Hero() {
               />
             </>
           )}
-        </motion.section>
+        </section>
       </Container>
     </section>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import {
   User,
   Eye,
@@ -112,12 +112,7 @@ export function Navbar() {
   }, []);
 
   return (
-    <motion.header
-      initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-      className="fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-50 flex justify-center lg:inset-x-0 lg:bottom-auto lg:top-4"
-    >
+    <header className="mount-fade fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-50 flex justify-center lg:inset-x-0 lg:bottom-auto lg:top-4">
       <nav
         aria-label="Main"
         className={cn(
@@ -180,6 +175,6 @@ export function Navbar() {
         </ul>
 
       </nav>
-    </motion.header>
+    </header>
   );
 }
