@@ -98,6 +98,34 @@
   border-radius: 9999px;
 }
 
+/* Scroll-reveal — hoort bij components/ui/Reveal.tsx. De klasse zet de
+   begintoestand; een IntersectionObserver daar voegt `is-in` toe zodra het
+   element in beeld komt. De drie custom properties zijn de knoppen:
+   --reveal-y (afstand), --reveal-delay (vertraging, ook gezet door
+   RevealStagger per kind) en --reveal-duration (RevealItem draait op 0.6s,
+   Reveal op 0.7s — zoals het met framer-motion ook was). */
+.reveal {
+  opacity: 0;
+  transform: translateY(var(--reveal-y, 24px));
+  transition:
+    opacity var(--reveal-duration, 0.7s) cubic-bezier(0.22, 1, 0.36, 1),
+    transform var(--reveal-duration, 0.7s) cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 /* Typewriter caret */
 @keyframes caret-blink {
   0%,
