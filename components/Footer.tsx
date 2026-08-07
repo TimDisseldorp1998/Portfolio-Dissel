@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import { nav, site, socials } from "@/lib/content";
 import { scrollToSection } from "@/lib/scroll";
 import { Container } from "./ui/Container";
