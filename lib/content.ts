@@ -157,30 +157,21 @@ export const bento = {
   ],
 };
 
-/**
- * Contribution bullets are split into `lead` (the action, rendered bold for
- * scannability) and `rest` — keep the lead to the first 3–5 words.
- */
 export type CaseSection = { heading: string; paragraphs: string[] };
 
 export type ProjectDetail = {
-  company: string;
-  /** What I did — shown as "Rol" in the meta bar instead of the company name
-   *  (which already appears as the drawer title). Falls back to `company`. */
-  role?: string;
+  /** What I did — shown as "Rol" in the meta bar. The project title already
+   *  appears as the drawer title, so this says the work, not the client. */
+  role: string;
   year: string;
   type: string;
   overview: string;
-  /** Full prose case (challenge / approach / result …). When present, the
-   *  panel renders these sections instead of the contribution bullets. */
-  body?: CaseSection[];
-  contribution?: { lead: string; rest: string }[];
+  /** Full prose case: challenge / approach / result / call to action. */
+  body: CaseSection[];
   /** Carousel slides. `gradient` is the base backdrop (shown while an image
    *  loads, or on its own for placeholder slides); add `src`/`alt` to overlay
    *  a real screenshot on top of it. */
   slides: { label: string; gradient: string; src?: string; alt?: string }[];
-  /** Award link (e.g. Awwwards). Omit for projects without honors. */
-  award?: { label: string; href: string };
 };
 
 export type Project = {
@@ -208,7 +199,6 @@ export const projects: Project[] = [
     href: "https://kleintjesvanalkmaar.nl/",
     accent: "primary",
     detail: {
-      company: "Kleintjes van Alkmaar",
       role: "Branding & UX/UI",
       year: "2025",
       type: "Web",
@@ -249,20 +239,26 @@ export const projects: Project[] = [
         {
           label: "Homepage",
           gradient: "from-primary/70 via-primary-700/50 to-[#8E5CE0]/60",
-          src: "/mockup/KvA-mockup-home-screen.webp",
+          src: "/mockup/KvA-mockup-home-screen-slider1.webp",
           alt: "De homepage van Kleintjes van Alkmaar op desktop, met het registratieformulier voor ouders en oppassers",
         },
         {
           label: "Mobiele schermen",
           gradient: "from-[#8E5CE0]/60 via-primary/40 to-primary-800",
-          src: "/mockup/KvA-mockup-screens-mobile-designs.webp",
+          src: "/mockup/KvA-mockup-screens-mobile-designs-slider2.webp",
           alt: "Vier mobiele schermen van het platform: menu, voordelen, de oppaskant en de ouderkant",
         },
         {
           label: "Onboarding",
           gradient: "from-primary-400/60 via-[#8E5CE0]/40 to-primary-900",
-          src: "/mockup/KvA-mockup-onboarding-screen.webp",
+          src: "/mockup/KvA-mockup-onboarding-screen-slider3.webp",
           alt: "De onboarding-pagina waarop oppassers stap voor stap een account aanmaken",
+        },
+        {
+          label: "Huisstijl",
+          gradient: "from-primary/60 via-primary-800 to-[#8E5CE0]/40",
+          src: "/mockup/KvA-mockup-screens-styleguide-slider4.webp",
+          alt: "Het brandboard met het kleursysteem, de typografie en de logoregels van Kleintjes van Alkmaar",
         },
       ],
     },
@@ -276,7 +272,6 @@ export const projects: Project[] = [
     href: "https://de-stock.nl/",
     accent: "secondary",
     detail: {
-      company: "De-Stock",
       role: "Branding & webdesign",
       year: "2025",
       type: "Web",
@@ -343,7 +338,6 @@ export const projects: Project[] = [
     href: "https://www.ziggodome.nl",
     accent: "mix",
     detail: {
-      company: "Ziggo Dome",
       role: "Mobile-first",
       year: "2024",
       type: "Web",
@@ -429,7 +423,6 @@ export const projects: Project[] = [
     href: "https://www.newedition.nl/en/",
     accent: "primary",
     detail: {
-      company: "New Edition",
       role: "Webdesign",
       year: "2023",
       type: "Web",
@@ -482,7 +475,6 @@ export const projects: Project[] = [
     href: "#",
     accent: "secondary",
     detail: {
-      company: "Marktzicht Eten & Drinken",
       role: "Branding & webdesign",
       year: "2025",
       type: "Web",
@@ -534,7 +526,6 @@ export const projects: Project[] = [
     href: "#",
     accent: "mix",
     detail: {
-      company: "16.08 Streetwear",
       role: "Branding & UX/UI",
       year: "2025",
       type: "Web",

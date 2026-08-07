@@ -10,7 +10,6 @@ import {
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import {
   ArrowRight,
-  Award,
   Briefcase,
   Calendar,
   ChevronLeft,
@@ -233,7 +232,7 @@ export function ProjectDetailPanel({
                 <div>
                   <dt className="sr-only md:not-sr-only md:mb-1 md:flex md:items-center md:gap-1.5 md:text-[11px] md:font-medium md:uppercase md:tracking-[0.14em] md:text-white/50">
                     <Briefcase size={12} aria-hidden />
-                    {detail.role ? "Rol" : "Bedrijf"}
+                    Rol
                   </dt>
                   <dd className="flex items-center gap-1.5 text-sm font-semibold text-white md:text-base">
                     <Briefcase
@@ -241,7 +240,7 @@ export function ProjectDetailPanel({
                       aria-hidden
                       className="shrink-0 text-white/50 md:hidden"
                     />
-                    {detail.role ?? detail.company}
+                    {detail.role}
                   </dd>
                 </div>
                 <div>
@@ -275,21 +274,6 @@ export function ProjectDetailPanel({
                   </dd>
                 </div>
               </dl>
-
-              {/* Award badge — labeled, keyboard-focusable */}
-              {detail.award && (
-                <a
-                  href={detail.award.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group absolute right-4 top-4 flex h-11 items-center gap-0 rounded-full border border-white/15 bg-black/60 px-3 text-white backdrop-blur-md transition-[gap,box-shadow] hover:gap-2 focus-visible:gap-2 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
-                >
-                  <Award size={18} aria-hidden />
-                  <span className="max-w-0 overflow-hidden whitespace-nowrap text-xs font-medium transition-[max-width] duration-300 group-hover:max-w-[140px] group-focus-visible:max-w-[140px]">
-                    {detail.award.label}
-                  </span>
-                </a>
-              )}
 
               {slideCount > 1 && (
                 <>
@@ -354,8 +338,8 @@ export function ProjectDetailPanel({
             </p>
           </div>
 
-          {/* Full case sections (challenge / approach / result …), when present */}
-          {detail.body?.map((section) => (
+          {/* Full case sections: challenge / approach / result / call to action */}
+          {detail.body.map((section) => (
             <div key={section.heading} className="mt-8">
               <h3 className="mb-3 text-xs font-medium uppercase tracking-[0.22em] text-white/60">
                 {section.heading}
@@ -369,34 +353,6 @@ export function ProjectDetailPanel({
               </div>
             </div>
           ))}
-
-          {/* Contribution bullets — only when there's no full case body */}
-          {!detail.body && detail.contribution && (
-            <div className="mt-8">
-              <h3 className="mb-3 text-xs font-medium uppercase tracking-[0.22em] text-white/60">
-                Mijn bijdrage
-              </h3>
-              <ul className="max-w-[68ch] space-y-3">
-                {detail.contribution.map((c) => (
-                  <li
-                    key={c.lead}
-                    className="flex gap-3 text-sm leading-relaxed text-white/65"
-                  >
-                    <span
-                      aria-hidden
-                      className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
-                    />
-                    <p>
-                      <strong className="font-semibold text-white/90">
-                        {c.lead}
-                      </strong>
-                      {c.rest}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
 
           <div className="mt-6 flex flex-wrap gap-1.5 pb-4">
             {project.tags.map((t) => (
