@@ -167,6 +167,163 @@
   }
 }
 
+/* Case-drawer: achtergrond en paneel. `data-state` wordt gezet door
+   usePresence, die het paneel gemount houdt tot de uit-animatie klaar is.
+   --drawer-x wordt bij verminderde beweging op 0 gezet, dan blijft alleen
+   de fade over. */
+@keyframes drawer-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes drawer-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes drawer-panel-in {
+  from {
+    opacity: 0;
+    transform: translateX(var(--drawer-x, 48px));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes drawer-panel-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(var(--drawer-x, 48px));
+  }
+}
+
+[data-drawer="backdrop"][data-state="open"] {
+  animation: drawer-fade-in 0.2s ease-out both;
+}
+[data-drawer="backdrop"][data-state="closed"] {
+  animation: drawer-fade-out 0.2s ease-out both;
+}
+[data-drawer="panel"][data-state="open"] {
+  animation: drawer-panel-in 0.2s ease-out both;
+}
+[data-drawer="panel"][data-state="closed"] {
+  animation: drawer-panel-out 0.2s ease-out both;
+}
+
+/* Contactformulier: het formulier fadet weg voordat de bedankt-kaart komt,
+   en de bedankt-kaart plus het vinkje komen daarna op. */
+@keyframes form-exit {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+@keyframes success-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes success-check-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+[data-form="fields"][data-state="closed"] {
+  animation: form-exit 0.22s ease-out both;
+}
+.success-card {
+  animation: success-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.success-check {
+  /* Dezelfde licht doorschietende curve als voorheen. */
+  animation: success-check-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+
+/* Veldfoutmelding: van 0 naar de eigen hoogte. Een grid van 0fr naar 1fr is
+   de manier om naar "auto" te animeren; height kan dat niet. */
+.field-error {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    grid-template-rows 0.18s ease-out,
+    opacity 0.18s ease-out,
+    transform 0.18s ease-out;
+}
+/* De marge van de tekst moet bínnen het inklapbare deel vallen, anders blijft
+   die ruimte staan als de melding dicht is. */
+.field-error > * {
+  overflow: hidden;
+  min-height: 0;
+}
+.field-error[data-state="open"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Chatberichten in de portretkaart: alle plekken staan er meteen, de bubbels
+   faden één voor één op hun plek in. Er schuift dus niets. */
+.chat-bubble {
+  opacity: 0;
+  transform: translateY(10px) scale(0.9);
+  transition:
+    opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.chat-bubble[data-visible="true"] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-drawer="panel"] {
+    --drawer-x: 0px;
+  }
+  .success-card,
+  .success-check {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .field-error,
+  .chat-bubble {
+    transition: none;
+  }
+}
+
 /* Typewriter caret */
 @keyframes caret-blink {
   0%,

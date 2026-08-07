@@ -1,12 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useInView,
-  useReducedMotion,
-} from "framer-motion";
+import { useInView } from "@/lib/useInView";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import { Download, Mail, Minus, Plus } from "lucide-react";
 import { bento, experience, site } from "@/lib/content";
 import { Container } from "./ui/Container";
@@ -295,7 +291,7 @@ function Slider() {
 function ChatMessages() {
   const prefersReducedMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { amount: 0.5 });
+  const inView = useInView(ref, 0.5);
   const messages = bento.portrait.messages;
   const [visibleCount, setVisibleCount] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -351,34 +347,21 @@ function ChatMessages() {
           className="absolute bottom-0 right-0 bg-black/50 backdrop-blur-md"
         />
       )}
-      <AnimatePresence>
-        {messages.slice(0, visibleCount).map((msg, idx) => (
-          <motion.span
+      {/* Alle bubbels staan er meteen, zodat hun plek al gereserveerd is en
+          er niets hoeft te schuiven als de volgende verschijnt. */}
+      {messages.map((msg, idx) => {
+        const zichtbaar = idx < visibleCount;
+        return (
+          <span
             key={msg}
-            layout
-            initial={
-              prefersReducedMotion
-                ? { opacity: 1 }
-                : { opacity: 0, y: 10, scale: 0.9 }
-            }
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={
-              prefersReducedMotion
-                ? { opacity: 0 }
-                : { opacity: 0, y: 8, transition: { duration: 0.25 } }
-            }
-            transition={{
-              type: "spring",
-              stiffness: 420,
-              damping: 28,
-              delay: idx === visibleCount - 1 ? 0 : 0,
-            }}
-            className="max-w-[85%] rounded-2xl rounded-bl-md bg-black/50 px-3.5 py-2 text-xs text-white/90 shadow-lg backdrop-blur-md"
+            data-visible={zichtbaar}
+            aria-hidden={!zichtbaar}
+            className="chat-bubble max-w-[85%] rounded-2xl rounded-bl-md bg-black/50 px-3.5 py-2 text-xs text-white/90 shadow-lg backdrop-blur-md"
           >
             {msg}
-          </motion.span>
-        ))}
-      </AnimatePresence>
+          </span>
+        );
+      })}
     </div>
   );
 }

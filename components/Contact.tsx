@@ -8,7 +8,8 @@ import {
   type HTMLAttributes,
   type RefObject,
 } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "@/lib/useReducedMotion";
+import { usePresence } from "@/lib/usePresence";
 import {
   AlertCircle,
   ArrowRight,
@@ -189,6 +190,13 @@ export function Contact() {
 
   const isSubmitting = status === "submitting";
 
+  // Het formulier blijft nog 220ms staan nadat het verstuurd is, zodat het weg
+  // kan faden voordat de bedankt-kaart verschijnt.
+  const { mounted: formulierZichtbaar, state: formulierState } = usePresence(
+    status !== "sent",
+    220
+  );
+
   return (
     <Section id="contact" variant="dark" className="pb-32">
       <Container>
@@ -266,17 +274,15 @@ export function Contact() {
           <div id="contact-form" className="scroll-mt-24 lg:col-span-7">
             <Reveal delay={0.15}>
               <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm md:p-10">
-                <AnimatePresence mode="wait" initial={false}>
-                  {status === "sent" ? (
-                    <SuccessCard key="sent" onReset={resetForm} />
-                  ) : (
-                    <motion.form
-                      key="form"
-                      onSubmit={onSubmit}
-                      noValidate
-                      exit={{ opacity: 0, scale: 0.98 }}
-                      transition={{ duration: 0.22 }}
-                    >
+                {/* Het formulier fadet eerst weg, daarna komt de
+                    bedankt-kaart op — zoals mode="wait" dat deed. */}
+                {formulierZichtbaar ? (
+                  <form
+                    data-form="fields"
+                    data-state={formulierState}
+                    onSubmit={onSubmit}
+                    noValidate
+                  >
                       {/* Honeypot */}
                       <input
                         type="text"
@@ -446,9 +452,10 @@ export function Contact() {
                           </div>
                         </RevealItem>
                       </RevealStagger>
-                    </motion.form>
-                  )}
-                </AnimatePresence>
+                  </form>
+                ) : (
+                  <SuccessCard onReset={resetForm} />
+                )}
               </div>
             </Reveal>
           </div>
@@ -461,30 +468,15 @@ export function Contact() {
 /* ------------------------------ SuccessCard ------------------------------ */
 
 function SuccessCard({ onReset }: { onReset: () => void }) {
-  const prefersReducedMotion = useReducedMotion();
   return (
-    <motion.div
+    <div
       role="status"
       aria-live="polite"
-      initial={
-        prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }
-      }
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-      className="flex min-h-[300px] flex-col items-center justify-center gap-4 py-8 text-center"
+      className="success-card flex min-h-[300px] flex-col items-center justify-center gap-4 py-8 text-center"
     >
-      <motion.div
-        initial={prefersReducedMotion ? {} : { scale: 0.6, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{
-          duration: 0.5,
-          delay: 0.1,
-          ease: [0.34, 1.56, 0.64, 1],
-        }}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/15 text-primary"
-      >
+      <div className="success-check flex h-14 w-14 items-center justify-center rounded-full bg-primary/15 text-primary">
         <Check size={28} strokeWidth={2.5} aria-hidden />
-      </motion.div>
+      </div>
       <div>
         <p className="font-heading text-2xl font-semibold text-white">
           Bedankt!
@@ -500,7 +492,7 @@ function SuccessCard({ onReset }: { onReset: () => void }) {
       >
         Nog een bericht sturen
       </button>
-    </motion.div>
+    </div>
   );
 }
 
@@ -621,23 +613,20 @@ function Field(props: FieldProps) {
         />
       )}
 
-      <AnimatePresence initial={false}>
-        {error && (
-          <motion.p
+      {/* Blijft staan zodat hij ook dicht kan animeren; de grid-truc in
+          globals.css doet het hoogte-effect. */}
+      <div className="field-error" data-state={error ? "open" : "closed"}>
+        <div>
+          <p
             id={errorId}
-            key="err"
             role="alert"
-            initial={{ opacity: 0, y: -4, height: 0 }}
-            animate={{ opacity: 1, y: 0, height: "auto" }}
-            exit={{ opacity: 0, y: -4, height: 0 }}
-            transition={{ duration: 0.18 }}
-            className="mt-1.5 flex items-center gap-1.5 overflow-hidden text-xs text-red-400"
+            className="mt-1.5 flex items-center gap-1.5 text-xs text-red-400"
           >
             <AlertCircle size={12} className="shrink-0" aria-hidden />
             <span>{error}</span>
-          </motion.p>
-        )}
-      </AnimatePresence>
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
