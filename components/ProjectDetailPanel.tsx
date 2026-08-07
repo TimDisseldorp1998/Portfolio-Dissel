@@ -7,7 +7,7 @@ import {
   useState,
   type CSSProperties,
 } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import {
   ArrowRight,
   Award,
@@ -45,11 +45,14 @@ const FOCUSABLE =
 interface ProjectDetailPanelProps {
   project: Project;
   onClose: () => void;
+  /** "open" of "closed" — stuurt de in- en uit-animatie aan (zie globals.css). */
+  state: "open" | "closed";
 }
 
 export function ProjectDetailPanel({
   project,
   onClose,
+  state,
 }: ProjectDetailPanelProps) {
   const prefersReducedMotion = useReducedMotion();
   const panelRef = useRef<HTMLDivElement>(null);
@@ -124,26 +127,22 @@ export function ProjectDetailPanel({
   return (
     <div className="fixed inset-0 z-[70]" style={panelTokens}>
       {/* Backdrop — click closes */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.2 }}
+      <div
+        data-drawer="backdrop"
+        data-state={state}
         onClick={onClose}
         aria-hidden
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
       />
 
       {/* Panel */}
-      <motion.div
+      <div
         ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        initial={{ opacity: 0, x: prefersReducedMotion ? 0 : 48 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: prefersReducedMotion ? 0 : 48 }}
-        transition={{ duration: 0.2, ease: "easeOut" }}
+        data-drawer="panel"
+        data-state={state}
         className="absolute inset-y-0 right-0 flex w-full flex-col border-l border-[color:var(--panel-border)] bg-[color:var(--panel-bg)] text-white md:w-1/2"
       >
         <div
@@ -447,7 +446,7 @@ export function ProjectDetailPanel({
             )}
           />
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }
