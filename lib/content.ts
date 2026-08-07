@@ -246,10 +246,24 @@ export const projects: Project[] = [
         },
       ],
       slides: [
-        { label: "Homepage", gradient: "from-primary/70 via-primary-700/50 to-[#8E5CE0]/60" },
-        { label: "Huisstijl", gradient: "from-[#8E5CE0]/60 via-primary/40 to-primary-800" },
-        { label: "Twee kanten", gradient: "from-primary-400/60 via-[#8E5CE0]/40 to-primary-900" },
-        { label: "Responsive schermen", gradient: "from-primary/60 via-primary-800 to-[#8E5CE0]/40" },
+        {
+          label: "Homepage",
+          gradient: "from-primary/70 via-primary-700/50 to-[#8E5CE0]/60",
+          src: "/mockup/KvA-mockup-home-screen.webp",
+          alt: "De homepage van Kleintjes van Alkmaar op desktop, met het registratieformulier voor ouders en oppassers",
+        },
+        {
+          label: "Mobiele schermen",
+          gradient: "from-[#8E5CE0]/60 via-primary/40 to-primary-800",
+          src: "/mockup/KvA-mockup-screens-mobile-designs.webp",
+          alt: "Vier mobiele schermen van het platform: menu, voordelen, de oppaskant en de ouderkant",
+        },
+        {
+          label: "Onboarding",
+          gradient: "from-primary-400/60 via-[#8E5CE0]/40 to-primary-900",
+          src: "/mockup/KvA-mockup-onboarding-screen.webp",
+          alt: "De onboarding-pagina waarop oppassers stap voor stap een account aanmaken",
+        },
       ],
     },
   },
