@@ -108,7 +108,6 @@ export const bento = {
   intro: {
     title:
       "Creatieve digitale product designer met een oog voor detail. Ik ontwerp en bouw producten die net zo goed presteren als ze eruitzien.",
-    resumeHref: "#",
   },
   background: {
     paragraphs: [

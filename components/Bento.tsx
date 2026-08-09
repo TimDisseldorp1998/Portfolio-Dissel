@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "@/lib/useInView";
 import { useReducedMotion } from "@/lib/useReducedMotion";
-import { Download, Mail, Minus, Plus } from "lucide-react";
+import { Mail, Minus, Plus } from "lucide-react";
 import { bento, experience, site, socials } from "@/lib/content";
 import { Container } from "./ui/Container";
 import { Reveal } from "./ui/Reveal";
@@ -406,7 +406,7 @@ export function Bento() {
               <p className="text-base leading-relaxed text-white/90 md:text-lg">
                 {bento.intro.title}
               </p>
-              <div className="mt-6 flex items-center justify-between gap-3">
+              <div className="mt-6 flex items-center gap-3">
                 <div className="flex gap-2">
                   <SocialIconLink
                     href={`mailto:${site.email}`}
@@ -427,14 +427,6 @@ export function Bento() {
                     );
                   })}
                 </div>
-                <a
-                  href={bento.intro.resumeHref}
-                  download
-                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-4 py-2 text-sm font-medium text-white transition-[transform,background-color,border-color] hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/10"
-                >
-                  <Download size={14} aria-hidden />
-                  CV (PDF)
-                </a>
               </div>
             </BentoCard>
 
