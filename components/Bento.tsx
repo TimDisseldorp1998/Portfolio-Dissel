@@ -27,7 +27,7 @@ function BentoCard({ children, className }: BentoCardProps) {
   return (
     <div
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm transition-[background-color,border-color] duration-500 hover:border-white/20 hover:bg-white/[0.06]",
+        "group relative flex flex-col overflow-hidden rounded-3xl bg-white/[0.04] p-6 backdrop-blur-sm transition-[background-color] duration-500 hover:bg-white/[0.06]",
         className
       )}
     >
@@ -233,7 +233,7 @@ function Slider() {
   }, [prefersReducedMotion, paused]);
 
   return (
-    <div className="group/slider relative min-h-[220px] flex-1 overflow-hidden rounded-2xl bg-black/40">
+    <div className="group/slider relative min-h-[220px] flex-1 overflow-hidden rounded-3xl bg-black/40">
       {bento.slider.map((slide, idx) => (
         <div
           key={idx}
@@ -454,8 +454,11 @@ export function Bento() {
               ))}
             </BentoCard>
 
-            {/* Slider card — grows to close any height gap in this column */}
-            <BentoCard className="flex-1 p-0">
+            {/* Slider card — groeit mee om het hoogteverschil in deze kolom te
+                dichten. `!p-0` is nodig, niet `p-0`: `cn` is clsx-only, dus
+                zonder `!` blijft BentoCard's `p-6` staan en houd je een rand
+                lucht rond de foto. Zelfde truc als bij de portretkaart. */}
+            <BentoCard className="flex-1 !p-0">
               <Slider />
             </BentoCard>
           </div>
