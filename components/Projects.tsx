@@ -117,18 +117,23 @@ export function Projects() {
                   met een korte naam. Visueel en qua klikgebied identiek. */}
               <article
                 className={cn(
-                  "group relative block w-full overflow-hidden rounded-3xl text-left transition-[transform,background-color,border-color,box-shadow] duration-300 hover:-translate-y-1",
+                  "group relative block w-full overflow-hidden rounded-3xl text-left transition-[transform,background-color,border-color,box-shadow] duration-300",
                   p.cardImage
                     ? // Fotokaart: geen rand en geen vlak eroverheen, die zouden
                       // als lijn of waas over de foto komen te liggen. Ook geen
                       // doorzichtige rand: `overflow-hidden` klipt op de
                       // padding-box, dus de foto kan een randring nooit bedekken
                       // en die zou als haarlijn zichtbaar blijven.
+                      // Deze kaart tilt bewust niet op bij hover: de foto loopt
+                      // door tot de rand, en een verschuivende rand tegen de
+                      // donkere pagina trekt de aandacht naar de kaartcontour in
+                      // plaats van naar de foto. Inzoomen en de oranje knop doen
+                      // het werk.
                       // `flex h-full flex-col` laat de kaart zijn gridvakje
                       // vullen en duwt de tekst naar de onderrand, ook als een
                       // buurkaart hoger uitvalt doordat zijn tekst anders afbreekt.
                       "flex h-full flex-col has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[#ff833d] has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-surface-dark"
-                    : "border border-white/10 bg-white/[0.04] backdrop-blur-sm hover:border-white/20 hover:bg-white/[0.06] has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-primary/30"
+                    : "border border-white/10 bg-white/[0.04] backdrop-blur-sm hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.06] has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-primary/30"
                 )}
               >
                 {p.cardImage ? (
@@ -155,17 +160,6 @@ export function Projects() {
                       // werd tegen (10,10,15) van de pagina. Dat verschil van twee
                       // waarden tekende de contour van de kaart als een haarlijn.
                       className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(10,10,15,1)_0%,rgba(10,10,15,0.80)_38%,rgba(10,10,15,0)_78%)]"
-                    />
-                    {/* Randlijn van 1px in de achtergrondkleur, langs de
-                        binnenkant van de kaart en bovenop de foto. Daarmee is de
-                        buitenste pixelrij exact gelijk aan de pagina, zodat de
-                        contour van de kaart niet meer als haarlijn oplicht.
-                        Bewust een eigen laag en geen `border` op de kaart zelf:
-                        een border telt mee in de hoogte en zou de kaart weer uit
-                        de pas laten lopen met de andere vijf. */}
-                    <div
-                      aria-hidden
-                      className="pointer-events-none absolute inset-0 rounded-3xl border border-surface-dark"
                     />
                     {/* Lege ruimte met dezelfde verhouding als het beeldblok van
                         de andere kaarten. Daardoor rekent deze kaart zijn hoogte
