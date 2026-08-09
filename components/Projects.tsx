@@ -119,15 +119,15 @@ export function Projects() {
                 className={cn(
                   "group relative block w-full overflow-hidden rounded-3xl text-left transition-[transform,background-color,border-color,box-shadow] duration-300 hover:-translate-y-1",
                   p.cardImage
-                    ? // Fotokaart: geen zichtbare rand en geen vlak eroverheen,
-                      // die zouden als lijn of waas over de foto komen te liggen.
-                      // De rand blijft wel staan, maar doorzichtig: zo houdt het
-                      // doosmodel dezelfde 1px en wordt de kaart precies even
-                      // hoog als de andere vijf, tot op de pixel.
+                    ? // Fotokaart: geen rand en geen vlak eroverheen, die zouden
+                      // als lijn of waas over de foto komen te liggen. Ook geen
+                      // doorzichtige rand: `overflow-hidden` klipt op de
+                      // padding-box, dus de foto kan een randring nooit bedekken
+                      // en die zou als haarlijn zichtbaar blijven.
                       // `flex h-full flex-col` laat de kaart zijn gridvakje
                       // vullen en duwt de tekst naar de onderrand, ook als een
                       // buurkaart hoger uitvalt doordat zijn tekst anders afbreekt.
-                      "flex h-full flex-col border border-transparent has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[#ff833d] has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-surface-dark"
+                      "flex h-full flex-col has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[#ff833d] has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-surface-dark"
                     : "border border-white/10 bg-white/[0.04] backdrop-blur-sm hover:border-white/20 hover:bg-white/[0.06] has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-primary/30"
                 )}
               >
