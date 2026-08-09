@@ -151,7 +151,10 @@ export function Projects() {
                 {p.cardImage && (
                   <div
                     aria-hidden
-                    className="pointer-events-none absolute inset-0 bg-[rgba(10,10,15,0.55)]"
+                    // Bij hover zakt de tint van 0.55 naar 0.45, waardoor de foto
+                    // oplicht. Niet verder: op 0.35 zakt het oranje pijl-icoon
+                    // naar 4,52:1 en dat is te krap boven de norm van 4,5.
+                    className="pointer-events-none absolute inset-0 bg-surface-dark opacity-[0.55] transition-opacity duration-500 ease-out group-hover:opacity-[0.45]"
                   />
                 )}
                 {/* De gradient onderlangs maakt de tekst leesbaar, wat de

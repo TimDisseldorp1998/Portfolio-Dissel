@@ -4,12 +4,19 @@ import { useEffect, useRef, useState } from "react";
 import { useInView } from "@/lib/useInView";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { Download, Mail, Minus, Plus } from "lucide-react";
-import { bento, experience, site } from "@/lib/content";
+import { bento, experience, site, socials } from "@/lib/content";
 import { Container } from "./ui/Container";
 import { Reveal } from "./ui/Reveal";
 import { LinkedinFilled, InstagramFilled } from "./ui/BrandIcons";
 import { PauseButton } from "./ui/PauseButton";
 import { cn } from "@/lib/cn";
+
+/** Zelfde koppeling als in Contact en Footer: `icon` uit lib/content wijst hier
+ *  naar het echte merk-icoon. */
+const brandIcons: Record<string, typeof LinkedinFilled> = {
+  Linkedin: LinkedinFilled,
+  Instagram: InstagramFilled,
+};
 
 type BentoCardProps = {
   children: React.ReactNode;
@@ -49,7 +56,12 @@ function SocialIconLink({
   return (
     <a
       href={href}
-      aria-label={label}
+      // Een link die in een nieuw tabblad opent hoort dat te melden, anders
+      // merkt een schermlezer pas achteraf dat de context is gewisseld. Contact
+      // en Footer doen dit al zo.
+      aria-label={
+        href.startsWith("mailto:") ? label : `${label} — opent in nieuw tabblad`
+      }
       target={href.startsWith("mailto:") ? undefined : "_blank"}
       rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
       className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/70 transition-[transform,background-color,border-color,color] hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/10 hover:text-white"
@@ -402,18 +414,18 @@ export function Bento() {
                   >
                     <Mail size={14} />
                   </SocialIconLink>
-                  <SocialIconLink
-                    href="https://www.linkedin.com/in/timdisseldorp/"
-                    label="LinkedIn"
-                  >
-                    <LinkedinFilled size={14} />
-                  </SocialIconLink>
-                  <SocialIconLink
-                    href="https://www.instagram.com/timdisseldorp/"
-                    label="Instagram"
-                  >
-                    <InstagramFilled size={14} />
-                  </SocialIconLink>
+                  {/* Uit lib/content, net als Contact en Footer. De URL's stonden
+                      hier eerder hardgecodeerd, waardoor een gewijzigde
+                      gebruikersnaam op deze ene plek achter zou blijven. */}
+                  {socials.map((s) => {
+                    const Icon = brandIcons[s.icon];
+                    if (!Icon) return null;
+                    return (
+                      <SocialIconLink key={s.label} href={s.href} label={s.label}>
+                        <Icon size={14} />
+                      </SocialIconLink>
+                    );
+                  })}
                 </div>
                 <a
                   href={bento.intro.resumeHref}

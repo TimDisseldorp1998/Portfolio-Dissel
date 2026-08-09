@@ -13,7 +13,6 @@ import { usePresence } from "@/lib/usePresence";
 import {
   AlertCircle,
   ArrowRight,
-  CalendarDays,
   Check,
   Clock,
   Loader2,
@@ -218,21 +217,6 @@ export function Contact() {
                 direct met je mee over hoe we daar sneller komen. Geen
                 verplichtingen, gewoon een goed gesprek.
               </p>
-
-              {/* Schedule CTA — TODO: point href at the Calendly/Cal.com link
-                  once the scheduling tool is set up. Falls back to email. */}
-              <a
-                href={`mailto:${site.email}?subject=${encodeURIComponent("Plan een gesprek")}`}
-                className="group mb-4 inline-flex min-h-[48px] items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-ink shadow-glow transition-[background-color,box-shadow] duration-200 hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
-              >
-                <CalendarDays size={16} aria-hidden />
-                Plan een gesprek
-                <ArrowRight
-                  size={16}
-                  className="transition-transform duration-200 group-hover:translate-x-1"
-                  aria-hidden
-                />
-              </a>
 
               {/* Socials */}
               <div className="mt-10">
