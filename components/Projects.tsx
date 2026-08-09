@@ -115,98 +115,63 @@ export function Projects() {
                   kaarttekst één lange toegankelijke naam en telt de h3 niet
                   als kop. De knop is nu een overlay die de hele kaart bedekt,
                   met een korte naam. Visueel en qua klikgebied identiek. */}
-              <article
-                className={cn(
-                  "group relative block w-full overflow-hidden rounded-3xl text-left transition-[transform,background-color,border-color,box-shadow] duration-300",
-                  p.cardImage
-                    ? // Fotokaart: geen rand en geen vlak eroverheen, die zouden
-                      // als lijn of waas over de foto komen te liggen. Ook geen
-                      // doorzichtige rand: `overflow-hidden` klipt op de
-                      // padding-box, dus de foto kan een randring nooit bedekken
-                      // en die zou als haarlijn zichtbaar blijven.
-                      // Deze kaart tilt bewust niet op bij hover: de foto loopt
-                      // door tot de rand, en een verschuivende rand tegen de
-                      // donkere pagina trekt de aandacht naar de kaartcontour in
-                      // plaats van naar de foto. Inzoomen en de oranje knop doen
-                      // het werk.
-                      // `flex h-full flex-col` laat de kaart zijn gridvakje
-                      // vullen en duwt de tekst naar de onderrand, ook als een
-                      // buurkaart hoger uitvalt doordat zijn tekst anders afbreekt.
-                      "flex h-full flex-col has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[#ff833d] has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-surface-dark"
-                    : "border border-white/10 bg-white/[0.04] backdrop-blur-sm hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.06] has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-primary/30"
-                )}
-              >
+              {/* Alle kaarten hebben dezelfde vorm: achtergrond over de hele
+                  kaart, tekst eroverheen tegen de onderrand. Geen rand en geen
+                  vlak over de achtergrond, want die zouden als lijn of waas
+                  zichtbaar zijn. Ook tilt de kaart niet op bij hover: de
+                  achtergrond loopt door tot de rand, en een verschuivende rand
+                  tegen de donkere pagina trekt de aandacht naar de kaartcontour
+                  in plaats van naar het beeld. Inzoomen en de oranje knop doen
+                  het werk. */}
+              <article className="group relative flex h-full w-full flex-col overflow-hidden rounded-3xl text-left transition-[box-shadow] duration-300 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[#ff833d] has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-surface-dark">
                 {p.cardImage ? (
-                  <>
-                    {/* De foto vult de hele kaart. Twee scrims eroverheen maken
-                        de tekst onderin leesbaar, wat er ook op de foto staat. */}
-                    <img
-                      src={p.cardImage}
-                      alt=""
-                      aria-hidden
-                      loading="lazy"
-                      draggable={false}
-                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.04]"
-                    />
-                    <div
-                      aria-hidden
-                      className="pointer-events-none absolute inset-0 bg-[rgba(10,10,15,0.55)]"
-                    />
-                    <div
-                      aria-hidden
-                      // De onderste stop is volledig dekkend, niet 0.95. Bij 0.95
-                      // schijnt 2,25% van de foto door en die is onderin licht
-                      // (bank en spijkerbroek), waardoor de kaart daar (12,12,17)
-                      // werd tegen (10,10,15) van de pagina. Dat verschil van twee
-                      // waarden tekende de contour van de kaart als een haarlijn.
-                      className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(10,10,15,1)_0%,rgba(10,10,15,0.80)_38%,rgba(10,10,15,0)_78%)]"
-                    />
-                    {/* Lege ruimte met dezelfde verhouding als het beeldblok van
-                        de andere kaarten. Daardoor rekent deze kaart zijn hoogte
-                        op precies dezelfde manier uit, zonder vaste pixelwaarde.
-                        `grow` vangt daarbovenop de speling op als de rij hoger
-                        wordt, zodat de tekst tegen de onderrand blijft staan. */}
-                    <div aria-hidden className="w-full grow aspect-[16/11]" />
-                  </>
+                  <img
+                    src={p.cardImage}
+                    alt=""
+                    aria-hidden
+                    loading="lazy"
+                    draggable={false}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.04]"
+                  />
                 ) : (
+                  // Plaatshouder tot er een foto is: het kleurvlak van de case.
+                  // Eén regel `cardImage` in lib/content.ts vervangt hem.
                   <div
+                    aria-hidden
                     className={cn(
-                      "relative aspect-[16/11] overflow-hidden",
+                      "absolute inset-0 transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.04]",
                       accentBg[p.accent]
                     )}
-                  >
-                    <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-105">
-                      {p.detail.slides[0]?.src ? (
-                        // First slide image doubles as the card thumbnail — the
-                        // card and the case open on the same visual.
-                        <img
-                          src={p.detail.slides[0].src}
-                          alt=""
-                          loading="lazy"
-                          draggable={false}
-                          className="h-full w-full object-cover"
-                        />
-                      ) : (
-                        <>
-                          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.08)_100%)]" />
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <span className="font-heading text-4xl font-semibold text-white/70 mix-blend-overlay">
-                              {p.title}
-                            </span>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </div>
+                  />
                 )}
 
+                {/* Vlakke tint alleen onder een foto: die kan overal fel zijn.
+                    Het kleurvlak van een plaatshouder is al donker, en de tint
+                    zou de kleur er volledig uit drukken. */}
+                {p.cardImage && (
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 bg-[rgba(10,10,15,0.55)]"
+                  />
+                )}
+                {/* De gradient onderlangs maakt de tekst leesbaar, wat de
+                    achtergrond ook is. De onderste stop is volledig dekkend, niet
+                    0.95: bij 0.95 schijnt 2,25% door en werd de onderrand van de
+                    kaart een paar waarden lichter dan de pagina, wat de contour
+                    als haarlijn liet oplichten. */}
                 <div
-                  className={cn(
-                    "flex flex-col gap-3 p-6",
-                    // Boven de scrims uit, anders valt de tekst eronder weg.
-                    p.cardImage && "relative"
-                  )}
-                >
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(10,10,15,1)_0%,rgba(10,10,15,0.80)_38%,rgba(10,10,15,0)_78%)]"
+                />
+
+                {/* Lege ruimte met de verhouding van het oude beeldblok, zodat de
+                    kaarthoogte op dezelfde manier wordt berekend als voorheen,
+                    zonder vaste pixelwaarde. `grow` vangt de speling op als een
+                    buurkaart hoger uitvalt, zodat de tekst tegen de onderrand
+                    blijft staan. */}
+                <div aria-hidden className="w-full grow aspect-[16/11]" />
+
+                <div className="relative flex flex-col gap-3 p-6">
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="font-heading text-lg font-semibold leading-snug text-white">
                       {p.title}
