@@ -257,7 +257,7 @@ export function Contact() {
               (on mobile the form stacks below the intro). */}
           <div id="contact-form" className="scroll-mt-24 lg:col-span-7">
             <Reveal delay={0.15}>
-              <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm md:p-10">
+              <div className="rounded-3xl bg-white/[0.04] p-6 backdrop-blur-sm md:p-10">
                 {/* Het formulier fadet eerst weg, daarna komt de
                     bedankt-kaart op — zoals mode="wait" dat deed. */}
                 {formulierZichtbaar ? (
