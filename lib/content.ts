@@ -278,6 +278,7 @@ export const projects: Project[] = [
     tags: ["Branding", "Webdesign", "UX"],
     href: "https://de-stock.nl/",
     accent: "secondary",
+    cardImage: "/mockup/image-DeStock-portfolio-image.jpg",
     detail: {
       role: "Branding & webdesign",
       year: "2025",
