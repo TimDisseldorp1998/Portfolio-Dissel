@@ -116,39 +116,87 @@ export function Projects() {
                   als kop. De knop is nu een overlay die de hele kaart bedekt,
                   met een korte naam. Visueel en qua klikgebied identiek. */}
               <article
-                className="group relative block w-full overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] text-left backdrop-blur-sm transition-[transform,background-color,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.06] has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-primary/30"
+                className={cn(
+                  "group relative block w-full overflow-hidden rounded-3xl text-left transition-[transform,background-color,border-color,box-shadow] duration-300 hover:-translate-y-1",
+                  p.cardImage
+                    ? // Fotokaart: geen zichtbare rand en geen vlak eroverheen,
+                      // die zouden als lijn of waas over de foto komen te liggen.
+                      // De rand blijft wel staan, maar doorzichtig: zo houdt het
+                      // doosmodel dezelfde 1px en wordt de kaart precies even
+                      // hoog als de andere vijf, tot op de pixel.
+                      // `flex h-full flex-col` laat de kaart zijn gridvakje
+                      // vullen en duwt de tekst naar de onderrand, ook als een
+                      // buurkaart hoger uitvalt doordat zijn tekst anders afbreekt.
+                      "flex h-full flex-col border border-transparent has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[#ff833d] has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-surface-dark"
+                    : "border border-white/10 bg-white/[0.04] backdrop-blur-sm hover:border-white/20 hover:bg-white/[0.06] has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-primary/30"
+                )}
               >
+                {p.cardImage ? (
+                  <>
+                    {/* De foto vult de hele kaart. Twee scrims eroverheen maken
+                        de tekst onderin leesbaar, wat er ook op de foto staat. */}
+                    <img
+                      src={p.cardImage}
+                      alt=""
+                      aria-hidden
+                      loading="lazy"
+                      draggable={false}
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.04]"
+                    />
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 bg-[rgba(10,10,15,0.55)]"
+                    />
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(10,10,15,0.95)_0%,rgba(10,10,15,0.80)_38%,rgba(10,10,15,0)_78%)]"
+                    />
+                    {/* Lege ruimte met dezelfde verhouding als het beeldblok van
+                        de andere kaarten. Daardoor rekent deze kaart zijn hoogte
+                        op precies dezelfde manier uit, zonder vaste pixelwaarde.
+                        `grow` vangt daarbovenop de speling op als de rij hoger
+                        wordt, zodat de tekst tegen de onderrand blijft staan. */}
+                    <div aria-hidden className="w-full grow aspect-[16/11]" />
+                  </>
+                ) : (
+                  <div
+                    className={cn(
+                      "relative aspect-[16/11] overflow-hidden",
+                      accentBg[p.accent]
+                    )}
+                  >
+                    <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-105">
+                      {p.detail.slides[0]?.src ? (
+                        // First slide image doubles as the card thumbnail — the
+                        // card and the case open on the same visual.
+                        <img
+                          src={p.detail.slides[0].src}
+                          alt=""
+                          loading="lazy"
+                          draggable={false}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <>
+                          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.08)_100%)]" />
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="font-heading text-4xl font-semibold text-white/70 mix-blend-overlay">
+                              {p.title}
+                            </span>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                )}
+
                 <div
                   className={cn(
-                    "relative aspect-[16/11] overflow-hidden",
-                    accentBg[p.accent]
+                    "flex flex-col gap-3 p-6",
+                    // Boven de scrims uit, anders valt de tekst eronder weg.
+                    p.cardImage && "relative"
                   )}
                 >
-                  <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-105">
-                    {p.detail.slides[0]?.src ? (
-                      // First slide image doubles as the card thumbnail — the
-                      // card and the case open on the same visual.
-                      <img
-                        src={p.detail.slides[0].src}
-                        alt=""
-                        loading="lazy"
-                        draggable={false}
-                        className="h-full w-full object-cover"
-                      />
-                    ) : (
-                      <>
-                        <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.08)_100%)]" />
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <span className="font-heading text-4xl font-semibold text-white/70 mix-blend-overlay">
-                            {p.title}
-                          </span>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-3 p-6">
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="font-heading text-lg font-semibold leading-snug text-white">
                       {p.title}

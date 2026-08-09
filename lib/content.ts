@@ -186,6 +186,12 @@ export type Project = {
   tags: string[];
   href: string;
   accent: "primary" | "secondary" | "mix";
+  /** Eigen foto voor de kaart op de landingspagina. Staat die er, dan wordt de
+   *  kaart full-bleed: de foto vult hem helemaal en de tekst staat eroverheen.
+   *  Ontbreekt hij, dan houdt de kaart de standaardvorm (beeld boven, tekst
+   *  eronder) en pakt hij de eerste slide als thumbnail. Decoratief, dus geen
+   *  alt: de kop in de kaart benoemt de case al. */
+  cardImage?: string;
   detail: ProjectDetail;
 };
 
@@ -198,6 +204,7 @@ export const projects: Project[] = [
     tags: ["Branding", "UX/UI", "Webdesign"],
     href: "https://kleintjesvanalkmaar.nl/",
     accent: "primary",
+    cardImage: "/mockup/image-KvA-portfolio-card.jpg",
     detail: {
       role: "Branding & UX/UI",
       year: "2025",
