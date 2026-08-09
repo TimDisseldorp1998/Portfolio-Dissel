@@ -149,7 +149,12 @@ export function Projects() {
                     />
                     <div
                       aria-hidden
-                      className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(10,10,15,0.95)_0%,rgba(10,10,15,0.80)_38%,rgba(10,10,15,0)_78%)]"
+                      // De onderste stop is volledig dekkend, niet 0.95. Bij 0.95
+                      // schijnt 2,25% van de foto door en die is onderin licht
+                      // (bank en spijkerbroek), waardoor de kaart daar (12,12,17)
+                      // werd tegen (10,10,15) van de pagina. Dat verschil van twee
+                      // waarden tekende de contour van de kaart als een haarlijn.
+                      className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(10,10,15,1)_0%,rgba(10,10,15,0.80)_38%,rgba(10,10,15,0)_78%)]"
                     />
                     {/* Lege ruimte met dezelfde verhouding als het beeldblok van
                         de andere kaarten. Daardoor rekent deze kaart zijn hoogte
