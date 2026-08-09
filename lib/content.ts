@@ -344,6 +344,7 @@ export const projects: Project[] = [
     tags: ["Mobile-first", "UX", "Animation"],
     href: "https://www.ziggodome.nl",
     accent: "mix",
+    cardImage: "/mockup/image-ZiggoDome-portfolio-card.jpg",
     detail: {
       role: "Mobile-first",
       year: "2024",
