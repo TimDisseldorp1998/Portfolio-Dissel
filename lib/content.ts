@@ -431,6 +431,7 @@ export const projects: Project[] = [
     tags: ["Brandbook", "Webdesign", "UX"],
     href: "https://www.newedition.nl/en/",
     accent: "primary",
+    cardImage: "/mockup/image-newedition-portfolio-image.jpg",
     detail: {
       role: "Webdesign",
       year: "2023",
@@ -483,6 +484,7 @@ export const projects: Project[] = [
     tags: ["Branding", "UX/UI", "Webdesign"],
     href: "#",
     accent: "secondary",
+    cardImage: "/mockup/image-Marktzicht-portfolio-image.jpg",
     detail: {
       role: "Branding & webdesign",
       year: "2025",
@@ -534,6 +536,7 @@ export const projects: Project[] = [
     tags: ["Branding", "UX/UI", "Webshop"],
     href: "#",
     accent: "mix",
+    cardImage: "/mockup/image-1608-portfolio-image.jpg",
     detail: {
       role: "Branding & UX/UI",
       year: "2025",
