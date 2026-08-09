@@ -156,6 +156,17 @@ export function Projects() {
                       // waarden tekende de contour van de kaart als een haarlijn.
                       className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(10,10,15,1)_0%,rgba(10,10,15,0.80)_38%,rgba(10,10,15,0)_78%)]"
                     />
+                    {/* Randlijn van 1px in de achtergrondkleur, langs de
+                        binnenkant van de kaart en bovenop de foto. Daarmee is de
+                        buitenste pixelrij exact gelijk aan de pagina, zodat de
+                        contour van de kaart niet meer als haarlijn oplicht.
+                        Bewust een eigen laag en geen `border` op de kaart zelf:
+                        een border telt mee in de hoogte en zou de kaart weer uit
+                        de pas laten lopen met de andere vijf. */}
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 rounded-3xl border border-surface-dark"
+                    />
                     {/* Lege ruimte met dezelfde verhouding als het beeldblok van
                         de andere kaarten. Daardoor rekent deze kaart zijn hoogte
                         op precies dezelfde manier uit, zonder vaste pixelwaarde.
