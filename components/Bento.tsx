@@ -27,7 +27,7 @@ function BentoCard({ children, className }: BentoCardProps) {
   return (
     <div
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm transition-[background-color,border-color] duration-500 hover:border-white/20 hover:bg-white/[0.06]",
+        "group relative flex flex-col overflow-hidden rounded-3xl bg-white/[0.04] p-6 backdrop-blur-sm transition-[background-color] duration-500 hover:bg-white/[0.06]",
         className
       )}
     >
@@ -233,7 +233,7 @@ function Slider() {
   }, [prefersReducedMotion, paused]);
 
   return (
-    <div className="group/slider relative min-h-[220px] flex-1 overflow-hidden rounded-2xl bg-black/40">
+    <div className="group/slider relative min-h-[220px] flex-1 overflow-hidden rounded-3xl bg-black/40">
       {bento.slider.map((slide, idx) => (
         <div
           key={idx}
@@ -454,8 +454,11 @@ export function Bento() {
               ))}
             </BentoCard>
 
-            {/* Slider card — grows to close any height gap in this column */}
-            <BentoCard className="flex-1 p-0">
+            {/* Slider card — groeit mee om het hoogteverschil in deze kolom te
+                dichten. `!p-0` is nodig, niet `p-0`: `cn` is clsx-only, dus
+                zonder `!` blijft BentoCard's `p-6` staan en houd je een rand
+                lucht rond de foto. Zelfde truc als bij de portretkaart. */}
+            <BentoCard className="flex-1 !p-0">
               <Slider />
             </BentoCard>
           </div>
@@ -467,26 +470,21 @@ export function Bento() {
                 clsx-only, so a plain p-0 would lose to p-6). */}
             <BentoCard className="aspect-[3/4] !p-0">
               <div className="relative h-full w-full overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-800 via-neutral-900 to-black">
-                {/* Real portrait fills the container (bg-cover = no letterbox, no
-                    black bars). Drop the file at /public/portrait.jpg. As a CSS
-                    background there's no broken-image icon when it's missing — the
-                    gradient below simply shows instead. */}
+                {/* Het portret vult de kaart (bg-cover = geen zwarte balken). De
+                    foto is 3:4, net als de kaart, dus er wordt niets weggesneden.
+                    Als CSS-achtergrond krijg je geen kapot-beeld-icoon als het
+                    bestand ontbreekt; dan valt hij terug op de gradient. */}
                 <div
                   aria-hidden
                   className="absolute inset-0 bg-cover bg-center"
-                  style={{ backgroundImage: "url('/portrait.jpg')" }}
+                  style={{
+                    backgroundImage: "url('/mockup/image-portret-tim.jpg')",
+                  }}
                 />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="h-64 w-64 rounded-full bg-gradient-to-br from-primary/40 to-secondary/30 blur-3xl" />
-                </div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <p
-                    aria-hidden
-                    className="font-heading text-[10rem] font-semibold leading-none text-white/[0.06]"
-                  >
-                    T
-                  </p>
-                </div>
+                {/* Geen scrim over deze foto. Nagemeten in het gebied waar de
+                    chatbubbels staan: de foto is daar donker (broek en schaduw),
+                    en zelfs op de lichtste plek haalt de bubbeltekst 7,57:1. Een
+                    verloop zou de foto alleen maar doffer maken. */}
                 <ChatMessages />
               </div>
             </BentoCard>
