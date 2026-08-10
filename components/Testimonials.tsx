@@ -10,7 +10,7 @@ import { MarqueeCard } from "./ui/Testimonial";
 
 /** Kaartbreedte plus de tussenruimte, in pixels. Alleen nodig om de duur uit
  *  te rekenen, dus de desktopmaat volstaat. */
-const KAART_PX = 376 + 20;
+const KAART_PX = 440 + 20;
 /** Hoe snel de rij loopt. Hoger is sneller. */
 const SNELHEID_PX_PER_S = 30;
 /** Het scherm waar de rij nog vullend voor moet zijn. Ruim genomen, zodat er
@@ -52,11 +52,13 @@ export function Testimonials() {
               <p className="mb-3.5 text-xs font-medium uppercase tracking-[0.22em] text-primary">
                 Reviews
               </p>
-              <h2 className="max-w-[640px] font-heading text-3xl font-semibold leading-tight tracking-[-0.02em] text-white sm:text-4xl md:text-[44px]">
-                <span className="text-white/[0.55]">
-                  Founders aan het woord.
-                </span>{" "}
-                Dit zeggen ze.
+              {/* Twee `block`-spans: de regelovergang staat vast in plaats van
+                  dat hij afhangt van de kolombreedte. */}
+              <h2 className="font-heading text-3xl font-semibold leading-tight tracking-[-0.02em] text-white sm:text-4xl md:text-[44px]">
+                <span className="block text-white/[0.55]">
+                  Lokale bedrijven aan het woord.
+                </span>
+                <span className="block">Dit zeggen ze.</span>
               </h2>
             </div>
             <PauseButton

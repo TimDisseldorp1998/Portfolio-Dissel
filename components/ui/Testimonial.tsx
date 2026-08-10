@@ -21,7 +21,10 @@ export function MarqueeCard({
   return (
     <figure
       aria-hidden={decoratief || undefined}
-      className="flex w-[320px] flex-none flex-col gap-5 rounded-[20px] border border-white/[0.07] bg-white/[0.045] p-[26px] transition-[border-color,background-color] duration-300 hover:border-[rgba(255,131,61,0.35)] hover:bg-white/[0.075] sm:w-[376px]"
+      // 440px is gemeten, niet gekozen: bij 376 loopt de langste quote uit tot
+      // vijf regels, vanaf 400 wordt het er vier en pas vanaf 500 drie. 440 zit
+      // midden in die band, dus een iets langere quote past er ook nog in.
+      className="flex w-[320px] flex-none flex-col gap-5 rounded-[20px] border border-white/[0.07] bg-white/[0.045] p-[26px] transition-[border-color,background-color] duration-300 hover:border-[rgba(255,131,61,0.35)] hover:bg-white/[0.075] sm:w-[440px]"
     >
       <blockquote className="text-[15px] leading-[1.6] text-white/[0.82] text-pretty">
         {review.quote}
