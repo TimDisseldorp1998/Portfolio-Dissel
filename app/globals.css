@@ -351,29 +351,17 @@
     transform: translateX(-50%);
   }
 }
-@keyframes mq-right {
-  from {
-    transform: translateX(-50%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
+/* Duur bepaalt de snelheid: lager is sneller. Bij drie reviews legt de rij
+   per ronde ongeveer 1200px af, dus 40s komt neer op zo'n 30px per seconde. */
 .mq-row {
-  animation: mq-left 60s linear infinite;
-}
-.mq-row-rev {
-  animation: mq-right 75s linear infinite;
+  animation: mq-left 40s linear infinite;
 }
 .mq-wrap:hover .mq-row,
-.mq-wrap:hover .mq-row-rev,
-.mq-wrap[data-paused="true"] .mq-row,
-.mq-wrap[data-paused="true"] .mq-row-rev {
+.mq-wrap[data-paused="true"] .mq-row {
   animation-play-state: paused;
 }
 @media (prefers-reduced-motion: reduce) {
-  .mq-row,
-  .mq-row-rev {
+  .mq-row {
     animation: none;
   }
   /* Zonder animatie zou je alleen het eerste stuk zien; zo blijven alle

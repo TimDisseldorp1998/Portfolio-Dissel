@@ -2,57 +2,16 @@
 
 import { useState } from "react";
 import { reviews } from "@/lib/content";
-import { cn } from "@/lib/cn";
 import { Section } from "./ui/Section";
 import { Container } from "./ui/Container";
 import { Reveal } from "./ui/Reveal";
 import { PauseButton } from "./ui/PauseButton";
-import { MarqueeCard, type MarqueeAccent, type Review } from "./ui/Testimonial";
-
-/** Rij 2 begint halverwege de lijst, zodat er niet twee keer dezelfde kaart
- *  recht boven elkaar staat. */
-function verschoven<T>(lijst: T[]): T[] {
-  const n = Math.ceil(lijst.length / 2);
-  return [...lijst.slice(n), ...lijst.slice(0, n)];
-}
-
-function Rij({
-  items,
-  accent,
-  omgekeerd,
-  verbergVoorSchermlezer,
-}: {
-  items: Review[];
-  accent: MarqueeAccent;
-  omgekeerd?: boolean;
-  /** Rij 2 toont dezelfde reviews als rij 1; die hoeft een schermlezer niet
-   *  nog een keer te horen. */
-  verbergVoorSchermlezer?: boolean;
-}) {
-  return (
-    <div
-      aria-hidden={verbergVoorSchermlezer || undefined}
-      className={cn(
-        "flex w-max gap-5 pr-5",
-        omgekeerd ? "mq-row-rev" : "mq-row"
-      )}
-    >
-      {[...items, ...items].map((review, i) => (
-        <MarqueeCard
-          key={`${review.author}-${i}`}
-          review={review}
-          accent={accent}
-          decoratief={i >= items.length}
-        />
-      ))}
-    </div>
-  );
-}
+import { MarqueeCard } from "./ui/Testimonial";
 
 /**
- * Reviews als twee tegengesteld lopende rijen, direct na het werk. De rijen
- * stoppen zodra de muis erop komt; de knop doet hetzelfde voor toetsenbord en
- * touch, want bewegende content langer dan vijf seconden moet te stoppen zijn
+ * Reviews als één doorlopende rij, direct na het werk. De rij stopt zodra de
+ * muis erop komt; de knop doet hetzelfde voor toetsenbord en touch, want
+ * beweging die langer dan vijf seconden doorloopt moet te stoppen zijn
  * (WCAG 2.2.2).
  */
 export function Testimonials() {
@@ -70,7 +29,7 @@ export function Testimonials() {
             Dit zeggen klanten.
           </h2>
           <p className="mt-[18px] max-w-[460px] text-[15px] leading-[1.65] text-white/60">
-            Van huisstijl tot livegang. Beweeg over de rijen om ze te stoppen en
+            Van huisstijl tot livegang. Beweeg over de rij om hem te stoppen en
             rustig te lezen.
           </p>
           <PauseButton
@@ -82,23 +41,29 @@ export function Testimonials() {
         </Reveal>
       </Container>
 
-      {/* Buiten de Container: de rijen lopen van rand tot rand. De mask laat ze
+      {/* Buiten de Container: de rij loopt van rand tot rand. De mask laat hem
           aan beide zijden uitfaden, maar knipt niets af — zonder
-          `overflow-hidden` steken de rijen buiten de pagina en krijgt het hele
+          `overflow-hidden` steekt de rij buiten de pagina en krijgt het hele
           document een horizontale scrollbalk. Onder reduced motion zet
           globals.css dit terug naar `overflow-x:auto`, zodat de reviews dan
           met de hand bereikbaar blijven. */}
       <div
-        className="mq-wrap mt-10 flex flex-col gap-5 overflow-hidden md:mt-[52px] [mask-image:linear-gradient(90deg,transparent,#000_7%,#000_93%,transparent)] [-webkit-mask-image:linear-gradient(90deg,transparent,#000_7%,#000_93%,transparent)]"
+        className="mq-wrap mt-10 overflow-hidden md:mt-[52px] [mask-image:linear-gradient(90deg,transparent,#000_7%,#000_93%,transparent)] [-webkit-mask-image:linear-gradient(90deg,transparent,#000_7%,#000_93%,transparent)]"
         data-paused={gepauzeerd}
       >
-        <Rij items={reviews} accent="secondary" />
-        <Rij
-          items={verschoven(reviews)}
-          accent="primary"
-          omgekeerd
-          verbergVoorSchermlezer
-        />
+        {/* De reviews staan er twee keer in: op -50% begint kopie 2 precies
+            waar kopie 1 begon, dus de loop is naadloos. De `pr-5` is even breed
+            als de `gap-5`, anders valt die halve slag net naast de kaartgrens
+            en zie je elke ronde een sprongetje. */}
+        <div className="mq-row flex w-max gap-5 pr-5">
+          {[...reviews, ...reviews].map((review, i) => (
+            <MarqueeCard
+              key={`${review.author}-${i}`}
+              review={review}
+              decoratief={i >= reviews.length}
+            />
+          ))}
+        </div>
       </div>
     </Section>
   );
