@@ -7,7 +7,7 @@ export type Review = (typeof reviews)[number];
 /** Kaartopmaak van een klantreview, los exporteerbaar voor het geval een
  *  plek de `figure` zelf wil samenstellen. */
 export const testimonialCardClass =
-  "rounded-2xl border border-white/10 bg-white/[0.05] p-5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.85)] backdrop-blur-xl transition-colors duration-200 max-lg:hover:border-white/25 max-lg:hover:bg-white/[0.09] max-lg:active:border-white/25 max-lg:active:bg-white/[0.09]";
+  "flex h-full flex-col rounded-2xl bg-white/[0.05] p-5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.85)] backdrop-blur-xl transition-colors duration-200 max-lg:hover:bg-white/[0.09] max-lg:active:bg-white/[0.09]";
 
 /**
  * De inhoud van een review: quote, logo en naam. Zonder `figure` eromheen,
@@ -20,7 +20,9 @@ export function TestimonialBody({ review }: { review: Review }) {
       <blockquote className="text-[0.875rem] leading-relaxed text-white/65 lg:text-[0.95rem]">
         {review.quote}
       </blockquote>
-      <figcaption className="mt-3.5 flex items-center gap-2.5">
+      {/* `mt-auto` duwt de naam naar de onderkant, zodat die bij kaarten naast
+          elkaar op één lijn staat ook als de quotes verschillen in lengte. */}
+      <figcaption className="mt-auto flex items-center gap-2.5 pt-3.5">
         {/* Het logo ligt over de initiaal heen; ontbreekt het bestand, dan
             verbergt onError het en komt de initiaal weer tevoorschijn. */}
         <span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/[0.06] text-sm font-semibold text-white/80">

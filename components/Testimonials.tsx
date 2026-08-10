@@ -27,7 +27,9 @@ export function Testimonials() {
           </div>
         </Reveal>
 
-        <RevealStagger className="grid gap-4 md:gap-5 sm:grid-cols-2">
+        {/* Drie kaarten passen op desktop naast elkaar. Bij twee kolommen zou
+            de derde alleen op een tweede rij achterblijven. */}
+        <RevealStagger className="grid gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
           {reviews.map((review) => (
             <RevealItem key={review.author}>
               <Testimonial review={review} />

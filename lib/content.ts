@@ -58,7 +58,16 @@ export const site = {
  * tegelijk zichtbaar en zonder rotatie: bewijs overtuigt pas nadat iemand de
  * cases heeft gezien. Voeg hier een review toe en hij verschijnt vanzelf.
  */
-export const reviews = [
+export type Review = {
+  quote: string;
+  author: string;
+  role: string;
+  /** Valt terug in beeld als het logo ontbreekt of niet laadt. */
+  initials: string;
+  logo?: string;
+};
+
+export const reviews: Review[] = [
   {
     quote:
       "Super blij met de stijl van de website, precies zoals we het in ons hoofd hadden. Erg fijne samenwerking gehad en we hebben inmiddels de eerste oppasdiensten via het platform lopen.",
@@ -74,6 +83,17 @@ export const reviews = [
     role: "Founder De-Stock.nl",
     initials: "D",
     logo: "/logos/de-stock-logo.png",
+  },
+  // PLAATSHOUDER — bewust herkenbaar als nepversie. Vervang quote, author,
+  // role, initials en logo door een echte review voordat dit naar main gaat,
+  // of haal dit blok weg. Een verzonnen review op een live site is een
+  // valse aanbeveling.
+  {
+    quote:
+      "Plaatshouder voor een derde review. Zet hier de quote van je klant, ongeveer twee tot drie zinnen, dan wordt de kaart net zo hoog als de andere twee.",
+    author: "Naam van je klant",
+    role: "Rol, bedrijfsnaam",
+    initials: "?",
   },
 ];
 
