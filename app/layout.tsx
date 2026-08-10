@@ -17,15 +17,31 @@ const jakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
+const SITE_URL = "https://disseldesign.com";
+
+// Eén bron voor de titel en omschrijving. Ze staan op drie plekken (page, OG en
+// Twitter) en liepen eerder uit elkaar: de OG-tags waren nog Engels en noemden
+// een andere positionering dan de pagina zelf.
+const TITEL = "Tim Disseldorp | Digitale product designer in Noord-Holland";
+const OMSCHRIJVING =
+  "Websites voor lokale ondernemers in Noord-Holland, van huisstijl tot live site. Strak design, snel opgeleverd, meer bezoekers die klant worden.";
+
 export const metadata: Metadata = {
-  title: "Tim Dissel — Digitale Product Designer | Dissel Design",
-  description:
-    "Freelance digitale product designer uit Nederland. Ik ontwerp en bouw conversiegerichte websites, web-apps en merkidentiteiten die ambitieuze merken laten groeien.",
+  title: TITEL,
+  description: OMSCHRIJVING,
+  alternates: {
+    canonical: SITE_URL,
+  },
   openGraph: {
-    title: "Tim Disseldorp — Designer & Developer",
-    description:
-      "Selected work, experience, and services from a designer & developer building thoughtful digital products.",
+    title: TITEL,
+    description: OMSCHRIJVING,
     type: "website",
+    locale: "nl_NL",
+    url: SITE_URL,
+  },
+  twitter: {
+    title: TITEL,
+    description: OMSCHRIJVING,
   },
 };
 
