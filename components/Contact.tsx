@@ -19,7 +19,12 @@ import {
   Mail,
 } from "lucide-react";
 import { contact, site, socials } from "@/lib/content";
+import { Testimonial } from "./ui/Testimonial";
 import { Section } from "./ui/Section";
+
+/** Op naam gezocht, niet op positie: zo wisselt de quote niet stilletjes mee
+ *  als de volgorde in `site.hero.reviews` ooit verandert. */
+const contactReview = site.hero.reviews.find((r) => r.author === "Madelief");
 import { Container } from "./ui/Container";
 import { Reveal, RevealStagger, RevealItem } from "./ui/Reveal";
 import { LinkedinFilled, InstagramFilled } from "./ui/BrandIcons";
@@ -250,6 +255,17 @@ export function Contact() {
                 </div>
               </div>
             </Reveal>
+
+            {/* Bewijs naast het formulier. Onderaan deze kolom, dus op desktop
+                naast het formulier en onder `lg` (één kolom) er direct boven.
+                Zelfde kaart als in de hero, uit hetzelfde component. */}
+            {contactReview && (
+              <Reveal delay={0.1}>
+                <div className="mt-10">
+                  <Testimonial review={contactReview} />
+                </div>
+              </Reveal>
+            )}
           </div>
 
           {/* Right column: form / success card. `contact-form` anchor is the

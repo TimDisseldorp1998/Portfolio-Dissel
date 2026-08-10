@@ -10,6 +10,10 @@ import { Container } from "./ui/Container";
 import { Button } from "./ui/Button";
 import { PauseButton } from "./ui/PauseButton";
 import { Typewriter } from "./ui/Typewriter";
+import {
+  TestimonialBody,
+  testimonialCardClass,
+} from "./ui/Testimonial";
 
 export function Hero() {
   const prefersReducedMotion = useReducedMotion();
@@ -27,44 +31,6 @@ export function Hero() {
     }, 7000);
     return () => window.clearInterval(id);
   }, [prefersReducedMotion, reviewsPaused]);
-
-  const reviewCardClass =
-    "rounded-2xl border border-white/10 bg-white/[0.05] p-5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.85)] backdrop-blur-xl transition-colors duration-200 max-lg:hover:border-white/25 max-lg:hover:bg-white/[0.09] max-lg:active:border-white/25 max-lg:active:bg-white/[0.09]";
-  const reviewBody = (review: (typeof site.hero.reviews)[number]) => (
-    <>
-      <blockquote className="text-[0.875rem] leading-relaxed text-white/65 lg:text-[0.95rem]">
-        {review.quote}
-      </blockquote>
-      <figcaption className="mt-3.5 flex items-center gap-2.5">
-        {/* Logo overlays the monogram; if the file is missing, onError hides it
-            and the initials fall back into view. */}
-        <span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/[0.06] text-sm font-semibold text-white/80">
-          <span aria-hidden>{review.initials}</span>
-          {review.logo && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={review.logo}
-              alt=""
-              className="absolute inset-0 h-full w-full object-contain"
-              onError={(e) => {
-                e.currentTarget.style.display = "none";
-              }}
-            />
-          )}
-        </span>
-        <span className="min-w-0">
-          <span className="block text-[0.95rem] font-semibold text-white">
-            {review.author}
-          </span>
-          {review.role && (
-            <span className="mt-0.5 block text-[0.8125rem] text-white/50">
-              {review.role}
-            </span>
-          )}
-        </span>
-      </figcaption>
-    </>
-  );
 
   /**
    * Entree bij het laden: de animatie zelf staat als `.mount-rise` in
@@ -195,8 +161,8 @@ export function Hero() {
           {prefersReducedMotion ? (
             <div className="flex flex-col gap-3">
               {site.hero.reviews.map((review) => (
-                <figure key={review.author} className={reviewCardClass}>
-                  {reviewBody(review)}
+                <figure key={review.author} className={testimonialCardClass}>
+                  <TestimonialBody review={review} />
                 </figure>
               ))}
             </div>
@@ -214,7 +180,7 @@ export function Hero() {
                       key={review.author}
                       aria-hidden={!actief}
                       className={cn(
-                        reviewCardClass,
+                        testimonialCardClass,
                         // Zelfde curve als voorheen: dit is easeInOut zoals de
                         // animatiebibliotheek hem definieerde, niet Tailwinds
                         // ease-in-out (dat is een andere bezier).
@@ -222,7 +188,7 @@ export function Hero() {
                         actief ? "opacity-100" : "pointer-events-none opacity-0"
                       )}
                     >
-                      {reviewBody(review)}
+                      <TestimonialBody review={review} />
                     </figure>
                   );
                 })}
