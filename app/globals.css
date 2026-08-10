@@ -351,10 +351,11 @@
     transform: translateX(-50%);
   }
 }
-/* Duur bepaalt de snelheid: lager is sneller. Bij drie reviews legt de rij
-   per ronde ongeveer 1200px af, dus 40s komt neer op zo'n 30px per seconde. */
+/* De duur komt uit `--mq-duur`, die het component uitrekent op basis van het
+   aantal kaarten. Zo blijft de snelheid gelijk (~30px/s) hoeveel reviews er
+   ook bij komen; een vaste duur zou juist versnellen bij meer kaarten. */
 .mq-row {
-  animation: mq-left 40s linear infinite;
+  animation: mq-left var(--mq-duur, 40s) linear infinite;
 }
 .mq-wrap:hover .mq-row,
 .mq-wrap[data-paused="true"] .mq-row {
