@@ -1,15 +1,11 @@
 "use client";
 
-import { site } from "@/lib/content";
+import { reviews } from "@/lib/content";
 
-export type Review = (typeof site.hero.reviews)[number];
+export type Review = (typeof reviews)[number];
 
-/**
- * Kaartopmaak van een klantreview. Staat los van de inhoud omdat de hero de
- * kaart zelf moet kunnen samenstellen: daar liggen alle reviews in dezelfde
- * grid-cel over elkaar heen om te kunnen crossfaden, en dan heeft elke `figure`
- * nog extra klassen nodig.
- */
+/** Kaartopmaak van een klantreview, los exporteerbaar voor het geval een
+ *  plek de `figure` zelf wil samenstellen. */
 export const testimonialCardClass =
   "rounded-2xl border border-white/10 bg-white/[0.05] p-5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.85)] backdrop-blur-xl transition-colors duration-200 max-lg:hover:border-white/25 max-lg:hover:bg-white/[0.09] max-lg:active:border-white/25 max-lg:active:bg-white/[0.09]";
 
