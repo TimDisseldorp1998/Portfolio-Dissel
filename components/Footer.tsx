@@ -60,7 +60,7 @@ export function Footer() {
               <a
                 key={s.label}
                 href={s.href}
-                aria-label={`${s.label} — opent in nieuw tabblad`}
+                aria-label={`${s.a11yLabel}, opent in nieuw tabblad`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex h-11 w-11 items-center justify-center rounded-full text-white/60 transition-[background-color,color,box-shadow] hover:bg-white/[0.06] hover:text-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"

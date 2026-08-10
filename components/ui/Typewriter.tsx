@@ -53,7 +53,11 @@ export function Typewriter({ phrases }: { phrases: string[] }) {
 
   return (
     <span>
-      <span aria-hidden="true">{text}</span>
+      {/* De getypte tekst staat in `data-text` en wordt door CSS getoond
+          (.typewriter-text::before). Zo staat hij niet als tekstknoop in de DOM
+          en blijft de sr-only kopie hieronder de enige leesbare versie van de
+          zin. De animatie zelf is ongewijzigd. */}
+      <span aria-hidden="true" className="typewriter-text" data-text={text} />
       <span
         aria-hidden="true"
         className="caret-blink ml-1.5 inline-block h-[0.78em] w-[0.055em] translate-y-[0.06em] rounded-full bg-primary align-baseline"
