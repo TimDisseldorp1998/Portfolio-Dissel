@@ -60,10 +60,14 @@ export const site = {
  */
 export type Review = {
   quote: string;
-  author: string;
-  role: string;
-  /** Valt terug in beeld als het logo ontbreekt of niet laadt. */
-  initials: string;
+  /** De persoon die het zei. Laat hem weg als je alleen het bedrijf hebt: de
+   *  kaart toont dan de bedrijfsnaam met het logo ernaast. */
+  author?: string;
+  role?: string;
+  /** Valt terug in beeld als het ronde logo ontbreekt of niet laadt. */
+  initials?: string;
+  /** Bedrijfsnaam. Nodig zodra `author` ontbreekt. */
+  company?: string;
   logo?: string;
 };
 
@@ -84,16 +88,13 @@ export const reviews: Review[] = [
     initials: "D",
     logo: "/logos/de-stock-logo.png",
   },
-  // PLAATSHOUDER — bewust herkenbaar als nepversie. Vervang quote, author,
-  // role, initials en logo door een echte review voordat dit naar main gaat,
-  // of haal dit blok weg. Een verzonnen review op een live site is een
-  // valse aanbeveling.
+  // Geen naam beschikbaar, alleen het bedrijf. De kaart toont daarom de
+  // bedrijfsnaam met het wordmark ernaast in plaats van een persoon.
   {
     quote:
-      "Plaatshouder voor een derde review. Zet hier de quote van je klant, ongeveer twee tot drie zinnen, dan wordt de kaart net zo hoog als de andere twee.",
-    author: "Naam van je klant",
-    role: "Rol, bedrijfsnaam",
-    initials: "?",
+      "Reserveringen komen nu binnen zonder dat wij er iets voor hoeven doen. Dat scheelt ons uren per week en gasten bellen niet meer voor de openingstijden.",
+    company: "Marktzicht Eten & Drinken",
+    logo: "/logos/marktzicht-logo.svg",
   },
 ];
 
