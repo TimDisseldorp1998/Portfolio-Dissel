@@ -1,37 +1,57 @@
 "use client";
 
 import { reviews } from "@/lib/content";
+import { cn } from "@/lib/cn";
 
 export type Review = (typeof reviews)[number];
 
-/** Kaartopmaak van een klantreview, los exporteerbaar voor het geval een
- *  plek de `figure` zelf wil samenstellen. */
-export const testimonialCardClass =
-  "flex h-full flex-col rounded-2xl bg-white/[0.05] p-5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.85)] backdrop-blur-xl transition-colors duration-200 max-lg:hover:bg-white/[0.09] max-lg:active:bg-white/[0.09]";
+/** Randkleur bij hover. Rij 1 loopt op oranje, rij 2 op cyaan. */
+export type MarqueeAccent = "secondary" | "primary";
+
+const accentHover: Record<MarqueeAccent, string> = {
+  secondary: "hover:border-[rgba(255,131,61,0.35)]",
+  primary: "hover:border-[rgba(92,221,255,0.35)]",
+};
 
 /**
- * De inhoud van een review: quote, logo en naam. Zonder `figure` eromheen,
- * zodat zowel de hero (die er een crossfade-laag van maakt) als het
- * contactblok (één losse kaart) hem kan gebruiken.
+ * Quote-kaart in de lopende rij. Vaste breedte, want in een marquee bepaalt
+ * de kaart de loopafstand; een meebuigende breedte maakt de animatie
+ * onvoorspelbaar.
  */
-export function TestimonialBody({ review }: { review: Review }) {
+export function MarqueeCard({
+  review,
+  accent,
+  decoratief,
+}: {
+  review: Review;
+  accent: MarqueeAccent;
+  /** Tweede set in de rij: staat er alleen om de loop rond te maken, dus een
+   *  schermlezer hoeft die niet nog een keer te horen. */
+  decoratief?: boolean;
+}) {
   return (
-    <>
-      <blockquote className="text-[0.875rem] leading-relaxed text-white/65 lg:text-[0.95rem]">
+    <figure
+      aria-hidden={decoratief || undefined}
+      className={cn(
+        "flex w-[300px] flex-none flex-col gap-[18px] rounded-[20px] border border-white/[0.07] bg-white/[0.045] p-6 transition-[border-color,background-color] duration-300 hover:bg-white/[0.075] sm:w-[330px]",
+        accentHover[accent]
+      )}
+    >
+      <blockquote className="text-[14.5px] leading-[1.6] text-white/80 text-pretty">
         {review.quote}
       </blockquote>
-      {/* `mt-auto` duwt de naam naar de onderkant, zodat die bij kaarten naast
-          elkaar op één lijn staat ook als de quotes verschillen in lengte. */}
-      <figcaption className="mt-auto flex items-center gap-2.5 pt-3.5">
+      <figcaption className="mt-auto flex items-center gap-[11px]">
         {/* Het logo ligt over de initiaal heen; ontbreekt het bestand, dan
             verbergt onError het en komt de initiaal weer tevoorschijn. */}
-        <span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/[0.06] text-sm font-semibold text-white/80">
+        <span className="relative flex h-[34px] w-[34px] shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/[0.14] bg-white/[0.06] font-heading text-[10px] font-semibold text-white/60">
           <span aria-hidden>{review.initials}</span>
           {review.logo && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={review.logo}
               alt=""
+              loading="lazy"
+              draggable={false}
               className="absolute inset-0 h-full w-full object-contain"
               onError={(e) => {
                 e.currentTarget.style.display = "none";
@@ -40,25 +60,14 @@ export function TestimonialBody({ review }: { review: Review }) {
           )}
         </span>
         <span className="min-w-0">
-          <span className="block text-[0.95rem] font-semibold text-white">
+          <span className="block font-heading text-[12.5px] font-semibold leading-[1.2] text-white">
             {review.author}
           </span>
-          {review.role && (
-            <span className="mt-0.5 block text-[0.8125rem] text-white/50">
-              {review.role}
-            </span>
-          )}
+          <span className="mt-0.5 block truncate text-[11.5px] leading-[1.2] text-white/45">
+            {review.role}
+          </span>
         </span>
       </figcaption>
-    </>
-  );
-}
-
-/** Eén losse reviewkaart, voor plekken zonder rotatie. */
-export function Testimonial({ review }: { review: Review }) {
-  return (
-    <figure className={testimonialCardClass}>
-      <TestimonialBody review={review} />
     </figure>
   );
 }
