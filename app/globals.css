@@ -339,6 +339,17 @@
   animation: caret-blink 1.1s step-end infinite;
 }
 
+/* De getypte tekst komt uit een attribuut in plaats van uit een tekstknoop.
+   Reden: naast de animatie staat een sr-only kopie met de volledige zin, zodat
+   schermlezers één schone kop horen in plaats van elke aanslag. Stonden beide
+   als tekst in de DOM, dan leest de h1 in platte tekst dubbel
+   ("lokale ondernemerslokale ondernemers") en zien crawlers dat ook zo.
+   Gegenereerde content telt niet mee in textContent, dus zo blijft er precies
+   één leesbare versie over. Visueel verandert er niets. */
+.typewriter-text::before {
+  content: attr(data-text);
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   html {

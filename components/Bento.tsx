@@ -60,7 +60,7 @@ function SocialIconLink({
       // merkt een schermlezer pas achteraf dat de context is gewisseld. Contact
       // en Footer doen dit al zo.
       aria-label={
-        href.startsWith("mailto:") ? label : `${label} — opent in nieuw tabblad`
+        href.startsWith("mailto:") ? label : `${label}, opent in nieuw tabblad`
       }
       target={href.startsWith("mailto:") ? undefined : "_blank"}
       rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
@@ -410,9 +410,9 @@ export function Bento() {
                 <div className="flex gap-2">
                   <SocialIconLink
                     href={`mailto:${site.email}`}
-                    label="Email"
+                    label={`Mail naar ${site.email}`}
                   >
-                    <Mail size={14} />
+                    <Mail size={14} aria-hidden />
                   </SocialIconLink>
                   {/* Uit lib/content, net als Contact en Footer. De URL's stonden
                       hier eerder hardgecodeerd, waardoor een gewijzigde
@@ -421,7 +421,11 @@ export function Bento() {
                     const Icon = brandIcons[s.icon];
                     if (!Icon) return null;
                     return (
-                      <SocialIconLink key={s.label} href={s.href} label={s.label}>
+                      <SocialIconLink
+                        key={s.label}
+                        href={s.href}
+                        label={s.a11yLabel}
+                      >
                         <Icon size={14} />
                       </SocialIconLink>
                     );

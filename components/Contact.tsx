@@ -231,7 +231,7 @@ export function Contact() {
                       <a
                         key={s.label}
                         href={s.href}
-                        aria-label={`${s.label} — opent in nieuw tabblad`}
+                        aria-label={`${s.a11yLabel}, opent in nieuw tabblad`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-[background-color,border-color,color,box-shadow] duration-200 hover:border-primary/40 hover:bg-white/[0.06] hover:text-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25"
@@ -242,10 +242,10 @@ export function Contact() {
                   })}
                   <a
                     href={`mailto:${site.email}`}
-                    aria-label="Stuur me direct een e-mail"
+                    aria-label={`Mail naar ${site.email}`}
                     className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-[background-color,border-color,color,box-shadow] duration-200 hover:border-primary/40 hover:bg-white/[0.06] hover:text-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25"
                   >
-                    <Mail size={18} />
+                    <Mail size={18} aria-hidden />
                   </a>
                 </div>
               </div>

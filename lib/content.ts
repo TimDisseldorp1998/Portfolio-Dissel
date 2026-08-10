@@ -642,14 +642,22 @@ export const experience = [
   },
 ];
 
+/**
+ * `label` is de korte naam voor intern gebruik; `a11yLabel` is wat een
+ * schermlezer voorleest. Die laatste moet op zichzelf te begrijpen zijn, want
+ * gebruikers kunnen een lijst met alleen de links opvragen: "LinkedIn" zegt dan
+ * niet van wie.
+ */
 export const socials = [
   {
     label: "LinkedIn",
+    a11yLabel: "LinkedIn-profiel van Tim Disseldorp",
     href: "https://www.linkedin.com/in/timdisseldorp/",
     icon: "Linkedin",
   },
   {
     label: "Instagram",
+    a11yLabel: "Instagram van Tim Disseldorp",
     href: "https://www.instagram.com/timdisseldorp/",
     icon: "Instagram",
   },
