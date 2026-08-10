@@ -84,8 +84,8 @@ export function Services() {
               Een mooie website is pas het halve werk.{" "}
               <span className="whitespace-nowrap">Ik ontwerp</span> en bouw
               digitale producten die er professioneel uitzien én meetbaar meer
-              opleveren. Voor merken die willen groeien, van startups tot
-              corporate bedrijven.
+              opleveren. Voor ondernemers die willen groeien, of je nu net
+              begint of al jaren draait.
             </p>
             <p>
               Design en development onder één dak, korte lijnen en snelle

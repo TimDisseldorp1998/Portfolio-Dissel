@@ -339,6 +339,39 @@
   animation: caret-blink 1.1s step-end infinite;
 }
 
+/* Marquee voor de reviewsectie. De rij bevat de reviews twee keer; op -50%
+   begint kopie 2 precies waar kopie 1 begon, dus de loop is naadloos. De
+   `pr` in de rij is even breed als de `gap`, anders valt die halve slag net
+   naast de kaartgrens en zie je elke ronde een sprongetje. */
+@keyframes mq-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+/* De duur komt uit `--mq-duur`, die het component uitrekent op basis van het
+   aantal kaarten. Zo blijft de snelheid gelijk (~30px/s) hoeveel reviews er
+   ook bij komen; een vaste duur zou juist versnellen bij meer kaarten. */
+.mq-row {
+  animation: mq-left var(--mq-duur, 40s) linear infinite;
+}
+.mq-wrap:hover .mq-row,
+.mq-wrap[data-paused="true"] .mq-row {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mq-row {
+    animation: none;
+  }
+  /* Zonder animatie zou je alleen het eerste stuk zien; zo blijven alle
+     reviews bereikbaar door te scrollen. */
+  .mq-wrap {
+    overflow-x: auto;
+  }
+}
+
 /* De getypte tekst komt uit een attribuut in plaats van uit een tekstknoop.
    Reden: naast de animatie staat een sr-only kopie met de volledige zin, zodat
    schermlezers één schone kop horen in plaats van elke aanslag. Stonden beide

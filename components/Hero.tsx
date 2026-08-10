@@ -1,71 +1,15 @@
 "use client";
 
-import { useEffect, useState, type CSSProperties } from "react";
-import { useReducedMotion } from "@/lib/useReducedMotion";
+import { type CSSProperties } from "react";
 import { ArrowRight } from "lucide-react";
 import { site } from "@/lib/content";
 import { cn } from "@/lib/cn";
 import { AuroraBackground } from "./AuroraBackground";
 import { Container } from "./ui/Container";
 import { Button } from "./ui/Button";
-import { PauseButton } from "./ui/PauseButton";
 import { Typewriter } from "./ui/Typewriter";
 
 export function Hero() {
-  const prefersReducedMotion = useReducedMotion();
-
-  // One review shows at a time; it crossfades to the next every ~7s.
-  // With reduced motion we skip the timer and stack both statically instead.
-  // De rotatie is te pauzeren (WCAG 2.2.2: bewegende content langer dan 5s
-  // moet stopgezet kunnen worden).
-  const [activeReview, setActiveReview] = useState(0);
-  const [reviewsPaused, setReviewsPaused] = useState(false);
-  useEffect(() => {
-    if (prefersReducedMotion || reviewsPaused) return;
-    const id = window.setInterval(() => {
-      setActiveReview((i) => (i + 1) % site.hero.reviews.length);
-    }, 7000);
-    return () => window.clearInterval(id);
-  }, [prefersReducedMotion, reviewsPaused]);
-
-  const reviewCardClass =
-    "rounded-2xl border border-white/10 bg-white/[0.05] p-5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.85)] backdrop-blur-xl transition-colors duration-200 max-lg:hover:border-white/25 max-lg:hover:bg-white/[0.09] max-lg:active:border-white/25 max-lg:active:bg-white/[0.09]";
-  const reviewBody = (review: (typeof site.hero.reviews)[number]) => (
-    <>
-      <blockquote className="text-[0.875rem] leading-relaxed text-white/65 lg:text-[0.95rem]">
-        {review.quote}
-      </blockquote>
-      <figcaption className="mt-3.5 flex items-center gap-2.5">
-        {/* Logo overlays the monogram; if the file is missing, onError hides it
-            and the initials fall back into view. */}
-        <span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/[0.06] text-sm font-semibold text-white/80">
-          <span aria-hidden>{review.initials}</span>
-          {review.logo && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={review.logo}
-              alt=""
-              className="absolute inset-0 h-full w-full object-contain"
-              onError={(e) => {
-                e.currentTarget.style.display = "none";
-              }}
-            />
-          )}
-        </span>
-        <span className="min-w-0">
-          <span className="block text-[0.95rem] font-semibold text-white">
-            {review.author}
-          </span>
-          {review.role && (
-            <span className="mt-0.5 block text-[0.8125rem] text-white/50">
-              {review.role}
-            </span>
-          )}
-        </span>
-      </figcaption>
-    </>
-  );
-
   /**
    * Entree bij het laden: de animatie zelf staat als `.mount-rise` in
    * globals.css, hier wordt alleen de vertraging doorgegeven. Verminderde
@@ -184,58 +128,6 @@ export function Hero() {
           </ul>
         </div>
 
-        {/* Subtle client reviews — bottom-right on desktop, in flow below the
-            logo strip on mobile. Dark glassmorphism over the aurora. One shows
-            at a time and crossfades to the next every ~7s. */}
-        <section
-          style={riseDelay(0.8)}
-          aria-label="Klantreviews"
-          className="mount-rise relative mt-12 w-full sm:max-w-md lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[400px]"
-        >
-          {prefersReducedMotion ? (
-            <div className="flex flex-col gap-3">
-              {site.hero.reviews.map((review) => (
-                <figure key={review.author} className={reviewCardClass}>
-                  {reviewBody(review)}
-                </figure>
-              ))}
-            </div>
-          ) : (
-            <>
-              {/* Alle reviews staan in dezelfde grid-cel en liggen dus over
-                  elkaar heen; alleen de actieve is zichtbaar. Daardoor is de
-                  kaart zo hoog als de langste review en verspringt hij niet
-                  meer tijdens het wisselen. */}
-              <div className="grid">
-                {site.hero.reviews.map((review, index) => {
-                  const actief = index === activeReview;
-                  return (
-                    <figure
-                      key={review.author}
-                      aria-hidden={!actief}
-                      className={cn(
-                        reviewCardClass,
-                        // Zelfde curve als voorheen: dit is easeInOut zoals de
-                        // animatiebibliotheek hem definieerde, niet Tailwinds
-                        // ease-in-out (dat is een andere bezier).
-                        "col-start-1 row-start-1 transition-opacity duration-[600ms] ease-[cubic-bezier(0.42,0,0.58,1)]",
-                        actief ? "opacity-100" : "pointer-events-none opacity-0"
-                      )}
-                    >
-                      {reviewBody(review)}
-                    </figure>
-                  );
-                })}
-              </div>
-              <PauseButton
-                paused={reviewsPaused}
-                onToggle={() => setReviewsPaused((p) => !p)}
-                label="Reviews"
-                className="absolute bottom-4 right-4"
-              />
-            </>
-          )}
-        </section>
       </Container>
     </section>
   );

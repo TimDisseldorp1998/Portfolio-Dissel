@@ -50,30 +50,53 @@ export const site = {
         { src: "/logos/1608-logo.svg", alt: "1608", size: "h-5 sm:h-6", w: 160, h: 55 },
       ],
     },
-    /**
-     * Subtiele klantreviews rechtsonder in de hero (dark glassmorphism, geen
-     * sterren). De quotes zijn placeholder: vervang ze door de echte reviews.
-     */
-    reviews: [
-      {
-        quote:
-          "Super blij met de stijl van de website, precies zoals we het in ons hoofd hadden. Erg fijne samenwerking gehad en we hebben inmiddels de eerste oppasdiensten via het platform lopen.",
-        author: "Madelief",
-        role: "Founder de Kleintjes van Alkmaar",
-        initials: "K",
-        logo: "/logos/kleintjes-van-alkmaar-logo.png",
-      },
-      {
-        quote:
-          "Vanuit alleen een logo en paar kleuren, en snel geschakeld met Tim. De website ziet er professioneel en modern uit en werkt top.",
-        author: "Sjoerd Avis",
-        role: "Founder De-Stock.nl",
-        initials: "D",
-        logo: "/logos/de-stock-logo.png",
-      },
-    ],
   },
 };
+
+/**
+ * Klantreviews. Ze staan in een eigen sectie direct na het werk, allebei
+ * tegelijk zichtbaar en zonder rotatie: bewijs overtuigt pas nadat iemand de
+ * cases heeft gezien. Voeg hier een review toe en hij verschijnt vanzelf.
+ */
+export type Review = {
+  quote: string;
+  /** De persoon die het zei. Laat hem weg als je alleen het bedrijf hebt: de
+   *  kaart toont dan de bedrijfsnaam met het logo ernaast. */
+  author?: string;
+  role?: string;
+  /** Valt terug in beeld als het ronde logo ontbreekt of niet laadt. */
+  initials?: string;
+  /** Bedrijfsnaam. Nodig zodra `author` ontbreekt. */
+  company?: string;
+  logo?: string;
+};
+
+export const reviews: Review[] = [
+  {
+    quote:
+      "Super blij met de stijl van de website, precies zoals we het in ons hoofd hadden. Erg fijne samenwerking gehad en we hebben inmiddels de eerste oppasdiensten via het platform lopen.",
+    author: "Madelief",
+    role: "Founder de Kleintjes van Alkmaar",
+    initials: "K",
+    logo: "/logos/kleintjes-van-alkmaar-logo.png",
+  },
+  {
+    quote:
+      "Vanuit alleen een logo en paar kleuren, en snel geschakeld met Tim. De website ziet er professioneel en modern uit en werkt top.",
+    author: "Sjoerd Avis",
+    role: "Founder De-Stock.nl",
+    initials: "D",
+    logo: "/logos/de-stock-logo.png",
+  },
+  // Geen naam beschikbaar, alleen het bedrijf. De kaart toont daarom de
+  // bedrijfsnaam met het wordmark ernaast in plaats van een persoon.
+  {
+    quote:
+      "Reserveringen komen nu binnen zonder dat wij er iets voor hoeven doen. Dat scheelt ons uren per week en gasten bellen niet meer voor de openingstijden.",
+    company: "Marktzicht Eten & Drinken",
+    logo: "/logos/marktzicht-logo.svg",
+  },
+];
 
 export const nav = [
   { label: "Diensten", href: "#services" },
