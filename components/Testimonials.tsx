@@ -53,8 +53,10 @@ export function Testimonials() {
                 Reviews
               </p>
               <h2 className="max-w-[640px] font-heading text-3xl font-semibold leading-tight tracking-[-0.02em] text-white sm:text-4xl md:text-[44px]">
-                <span className="text-white/[0.55]">Geen verkooppraatje.</span>{" "}
-                Dit zeggen klanten.
+                <span className="text-white/[0.55]">
+                  Founders aan het woord.
+                </span>{" "}
+                Dit zeggen ze.
               </h2>
             </div>
             <PauseButton
