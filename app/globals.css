@@ -167,6 +167,52 @@
   }
 }
 
+/* Scroll-hint in de hero: een lichtpuntje glijdt langs een dun lijntje naar
+   beneden. Het lijntje zelf is het element; het puntje is de ::after. */
+.scroll-hint-lijn {
+  position: relative;
+  width: 1px;
+  height: 44px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.scroll-hint-lijn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  animation: scroll-hint-glijd 2.2s ease-in infinite;
+}
+
+@keyframes scroll-hint-glijd {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(44px);
+    opacity: 0;
+  }
+}
+
+/* Verminderde beweging: het puntje staat stil onderaan de lijn. De hint
+   blijft, de beweging niet. */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-hint-lijn::after {
+    animation: none;
+    top: auto;
+    bottom: 0;
+    opacity: 0.8;
+  }
+}
+
 /* Case-drawer: achtergrond en paneel. `data-state` wordt gezet door
    usePresence, die het paneel gemount houdt tot de uit-animatie klaar is.
    --drawer-x wordt bij verminderde beweging op 0 gezet, dan blijft alleen

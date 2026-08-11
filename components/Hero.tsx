@@ -129,6 +129,27 @@ export function Hero() {
         </div>
 
       </Container>
+
+      {/* Scroll-hint: de dienstensectie eronder heeft dezelfde donkere
+          achtergrond, dus zonder dit is nergens aan te zien dat er meer onder
+          de vouw staat. Alleen vanaf sm: op telefoons botst hij met de
+          logostrip en is scrollen toch al vanzelfsprekend. */}
+      {/* Centreren via een wrapper, niet met -translate-x-1/2 op de link zelf:
+          mount-rise eindigt op transform:translateY(0) en zou die translate
+          overschrijven, waardoor de hint uit het midden schuift. */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-8 z-10 hidden justify-center sm:flex">
+        <a
+          href="#services"
+          aria-label="Scroll naar diensten"
+          style={riseDelay(0.8)}
+          className="mount-rise group pointer-events-auto flex flex-col items-center gap-3"
+        >
+          <span className="text-[0.625rem] font-medium uppercase tracking-[0.22em] text-white/40 transition-colors duration-300 group-hover:text-white/70">
+            scroll
+          </span>
+          <span aria-hidden className="scroll-hint-lijn" />
+        </a>
+      </div>
     </section>
   );
 }
