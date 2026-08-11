@@ -23,8 +23,11 @@ const SITE_URL = "https://disseldesign.com";
 // Twitter) en liepen eerder uit elkaar: de OG-tags waren nog Engels en noemden
 // een andere positionering dan de pagina zelf.
 const TITEL = "Tim Disseldorp | Digitale product designer in Noord-Holland";
+// Rond de 150 tekens houden: korter vult Google zelf aan met een willekeurig
+// stuk paginatekst, langer kapt hij af. Geen beloofd resultaat in deze zin,
+// alleen wat er gebeurt en wat de bezoeker kan doen.
 const OMSCHRIJVING =
-  "Websites voor lokale ondernemers in Noord-Holland, van huisstijl tot live site. Strak design, snel opgeleverd, meer bezoekers die klant worden.";
+  "Websites voor lokale ondernemers in Noord-Holland, van huisstijl tot live site. Strak design, snel opgeleverd, zonder gedoe. Plan een kennismaking.";
 
 export const metadata: Metadata = {
   title: TITEL,
