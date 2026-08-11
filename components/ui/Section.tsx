@@ -21,7 +21,11 @@ export function Section({
   return (
     <section
       className={cn(
-        "relative w-full py-24 md:py-32",
+        // Alle secties delen dezelfde donkere achtergrond, dus tussen twee
+        // secties lees je de padding van beide als één leeg vlak: 2x deze
+        // waarde. Op 128px was dat 256px, ruim een kwart beeldscherm zonder
+        // iets erin. 96px houdt de lucht, maar halveert de leegte niet.
+        "relative w-full py-20 md:py-24",
         variantClasses[variant],
         className
       )}

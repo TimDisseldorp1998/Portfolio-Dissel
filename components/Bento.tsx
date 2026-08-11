@@ -382,7 +382,9 @@ export function Bento() {
   return (
     <section
       id="about"
-      className="relative bg-surface-dark py-24 text-white md:py-32"
+      // Geen <Section>, maar wel dezelfde ritmiek: houd deze padding gelijk
+      // aan die van components/ui/Section.tsx.
+      className="relative bg-surface-dark py-20 text-white md:py-24"
     >
       <Container>
         <Reveal>

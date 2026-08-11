@@ -27,7 +27,7 @@ export const site = {
       "regionale bedrijven",
     ],
     subtitle:
-      "Ik ontwerp en bouw websites voor lokale ondernemers, van huisstijl tot live site. Strak design, snel opgeleverd, zonder gedoe. Met één doel: meer bezoekers die klant worden.",
+      "Ik ontwerp en bouw websites voor lokale ondernemers, van huisstijl tot live site. Strak design, snel opgeleverd, zonder gedoe.",
     // Contact is the primary (filled) action; work is the secondary (ghost) one.
     // The contact CTA targets the form anchor directly so the form lands in view.
     contactCta: { label: "Plan een kennismaking", href: "#contact-form" },

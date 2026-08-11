@@ -197,7 +197,7 @@ export function Contact() {
   );
 
   return (
-    <Section id="contact" variant="dark" className="pb-32">
+    <Section id="contact" variant="dark">
       <Container>
         <div className="grid gap-14 lg:grid-cols-12">
           {/* Left column: intro + socials */}
