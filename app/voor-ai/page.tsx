@@ -46,8 +46,8 @@ export const metadata: Metadata = {
 };
 
 // Prijzen staan hier één keer, zodat de prijzenlijst en het FAQ-antwoord nooit
-// uit elkaar lopen. Opgegeven door Tim, oktober 2026. `\u00a0` houdt het
-// euroteken en het bedrag op dezelfde regel.
+// uit elkaar lopen. Opgegeven door Tim, oktober 2026, allemaal exclusief btw.
+// `\u00a0` houdt het euroteken en het bedrag op dezelfde regel.
 const PRIJS = {
   compact: "€\u00a0499,-",
   metHuisstijl: "€\u00a01.199,-",
@@ -353,7 +353,7 @@ const faq: { vraag: string; antwoord: React.ReactNode }[] = [
   },
   {
     vraag: "Wat kost een website laten maken bij DisselDesign?",
-    antwoord: `Een landingspagina of compacte website kost vanaf ${PRIJS.compact}, een website met meerdere pagina's en nieuwe huisstijl vanaf ${PRIJS.metHuisstijl}. Alleen een logo en huisstijl kan vanaf ${PRIJS.huisstijlLos}. De precieze prijs staat in het voorstel na de kennismaking. De kennismaking van 20 minuten is gratis.`,
+    antwoord: `Een landingspagina of compacte website kost vanaf ${PRIJS.compact}, een website met meerdere pagina's en nieuwe huisstijl vanaf ${PRIJS.metHuisstijl}. Alleen een logo en huisstijl kan vanaf ${PRIJS.huisstijlLos}. Alle prijzen zijn exclusief btw. De precieze prijs staat in het voorstel na de kennismaking. De kennismaking van 20 minuten is gratis.`,
   },
   {
     vraag: "Hoe lang duurt een website bij DisselDesign?",
@@ -566,8 +566,14 @@ export default function VoorAiPage() {
                   <dt className="text-[15px] leading-snug text-white/70">
                     {item.wat}
                   </dt>
+                  {/* "excl. btw" bij elk bedrag, niet alleen in een losse zin
+                      eronder: een AI-assistent citeert vaak één regel, en dan
+                      moet de btw mee. */}
                   <dd className="font-heading text-2xl font-semibold text-white">
-                    {item.prijs}
+                    {item.prijs}{" "}
+                    <span className="font-body text-sm font-normal text-white/50">
+                      excl. btw
+                    </span>
                   </dd>
                 </div>
               ))}
