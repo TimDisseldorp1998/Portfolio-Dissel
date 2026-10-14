@@ -305,7 +305,7 @@ const werk = [
   },
   {
     klant: "16.08 Streetwear",
-    wat: "Herontwerp van de webshop: nieuwe huisstijl, heldere categorieën en een kortere checkout.",
+    wat: "Herontwerp van de webshop in 2023, van huisstijl via wireframes tot doordachte designs. Met heldere categorieën en een kortere checkout.",
     resultaat:
       "Een webshop opgebouwd rond zoeken, kiezen en afrekenen, met een huisstijlhandboek waar de developers direct mee bouwen.",
   },

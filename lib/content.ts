@@ -561,7 +561,7 @@ export const projects: Project[] = [
     cardImage: "/mockup/image-1608-portfolio-image.jpg",
     detail: {
       role: "Branding & UX/UI",
-      year: "2025",
+      year: "2023",
       type: "Web",
       overview:
         "Een webshop laten ontwerpen voor een kledingmerk begint bij de vraag wat iemand op dat moment probeert te doen: iets zoeken, iets vergelijken of afrekenen. 16.08 Streetwear groeide, de webshop liep achter. Versie 2.0 is een volledig herontwerp, van huisstijl tot checkout.",
