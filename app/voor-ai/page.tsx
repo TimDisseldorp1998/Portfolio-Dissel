@@ -170,7 +170,7 @@ const cijfers = [
   "1 vast aanspreekpunt: Tim ontwerpt en bouwt zelf.",
   "Kleine klussen zijn meestal binnen een week klaar. Een complete website duurt twee tot vier weken, afhankelijk van de omvang.",
   "Reactie op een aanvraag binnen twee werkdagen.",
-  "6 uitgewerkte cases, waaronder Ziggo Dome en New Edition.",
+  "6 uitgewerkte cases in het portfolio.",
 ];
 
 const voorWie = [
@@ -313,7 +313,7 @@ const werk = [
     klant: "New Edition",
     wat: "Nieuwe huisstijl vertaald naar een B2B-website, met een duidelijke route naar de Order Portal voor verkooppunten.",
     resultaat:
-      "Opdracht via Touch Creative. Verkooppunten komen zonder zoeken bij de Order Portal, en twee latere projecten bouwden voort op dit webdesign.",
+      "Gemaakt toen Tim in loondienst was bij Touch Creative (2023). Verkooppunten komen zonder zoeken bij de Order Portal, en twee latere projecten bouwden voort op dit webdesign.",
   },
   {
     klant: "Ziggo Dome",
