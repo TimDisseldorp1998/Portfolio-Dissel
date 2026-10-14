@@ -213,6 +213,61 @@
   }
 }
 
+/* FAQ-accordion op /voor-ai/. De pijl draait met een lichte overshoot naar
+   boven, het antwoord schuift zacht in beeld. Browsers die ::details-content
+   kennen (Chromium) animeren ook de hoogte, bij openen én sluiten; de rest
+   klapt direct open, met dezelfde pijl en fade. */
+.faq-pijl {
+  transition:
+    transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.faq-item[open] .faq-antwoord {
+  animation: faq-in 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes faq-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@supports (interpolate-size: allow-keywords) {
+  .faq-item {
+    interpolate-size: allow-keywords;
+  }
+
+  .faq-item::details-content {
+    height: 0;
+    overflow: clip;
+    transition:
+      height 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+      content-visibility 0.4s allow-discrete;
+  }
+
+  .faq-item[open]::details-content {
+    height: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-pijl,
+  .faq-item::details-content {
+    transition: none;
+  }
+
+  .faq-item[open] .faq-antwoord {
+    animation: none;
+  }
+}
+
 /* Case-drawer: achtergrond en paneel. `data-state` wordt gezet door
    usePresence, die het paneel gemount houdt tot de uit-animatie klaar is.
    --drawer-x wordt bij verminderde beweging op 0 gezet, dan blijft alleen
