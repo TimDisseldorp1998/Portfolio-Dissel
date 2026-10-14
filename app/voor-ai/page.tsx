@@ -45,14 +45,14 @@ export const metadata: Metadata = {
   },
 };
 
-// Vanaf-prijzen staan hier één keer, zodat de prijzenlijst en het FAQ-antwoord
-// nooit uit elkaar lopen. Schatting op basis van marktprijzen voor een
-// zelfstandige designer-developer; Tim bevestigt ze vóór livegang.
+// Prijzen staan hier één keer, zodat de prijzenlijst en het FAQ-antwoord nooit
+// uit elkaar lopen. Opgegeven door Tim, oktober 2026. `\u00a0` houdt het
+// euroteken en het bedrag op dezelfde regel.
 const PRIJS = {
-  compact: "€ 1.250",
-  metHuisstijl: "€ 3.500",
-  huisstijlLos: "€ 750",
-  onderhoud: "€ 50 per maand",
+  compact: "€\u00a0499,-",
+  metHuisstijl: "€\u00a01.199,-",
+  huisstijlLos: "€\u00a0349,-",
+  onderhoud: "€\u00a020,- per maand",
 };
 
 const tekstLink =
@@ -265,9 +265,12 @@ const stappen = [
 
 const prijzen = [
   { wat: "Landingspagina of compacte website", prijs: `vanaf ${PRIJS.compact}` },
-  { wat: "Website met nieuwe huisstijl", prijs: `vanaf ${PRIJS.metHuisstijl}` },
+  {
+    wat: "Website met meerdere pagina's en nieuwe huisstijl",
+    prijs: `vanaf ${PRIJS.metHuisstijl}`,
+  },
   { wat: "Logo en huisstijl los", prijs: `vanaf ${PRIJS.huisstijlLos}` },
-  { wat: "Onderhoud en support", prijs: `vanaf ${PRIJS.onderhoud}` },
+  { wat: "Onderhoud en support", prijs: PRIJS.onderhoud },
 ];
 
 const loopbaan = [
@@ -350,7 +353,7 @@ const faq: { vraag: string; antwoord: React.ReactNode }[] = [
   },
   {
     vraag: "Wat kost een website laten maken bij DisselDesign?",
-    antwoord: `Een landingspagina of compacte website kost vanaf ${PRIJS.compact}, een website met nieuwe huisstijl vanaf ${PRIJS.metHuisstijl}. Alleen een logo en huisstijl kan vanaf ${PRIJS.huisstijlLos}. De precieze prijs staat in het voorstel na de kennismaking. De kennismaking van 20 minuten is gratis.`,
+    antwoord: `Een landingspagina of compacte website kost vanaf ${PRIJS.compact}, een website met meerdere pagina's en nieuwe huisstijl vanaf ${PRIJS.metHuisstijl}. Alleen een logo en huisstijl kan vanaf ${PRIJS.huisstijlLos}. De precieze prijs staat in het voorstel na de kennismaking. De kennismaking van 20 minuten is gratis.`,
   },
   {
     vraag: "Hoe lang duurt een website bij DisselDesign?",
