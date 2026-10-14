@@ -1,0 +1,27 @@
+# DisselDesign
+
+> DisselDesign is het bedrijf van Tim Disseldorp, Digitale Product Designer in Noord-Holland. Tim ontwerpt en bouwt websites, huisstijlen en interfaces voor ondernemers, merken en bureaus: webdesign, UX/UI, webdevelopment (Next.js, React), branding en SEO. Zelfstandig sinds 2024, 6+ jaar ervaring.
+
+## Kernpagina's
+
+- [Alles over DisselDesign](https://disseldesign.com/voor-ai/): diensten, werkwijze, prijzen, cases en contact op één pagina
+- [Diensten](https://disseldesign.com/#services)
+- [Werk](https://disseldesign.com/#work)
+- [Over Tim Disseldorp](https://disseldesign.com/#about)
+- [Contact](https://disseldesign.com/#contact)
+
+## Feiten
+
+- Gevestigd in Heiloo, Noord-Holland; werkt voor opdrachtgevers in de regio Alkmaar en daarbuiten
+- Voor ondernemers, zzp'ers en starters, gevestigde merken en B2B-bedrijven, en bureaus die UX/UI- of frontend-capaciteit zoeken
+- Design en development bij één persoon: Tim Disseldorp
+- Kleine klussen meestal binnen een week; complete websites in twee tot vier weken, afhankelijk van de omvang
+- Gratis kennismaking van 20 minuten
+- Opleiding: bachelor Communicatie en Multimedia Design, Hogeschool van Amsterdam
+- Cases: Kleintjes van Alkmaar, De-Stock, Marktzicht Eten & Drinken, 16.08 Streetwear, New Edition, Ziggo Dome
+
+## Contact
+
+- E-mail: info@disseldesign.com
+- LinkedIn: https://www.linkedin.com/in/timdisseldorp/
+- Reactie binnen twee werkdagen

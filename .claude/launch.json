@@ -4,8 +4,24 @@
     {
       "name": "Next.js dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 1080,
+      "autoPort": false
+    },
+    {
+      "name": "Static export (out)",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "1081",
+        "--directory",
+        "out"
+      ],
+      "port": 1081,
       "autoPort": false
     }
   ]

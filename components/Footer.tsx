@@ -16,7 +16,12 @@ const brandIcons: Record<string, (props: { size?: number }) => JSX.Element> = {
 
 const footerNav = [...nav, { label: "Contact", href: "#contact" }];
 
-export function Footer() {
+export function Footer({
+  basis = "",
+}: {
+  /** Zie Navbar: "/" op een subpagina, zodat de ankers naar de homepage gaan. */
+  basis?: string;
+} = {}) {
   const prefersReducedMotion = useReducedMotion();
 
   return (
@@ -24,9 +29,13 @@ export function Footer() {
       <Container className="grid grid-cols-1 items-center gap-10 py-14 md:grid-cols-3 md:gap-6">
         {/* Logo — left */}
         <a
-          href="#top"
-          onClick={(e) => scrollToSection(e, "#top", prefersReducedMotion)}
-          aria-label="DisselDesign — naar boven"
+          href={`${basis}#top`}
+          onClick={(e) =>
+            scrollToSection(e, `${basis}#top`, prefersReducedMotion)
+          }
+          aria-label={
+            basis ? "DisselDesign, naar de homepage" : "DisselDesign — naar boven"
+          }
           className="justify-self-center rounded text-white transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30 md:justify-self-start"
         >
           <Logo className="h-11 w-auto" />
@@ -38,9 +47,9 @@ export function Footer() {
             {footerNav.map((n) => (
               <li key={n.href}>
                 <a
-                  href={n.href}
+                  href={`${basis}${n.href}`}
                   onClick={(e) =>
-                    scrollToSection(e, n.href, prefersReducedMotion)
+                    scrollToSection(e, `${basis}${n.href}`, prefersReducedMotion)
                   }
                   className="rounded text-sm text-white/70 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
                 >
@@ -78,7 +87,13 @@ export function Footer() {
           © {process.env.NEXT_PUBLIC_BUILD_YEAR} {site.name}. All rights
           reserved. Designed &amp; built by {site.name}.
         </p>
-        <div className="flex items-center gap-5">
+        <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+          <Link
+            href="/voor-ai/"
+            className="rounded text-xs text-white/45 underline-offset-4 transition-colors hover:text-white/70 hover:underline focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+          >
+            Alles over DisselDesign
+          </Link>
           <Link
             href="/privacy/"
             className="rounded text-xs text-white/45 underline-offset-4 transition-colors hover:text-white/70 hover:underline focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"

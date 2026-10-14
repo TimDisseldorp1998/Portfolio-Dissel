@@ -38,7 +38,14 @@ const SECTION_IDS = items.map((i) => i.href.slice(1));
 /** Idle delay (ms) before the mobile nav grows back to its resting size. */
 const IDLE_AFTER = 220;
 
-export function Navbar() {
+export function Navbar({
+  basis = "",
+}: {
+  /** Voorvoegsel voor de ankerlinks. Leeg op de homepage; "/" op een
+   *  subpagina, zodat `#work` daar `/#work` wordt en naar de homepage gaat.
+   *  scrollToSection laat zo'n link met rust, want hij begint niet met `#`. */
+  basis?: string;
+} = {}) {
   const prefersReducedMotion = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
@@ -129,9 +136,15 @@ export function Navbar() {
       >
         {/* Logo — mark only */}
         <a
-          href="#top"
-          onClick={(e) => scrollToSection(e, "#top", prefersReducedMotion)}
-          aria-label="DisselDesign — terug naar boven"
+          href={`${basis}#top`}
+          onClick={(e) =>
+            scrollToSection(e, `${basis}#top`, prefersReducedMotion)
+          }
+          aria-label={
+            basis
+              ? "DisselDesign, naar de homepage"
+              : "DisselDesign — terug naar boven"
+          }
           className="flex min-h-[50px] shrink-0 items-center rounded-full px-2 transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40 sm:min-h-[44px]"
         >
           <LogoMark className="h-8 w-auto sm:h-7" />
@@ -144,9 +157,13 @@ export function Navbar() {
             return (
               <li key={item.href}>
                 <a
-                  href={item.href}
+                  href={`${basis}${item.href}`}
                   onClick={(e) =>
-                    scrollToSection(e, item.href, prefersReducedMotion)
+                    scrollToSection(
+                      e,
+                      `${basis}${item.href}`,
+                      prefersReducedMotion
+                    )
                   }
                   aria-label={item.label}
                   aria-current={isActive ? "location" : undefined}

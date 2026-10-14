@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Poppins, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { CookieConsent } from "@/components/CookieConsent";
+import { JsonLd } from "@/components/JsonLd";
+import { SITE_URL, bedrijfEnPersoon } from "@/lib/structured-data";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -16,8 +18,6 @@ const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   display: "swap",
 });
-
-const SITE_URL = "https://disseldesign.com";
 
 // Eén bron voor de titel en omschrijving. Ze staan op drie plekken (page, OG en
 // Twitter) en liepen eerder uit elkaar: de OG-tags waren nog Engels en noemden
@@ -75,6 +75,9 @@ export default function RootLayout({
             dus de DOM-volgorde verandert niets aan de weergave. */}
         <CookieConsent />
         {children}
+        {/* Bedrijf en persoon op elke pagina; /voor-ai/ voegt zijn eigen
+            WebPage-blok toe dat via @id naar dit bedrijf verwijst. */}
+        <JsonLd data={bedrijfEnPersoon} />
       </body>
     </html>
   );

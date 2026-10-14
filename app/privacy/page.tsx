@@ -3,11 +3,17 @@ import { ArrowLeft } from "lucide-react";
 import { site } from "@/lib/content";
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/Logo";
+import { SITE_URL } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
   title: "Privacy & cookies | Dissel Design",
   description:
     "Hoe DisselDesign omgaat met je gegevens: contactformulier, Google Analytics en je rechten.",
+  // Zonder deze regel erft de pagina de canonical van de homepage uit de
+  // layout en zegt hij tegen Google dat hij een kopie van de homepage is.
+  alternates: {
+    canonical: `${SITE_URL}/privacy/`,
+  },
 };
 
 /** Kopje + lopende tekst, in de donkere site-stijl. */
