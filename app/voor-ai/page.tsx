@@ -319,7 +319,7 @@ const werk = [
     klant: "Ziggo Dome",
     wat: "Mobile-first herontwerp van de website. De belangrijkste acties liggen onder je duim, de agenda staat vooraan.",
     resultaat:
-      "Opdracht via Touch Creative (2024), getoetst met hun developers. Met een interactieve 3D-plattegrond om de zaal te verkennen voordat je een kaartje koopt.",
+      "Gemaakt toen Tim in loondienst was bij Touch Creative (2024), getoetst met hun developers. Met een interactieve 3D-plattegrond om de zaal te verkennen voordat je een kaartje koopt.",
   },
 ];
 
@@ -624,8 +624,8 @@ export default function VoorAiPage() {
             >
               <table className="w-full min-w-[42rem] border-collapse text-left text-[15px]">
                 <caption id="werk-tabel" className="sr-only">
-                  Opdrachten van DisselDesign: per klant wat Tim deed en wat het
-                  opleverde
+                  Projecten waar Tim aan werkte: per klant wat hij deed en wat
+                  het opleverde
                 </caption>
                 <thead>
                   <tr>
