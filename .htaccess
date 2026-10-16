@@ -10,6 +10,12 @@ DirectoryIndex index.html out/index.html
 RewriteEngine On
 RewriteBase /
 
+# www.disseldesign.com → https://disseldesign.com (301). Next.js kan dit bij een
+# statische export niet zelf, dus het staat hier. Alleen voor de www-host:
+# disseldesign.com en dev.disseldesign.com vallen er niet onder.
+RewriteCond %{HTTP_HOST} ^www\.disseldesign\.com$ [NC]
+RewriteRule ^(.*)$ https://disseldesign.com/$1 [R=301,L]
+
 # Don't rewrite requests that are already inside /out/ — they resolve normally.
 RewriteRule ^out/ - [L]
 
@@ -23,3 +29,12 @@ RewriteRule ^(.*)$ out/$1 [L]
 
 # Fallback for trailing-slash URLs that Next generates as directories.
 ErrorDocument 404 /out/404.html
+
+# dev.disseldesign.com is de testomgeving en hoort niet in Google. Dezelfde
+# .htaccess draait ook op live, maar daar matcht de host niet en komt de
+# header er niet bij.
+# Na de interne rewrite naar out/ kan Apache de variabele hernoemen naar
+# REDIRECT_DD_NOINDEX; daarom staan beide varianten erin.
+SetEnvIfNoCase Host ^dev\.disseldesign\.com$ DD_NOINDEX
+Header set X-Robots-Tag "noindex, nofollow" env=DD_NOINDEX
+Header set X-Robots-Tag "noindex, nofollow" env=REDIRECT_DD_NOINDEX

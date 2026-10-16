@@ -6,7 +6,7 @@
 export const site = {
   name: "Tim Disseldorp",
   shortName: "Tim",
-  role: "UX Designer & Developer",
+  role: "Digitale Product Designer",
   location: "Amsterdam, NL",
   email: "info@disseldesign.com",
   // Wordt getoond in de privacyverklaring (AVG: identiteit van de
@@ -18,7 +18,7 @@ export const site = {
     eyebrow: "Gevestigd in Noord-Holland",
     // The headline ends with a rotating tail that types in/out (see Typewriter).
     // The first phrase is what renders server-side (SEO + no-JS fallback).
-    headlinePrefix: "Digitale product designer",
+    headlinePrefix: "Digitale Product Designer",
     // "voor" is vaste tekst (wordt niet steeds opnieuw getypt); alleen de
     // woorden erna roteren via de Typewriter.
     headlineConnector: "voor",
@@ -69,6 +69,8 @@ export type Review = {
   /** Bedrijfsnaam. Nodig zodra `author` ontbreekt. */
   company?: string;
   logo?: string;
+  /** Slug van de case waar deze review als quote op staat (content/werk/). */
+  case?: string;
 };
 
 export const reviews: Review[] = [
@@ -79,6 +81,7 @@ export const reviews: Review[] = [
     role: "Founder de Kleintjes van Alkmaar",
     initials: "K",
     logo: "/logos/kleintjes-van-alkmaar-logo.png",
+    case: "kleintjes-van-alkmaar",
   },
   {
     quote:
@@ -87,6 +90,7 @@ export const reviews: Review[] = [
     role: "Founder De-Stock.nl",
     initials: "D",
     logo: "/logos/de-stock-logo.png",
+    case: "de-stock",
   },
   // Geen naam beschikbaar, alleen het bedrijf. De kaart toont daarom de
   // bedrijfsnaam met het wordmark ernaast in plaats van een persoon.
@@ -95,14 +99,10 @@ export const reviews: Review[] = [
       "Reserveringen komen nu binnen zonder dat wij er iets voor hoeven doen. Dat scheelt ons uren per week en gasten bellen niet meer voor de openingstijden.",
     company: "Marktzicht Eten & Drinken",
     logo: "/logos/marktzicht-logo.svg",
+    case: "marktzicht",
   },
 ];
 
-export const nav = [
-  { label: "Diensten", href: "#services" },
-  { label: "Werk", href: "#work" },
-  { label: "Over mij", href: "#about" },
-];
 
 export const about = {
   paragraph:
@@ -130,11 +130,11 @@ export const about = {
 export const bento = {
   intro: {
     title:
-      "Creatieve digitale product designer met een oog voor detail. Ik ontwerp en bouw producten die net zo goed presteren als ze eruitzien.",
+      "Creatieve Digitale Product Designer met een oog voor detail. Ik ontwerp en bouw producten die net zo goed presteren als ze eruitzien.",
   },
   background: {
     paragraphs: [
-      "Ik ben Tim Disseldorp, product designer. Alweer 6+ jaar ervaring en sinds 2024 voor mezelf begonnen. Daarnaast actief bij een e-commercebureau in Alkmaar. Disseldesign is geen team, geen manager, geen doorgeefluik. Je praat met de persoon die het ook daadwerkelijk maakt. Sprintklusjes binnen een week, marathonprojecten in twee tot vier weken. Nooit half af.",
+      "Ik ben Tim Disseldorp, Digitale Product Designer. Alweer 6+ jaar ervaring en sinds 2024 voor mezelf begonnen. Daarnaast actief bij een e-commercebureau in Alkmaar. Disseldesign is geen team, geen manager, geen doorgeefluik. Je praat met de persoon die het ook daadwerkelijk maakt. Sprintklusjes binnen een week, marathonprojecten in twee tot vier weken. Nooit half af.",
       "Ik ontwerp websites voor lokale ondernemers en regionale bedrijven. Maar eerlijk: iedereen is welkom, van eenmanszaak tot groot merk. Ik ontwierp de website van de Ziggo Dome, die van de kapper om de hoek en hielp een vriend met zijn retailbedrijf. Dezelfde vragen, dezelfde tests, dezelfde tijd en aandacht.",
       "Zin in een koffie en wil je praten over je ambitie? Ik reageer ook op zondagavond. 😉",
     ],
@@ -179,431 +179,8 @@ export const bento = {
   ],
 };
 
-export type CaseSection = { heading: string; paragraphs: string[] };
-
-export type ProjectDetail = {
-  /** What I did — shown as "Rol" in the meta bar. The project title already
-   *  appears as the drawer title, so this says the work, not the client. */
-  role: string;
-  year: string;
-  type: string;
-  overview: string;
-  /** Full prose case: challenge / approach / result / call to action. */
-  body: CaseSection[];
-  /** Carousel slides. `gradient` is the base backdrop (shown while an image
-   *  loads, or on its own for placeholder slides); add `src`/`alt` to overlay
-   *  a real screenshot on top of it. */
-  slides: { label: string; gradient: string; src?: string; alt?: string }[];
-};
-
-export type Project = {
-  title: string;
-  /** Stabiele id in de URL (`?case=<slug>`), zodat een case deelbaar is.
-   *  Wijzigen breekt bestaande links. */
-  slug: string;
-  /** Tekst in de case-kaart op de landingspagina. Maximaal 120 tekens —
-   *  dit wordt afgedwongen door scripts/check-content.mjs, dat vóór elke
-   *  build draait. Te lang = de build faalt. */
-  description: string;
-  tags: string[];
-  href: string;
-  accent: "primary" | "secondary" | "mix";
-  /** Eigen foto voor de kaart op de landingspagina. Staat die er, dan wordt de
-   *  kaart full-bleed: de foto vult hem helemaal en de tekst staat eroverheen.
-   *  Ontbreekt hij, dan houdt de kaart de standaardvorm (beeld boven, tekst
-   *  eronder) en pakt hij de eerste slide als thumbnail. Decoratief, dus geen
-   *  alt: de kop in de kaart benoemt de case al. */
-  cardImage?: string;
-  detail: ProjectDetail;
-};
-
-export const projects: Project[] = [
-  {
-    title: "Kleintjes van Alkmaar",
-    slug: "kleintjes-van-alkmaar",
-    description:
-      "Van idee naar merk en een tweezijdig oppasplatform: huisstijl, UX en alle schermen voor ouders én oppassers.",
-    tags: ["Branding", "UX/UI", "Webdesign"],
-    href: "https://kleintjesvanalkmaar.nl/",
-    accent: "primary",
-    cardImage: "/mockup/image-KvA-portfolio-card.jpg",
-    detail: {
-      role: "Branding & UX/UI",
-      year: "2025",
-      type: "Web",
-      overview:
-        "Kleintjes van Alkmaar koppelt ouders aan een oppas, en oppassers aan een klusje waarmee ze wat bijverdienen. Het begon met een idee in de hoofden van de oprichters, verder was er niets: geen merk, geen schermen, geen structuur. Samen met developer Lucas werkte ik dat idee uit tot een compleet platform, van de huisstijl tot het laatste scherm.",
-      body: [
-        {
-          heading: "De uitdaging",
-          paragraphs: [
-            "Een idee dat nog nergens stond, en een platform met twee heel verschillende kanten. Aan de ene kant ouders die een betrouwbare oppas zoeken. Aan de andere kant oppassers die zich aanbieden en wat willen bijverdienen. Allebei moeten ze zich meteen thuis voelen en snappen waar ze zijn. En omdat ouders hun kinderen uit handen geven, moet alles rust en vertrouwen uitstralen. Geen kille app, wel iets warms waar je je kleintjes met een gerust hart achterlaat.",
-          ],
-        },
-        {
-          heading: "De aanpak",
-          paragraphs: [
-            "Het begon klein. Een paar zaterdagochtenden zaten we samen om tafel, de oprichters, Lucas en ik, om het idee uit te denken. Meedenken met de klant en een idee echt zien landen, dat vind ik het mooiste deel van het werk.",
-            "Daarna ging ik schetsen. Eerst wireframes en de functies die er sowieso op moesten. Toen de huisstijl, want ook die was er nog niet: typografie, kleuren, knoppen, hiërarchie, ik mocht het helemaal zelf bepalen. Om zeker te weten dat de look-and-feel klopte met wat zij in hun hoofd hadden, maakte ik twee richtingen. Ze kozen versie A, en daarmee ontwierp ik de rest van de site.",
-            "Voor de twee kanten van het platform gaf ik elke doelgroep een eigen kleur. Groen voor de oppassers, bruin voor de ouders. Zo zie je meteen op welke kant je zit en maak je minder snel een verkeerde klik.",
-            "Ik werkte alle schermen uit voor mobiel en desktop, en voor de secties die lastig meebewegen ook een iPad-versie. Alles leverde ik aan als PDF zodat ze overal op konden schieten, met een sitemap en styleguide erbij zodat de stijl vastlag. Bij elke fase liet ik secties tussentijds zien en vroeg ik wat ze ervan vonden, zodat we snel konden bijsturen en door-itereren.",
-            "Toen mijn ontwerp stond, pakte Lucas door. Hij bouwde de front-end en maakte het hele platform aan de achterkant werkend. De flow van die achterkant bedachten we samen, en ik ontwierp een paar schermen om ook de binnenkant er verzorgd uit te laten zien.",
-          ],
-        },
-        {
-          heading: "Het resultaat",
-          paragraphs: [
-            "Van een idee op een zaterdagochtend naar een werkend platform dat ouders en oppassers bij elkaar brengt. Er staat nu een compleet merk waar eerst niets was, en een site die op elk scherm klopt, van de eerste schets tot de laatste knop.",
-            "Voor mij een van de leukste projecten die ik voor mijn eigen bedrijf heb mogen doen. We konden goed met elkaar praten, gingen samen los op hun idee, en het eindresultaat mag er zijn.",
-          ],
-        },
-        {
-          heading: "Zelf zoiets?",
-          paragraphs: [
-            "Heb je een idee in je hoofd dat nog nergens staat? Vertel me over je project, dan kijk ik met je mee. Een vrijblijvend gesprek is zo gepland.",
-          ],
-        },
-      ],
-      slides: [
-        {
-          label: "Homepage",
-          gradient: "from-primary/70 via-primary-700/50 to-[#8E5CE0]/60",
-          src: "/mockup/KvA-mockup-home-screen-slider1.webp",
-          alt: "De homepage van Kleintjes van Alkmaar op desktop, met het registratieformulier voor ouders en oppassers",
-        },
-        {
-          label: "Mobiele schermen",
-          gradient: "from-[#8E5CE0]/60 via-primary/40 to-primary-800",
-          src: "/mockup/KvA-mockup-screens-mobile-designs-slider2.webp",
-          alt: "Vier mobiele schermen van het platform: menu, voordelen, de oppaskant en de ouderkant",
-        },
-        {
-          label: "Onboarding",
-          gradient: "from-primary-400/60 via-[#8E5CE0]/40 to-primary-900",
-          src: "/mockup/KvA-mockup-onboarding-screen-slider3.webp",
-          alt: "De onboarding-pagina waarop oppassers stap voor stap een account aanmaken",
-        },
-        {
-          label: "Huisstijl",
-          gradient: "from-primary/60 via-primary-800 to-[#8E5CE0]/40",
-          src: "/mockup/KvA-mockup-screens-styleguide-slider4.webp",
-          alt: "Het brandboard met het kleursysteem, de typografie en de logoregels van Kleintjes van Alkmaar",
-        },
-      ],
-    },
-  },
-  {
-    title: "De-Stock",
-    slug: "de-stock",
-    description:
-      "Huisstijl en website voor groothandel De-Stock, opgebouwd vanaf één logo en gericht op één stap: voorraad aanbieden.",
-    tags: ["Branding", "Webdesign", "UX"],
-    href: "https://de-stock.nl/",
-    accent: "secondary",
-    cardImage: "/mockup/image-DeStock-portfolio-image.jpg",
-    detail: {
-      role: "Branding & webdesign",
-      year: "2025",
-      type: "Web",
-      overview:
-        "De-Stock koopt restpartijen en overtollige voorraad van bedrijven op. Ze kwamen bij me met precies één ding: een logo. Geen huisstijl, geen site, geen structuur. Daar ontwierp ik een complete website omheen, van merk tot live pagina's, met één actie in het middelpunt: je voorraad aanbieden. Rustig en strak, en gemaakt om vertrouwen te wekken bij een bedrijf dat je nog niet kent.",
-      body: [
-        {
-          heading: "De uitdaging",
-          paragraphs: [
-            "Een nieuw bedrijf in een markt die er online vaak rommelig uitziet. Kijk naar de meeste opkopers en je ziet volgestampte pagina's, muren van tekst en een verkooppraatje dat over je heen komt. De-Stock moest er vanaf dag één staan als een partij die je durft te bellen met een volle vrachtwagen incourante voorraad. Betrouwbaar en professioneel, zonder poeha. En het belangrijkste: iemand met stilstaande voorraad moest die in een paar stappen kunnen aanbieden, zonder te verdwalen.",
-          ],
-        },
-        {
-          heading: "De aanpak",
-          paragraphs: [
-            "Eerst de structuur. Samen met Sjoerd bouwde ik de sitemap: welke pagina's, welke volgorde, en hoe iemand van binnenkomst naar het aanbiedformulier loopt. Korte lijntjes, snel schakelen. Hij leverde de content, ik zorgde dat alles op de juiste plek belandde.",
-            "Daarna het merk. Van dat ene logo maakte ik een volledige huisstijl: kleur, typografie, knoppen, de hele look. Strak en professioneel, zodat een onbekend bedrijf meteen serieus overkomt.",
-            "Voor de vorm koos ik een bento-grid. Losse blokken in een rustig raster, waarin de belangrijkste info direct te scannen is. Geen muur van tekst zoals bij de concurrent, wel een pagina die je in één oogopslag snapt.",
-            "En de kern: het formulier waarmee bedrijven hun voorraad aanbieden. Dat is waar het werk binnenkomt, dus dat kreeg de hoofdrol. Elke pagina duwt de bezoeker naar die ene stap, van de homepage tot de aparte opkoper-pagina's per type partij.",
-            "De techniek pakte ik samen met developer Lucas op. Hij bouwde de front-end en back-end en maakte het formulier en het menu werkend. Ik hield het concept, de branding en de flow in handen: hoe de site eruitziet en hoe je erdoorheen loopt.",
-          ],
-        },
-        {
-          heading: "Het resultaat",
-          paragraphs: [
-            "Waar De-Stock begon met alleen een logo, staat er nu een compleet merk en een werkende website. De vorm is rustig en professioneel, en de hele opzet leidt de bezoeker naar één stap: zijn voorraad aanbieden. Elk type partij heeft een eigen opkoper-pagina, dus de site groeit mee met wat er binnenkomt zonder dat het rommelig wordt.",
-          ],
-        },
-        {
-          heading: "Zelf zoiets?",
-          paragraphs: [
-            "Begin je met niet meer dan een logo, of loopt je huidige site achter op wat je bedrijf nodig heeft? Vertel me over je project, dan kijk ik met je mee. Een vrijblijvend gesprek is zo gepland.",
-          ],
-        },
-      ],
-      slides: [
-        {
-          label: "Homepage",
-          gradient: "from-secondary/70 via-secondary-700/50 to-primary-900",
-          src: "/mockup/destock-dark-homepage-desktop-1slider.webp",
-          alt: "De homepage van De-Stock.nl op desktop, met de oproep om restvoorraad te verkopen",
-        },
-        {
-          label: "Mobiele schermen",
-          gradient: "from-secondary-400/60 via-secondary/40 to-[#8E5CE0]/50",
-          src: "/mockup/destock-dark-screens-designs-mobile-slider2.webp",
-          alt: "Vier mobiele schermen van De-Stock.nl: het menu, de homepage, het aanbiedformulier en een opkoper-pagina",
-        },
-        {
-          label: "Opkoper-pagina",
-          gradient: "from-secondary-800 via-secondary/40 to-primary-900",
-          src: "/mockup/destock-dark-desktop-opkoper-screen-slider3.webp",
-          alt: "De opkoper-pagina van De-Stock.nl op desktop, met een magazijn vol restpartijen",
-        },
-      ],
-    },
-  },
-  {
-    title: "Ziggo Dome",
-    slug: "ziggo-dome",
-    description:
-      "Mobile-first herontwerp van de Ziggo Dome-website. De belangrijkste acties liggen onder je duim, de agenda vooraan.",
-    tags: ["Mobile-first", "UX", "Animation"],
-    href: "https://www.ziggodome.nl",
-    accent: "mix",
-    cardImage: "/mockup/image-ZiggoDome-portfolio-card.jpg",
-    detail: {
-      role: "Mobile-first",
-      year: "2024",
-      type: "Web",
-      overview:
-        "77% van de bezoekers kwam binnen op een telefoon. De site kwam uit 2015, werd in 2020 nog uitgeroepen tot beste website van het jaar, maar was nooit voor die telefoon gebouwd. Dat verschil los je niet op met een likje verf. Ik pakte de Ziggo Dome website aan als een compleet mobile-first website redesign: opnieuw opgebouwd vanaf het scherm waar de meeste mensen echt op zitten.",
-      body: [
-        {
-          heading: "De uitdaging",
-          paragraphs: [
-            "Een geliefde site die stilletjes veroudert. De techniek onder de motorkap liep achter, features haperden, de laadtijd zakte weg. En al die tijd groeide het mobiele verkeer door op een fundament dat daar niet op was berekend.",
-            "De doelgroep maakte het scherper. De grootste groep zit tussen de 25 en 34, maar het opvallende was dat écht elke leeftijd op mobiel binnenkwam, tot de oudere bezoeker aan toe. Geen kleine niche om voor te ontwerpen, wel de meerderheid. Dus daar begon het.",
-          ],
-        },
-        {
-          heading: "De aanpak",
-          paragraphs: [
-            "Eerst luisteren. Ik sprak met medewerkers, met de organisatie en met bezoekers die maandelijks of jaarlijks kaarten kopen. Daaruit kwamen de keuzes die het redesign sturen.",
-            "Mobile-first, letterlijk vanaf de duim. In tien jaar zijn telefoonschermen verdubbeld, waardoor de bovenkant onbereikbaar werd zonder je hand te verleggen. Ik verplaatste de belangrijkste acties naar een bottom-navigatie, binnen de zone die je duim moeiteloos haalt. De secundaire dingen schoven naar boven. Navigeren voelt daardoor rustig in één hand.",
-            "De agenda werd het hart van de site. Events komen prominenter op de homepage, de eventpagina's zijn persoonlijker. Daaromheen een interface in de stijl van Netflix en Videoland: grote beelden die overgaan in video, dynamic scrolling, card-transitions, dark mode en micro-interacties die precies laten zien dat je actie is aangekomen. Geen los opgeplakte trends, wel bewegingen die de flow soepeler maken.",
-            "Voor bezoekers die de zaal nog niet kennen bouwde ik een interactieve 3D-plattegrond. Drie verdiepingen, met gestures door de Ziggo Dome heen, van de begane grond tot het uitzicht vanaf de tribune op het podium. Rondkijken voordat je een kaartje koopt.",
-            "Wireframes toetste ik wekelijks met de developers van Touch Creative, zodat elke keuze ook echt te bouwen was. Alle regels legde ik vast in een styleguide: kleuren, typografie, iconen, knoppen en hun hover-states, de micro-animaties. Eén document waar het team zonder ruis mee verder kon. Responsive was daarbij geen sluitstuk maar het uitgangspunt: consistent en bruikbaar op elk formaat.",
-          ],
-        },
-        {
-          heading: "Het resultaat",
-          paragraphs: [
-            "Een site die doet wat de bezoeker verwacht op de plek waar hij hem gebruikt. De belangrijkste acties liggen onder je duim, de agenda duwt de eerstvolgende events naar voren en de 3D-plattegrond laat je binnenlopen voordat je koopt. Waar de oude site tegenwerkte op mobiel, werkt deze mee.",
-          ],
-        },
-        {
-          heading: "Zelf zoiets?",
-          paragraphs: [
-            "Loopt jouw site achter op je bezoekers? Vertel me over je project, dan kijk ik met je mee. Een vrijblijvend gesprek is zo gepland.",
-          ],
-        },
-      ],
-      slides: [
-        {
-          label: "Mobile-first home",
-          gradient: "from-primary/60 via-[#8E5CE0]/50 to-secondary/50",
-          src: "/mockup/zd-mockup-slider1-mobilefirst.webp",
-          alt: "De Ziggo Dome homepage op desktop en op een telefoon in de hand",
-        },
-        {
-          label: "Agenda-iteraties",
-          gradient: "from-primary-800 via-primary/40 to-secondary/40",
-          src: "/mockup/zd-mockup-slider2-itereren-3screens.webp",
-          alt: "Drie schermen die de agendapagina tonen van wireframe tot definitief ontwerp",
-        },
-        {
-          label: "3D-plattegrond",
-          gradient: "from-[#8E5CE0]/50 via-primary-700/40 to-primary/60",
-          src: "/mockup/zd-mockup-slider3-plattegrond.webp",
-          alt: "Interactieve 3D-plattegrond van de Ziggo Dome met een uitgelichte bar",
-        },
-        {
-          label: "Ticketfases",
-          gradient: "from-primary/50 via-[#8E5CE0]/40 to-secondary/50",
-          src: "/mockup/zd-mockup-slider4-fase-tickets.webp",
-          alt: "Vier schermen die de eventpagina tonen in verschillende fases van de kaartverkoop",
-        },
-        {
-          label: "Verkooppagina",
-          gradient: "from-primary/60 via-[#8E5CE0]/50 to-secondary/50",
-          src: "/mockup/zd-mockup-slider5-verkooppagina.webp",
-          alt: "Desktop verkooppagina van een event in de Ziggo Dome met ticketprijzen",
-        },
-        {
-          label: "Iconenset",
-          gradient: "from-primary-800 via-primary/40 to-secondary/40",
-          src: "/mockup/zd-mockup-slider6-Iconen.webp",
-          alt: "Set met de custom iconen die voor de Ziggo Dome site zijn ontworpen",
-        },
-      ],
-    },
-  },
-  {
-    title: "New Edition",
-    slug: "new-edition",
-    description:
-      "Nieuwe huisstijl doorvertaald naar een B2B-website, met een heldere route naar de Order Portal voor verkooppunten.",
-    tags: ["Brandbook", "Webdesign", "UX"],
-    href: "https://www.newedition.nl/en/",
-    accent: "primary",
-    cardImage: "/mockup/image-newedition-portfolio-image.jpg",
-    detail: {
-      role: "Webdesign",
-      year: "2023",
-      type: "Web",
-      overview:
-        "De nieuwe merkidentiteit stond. Nu moest de website hem waarmaken. Ik ontwierp de site die de frisse huisstijl van New Edition doorvertaalt naar het scherm, met een heldere route naar de Order Portal voor bestaande en nieuwe verkooppunten. Twee latere projecten bouwden voort op dit webdesign.",
-      body: [
-        {
-          heading: "De uitdaging",
-          paragraphs: [
-            "New Edition ontwikkelt al tien jaar woon- en lifestyleproducten voor merken als Pip Studio en VT Wonen. Servies, bestek, tassen, loungewear. Een klein team dat wereldwijd concepten neerzet, gedreven door hun passie voor wonen.",
-            "Na tien jaar paste het oude merk niet meer bij wie ze waren geworden. De uitstraling was strak en zakelijk, terwijl het bedrijf juist persoonlijk werkt. De website moest daarin mee: geen digitaal visitekaartje, wel een toegangspoort voor verkooppunten die in een paar klikken bij de Order Portal uitkomen. En de bezoekers zoeken niet hetzelfde. De een wil bedrijfsinformatie, de ander wil meteen de beeldbank in.",
-          ],
-        },
-        {
-          heading: "De aanpak",
-          paragraphs: [
-            "De identiteit kwam eerst. Het team van Touch Creative herontwierp het logo en de huisstijl van strak en zakelijk naar verfijnd en persoonlijk, met de ampersand als kern: het symbool voor Niels en Wouter, de twee mannen achter het bedrijf. Neutrale kleuren houden de aandacht bij de merken waarvoor ze werken, zonder zelf de show te stelen. Om het verhaal echt te maken schoten we op kantoor, zodat je de mensen en het proces achter de collecties ziet.",
-            "Toen die identiteit goedgekeurd was, begon mijn deel: de website. Ik startte met gebruikersonderzoek om de verschillende bezoekers in kaart te brengen. Daaruit ontwierp ik een navigatie die simpel blijft, of je nu op laptop, tablet of telefoon kijkt. De wireframes liepen via een strak schema, elke fase afgesloten met één gerichte feedbackronde, zodat we snel en helder bleven.",
-            "Alles legde ik vast in een uitgebreide styleguide. De afronding lag bij externe developers, dus die gids moest hún leidraad zijn: kleuren, typografie, componenten, één bron waar geen twijfel over bestaat. Verder voegde ik een productpagina toe die eerdere projecten laat zien. Geen verhaal over kwaliteit, maar het bewijs ervan, meteen zichtbaar voor een potentiële klant.",
-          ],
-        },
-        {
-          heading: "Het resultaat",
-          paragraphs: [
-            "Een website die de nieuwe identiteit vasthoudt en tegelijk werkt als toegangspoort. Verkooppunten vinden hun weg naar de Order Portal zonder zoeken, de navigatie blijft rustig op elk scherm en de productpagina laat direct zien wat New Edition kan. Wat het bedrijf op kantoor uitstraalt, straalt de site nu ook uit.",
-          ],
-        },
-        {
-          heading: "Zelf zoiets?",
-          paragraphs: [
-            "Heb je een frisse huisstijl die nog niet online tot leven komt? Vertel me over je project, dan vertaal ik hem door naar een site die klopt. Een vrijblijvend gesprek is zo gepland.",
-          ],
-        },
-      ],
-      slides: [
-        { label: "Homepage", gradient: "from-primary/60 via-primary-800 to-[#8E5CE0]/40" },
-        { label: "Logo & ampersand", gradient: "from-[#8E5CE0]/50 via-primary/40 to-primary-900" },
-        { label: "Responsive navigatie", gradient: "from-primary-400/50 via-primary/30 to-primary-900" },
-        { label: "Order Portal", gradient: "from-primary/50 via-[#8E5CE0]/40 to-secondary/40" },
-        { label: "Productpagina", gradient: "from-primary-800 via-primary/40 to-[#8E5CE0]/50" },
-      ],
-    },
-  },
-  {
-    title: "Marktzicht Eten & Drinken",
-    slug: "marktzicht-eten-en-drinken",
-    description:
-      "Restaurantwebsite voor Marktzicht: mobile-first ontwerp, nieuwe huisstijl en een CMS om zelf het menu bij te werken.",
-    tags: ["Branding", "UX/UI", "Webdesign"],
-    href: "#",
-    accent: "secondary",
-    cardImage: "/mockup/image-Marktzicht-portfolio-image.jpg",
-    detail: {
-      role: "Branding & webdesign",
-      year: "2025",
-      type: "Web",
-      overview:
-        "Een website laten maken voor een restaurant begint bij de vraag wat een gast eigenlijk komt doen. Bij Marktzicht Eten & Drinken was dat één ding: een tafel reserveren. Ik ontwierp de site opnieuw vanaf de telefoon, trok een nieuwe huisstijl door vanuit hun eigen menukaart en ontwierp de interface van het CMS waarmee ze het menu zelf bijhouden.",
-      body: [
-        {
-          heading: "De uitdaging",
-          paragraphs: [
-            "Een restaurantsite is geen brochure. Mensen kijken op hun telefoon, vaak onderweg, en willen weten wat er op de kaart staat en of ze vanavond terecht kunnen. Bij Marktzicht stond die informatie verspreid over de site, en het menu bijwerken kostte elke keer een omweg. Reserveren was daardoor niet de vanzelfsprekende volgende stap, terwijl dat wel het punt van de hele site is.",
-          ],
-        },
-        {
-          heading: "De aanpak",
-          paragraphs: [
-            "De huisstijl lag er al voor een deel: eerder maakte ik een template voor hun menukaart. Die vormtaal heb ik doorgetrokken naar het web, met het bestaande logo als vast punt. Zo herkent een gast de zaak van tafel tot scherm.",
-            "Daarna heb ik de informatiearchitectuur opnieuw ingedeeld en een heldere sitemap gemaakt, zodat elke pagina één taak heeft. Het ontwerp is mobile first: de telefoonversie is het uitgangspunt, niet het restje. De navigatie is teruggebracht tot wat mensen echt zoeken, en reserveren staat overal binnen handbereik.",
-            "Voor het menu ontwierp ik de beheerinterface. De developers bouwden het CMS, ik zorgde dat het scherm waar Marktzicht wekelijks in werkt logisch werkt: inloggen, gerecht aanpassen, klaar. Geen mailtje sturen bij elke wisseling van de kaart, wel zelf de kaart bijwerken. Het beeld komt uit hun eigen social media, dus wat je op de site ziet is wat er die week op tafel staat. De teksten heb ik opnieuw geschreven, in de toon van de zaak.",
-          ],
-        },
-        {
-          heading: "Het resultaat",
-          paragraphs: [
-            "Marktzicht beheert de kaart nu zelf en een wijziging staat dezelfde dag online. Bezoekers zien op hun telefoon meteen waar ze aan toe zijn en zitten in een paar stappen in het reserveringsproces. De site, de menukaart en het beeld op social media vertellen hetzelfde verhaal.",
-          ],
-        },
-        {
-          heading: "Zelf zoiets?",
-          paragraphs: [
-            "Heb je een zaak waar mensen vooral op hun telefoon naar kijken, en wil je dat ze daarna ook echt reserveren of contact opnemen? Vertel me wat je in gedachten hebt.",
-          ],
-        },
-      ],
-      slides: [
-        { label: "Homepage", gradient: "from-secondary/70 via-secondary-700/50 to-primary-900" },
-        { label: "Huisstijl", gradient: "from-secondary-400/60 via-secondary/40 to-[#8E5CE0]/50" },
-        { label: "Menu", gradient: "from-primary/50 via-secondary/50 to-secondary-800" },
-        { label: "CMS", gradient: "from-secondary-800 via-secondary/40 to-primary-900" },
-        { label: "Reserveren", gradient: "from-[#8E5CE0]/50 via-secondary/40 to-primary/60" },
-      ],
-    },
-  },
-  {
-    title: "16.08 Streetwear",
-    slug: "16-08-streetwear",
-    description:
-      "Volledig herontwerp van de webshop van 16.08 Streetwear: nieuwe huisstijl, heldere categorieën en kortere checkout.",
-    tags: ["Branding", "UX/UI", "Webshop"],
-    href: "#",
-    accent: "mix",
-    cardImage: "/mockup/image-1608-portfolio-image.jpg",
-    detail: {
-      role: "Branding & UX/UI",
-      year: "2023",
-      type: "Web",
-      overview:
-        "Een webshop laten ontwerpen voor een kledingmerk begint bij de vraag wat iemand op dat moment probeert te doen: iets zoeken, iets vergelijken of afrekenen. 16.08 Streetwear groeide, de webshop liep achter. Versie 2.0 is een volledig herontwerp, van huisstijl tot checkout.",
-      body: [
-        {
-          heading: "De uitdaging",
-          paragraphs: [
-            "De oude shop kwam uit een eerdere fase van het merk. De structuur was verouderd en een aantal functies deed niet meer wat het moest. Wie een specifiek item zocht, moest te veel klikken: categorieën liepen door elkaar, filters hielpen nauwelijks en afrekenen kostte meer stappen dan nodig. Voor een merk dat groeit is dat het verschil tussen een bestelling en iemand die afhaakt.",
-          ],
-        },
-        {
-          heading: "De aanpak",
-          paragraphs: [
-            "Ik ben begonnen met job stories. In plaats van een persona te beschrijven leg je vast wat iemand in een bepaalde situatie voor elkaar wil krijgen, en waarom. Dat geeft elk scherm een duidelijke opdracht: wat moet hier lukken, en wat staat er in de weg. Vanuit die stories heb ik de navigatie, de categorieën en de filters opnieuw ingedeeld en het afrekenen teruggebracht tot de stappen die er echt toe doen.",
-            "Daarnaast heb ik de merkidentiteit uitgewerkt en vastgelegd in een huisstijlhandboek: logo, kleurgebruik, typografie, iconen, button states, invoervelden, web-elementen en illustraties. Dat handboek is opgezet met de developers in gedachten. Geen losse screenshots, wel een set die ze direct kunnen bouwen.",
-            "Tot slot heb ik micro-interacties ontworpen en in de shop verwerkt. Kleine dingen: een knop die reageert, een filter dat laat zien dat hij aanstaat, een overgang die vertelt waar je terechtkomt. Ze vallen niet op als ze goed zijn, wel als ze ontbreken.",
-          ],
-        },
-        {
-          heading: "Het resultaat",
-          paragraphs: [
-            "De shop is nu opgebouwd rond wat een bezoeker komt doen: zoeken, kiezen, afrekenen. Elk scherm heeft één taak en werkt op elk formaat. De developers bouwen uit één handboek, dus wat in het ontwerp staat komt ook zo live, en nieuwe pagina's passen er vanzelf bij.",
-          ],
-        },
-        {
-          heading: "Zelf zoiets?",
-          paragraphs: [
-            "Loopt je webshop achter op je merk, of haken mensen af voordat ze afrekenen? Vertel me waar het misgaat, dan kijk ik met je mee.",
-          ],
-        },
-      ],
-      slides: [
-        { label: "Homepage", gradient: "from-primary/50 via-[#8E5CE0]/40 to-secondary/50" },
-        { label: "Huisstijl", gradient: "from-secondary/50 via-primary-700/40 to-primary/50" },
-        { label: "Componenten", gradient: "from-[#8E5CE0]/50 via-secondary/40 to-primary/60" },
-        { label: "Categorieën", gradient: "from-primary-400/60 via-[#8E5CE0]/40 to-primary-900" },
-        { label: "Checkout", gradient: "from-secondary/60 via-secondary-800 to-primary-900" },
-        { label: "Micro-interacties", gradient: "from-primary/60 via-secondary/40 to-[#8E5CE0]/50" },
-      ],
-    },
-  },
-];
+// De cases staan sinds fase 1 elk in een eigen bestand: content/werk/*.mdx.
+// Zie lib/werk.ts.
 
 export const skills = [
   {

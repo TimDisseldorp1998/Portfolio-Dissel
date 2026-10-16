@@ -66,6 +66,11 @@ export function scrollToSection(
   href: string,
   prefersReducedMotion: boolean | null
 ) {
+  // `/#services` is op home gewoon `#services`: soepel scrollen in plaats
+  // van de pagina opnieuw laden. Op een andere pagina gaat de link naar home.
+  if (href.startsWith("/#") && window.location.pathname === "/") {
+    href = href.slice(1);
+  }
   if (!href.startsWith("#")) return;
   const id = href.slice(1);
   const goTo = (y: number) =>

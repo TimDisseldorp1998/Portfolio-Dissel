@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
+import { TOESTEMMING_KEY } from "@/lib/meten";
 
 /**
  * GDPR/AVG-conforme, opt-in analytics. Google Analytics wordt PAS geladen
@@ -17,7 +18,8 @@ import Script from "next/script";
  * die var rendert dit component niets en verandert er niks aan de site.
  */
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
-const STORAGE_KEY = "dd-analytics-consent"; // "granted" | "denied"
+// "granted" | "denied"; dezelfde sleutel leest lib/meten.ts voor de events.
+const STORAGE_KEY = TOESTEMMING_KEY;
 const REOPEN_EVENT = "dd:reopen-consent";
 
 type Consent = "granted" | "denied";

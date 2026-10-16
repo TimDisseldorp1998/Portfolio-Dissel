@@ -66,7 +66,7 @@ export function Hero() {
           className="mount-rise min-h-[3.75em] max-w-4xl font-heading text-[clamp(1.9375rem,8.6vw,2.75rem)] font-semibold leading-[1.25] tracking-tight text-white sm:min-h-0 sm:text-[2.75rem] md:text-[3.25rem] lg:text-[4.25rem]"
         >
           {/* Phones: 3 lines — "Digitale product" / "designer voor" / word.
-              Tablet+ (sm): 2 lines — "Digitale product designer" / "voor" + word.
+              Tablet+ (sm): 2 lines — "Digitale Product Designer" / "voor" + word.
               "voor" is fixed text; only the rotating word types in and out. */}
           {prefixHead}{" "}
           <br className="sm:hidden" />
@@ -95,7 +95,12 @@ export function Hero() {
           <Button href={site.hero.workCta.href} variant="outline" size="lg">
             {site.hero.workCta.label}
           </Button>
-          <Button href={site.hero.contactCta.href} variant="primary" size="lg">
+          <Button
+            href={site.hero.contactCta.href}
+            variant="primary"
+            size="lg"
+            data-cta="plan_kennismaking"
+          >
             {site.hero.contactCta.label}
             <ArrowRight size={18} />
           </Button>

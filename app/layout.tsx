@@ -3,6 +3,7 @@ import { Poppins, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { CookieConsent } from "@/components/CookieConsent";
 import { JsonLd } from "@/components/JsonLd";
+import { KlikMeter } from "@/components/KlikMeter";
 import { SITE_URL, bedrijfEnPersoon } from "@/lib/structured-data";
 
 const poppins = Poppins({
@@ -22,7 +23,7 @@ const jakarta = Plus_Jakarta_Sans({
 // Eén bron voor de titel en omschrijving. Ze staan op drie plekken (page, OG en
 // Twitter) en liepen eerder uit elkaar: de OG-tags waren nog Engels en noemden
 // een andere positionering dan de pagina zelf.
-const TITEL = "Tim Disseldorp | Digitale product designer in Noord-Holland";
+const TITEL = "Tim Disseldorp | Digitale Product Designer in Noord-Holland";
 // Rond de 150 tekens houden: korter vult Google zelf aan met een willekeurig
 // stuk paginatekst, langer kapt hij af. Geen beloofd resultaat in deze zin,
 // alleen wat er gebeurt en wat de bezoeker kan doen.
@@ -30,6 +31,8 @@ const OMSCHRIJVING =
   "Websites voor lokale ondernemers in Noord-Holland, van huisstijl tot live site. Strak design, snel opgeleverd, zonder gedoe. Plan een kennismaking.";
 
 export const metadata: Metadata = {
+  // Maakt relatieve canonicals en OG-URL's op subpagina's absoluut.
+  metadataBase: new URL(SITE_URL),
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: {
@@ -74,6 +77,7 @@ export default function RootLayout({
             bereikbaar in plaats van pas na de hele pagina. Hij staat fixed,
             dus de DOM-volgorde verandert niets aan de weergave. */}
         <CookieConsent />
+        <KlikMeter />
         {children}
         {/* Bedrijf en persoon op elke pagina; /voor-ai/ voegt zijn eigen
             WebPage-blok toe dat via @id naar dit bedrijf verwijst. */}

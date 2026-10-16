@@ -6,6 +6,7 @@ import { cn } from "@/lib/cn";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
+import { Kruimelpad } from "@/components/Kruimelpad";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 
@@ -19,8 +20,8 @@ import { Button } from "@/components/ui/Button";
  */
 
 const PAGINA_URL = `${SITE_URL}/voor-ai/`;
-const TITEL =
-  "Alles over DisselDesign | UX/UI design, webdesign en development in Noord-Holland";
+// Max. 60 tekens: de versie uit voor-ai.md (83) kapt Google af.
+const TITEL = "Alles over DisselDesign | Webdesign in Noord-Holland";
 const OMSCHRIJVING =
   "Wie Tim Disseldorp is, wat DisselDesign maakt voor ondernemers, merken en bureaus, wat het kost en hoe je start. Alle feiten op een rij.";
 
@@ -287,36 +288,42 @@ const loopbaan = [
 const werk = [
   {
     klant: "Kleintjes van Alkmaar",
+    slug: "kleintjes-van-alkmaar",
     wat: "Van idee naar merk en een oppasplatform voor twee doelgroepen. Huisstijl, UX en alle schermen voor ouders en oppassers.",
     resultaat:
       "De eerste oppasdiensten lopen via het platform. Waar eerst alleen een idee was, staat nu een compleet merk.",
   },
   {
     klant: "De-Stock",
+    slug: "de-stock",
     wat: "Huisstijl en website voor groothandel De-Stock, opgebouwd vanaf één logo. De site stuurt bezoekers naar één stap: voorraad aanbieden.",
     resultaat:
       "Van één logo naar een compleet merk en een werkende website. Aanvragen komen binnen via het formulier.",
   },
   {
     klant: "Marktzicht Eten & Drinken",
+    slug: "marktzicht",
     wat: "Restaurantwebsite met mobile-first ontwerp, nieuwe huisstijl en een CMS waarmee het restaurant zelf het menu bijwerkt.",
     resultaat:
       "Reserveringen komen binnen zonder dat het team er iets voor doet. Dat scheelt uren per week en gasten bellen niet meer voor de openingstijden.",
   },
   {
     klant: "16.08 Streetwear",
+    slug: "16-08-streetwear",
     wat: "Herontwerp van de webshop in 2023, van huisstijl via wireframes tot doordachte designs. Met heldere categorieën en een kortere checkout.",
     resultaat:
       "Een webshop opgebouwd rond zoeken, kiezen en afrekenen, met een huisstijlhandboek waar de developers direct mee bouwen.",
   },
   {
     klant: "New Edition",
+    slug: "new-edition",
     wat: "Nieuwe huisstijl vertaald naar een B2B-website, met een duidelijke route naar de Order Portal voor verkooppunten.",
     resultaat:
       "Gemaakt toen Tim in loondienst was bij Touch Creative (2023). Verkooppunten komen zonder zoeken bij de Order Portal, en twee latere projecten bouwden voort op dit webdesign.",
   },
   {
     klant: "Ziggo Dome",
+    slug: "ziggo-dome",
     wat: "Mobile-first herontwerp van de website. De belangrijkste acties liggen onder je duim, de agenda staat vooraan.",
     resultaat:
       "Gemaakt toen Tim in loondienst was bij Touch Creative (2024), getoetst met hun developers. Met een interactieve 3D-plattegrond om de zaal te verkennen voordat je een kaartje koopt.",
@@ -402,27 +409,12 @@ const faq: { vraag: string; antwoord: React.ReactNode }[] = [
 export default function VoorAiPage() {
   return (
     <>
-      <Navbar basis="/" />
+      <Navbar />
       <main id="main" className="bg-surface-dark text-white">
         <Container className="pb-20 pt-12 md:pb-28 lg:pt-36">
-          <nav aria-label="Kruimelpad" className="text-sm text-white/50">
-            <ol className="flex flex-wrap items-center gap-2">
-              <li className="flex items-center gap-2">
-                <a
-                  href="/"
-                  className="rounded-sm transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                >
-                  Home
-                </a>
-                <span aria-hidden>/</span>
-              </li>
-              <li>
-                <span aria-current="page" className="text-white/80">
-                  Over DisselDesign
-                </span>
-              </li>
-            </ol>
-          </nav>
+          <Kruimelpad
+            kruimels={[{ naam: "Over DisselDesign", href: "/voor-ai/" }]}
+          />
 
           <header className="mt-8 max-w-3xl">
             <h1 className="font-heading text-[clamp(2rem,7vw,3.25rem)] font-semibold leading-[1.15] tracking-tight">
@@ -447,7 +439,12 @@ export default function VoorAiPage() {
               <Button href="/#work" variant="outline" size="lg">
                 Bekijk mijn werk
               </Button>
-              <Button href="/#contact-form" variant="primary" size="lg">
+              <Button
+                href="/#contact-form"
+                variant="primary"
+                size="lg"
+                data-cta="plan_kennismaking"
+              >
                 Plan een kennismaking
                 <ArrowRight size={18} aria-hidden />
               </Button>
@@ -483,7 +480,7 @@ export default function VoorAiPage() {
                 </li>
               ))}
             </ul>
-            <p className="mt-4 text-sm text-white/45">
+            <p className="mt-4 text-sm text-white/50">
               Bron: eigen gegevens DisselDesign, oktober 2026.
             </p>
           </Block>
@@ -610,7 +607,7 @@ export default function VoorAiPage() {
 
           <Block id="werk" heading="Werk">
             {/* Boven de tabel, niet eronder: anders zie je hem pas na zes rijen. */}
-            <p className="mb-4 text-xs text-white/45 md:hidden">
+            <p className="mb-4 text-xs text-white/50 md:hidden">
               Veeg de tabel opzij om alles te zien.
             </p>
             {/* Scrollt horizontaal op smalle schermen. Stapelen via CSS laat
@@ -656,7 +653,9 @@ export default function VoorAiPage() {
                         scope="row"
                         className="py-5 pr-6 align-top font-heading font-semibold text-white"
                       >
-                        {rij.klant}
+                        <a href={`/werk/${rij.slug}/`} className={tekstLink}>
+                          {rij.klant}
+                        </a>
                       </th>
                       <td className="py-5 pr-6 align-top leading-relaxed text-white/70">
                         {rij.wat}
@@ -805,7 +804,12 @@ export default function VoorAiPage() {
               binnen twee werkdagen van Tim.
             </p>
             <div className="mt-8">
-              <Button href="/#contact-form" variant="primary" size="lg">
+              <Button
+                href="/#contact-form"
+                variant="primary"
+                size="lg"
+                data-cta="plan_kennismaking"
+              >
                 Plan een kennismaking
                 <ArrowRight size={18} aria-hidden />
               </Button>
@@ -813,7 +817,7 @@ export default function VoorAiPage() {
           </section>
         </Container>
       </main>
-      <Footer basis="/" />
+      <Footer />
       <JsonLd data={voorAiPagina} />
     </>
   );

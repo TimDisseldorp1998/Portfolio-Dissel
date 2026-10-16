@@ -1,63 +1,56 @@
 /**
- * Content-guard: bewaakt de maximale lengte van de projectomschrijvingen
- * die op de landingspagina in de case-kaarten staan.
+ * Content-guard: bewaakt de maximale lengte van de kaartteksten van de cases
+ * (op home, op /werk/ en als meta-description van de casepagina).
  *
  * Draait automatisch via het `prebuild`-script, dus vóór elke `npm run build`
  * — en daarmee ook vóór `npm run deploy` en `npm run ship`. Een te lange tekst
  * kan dus niet naar de preview of naar live.
  *
+ * De volledige controle van een casebestand (verplichte velden, titellengte,
+ * bestaande beelden) zit in lib/werk.ts en draait tijdens de build zelf. Dit
+ * script is de snelle check vooraf, met een leesbare melding.
+ *
  * Handmatig draaien kan met: npm run check:content
  */
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 
-const MAX_DESCRIPTION = 120;
-const CONTENT_FILE = new URL("../lib/content.ts", import.meta.url);
+const MAX_KAARTTEKST = 120;
+const MAP = new URL("../content/werk/", import.meta.url);
 
-const source = readFileSync(CONTENT_FILE, "utf8");
+const bestanden = readdirSync(MAP).filter((f) => f.endsWith(".mdx"));
 
-// Pakt elke `title: "..."` met de `description: "..."` die erop volgt. Tussen
-// die twee mag alleen de `slug`-regel staan; alles anders laat de controle
-// bewust vastlopen, zodat een gewijzigde opmaak opvalt.
-const pattern =
-  /title:\s*"([^"]+)",\s*\n(?:\s*slug:\s*"[^"]+",\s*\n)?\s*description:\s*\n?\s*"([^"]+)"/g;
+const teksten = bestanden.map((bestand) => {
+  const bron = readFileSync(new URL(bestand, MAP), "utf8");
+  const match = bron.match(/kaarttekst:\s*\n?\s*"([^"]+)"/);
+  return { bestand, tekst: match?.[1] };
+});
 
-const descriptions = [];
-let match;
-while ((match = pattern.exec(source))) {
-  descriptions.push({ title: match[1], text: match[2] });
-}
-
-// Vangnet: als de opmaak van content.ts verandert en de regex niets meer vindt,
-// moet dat opvallen. Een controle die stil niets controleert is erger dan geen.
-if (descriptions.length === 0) {
+// Vangnet: een controle die stil niets controleert is erger dan geen.
+const zonder = teksten.filter((t) => !t.tekst);
+if (bestanden.length === 0 || zonder.length > 0) {
+  console.error("\n❌ check-content: geen kaarttekst gevonden in:");
+  for (const t of zonder) console.error(`   content/werk/${t.bestand}`);
+  if (bestanden.length === 0) console.error("   (geen .mdx-bestanden in content/werk/)");
   console.error(
-    "\n❌ check-content: geen projectomschrijvingen gevonden in lib/content.ts."
+    "   Elke case heeft `kaarttekst: \"...\"` in zijn meta nodig. Is de opmaak"
   );
-  console.error(
-    "   De opmaak van dat bestand is waarschijnlijk gewijzigd. Pas de regex in"
-  );
-  console.error("   scripts/check-content.mjs aan zodat de controle weer werkt.\n");
+  console.error("   gewijzigd, pas dan de regex in scripts/check-content.mjs aan.\n");
   process.exit(1);
 }
 
-const tooLong = descriptions.filter((d) => d.text.length > MAX_DESCRIPTION);
-
-if (tooLong.length > 0) {
-  console.error(
-    `\n❌ Projectomschrijving te lang (max ${MAX_DESCRIPTION} tekens):\n`
-  );
-  for (const d of tooLong) {
-    const over = d.text.length - MAX_DESCRIPTION;
-    console.error(`   ${d.title} — ${d.text.length} tekens, ${over} te veel`);
-    console.error(`   "${d.text}"\n`);
+const teLang = teksten.filter((t) => t.tekst.length > MAX_KAARTTEKST);
+if (teLang.length > 0) {
+  console.error(`\n❌ Kaarttekst te lang (max ${MAX_KAARTTEKST} tekens):\n`);
+  for (const t of teLang) {
+    const over = t.tekst.length - MAX_KAARTTEKST;
+    console.error(`   ${t.bestand}: ${t.tekst.length} tekens, ${over} te veel`);
+    console.error(`   "${t.tekst}"\n`);
   }
-  console.error(
-    "   Kort de tekst in in lib/content.ts en probeer opnieuw.\n"
-  );
+  console.error("   Kort de tekst in in content/werk/ en probeer opnieuw.\n");
   process.exit(1);
 }
 
-const longest = Math.max(...descriptions.map((d) => d.text.length));
+const langste = Math.max(...teksten.map((t) => t.tekst.length));
 console.log(
-  `✓ ${descriptions.length} projectomschrijvingen, allemaal binnen ${MAX_DESCRIPTION} tekens (langste: ${longest}).`
+  `✓ ${teksten.length} kaartteksten, allemaal binnen ${MAX_KAARTTEKST} tekens (langste: ${langste}).`
 );

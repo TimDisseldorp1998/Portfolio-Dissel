@@ -1,5 +1,10 @@
 const isDev = process.env.NODE_ENV === "development";
 
+// MDX voor de casepagina's (content/werk/*.mdx). Ze worden tijdens de build
+// naar HTML omgezet; de bezoeker krijgt er geen extra JavaScript door. Geen
+// .mdx in pageExtensions: de bestanden zijn content, geen routes.
+const withMDX = require("@next/mdx")();
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -25,4 +30,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withMDX(nextConfig);

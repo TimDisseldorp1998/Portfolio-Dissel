@@ -79,24 +79,6 @@
   }
 }
 
-/* Thin custom scrollbar for the project detail panel */
-.panel-scroll {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
-  /* Houd het scrollen binnen de drawer: aan het einde van de lijst mag de
-     pagina erachter niet meescrollen. */
-  overscroll-behavior: contain;
-}
-.panel-scroll::-webkit-scrollbar {
-  width: 6px;
-}
-.panel-scroll::-webkit-scrollbar-track {
-  background: transparent;
-}
-.panel-scroll::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 9999px;
-}
 
 /* Scroll-reveal — hoort bij components/ui/Reveal.tsx. De klasse zet de
    begintoestand; een IntersectionObserver daar voegt `is-in` toe zodra het
@@ -268,63 +250,6 @@
   }
 }
 
-/* Case-drawer: achtergrond en paneel. `data-state` wordt gezet door
-   usePresence, die het paneel gemount houdt tot de uit-animatie klaar is.
-   --drawer-x wordt bij verminderde beweging op 0 gezet, dan blijft alleen
-   de fade over. */
-@keyframes drawer-fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes drawer-fade-out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes drawer-panel-in {
-  from {
-    opacity: 0;
-    transform: translateX(var(--drawer-x, 48px));
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes drawer-panel-out {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateX(var(--drawer-x, 48px));
-  }
-}
-
-[data-drawer="backdrop"][data-state="open"] {
-  animation: drawer-fade-in 0.2s ease-out both;
-}
-[data-drawer="backdrop"][data-state="closed"] {
-  animation: drawer-fade-out 0.2s ease-out both;
-}
-[data-drawer="panel"][data-state="open"] {
-  animation: drawer-panel-in 0.2s ease-out both;
-}
-[data-drawer="panel"][data-state="closed"] {
-  animation: drawer-panel-out 0.2s ease-out both;
-}
-
 /* Contactformulier: het formulier fadet weg voordat de bedankt-kaart komt,
    en de bedankt-kaart plus het vinkje komen daarna op. */
 @keyframes form-exit {
@@ -410,9 +335,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-drawer="panel"] {
-    --drawer-x: 0px;
-  }
   .success-card,
   .success-check {
     animation: none;
