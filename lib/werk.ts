@@ -29,6 +29,9 @@ export const DIENSTEN = {
 
 export type Dienst = keyof typeof DIENSTEN;
 
+/** Een beeld in de carousel bovenaan de casepagina. */
+export type Slide = { src: string; alt: string; label: string };
+
 export type CaseMeta = {
   slug: string;
   klant: string;
@@ -48,6 +51,8 @@ export type CaseMeta = {
   tags: string[];
   liveUrl: string | null;
   kaartbeeld: string;
+  /** Beelden voor de carousel, in volgorde. Leeg = alleen het kaartbeeld. */
+  slides: Slide[];
   diensten: Dienst[];
   /** Tekst bij "Zelf zoiets?" onderaan de case. */
   cta: string;
@@ -61,7 +66,7 @@ const MAX_KAARTTEKST = 120;
 
 const VERPLICHT: (keyof CaseMeta)[] = [
   "slug", "klant", "volgorde", "seoTitel", "kaarttekst", "label", "rol",
-  "jaar", "type", "tags", "liveUrl", "kaartbeeld", "diensten", "cta",
+  "jaar", "type", "tags", "liveUrl", "kaartbeeld", "slides", "diensten", "cta",
 ];
 
 /** Faalt de build hard bij een fout in een casebestand, zodat een kapotte of
@@ -83,8 +88,17 @@ function controleer(bestand: string, meta: unknown): CaseMeta {
   for (const d of m.diensten) {
     if (!(d in DIENSTEN)) fout(`onbekende dienst "${d}"`);
   }
-  if (!fs.existsSync(path.join(process.cwd(), "public", m.kaartbeeld)))
-    fout(`kaartbeeld ${m.kaartbeeld} bestaat niet in public/`);
+  // Hoofdletters tellen: de server van Hostinger is hoofdlettergevoelig, de
+  // Mac niet. existsSync op de Mac zou "Iconen" en "iconen" allebei goedkeuren.
+  const bestaat = (src: string) => {
+    const vol = path.join(process.cwd(), "public", src);
+    return fs.existsSync(vol) && fs.readdirSync(path.dirname(vol)).includes(path.basename(vol));
+  };
+  if (!bestaat(m.kaartbeeld)) fout(`kaartbeeld ${m.kaartbeeld} bestaat niet in public/`);
+  for (const slide of m.slides) {
+    if (!bestaat(slide.src)) fout(`slide ${slide.src} bestaat niet in public/`);
+    if (!slide.alt) fout(`slide ${slide.src} heeft geen alt-tekst`);
+  }
   return m;
 }
 
@@ -123,6 +137,12 @@ export async function volgendeCase(slug: string): Promise<Case> {
   const cases = await alleCases();
   const i = cases.findIndex((c) => c.slug === slug);
   return cases[(i + 1) % cases.length];
+}
+
+/** Wat de carousel toont: de slides, of het kaartbeeld als er nog geen zijn. */
+export function carouselSlides(c: CaseMeta): Slide[] {
+  if (c.slides.length > 0) return c.slides;
+  return [{ src: c.kaartbeeld, alt: "", label: c.klant }];
 }
 
 export function labelTekst(label: CaseLabel): string {

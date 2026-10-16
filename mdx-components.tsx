@@ -1,34 +1,41 @@
 import type { MDXComponents } from "mdx/types";
-import { Beeld } from "@/components/werk/Beeld";
+import { Reveal } from "@/components/ui/Reveal";
 
 /**
  * Opmaak voor de MDX-casebestanden in content/werk/. Verplicht bestand voor
- * @next/mdx in de App Router. Koppen, alinea's en lijsten krijgen hier de
- * site-stijl, zodat een casebestand alleen tekst en <Beeld> bevat.
+ * @next/mdx in de App Router.
+ *
+ * Zelfde vorm als de oude case-popup: sectiekoppen als klein kopje in
+ * hoofdletters, tekst in één leeskolom. Elk stuk schuift in beeld zodra je
+ * erlangs scrollt (zelfde Reveal als op home). De tekst staat ook zonder
+ * JavaScript in de HTML; Reveal regelt alleen de zichtbaarheid.
  */
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     h2: ({ children }) => (
-      <h2 className="mt-14 font-heading text-2xl font-semibold leading-tight text-white first:mt-0 sm:text-3xl">
-        {children}
-      </h2>
+      <Reveal y={16} className="mt-10 first:mt-0">
+        <h2 className="text-xs font-medium uppercase tracking-[0.22em] text-white/60">
+          {children}
+        </h2>
+      </Reveal>
     ),
     h3: ({ children }) => (
-      <h3 className="mt-8 font-heading text-lg font-semibold text-white">
-        {children}
-      </h3>
+      <Reveal y={16} className="mt-6">
+        <h3 className="font-heading text-lg font-semibold text-white">{children}</h3>
+      </Reveal>
     ),
     p: ({ children }) => (
-      <p className="mt-4 max-w-[68ch] leading-relaxed text-white/75">
-        {children}
-      </p>
+      <Reveal y={16} className="mt-4 first:mt-0">
+        <p className="max-w-[68ch] leading-relaxed text-white/75">{children}</p>
+      </Reveal>
     ),
     ul: ({ children }) => (
-      <ul className="ml-5 mt-4 max-w-[68ch] list-disc space-y-2 leading-relaxed text-white/75 marker:text-white/30">
-        {children}
-      </ul>
+      <Reveal y={16} className="mt-4">
+        <ul className="ml-5 max-w-[68ch] list-disc space-y-2 leading-relaxed text-white/75 marker:text-white/30">
+          {children}
+        </ul>
+      </Reveal>
     ),
-    Beeld,
     ...components,
   };
 }

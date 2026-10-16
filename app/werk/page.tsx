@@ -7,6 +7,7 @@ import { Kruimelpad } from "@/components/Kruimelpad";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { CaseKaart } from "@/components/werk/CaseKaart";
+import { RevealItem, RevealStagger } from "@/components/ui/Reveal";
 
 const TITEL = "Werk van Tim Disseldorp | DisselDesign";
 const OMSCHRIJVING =
@@ -49,11 +50,14 @@ export default async function WerkPagina() {
             </p>
           </header>
 
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Zelfde gestaffelde entree als het werk op home. */}
+          <RevealStagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {cases.map((c) => (
-              <CaseKaart key={c.slug} caseMeta={c} kop="h2" />
+              <RevealItem key={c.slug}>
+                <CaseKaart caseMeta={c} kop="h2" />
+              </RevealItem>
             ))}
-          </div>
+          </RevealStagger>
 
           <section
             aria-labelledby="zelf-zoiets"
