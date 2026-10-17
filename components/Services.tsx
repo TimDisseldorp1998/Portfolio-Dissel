@@ -49,18 +49,29 @@ const serviceColumns: {
   },
 ];
 
-export function Services() {
+/**
+ * Op home een sectie met H2; op /diensten/ de hoofdinhoud met H1 en een
+ * kruimelpad erboven (`boven`).
+ */
+export function Services({
+  kop: Kop = "h2",
+  boven,
+}: {
+  kop?: "h1" | "h2";
+  boven?: React.ReactNode;
+} = {}) {
   return (
-    <Section id="services" variant="dark">
+    <Section id="services" variant="dark" className={Kop === "h1" ? "lg:pt-32" : undefined}>
       <Container>
+        {boven}
         {/* Subheading + heading on top */}
         <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-primary">
           Diensten
         </p>
-        <h2 className="max-w-3xl font-heading text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
+        <Kop className="max-w-3xl font-heading text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
           <span className="text-white/[0.55]">Van klik tot klant,</span>{" "}
           <span className="text-white">met design dat converteert.</span>
-        </h2>
+        </Kop>
 
         {/* Intro onder de kop, de drie blokken daaronder over de volle
             breedte: naast de intro werden ze te smal en liepen de titels
@@ -115,8 +126,7 @@ export function Services() {
             </div>
 
             <p className="mt-8 text-base leading-relaxed text-white/70">
-              Bureau of digitaal team? Ik werk ook als freelance designer en
-              frontend-developer.{" "}
+              Bureau of digitaal team? Ik werk als Freelance Product Designer.{" "}
               <a
                 href="/contact/"
                 className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-sm font-medium text-white underline decoration-white/30 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"

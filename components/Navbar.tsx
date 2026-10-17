@@ -21,11 +21,10 @@ import { LogoMark } from "./Logo";
 const SCROLLED_AT = 80;
 const REST_AT = 40;
 
-/** Werk en Over mij zijn eigen pagina's; Diensten is tot fase 2 nog een
- *  sectie op home. Vanaf een subpagina gaat `/#services` naar home. */
+/** Elk item is een eigen pagina; home bereik je via het logo en de footer. */
 const items: { label: string; href: string; icon: LucideIcon }[] = [
   { label: "Werk", href: "/werk/", icon: Eye },
-  { label: "Diensten", href: "/#services", icon: LayoutGrid },
+  { label: "Diensten", href: "/diensten/", icon: LayoutGrid },
   { label: "Over mij", href: "/over-mij/", icon: User },
 ];
 
@@ -81,25 +80,9 @@ export function Navbar() {
   const pad = kaal(usePathname() ?? "/");
   const opHome = pad === "/";
 
-  // Diensten licht op zolang de dienstensectie op home in de bovenste helft
-  // van het scherm staat. Op andere pagina's bestaat die sectie niet.
-  const [dienstenInBeeld, setDienstenInBeeld] = useState(false);
-  useEffect(() => {
-    if (!opHome) return;
-    const el = document.getElementById("services");
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([e]) => setDienstenInBeeld(e.isIntersecting),
-      { rootMargin: "-35% 0px -55% 0px" }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [opHome]);
-
   /** "page" op de pagina zelf, "true" op een onderliggende pagina (een case
-   *  onder Werk), "location" voor de dienstensectie op home. */
-  function huidig(href: string): "page" | "location" | "true" | undefined {
-    if (href === "/#services") return opHome && dienstenInBeeld ? "location" : undefined;
+   *  onder Werk). */
+  function huidig(href: string): "page" | "true" | undefined {
     const doel = kaal(href);
     if (pad === doel) return "page";
     if (pad.startsWith(`${doel}/`)) return "true";
