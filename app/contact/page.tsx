@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Clock, Mail, MapPin } from "lucide-react";
+import { Clock, Mail, MapPin, MessageCircle } from "lucide-react";
 import { LinkedinFilled, InstagramFilled } from "@/components/ui/BrandIcons";
 import { site, socials } from "@/lib/content";
 import { Navbar } from "@/components/Navbar";
@@ -66,6 +66,17 @@ export default function ContactPagina() {
                   <Mail size={18} aria-hidden className="shrink-0 text-primary" />
                   <a href={`mailto:${site.email}`} className={linkStijl}>
                     {site.email}
+                  </a>
+                </li>
+                <li className="flex items-center gap-3">
+                  <MessageCircle size={18} aria-hidden className="shrink-0 text-primary" />
+                  <a
+                    href={site.whatsapp.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={linkStijl}
+                  >
+                    WhatsApp
                   </a>
                 </li>
                 {socials.map((s) => {

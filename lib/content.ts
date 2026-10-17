@@ -12,6 +12,9 @@ export const site = {
   // Wordt getoond in de privacyverklaring (AVG: identiteit van de
   // verwerkingsverantwoordelijke). Leeg laten = regel valt weg.
   kvk: "94838852",
+  btw: "NL231218655B01",
+  // WhatsApp-link: internationaal formaat zonder plus of nullen.
+  whatsapp: { href: "https://wa.me/31619754581" },
   tagline:
     "I design and build calm, considered digital products — where craft meets clarity.",
   hero: {

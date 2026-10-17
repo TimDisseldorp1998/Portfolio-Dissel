@@ -5,9 +5,8 @@ import { Reveal } from "./ui/Reveal";
 import { Marquee } from "./ui/Marquee";
 import { MarqueeCard } from "./ui/Testimonial";
 
-// TODO: deze sectie terugzetten op /diensten/, de overzichtspagina uit fase 2.
-// Hij staat sinds de projectcarrousel niet meer op home; de quotes per case
-// staan los daarvan op de casepagina's.
+// Staat op home, direct na het werk. De quotes per case staan los daarvan
+// op de casepagina's.
 
 /** Kaartbreedte (desktop) plus de gap. Alleen nodig om uit te rekenen hoe
  *  vaak de reviews in één set moeten staan. */

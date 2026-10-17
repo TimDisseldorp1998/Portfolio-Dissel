@@ -87,6 +87,7 @@ export async function Footer() {
 
   const contact: FooterLink[] = [
     { naam: site.email, href: `mailto:${site.email}` },
+    { naam: "WhatsApp", href: site.whatsapp.href, extern: true },
     { naam: "Plan een kennismaking", href: "/contact/", cta: true },
     ...socials.map((s) => ({ naam: s.label, href: s.href, extern: true })),
   ];
@@ -132,7 +133,7 @@ export async function Footer() {
           scherm en viel hij anders over de laatste regel. */}
       <Container className="flex flex-col items-center gap-3 border-t border-white/10 pb-32 pt-8 md:flex-row md:justify-between lg:pb-8">
         <p className="text-center text-xs text-white/50">
-          © {process.env.NEXT_PUBLIC_BUILD_YEAR} {site.name}
+          © {process.env.NEXT_PUBLIC_BUILD_YEAR} {site.name} · KvK {site.kvk} · btw-id {site.btw}
         </p>
         <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
           <Link href="/privacy/" className={onderbalkStijl}>

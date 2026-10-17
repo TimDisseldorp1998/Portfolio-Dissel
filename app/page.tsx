@@ -3,6 +3,7 @@ import { Hero } from "@/components/Hero";
 import { Services } from "@/components/Services";
 import { OverMijKort } from "@/components/Bento";
 import { Projects } from "@/components/Projects";
+import { Testimonials } from "@/components/Testimonials";
 import { Werkwijze } from "@/components/Werkwijze";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
@@ -15,6 +16,7 @@ export default function HomePage() {
         <Hero />
         <Services />
         <Projects />
+        <Testimonials />
         <Werkwijze />
         <OverMijKort />
         <Contact />
