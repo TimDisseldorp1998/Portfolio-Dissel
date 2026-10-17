@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "@/lib/useInView";
 import { useReducedMotion } from "@/lib/useReducedMotion";
-import { Mail, Minus, Plus } from "lucide-react";
+import { ArrowRight, Mail, Minus, Plus } from "lucide-react";
 import { bento, experience, site, socials } from "@/lib/content";
 import { Container } from "./ui/Container";
 import { Reveal } from "./ui/Reveal";
@@ -378,7 +378,150 @@ function ChatMessages() {
   );
 }
 
-export function Bento() {
+/* ---------- Kaarten, gedeeld door home en /over-mij/ ---------- */
+
+function IntroKaart() {
+  return (
+    <BentoCard>
+      <p className="text-base leading-relaxed text-white/90 md:text-lg">
+        {bento.intro.title}
+      </p>
+      <div className="mt-6 flex items-center gap-3">
+        <div className="flex gap-2">
+          <SocialIconLink
+            href={`mailto:${site.email}`}
+            label={`Mail naar ${site.email}`}
+          >
+            <Mail size={14} aria-hidden />
+          </SocialIconLink>
+          {/* Uit lib/content, net als Contact en Footer. */}
+          {socials.map((s) => {
+            const Icon = brandIcons[s.icon];
+            if (!Icon) return null;
+            return (
+              <SocialIconLink key={s.label} href={s.href} label={s.a11yLabel}>
+                <Icon size={14} />
+              </SocialIconLink>
+            );
+          })}
+        </div>
+      </div>
+    </BentoCard>
+  );
+}
+
+function ZoWerkIkKaart({ className }: { className?: string }) {
+  return (
+    <BentoCard className={className}>
+      <CardLabel>Zo werk ik</CardLabel>
+      {bento.background.paragraphs.map((p, idx) => (
+        <p
+          key={idx}
+          className={cn("text-sm leading-relaxed text-white/70", idx > 0 && "mt-3")}
+        >
+          {p}
+        </p>
+      ))}
+    </BentoCard>
+  );
+}
+
+/** Portret met de chatbubbels. Vaste 3:4, de foto vult de kaart van rand tot
+ *  rand. `!p-0` wint van BentoCard's p-6: `cn` is clsx-only, dus een gewone
+ *  p-0 zou verliezen. */
+function PortretKaart({ className }: { className?: string }) {
+  return (
+    <BentoCard className={cn("aspect-[3/4] !p-0", className)}>
+      <div className="relative h-full w-full overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-800 via-neutral-900 to-black">
+        {/* Als CSS-achtergrond: geen kapot-beeld-icoon als het bestand
+            ontbreekt, dan valt hij terug op de gradient. */}
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/mockup/image-portret-tim.jpg')" }}
+        />
+        {/* Geen scrim: in het gebied van de chatbubbels is de foto donker en
+            haalt de bubbeltekst op de lichtste plek nog 7,57:1. */}
+        <ChatMessages />
+      </div>
+    </BentoCard>
+  );
+}
+
+function WerkervaringKaart() {
+  return (
+    <BentoCard>
+      <CardLabel>Werkervaring</CardLabel>
+      <ul className="space-y-5">
+        {experience.map((exp) => (
+          <li key={exp.company} className="grid grid-cols-[90px_1fr] items-baseline gap-3">
+            <span className="text-xs text-white/50">{exp.period}</span>
+            <div>
+              <p className="text-sm font-medium leading-tight">{exp.role}</p>
+              <p className="mt-0.5 text-xs text-white/50">{exp.company}</p>
+              <p className="mt-0.5 text-xs text-white/50">{exp.location}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </BentoCard>
+  );
+}
+
+function ToolstackKaart() {
+  return (
+    <BentoCard className="md:order-last md:col-span-2 lg:order-none">
+      <CardLabel>Toolstack</CardLabel>
+      <div className="grid grid-cols-6 gap-2.5">
+        {bento.tools.map((tool) => (
+          <div
+            key={tool.name}
+            className="flex aspect-square items-center justify-center transition-transform duration-200 ease-out hover:scale-[1.04]"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={tool.icon}
+              alt={`${tool.name} logo`}
+              loading="lazy"
+              draggable={false}
+              className="h-full w-full object-contain"
+            />
+          </div>
+        ))}
+      </div>
+      <p className="mt-4 text-xs text-white/50">Van Figma-mock tot production-code.</p>
+    </BentoCard>
+  );
+}
+
+function OpleidingenKaart() {
+  return (
+    <BentoCard>
+      <CardLabel>Opleidingen</CardLabel>
+      <ul className="space-y-4">
+        {bento.education.map((ed) => (
+          <li key={ed.degree} className="grid grid-cols-[110px_1fr] items-baseline gap-3">
+            <span className="text-xs text-white/50">{ed.period}</span>
+            <div>
+              {ed.type ? <p className="text-xs text-white/50">{ed.type}</p> : null}
+              <p className="text-sm font-medium leading-tight">{ed.degree}</p>
+              <p className="mt-0.5 text-xs text-white/50">{ed.school}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </BentoCard>
+  );
+}
+
+/* ---------- Home: korte "Over mij" ---------- */
+
+/**
+ * Korte versie op home, met een link naar /over-mij/. Werkervaring,
+ * opleidingen, toolstack, fotoslider en de 1RM-calculator staan daar.
+ * Houdt `id="about"`, zodat oude links naar /#about blijven werken.
+ */
+export function OverMijKort() {
   return (
     <section
       id="about"
@@ -388,7 +531,7 @@ export function Bento() {
     >
       <Container>
         <Reveal>
-          <div className="mb-6 flex items-end justify-between gap-6 md:mb-12">
+          <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between md:mb-12">
             <div>
               <p className="mb-3 text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-primary">
                 Over mij
@@ -397,181 +540,84 @@ export function Bento() {
                 Even voorstellen.
               </h2>
             </div>
+            <a
+              href="/over-mij/"
+              className="inline-flex shrink-0 items-center gap-2 rounded-full text-sm font-medium text-white/70 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              Meer over mij
+              <ArrowRight size={16} aria-hidden />
+            </a>
           </div>
         </Reveal>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-3">
-          {/* Column 1 */}
           <div className="flex flex-col gap-4 md:gap-5">
-            {/* Intro card */}
-            <BentoCard>
-              <p className="text-base leading-relaxed text-white/90 md:text-lg">
-                {bento.intro.title}
-              </p>
-              <div className="mt-6 flex items-center gap-3">
-                <div className="flex gap-2">
-                  <SocialIconLink
-                    href={`mailto:${site.email}`}
-                    label={`Mail naar ${site.email}`}
-                  >
-                    <Mail size={14} aria-hidden />
-                  </SocialIconLink>
-                  {/* Uit lib/content, net als Contact en Footer. De URL's stonden
-                      hier eerder hardgecodeerd, waardoor een gewijzigde
-                      gebruikersnaam op deze ene plek achter zou blijven. */}
-                  {socials.map((s) => {
-                    const Icon = brandIcons[s.icon];
-                    if (!Icon) return null;
-                    return (
-                      <SocialIconLink
-                        key={s.label}
-                        href={s.href}
-                        label={s.a11yLabel}
-                      >
-                        <Icon size={14} />
-                      </SocialIconLink>
-                    );
-                  })}
-                </div>
-              </div>
-            </BentoCard>
-
-            {/* Background card */}
-            <BentoCard>
-              <CardLabel>Zo werk ik</CardLabel>
-              {bento.background.paragraphs.map((p, idx) => (
-                <p
-                  key={idx}
-                  className={cn(
-                    "text-sm leading-relaxed text-white/70",
-                    idx > 0 && "mt-3"
-                  )}
-                >
-                  {p}
-                </p>
-              ))}
-            </BentoCard>
-
-            {/* Slider card — groeit mee om het hoogteverschil in deze kolom te
-                dichten. `!p-0` is nodig, niet `p-0`: `cn` is clsx-only, dus
-                zonder `!` blijft BentoCard's `p-6` staan en houd je een rand
-                lucht rond de foto. Zelfde truc als bij de portretkaart. */}
-            <BentoCard className="flex-1 !p-0">
-              <Slider />
-            </BentoCard>
+            <IntroKaart />
+            {/* Vult de kolom en zegt wat er op /over-mij/ staat. */}
+            <a
+              href="/over-mij/"
+              className="group flex flex-1 flex-col justify-between gap-6 rounded-3xl bg-white/[0.04] p-6 transition-[background-color] duration-500 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              <span>
+                <span className="mb-4 block text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-white/50">
+                  Meer over mij
+                </span>
+                <span className="block text-base leading-relaxed text-white/90">
+                  Werkervaring, opleidingen, toolstack en een paar foto&apos;s.
+                </span>
+              </span>
+              <span
+                aria-hidden
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-[background-color,color] duration-300 group-hover:bg-secondary group-hover:text-white"
+              >
+                <ArrowRight size={16} />
+              </span>
+            </a>
           </div>
-
-          {/* Column 2 */}
-          <div className="flex flex-col gap-4 md:gap-5">
-            {/* Portrait card — fixed 3:4 (360x480) ratio; the image fills the whole
-                container edge-to-edge. `!p-0` beats BentoCard's base p-6 (cn is
-                clsx-only, so a plain p-0 would lose to p-6). */}
-            <BentoCard className="aspect-[3/4] !p-0">
-              <div className="relative h-full w-full overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-800 via-neutral-900 to-black">
-                {/* Het portret vult de kaart (bg-cover = geen zwarte balken). De
-                    foto is 3:4, net als de kaart, dus er wordt niets weggesneden.
-                    Als CSS-achtergrond krijg je geen kapot-beeld-icoon als het
-                    bestand ontbreekt; dan valt hij terug op de gradient. */}
-                <div
-                  aria-hidden
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{
-                    backgroundImage: "url('/mockup/image-portret-tim.jpg')",
-                  }}
-                />
-                {/* Geen scrim over deze foto. Nagemeten in het gebied waar de
-                    chatbubbels staan: de foto is daar donker (broek en schaduw),
-                    en zelfs op de lichtste plek haalt de bubbeltekst 7,57:1. Een
-                    verloop zou de foto alleen maar doffer maken. */}
-                <ChatMessages />
-              </div>
-            </BentoCard>
-
-            {/* 1RM strength calculator card — natural height (does not grow to
-                fill the column). */}
-            <BentoCard>
-              <OneRepMaxCalculator />
-            </BentoCard>
-          </div>
-
-          {/* Column 3 — full-width on tablet (2-col grid), stacked column on desktop */}
-          <div className="flex flex-col gap-4 md:col-span-2 md:grid md:grid-cols-2 md:gap-5 lg:col-span-1 lg:flex lg:flex-col">
-            {/* Experience card */}
-            <BentoCard>
-              <CardLabel>Werkervaring</CardLabel>
-              <ul className="space-y-5">
-                {experience.map((exp) => (
-                  <li
-                    key={exp.company}
-                    className="grid grid-cols-[90px_1fr] items-baseline gap-3"
-                  >
-                    <span className="text-xs text-white/50">{exp.period}</span>
-                    <div>
-                      <p className="text-sm font-medium leading-tight">
-                        {exp.role}
-                      </p>
-                      <p className="mt-0.5 text-xs text-white/50">
-                        {exp.company}
-                      </p>
-                      <p className="mt-0.5 text-xs text-white/50">
-                        {exp.location}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </BentoCard>
-
-            {/* Tools card — full-width bottom row on tablet, middle of the stack on desktop */}
-            <BentoCard className="md:order-last md:col-span-2 lg:order-none">
-              <CardLabel>Toolstack</CardLabel>
-              <div className="grid grid-cols-6 gap-2.5">
-                {bento.tools.map((tool) => (
-                  <div
-                    key={tool.name}
-                    className="flex aspect-square items-center justify-center transition-transform duration-200 ease-out hover:scale-[1.04]"
-                  >
-                    <img
-                      src={tool.icon}
-                      alt={`${tool.name} logo`}
-                      loading="lazy"
-                      draggable={false}
-                      className="h-full w-full object-contain"
-                    />
-                  </div>
-                ))}
-              </div>
-              <p className="mt-4 text-xs text-white/50">
-                Van Figma-mock tot production-code.
-              </p>
-            </BentoCard>
-
-            {/* Education card — next to Experience on tablet, bottom of the stack on desktop */}
-            <BentoCard>
-              <CardLabel>Opleidingen</CardLabel>
-              <ul className="space-y-4">
-                {bento.education.map((ed) => (
-                  <li
-                    key={ed.degree}
-                    className="grid grid-cols-[110px_1fr] items-baseline gap-3"
-                  >
-                    <span className="text-xs text-white/50">{ed.period}</span>
-                    <div>
-                      {ed.type ? (
-                        <p className="text-xs text-white/50">{ed.type}</p>
-                      ) : null}
-                      <p className="text-sm font-medium leading-tight">
-                        {ed.degree}
-                      </p>
-                      <p className="mt-0.5 text-xs text-white/50">{ed.school}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </BentoCard>
+          <ZoWerkIkKaart />
+          {/* Vanaf lg even hoog als de twee kolommen ernaast: de vaste 3:4
+              maakte hem korter. De foto vult de kaart nog steeds (bg-cover). */}
+          <div className="md:col-span-2 md:mx-auto md:w-1/2 lg:col-span-1 lg:mx-0 lg:w-auto">
+            <PortretKaart className="lg:aspect-auto lg:h-full" />
           </div>
         </div>
       </Container>
     </section>
+  );
+}
+
+/* ---------- /over-mij/: het volledige raster ---------- */
+
+/** Het volledige bento-raster, zonder eigen kop: /over-mij/ zet de H1. */
+export function OverMijVolledig() {
+  return (
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-3">
+      {/* Kolom 1 */}
+      <div className="flex flex-col gap-4 md:gap-5">
+        <IntroKaart />
+        <ZoWerkIkKaart />
+        {/* Groeit mee om het hoogteverschil in deze kolom te dichten. `!p-0`
+            omdat `cn` clsx-only is (zie PortretKaart). */}
+        <BentoCard className="flex-1 !p-0">
+          <Slider />
+        </BentoCard>
+      </div>
+
+      {/* Kolom 2 */}
+      <div className="flex flex-col gap-4 md:gap-5">
+        <PortretKaart />
+        <BentoCard>
+          <OneRepMaxCalculator />
+        </BentoCard>
+      </div>
+
+      {/* Kolom 3: op tablet over de volle breedte in twee kolommen, op desktop
+          gestapeld. */}
+      <div className="flex flex-col gap-4 md:col-span-2 md:grid md:grid-cols-2 md:gap-5 lg:col-span-1 lg:flex lg:flex-col">
+        <WerkervaringKaart />
+        <ToolstackKaart />
+        <OpleidingenKaart />
+      </div>
+    </div>
   );
 }

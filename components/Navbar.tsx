@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import {
   User,
@@ -9,7 +10,6 @@ import {
   MessageCircle,
   type LucideIcon,
 } from "lucide-react";
-import { nav } from "@/lib/content";
 import { cn } from "@/lib/cn";
 import { isProgrammaticScroll, scrollToSection } from "@/lib/scroll";
 import { LogoMark } from "./Logo";
@@ -21,19 +21,15 @@ import { LogoMark } from "./Logo";
 const SCROLLED_AT = 80;
 const REST_AT = 40;
 
-const iconMap: Record<string, LucideIcon> = {
-  "#services": LayoutGrid,
-  "#about": User,
-  "#work": Eye,
-  "#contact": MessageCircle,
-};
+/** Elk item is een eigen pagina; home bereik je via het logo en de footer. */
+const items: { label: string; href: string; icon: LucideIcon }[] = [
+  { label: "Werk", href: "/werk/", icon: Eye },
+  { label: "Diensten", href: "/diensten/", icon: LayoutGrid },
+  { label: "Over mij", href: "/over-mij/", icon: User },
+];
 
-const items = [...nav, { label: "Contact", href: "#contact" }].map((n) => ({
-  ...n,
-  icon: iconMap[n.href] ?? LayoutGrid,
-}));
-
-const SECTION_IDS = items.map((i) => i.href.slice(1));
+/** Zonder slash aan het eind, zodat "/werk" en "/werk/" hetzelfde zijn. */
+const kaal = (pad: string) => pad.replace(/\/+$/, "") || "/";
 
 /** Idle delay (ms) before the mobile nav grows back to its resting size. */
 const IDLE_AFTER = 220;
@@ -42,7 +38,6 @@ export function Navbar() {
   const prefersReducedMotion = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
-  const [active, setActive] = useState<string | null>(null);
   const scrollingRef = useRef(false);
 
   // rAF-throttled scroll listener with hysteresis, plus an idle debounce that
@@ -82,34 +77,17 @@ export function Navbar() {
     };
   }, []);
 
-  // Active-section highlighting: the section crossing the upper-middle band
-  // of the viewport wins; the hero clears the highlight.
-  useEffect(() => {
-    const observerOptions = { rootMargin: "-35% 0px -55% 0px" };
+  const pad = kaal(usePathname() ?? "/");
+  const opHome = pad === "/";
 
-    const sections = SECTION_IDS.map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => el !== null);
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) setActive(`#${e.target.id}`);
-      });
-    }, observerOptions);
-    sections.forEach((s) => observer.observe(s));
-
-    // Only the hero clears the highlight — every other section has a nav item.
-    const clearObserver = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) setActive(null);
-      });
-    }, observerOptions);
-    const hero = document.getElementById("top");
-    if (hero) clearObserver.observe(hero);
-
-    return () => {
-      observer.disconnect();
-      clearObserver.disconnect();
-    };
-  }, []);
+  /** "page" op de pagina zelf, "true" op een onderliggende pagina (een case
+   *  onder Werk). */
+  function huidig(href: string): "page" | "true" | undefined {
+    const doel = kaal(href);
+    if (pad === doel) return "page";
+    if (pad.startsWith(`${doel}/`)) return "true";
+    return undefined;
+  }
 
   return (
     <header className="mount-fade fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-50 flex justify-center lg:inset-x-0 lg:bottom-auto lg:top-4">
@@ -127,11 +105,16 @@ export function Navbar() {
             : "scale-100"
         )}
       >
-        {/* Logo — mark only */}
+        {/* Logo — mark only. Op home scrolt hij terug naar boven, elders gaat
+            hij naar home. */}
         <a
-          href="#top"
-          onClick={(e) => scrollToSection(e, "#top", prefersReducedMotion)}
-          aria-label="DisselDesign — terug naar boven"
+          href="/"
+          onClick={(e) => {
+            if (opHome) scrollToSection(e, "#top", prefersReducedMotion);
+          }}
+          aria-label={
+            opHome ? "DisselDesign, terug naar boven" : "DisselDesign, naar de homepage"
+          }
           className="flex min-h-[50px] shrink-0 items-center rounded-full px-2 transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40 sm:min-h-[44px]"
         >
           <LogoMark className="h-8 w-auto sm:h-7" />
@@ -140,7 +123,8 @@ export function Navbar() {
         <ul className="flex items-center gap-0.5 sm:gap-1">
           {items.map((item) => {
             const Icon = item.icon;
-            const isActive = active === item.href;
+            const stand = huidig(item.href);
+            const isActive = stand !== undefined;
             return (
               <li key={item.href}>
                 <a
@@ -149,7 +133,7 @@ export function Navbar() {
                     scrollToSection(e, item.href, prefersReducedMotion)
                   }
                   aria-label={item.label}
-                  aria-current={isActive ? "location" : undefined}
+                  aria-current={stand}
                   className={cn(
                     "flex min-h-[50px] min-w-[50px] items-center justify-center gap-1.5 rounded-full px-3.5 text-[15px] font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40 sm:min-h-[44px] sm:min-w-0 sm:px-3.5",
                     isActive
@@ -163,7 +147,7 @@ export function Navbar() {
                     aria-hidden
                     className="sm:h-[17px] sm:w-[17px]"
                   />
-                  {/* On mobile only the active section shows its name; from sm up
+                  {/* On mobile only the active item shows its name; from sm up
                       every item shows its label. */}
                   <span className={cn(isActive ? "inline" : "hidden sm:inline")}>
                     {item.label}
@@ -174,6 +158,25 @@ export function Navbar() {
           })}
         </ul>
 
+        {/* Kennismakingsknop. Volledige tekst pas vanaf lg: daaronder staat de
+            pil onderin en is hij in rust 1,15x geschaald, dan past de tekst
+            er naast de drie items niet in. Daar een gevuld icoon met dezelfde
+            toegankelijke naam. */}
+        <a
+          href="/contact/"
+          data-cta="plan_kennismaking"
+          aria-label="Plan een kennismaking"
+          aria-current={huidig("/contact/") === "page" ? "page" : undefined}
+          className="ml-1 flex min-h-[50px] min-w-[50px] items-center justify-center gap-2 rounded-full bg-primary px-3.5 text-[15px] font-semibold text-ink transition-colors duration-200 hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40 sm:min-h-[44px] lg:px-4"
+        >
+          <MessageCircle
+            size={20}
+            strokeWidth={2}
+            aria-hidden
+            className="sm:h-[17px] sm:w-[17px] lg:hidden"
+          />
+          <span className="hidden lg:inline">Plan een kennismaking</span>
+        </a>
       </nav>
     </header>
   );

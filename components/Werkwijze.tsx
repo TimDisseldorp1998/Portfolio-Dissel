@@ -1,0 +1,56 @@
+import { ArrowRight } from "lucide-react";
+import { Section } from "./ui/Section";
+import { Container } from "./ui/Container";
+import { Reveal, RevealItem, RevealStagger } from "./ui/Reveal";
+import { Button } from "./ui/Button";
+
+const stappen = [
+  { titel: "Kennismaking", tekst: "20 minuten, gratis. Je vertelt wat je wilt bereiken." },
+  { titel: "Voorstel", tekst: "Wat ik maak, wanneer het af is en wat het kost." },
+  { titel: "Ontwerp", tekst: "Ik ontwerp in Figma, jij geeft feedback voordat er code komt." },
+  { titel: "Bouwen en live", tekst: "Ik bouw de site, test hem op mobiel en zet hem live." },
+];
+
+/** "Zo werk ik" op home, tussen het werk en Over mij. */
+export function Werkwijze() {
+  return (
+    <Section id="werkwijze" variant="dark">
+      <Container>
+        <Reveal>
+          <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-primary">
+            Werkwijze
+          </p>
+          <h2 className="font-heading text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-5xl">
+            Zo werk ik.
+          </h2>
+        </Reveal>
+
+        <RevealStagger className="mt-8 grid gap-4 sm:grid-cols-2 md:mt-12 lg:grid-cols-4 lg:gap-5">
+          {stappen.map((stap, i) => (
+            <RevealItem key={stap.titel}>
+              {/* Een geordende lijst zou semantisch mooier zijn, maar
+                  RevealStagger zet om elk item een div; de nummers staan
+                  daarom als tekst in de kaart. */}
+              <div className="flex h-full flex-col rounded-3xl bg-white/[0.04] p-7 transition-colors duration-300 hover:bg-white/[0.06]">
+                <span className="font-heading text-sm font-semibold text-primary">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-3 font-heading text-lg font-semibold text-white">
+                  {stap.titel}
+                </h3>
+                <p className="mt-2 text-[15px] leading-relaxed text-white/70">{stap.tekst}</p>
+              </div>
+            </RevealItem>
+          ))}
+        </RevealStagger>
+
+        <Reveal className="mt-10">
+          <Button href="/contact/" variant="primary" size="lg" data-cta="plan_kennismaking">
+            Plan een kennismaking
+            <ArrowRight size={18} aria-hidden />
+          </Button>
+        </Reveal>
+      </Container>
+    </Section>
+  );
+}

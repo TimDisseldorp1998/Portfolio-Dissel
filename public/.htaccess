@@ -1,0 +1,12 @@
+# Hostinger (Apache). Wordt met de build mee naar out/ gekopieerd.
+RewriteEngine On
+
+# www -> hoofdversie, in één stap naar https
+RewriteCond %{HTTP_HOST} ^www\.disseldesign\.com$ [NC]
+RewriteRule ^(.*)$ https://disseldesign.com/$1 [R=301,L]
+
+# Testomgeving niet laten indexeren
+<IfModule mod_headers.c>
+  SetEnvIfNoCase Host ^dev\. staging
+  Header set X-Robots-Tag "noindex, nofollow" env=staging
+</IfModule>

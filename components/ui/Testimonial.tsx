@@ -9,18 +9,10 @@ export type Review = (typeof reviews)[number];
  * de kaart de loopafstand; een meebuigende breedte maakt de animatie
  * onvoorspelbaar.
  */
-export function MarqueeCard({
-  review,
-  decoratief,
-}: {
-  review: Review;
-  /** Tweede set in de rij: staat er alleen om de loop rond te maken, dus een
-   *  schermlezer hoeft die niet nog een keer te horen. */
-  decoratief?: boolean;
-}) {
+/** Aria-hidden en inert voor de kopieën regelt de Marquee zelf. */
+export function MarqueeCard({ review }: { review: Review }) {
   return (
     <figure
-      aria-hidden={decoratief || undefined}
       // 440px is gemeten, niet gekozen: bij 376 loopt de langste quote uit tot
       // vijf regels, vanaf 400 wordt het er vier en pas vanaf 500 drie. 440 zit
       // midden in die band, dus een iets langere quote past er ook nog in.
@@ -59,7 +51,8 @@ export function MarqueeCard({
               <span className="block font-heading text-[13px] font-semibold leading-[1.2] text-white">
                 {review.author}
               </span>
-              <span className="mt-0.5 block truncate text-xs leading-[1.2] text-white/45">
+              {/* /50: met /45 was het 4,49:1 op de kaart, net onder de norm. */}
+              <span className="mt-0.5 block truncate text-xs leading-[1.2] text-white/50">
                 {review.role}
               </span>
             </span>

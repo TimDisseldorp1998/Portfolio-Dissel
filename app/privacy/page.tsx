@@ -3,11 +3,29 @@ import { ArrowLeft } from "lucide-react";
 import { site } from "@/lib/content";
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/Logo";
+import { SITE_URL } from "@/lib/structured-data";
+import { Kruimelpad } from "@/components/Kruimelpad";
+
+const TITEL = "Privacy & cookies | DisselDesign";
+const OMSCHRIJVING =
+  "Hoe DisselDesign omgaat met je gegevens: contactformulier, Google Analytics en je rechten.";
 
 export const metadata: Metadata = {
-  title: "Privacy & cookies | Dissel Design",
-  description:
-    "Hoe DisselDesign omgaat met je gegevens: contactformulier, Google Analytics en je rechten.",
+  title: TITEL,
+  description: OMSCHRIJVING,
+  openGraph: {
+    title: TITEL,
+    description: OMSCHRIJVING,
+    type: "website",
+    locale: "nl_NL",
+    url: "/privacy/",
+  },
+  twitter: { title: TITEL, description: OMSCHRIJVING },
+  // Zonder deze regel erft de pagina de canonical van de homepage uit de
+  // layout en zegt hij tegen Google dat hij een kopie van de homepage is.
+  alternates: {
+    canonical: `${SITE_URL}/privacy/`,
+  },
 };
 
 /** Kopje + lopende tekst, in de donkere site-stijl. */
@@ -53,6 +71,10 @@ export default function PrivacyPage() {
         >
           <Logo className="h-10 w-auto" />
         </a>
+
+        <div className="mt-8">
+          <Kruimelpad kruimels={[{ naam: "Privacy & cookies", href: "/privacy/" }]} />
+        </div>
 
         <h1 className="mt-10 font-heading text-3xl font-semibold leading-tight sm:text-4xl">
           Privacy &amp; cookies
@@ -159,7 +181,7 @@ export default function PrivacyPage() {
           </p>
         </Block>
 
-        <p className="mt-10 text-sm text-white/45">
+        <p className="mt-10 text-sm text-white/50">
           Laatst bijgewerkt: augustus 2026.
         </p>
 
