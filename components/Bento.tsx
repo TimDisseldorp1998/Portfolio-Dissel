@@ -429,9 +429,9 @@ function ZoWerkIkKaart({ className }: { className?: string }) {
 /** Portret met de chatbubbels. Vaste 3:4, de foto vult de kaart van rand tot
  *  rand. `!p-0` wint van BentoCard's p-6: `cn` is clsx-only, dus een gewone
  *  p-0 zou verliezen. */
-function PortretKaart() {
+function PortretKaart({ className }: { className?: string }) {
   return (
-    <BentoCard className="aspect-[3/4] !p-0">
+    <BentoCard className={cn("aspect-[3/4] !p-0", className)}>
       <div className="relative h-full w-full overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-800 via-neutral-900 to-black">
         {/* Als CSS-achtergrond: geen kapot-beeld-icoon als het bestand
             ontbreekt, dan valt hij terug op de gradient. */}
@@ -575,8 +575,10 @@ export function OverMijKort() {
             </a>
           </div>
           <ZoWerkIkKaart />
+          {/* Vanaf lg even hoog als de twee kolommen ernaast: de vaste 3:4
+              maakte hem korter. De foto vult de kaart nog steeds (bg-cover). */}
           <div className="md:col-span-2 md:mx-auto md:w-1/2 lg:col-span-1 lg:mx-0 lg:w-auto">
-            <PortretKaart />
+            <PortretKaart className="lg:aspect-auto lg:h-full" />
           </div>
         </div>
       </Container>
