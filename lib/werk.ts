@@ -172,6 +172,13 @@ export async function volgendeCase(slug: string): Promise<Case> {
   return cases[(i + 1) % cases.length];
 }
 
+/** De case voor deze, en voor de eerste weer de laatste. */
+export async function vorigeCase(slug: string): Promise<Case> {
+  const cases = await alleCases();
+  const i = cases.findIndex((c) => c.slug === slug);
+  return cases[(i - 1 + cases.length) % cases.length];
+}
+
 /** Wat de carousel toont: de slides, of het kaartbeeld als er nog geen zijn. */
 export function carouselSlides(c: CaseMeta): Slide[] {
   if (c.slides.length > 0) return c.slides;

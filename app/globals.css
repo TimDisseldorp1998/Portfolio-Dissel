@@ -136,6 +136,12 @@
     both;
 }
 
+/* Tijdens de overgang tussen cases wacht de nieuwe pagina met opkomen tot
+   de foto geland is (zie CaseNavigatie). */
+html[data-case-overgang] main .mount-rise {
+  animation-play-state: paused;
+}
+
 .mount-fade {
   animation: mount-fade 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
 }

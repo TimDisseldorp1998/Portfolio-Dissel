@@ -10,6 +10,7 @@ import {
   labelTekst,
   vindCase,
   volgendeCase,
+  vorigeCase,
 } from "@/lib/werk";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -18,6 +19,7 @@ import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Reveal, RevealItem, RevealStagger } from "@/components/ui/Reveal";
 import { CaseCarousel } from "@/components/werk/CaseCarousel";
+import { CaseNavigatie } from "@/components/werk/CaseNavigatie";
 
 /**
  * Casepagina, één per bestand in content/werk/. Volgorde volgens het
@@ -71,6 +73,7 @@ export default async function CasePagina({ params }: Props) {
   const c = await vindCase(params.slug);
   if (!c) notFound();
   const volgende = await volgendeCase(c.slug);
+  const vorige = await vorigeCase(c.slug);
   const review = reviews.find((r) => r.case === c.slug);
   const { Inhoud } = c;
 
@@ -78,7 +81,20 @@ export default async function CasePagina({ params }: Props) {
     <>
       <Navbar />
       <main id="main" className="bg-surface-dark text-white">
-        <Container className="pb-20 pt-10 md:pb-24 lg:pt-32">
+        {/* Grote foto over de volle breedte. Hier landt de overgang vanaf de
+            vorige/volgende-kaart; de maten staan ook in CaseNavigatie. */}
+        <div data-case-hero className="relative h-[75svh] min-h-[22rem] w-full">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={c.kaartbeeld}
+            alt=""
+            fetchPriority="high"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          <div aria-hidden className="absolute inset-x-0 -bottom-px h-1/2 bg-[linear-gradient(to_top,#0a0a0f,rgba(10,10,15,0))]" />
+        </div>
+        <Container className="pb-20 pt-8 md:pb-24 lg:pt-12">
           <div className="mx-auto max-w-4xl">
             <Kruimelpad
               kruimels={[
@@ -209,47 +225,12 @@ export default async function CasePagina({ params }: Props) {
               </section>
             </Reveal>
 
-            {/* Volgende case: met zijn kaartbeeld, dat bij hover inzoomt. */}
+            {/* Vorige en volgende case. Een klik trekt je de foto in. */}
             <Reveal y={16} className="mt-14">
-              <nav aria-label="Volgende case">
-                <a
-                  href={`/werk/${volgende.slug}/`}
-                  className="group relative flex min-h-[11rem] items-end overflow-hidden rounded-3xl p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff833d] focus-visible:ring-offset-2 focus-visible:ring-offset-surface-dark md:min-h-[13rem] md:p-8"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={volgende.kaartbeeld}
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.04]"
-                  />
-                  <div
-                    aria-hidden
-                    className="absolute inset-0 bg-surface-dark opacity-[0.6] transition-opacity duration-500 group-hover:opacity-[0.5]"
-                  />
-                  <div
-                    aria-hidden
-                    className="absolute inset-0 bg-[linear-gradient(to_top,rgba(10,10,15,1)_0%,rgba(10,10,15,0.6)_50%,rgba(10,10,15,0)_100%)]"
-                  />
-                  <span className="relative flex w-full items-end justify-between gap-6">
-                    <span>
-                      <span className="block text-xs font-medium uppercase tracking-[0.22em] text-white/70">
-                        Volgende case
-                      </span>
-                      <span className="mt-2 block font-heading text-2xl font-semibold text-white sm:text-3xl">
-                        {volgende.klant}
-                      </span>
-                    </span>
-                    <span
-                      aria-hidden
-                      className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-secondary/15 text-secondary transition-[background-color,color,transform] duration-300 group-hover:translate-x-1 group-hover:bg-secondary group-hover:text-white"
-                    >
-                      <ArrowRight size={20} />
-                    </span>
-                  </span>
-                </a>
-              </nav>
+              <CaseNavigatie
+                vorige={{ slug: vorige.slug, klant: vorige.klant, kaartbeeld: vorige.kaartbeeld }}
+                volgende={{ slug: volgende.slug, klant: volgende.klant, kaartbeeld: volgende.kaartbeeld }}
+              />
             </Reveal>
           </div>
         </Container>
