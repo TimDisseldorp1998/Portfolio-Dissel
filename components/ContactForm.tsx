@@ -211,8 +211,7 @@ export function ContactForm({ className }: { className?: string }) {
                 {formulierZichtbaar ? (
                   <>
                   <p className="mb-6 text-base leading-relaxed text-white/80">
-                    Stuur een bericht, dan plan ik binnen twee werkdagen een
-                    kennismaking met je in.
+                    Plan een gratis kennismaking van 20 minuten.
                   </p>
                   <form
                     data-form="fields"
