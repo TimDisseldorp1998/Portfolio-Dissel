@@ -210,8 +210,11 @@ export function ContactForm({ className }: { className?: string }) {
                     bedankt-kaart op — zoals mode="wait" dat deed. */}
                 {formulierZichtbaar ? (
                   <>
-                  <p className="mb-6 text-base leading-relaxed text-white/80">
-                    Plan een gratis kennismaking van 20 minuten.
+                  {/* Een <p>, geen kop: het formulier staat onder een H2 (home)
+                      én onder een H1 (/contact/), dus een vast kopniveau zou
+                      op één van de twee de volgorde breken. */}
+                  <p className="mb-6 font-heading text-xl font-semibold leading-snug text-white md:text-2xl">
+                    Plan een gratis kennismaking.
                   </p>
                   <form
                     data-form="fields"
