@@ -214,7 +214,7 @@ export function ContactForm({ className }: { className?: string }) {
                       én onder een H1 (/contact/), dus een vast kopniveau zou
                       op één van de twee de volgorde breken. */}
                   <p className="mb-6 font-heading text-xl font-semibold leading-snug text-white md:text-2xl">
-                    Plan een gratis kennismaking.
+                    Vraag een gratis gesprek aan
                   </p>
                   <form
                     data-form="fields"
