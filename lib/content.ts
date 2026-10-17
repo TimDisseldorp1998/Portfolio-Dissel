@@ -15,10 +15,19 @@ export const site = {
   tagline:
     "I design and build calm, considered digital products — where craft meets clarity.",
   hero: {
-    eyebrow: "Digitale Product Designer · Heiloo",
-    headline: "Je website en huisstijl, ontworpen én gebouwd door één persoon",
+    eyebrow: "Gevestigd in Noord-Holland",
+    // The headline ends with a rotating tail that types in/out (see Typewriter).
+    // The first phrase is what renders server-side (SEO + no-JS fallback).
+    headlinePrefix: "Digitale Product Designer",
+    // "voor" is vaste tekst (wordt niet steeds opnieuw getypt); alleen de
+    // woorden erna roteren via de Typewriter.
+    headlineConnector: "voor",
+    headlineRotating: [
+      "lokale ondernemers",
+      "regionale bedrijven",
+    ],
     subtitle:
-      "Voor ondernemers, merken en bureaus. Strak design, snel opgeleverd, zonder gedoe.",
+      "Ik ontwerp en bouw websites voor lokale ondernemers, van huisstijl tot live site. Strak design, snel opgeleverd, zonder gedoe.",
     // Contact is the primary (filled) action; work is the secondary (ghost) one.
     // The contact CTA targets the form anchor directly so the form lands in view.
     contactCta: { label: "Plan een kennismaking", href: "#contact-form" },
