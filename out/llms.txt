@@ -5,10 +5,10 @@
 ## Kernpagina's
 
 - [Alles over DisselDesign](https://disseldesign.com/voor-ai/): diensten, werkwijze, prijzen, cases en contact op één pagina
-- [Diensten](https://disseldesign.com/#services)
-- [Werk](https://disseldesign.com/#work)
-- [Over Tim Disseldorp](https://disseldesign.com/#about)
-- [Contact](https://disseldesign.com/#contact)
+- [Diensten](https://disseldesign.com/diensten/)
+- [Werk](https://disseldesign.com/werk/)
+- [Over Tim Disseldorp](https://disseldesign.com/over-mij/)
+- [Contact](https://disseldesign.com/contact/)
 
 ## Feiten
 
