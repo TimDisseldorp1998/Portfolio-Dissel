@@ -1,5 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
-import type { CaseMeta } from "@/lib/werk";
+import type { Case } from "@/lib/werk";
 
 /**
  * Casekaart op home en /werk/. Eén vorm voor elke case: het kaartbeeld over
@@ -12,10 +12,17 @@ import type { CaseMeta } from "@/lib/werk";
 export function CaseKaart({
   caseMeta,
   kop: Kop = "h3",
+  laden = "lazy",
+  sizes,
 }: {
-  caseMeta: Pick<CaseMeta, "slug" | "klant" | "kaarttekst" | "tags" | "kaartbeeld">;
+  caseMeta: Pick<Case, "slug" | "klant" | "kaarttekst" | "tags" | "kaartbeeld" | "kaartSrcSet">;
   /** h3 onder een H2 (home), h2 direct onder de H1 (/werk/). */
   kop?: "h2" | "h3";
+  /** "eager" voor de kaarten die meteen in beeld staan. */
+  laden?: "eager" | "lazy";
+  /** Hoe breed de kaart is per breakpoint, zodat de browser de juiste
+   *  variant uit srcset kiest. */
+  sizes: string;
 }) {
   const c = caseMeta;
   return (
@@ -23,9 +30,12 @@ export function CaseKaart({
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={c.kaartbeeld}
+        srcSet={c.kaartSrcSet}
+        sizes={sizes}
         alt=""
         aria-hidden
-        loading="lazy"
+        loading={laden}
+        decoding="async"
         draggable={false}
         className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.04]"
       />

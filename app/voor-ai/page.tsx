@@ -671,7 +671,7 @@ export default function VoorAiPage() {
           </Block>
 
           <Block id="reviews" heading="Wat klanten zeggen">
-            {/* Zelfde reviews als de homepage, uit lib/content.ts. */}
+            {/* Zelfde reviews als op de casepagina's, uit lib/content.ts. */}
             <div className="grid gap-4 lg:grid-cols-3">
               {reviews.map((review) => (
                 <figure

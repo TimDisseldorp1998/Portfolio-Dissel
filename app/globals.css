@@ -347,10 +347,10 @@
   }
 }
 
-/* Marquee voor de reviewsectie. De rij bevat de reviews twee keer; op -50%
-   begint kopie 2 precies waar kopie 1 begon, dus de loop is naadloos. De
-   `pr` in de rij is even breed als de `gap`, anders valt die halve slag net
-   naast de kaartgrens en zie je elke ronde een sprongetje. */
+/* Marquee (components/ui/Marquee.tsx), voor projecten en reviews. De track
+   bevat de set twee keer; op -50% begint de kopie precies waar de eerste set
+   begon, dus de loop is naadloos. `--mq-duur` rekent het component uit de
+   gemeten setbreedte, zodat het tempo in px/s gelijk blijft op elk scherm. */
 @keyframes mq-left {
   from {
     transform: translateX(0);
@@ -359,24 +359,33 @@
     transform: translateX(-50%);
   }
 }
-/* De duur komt uit `--mq-duur`, die het component uitrekent op basis van het
-   aantal kaarten. Zo blijft de snelheid gelijk (~30px/s) hoeveel reviews er
-   ook bij komen; een vaste duur zou juist versnellen bij meer kaarten. */
 .mq-row {
-  animation: mq-left var(--mq-duur, 40s) linear infinite;
+  animation: mq-left var(--mq-duur, 80s) linear infinite;
 }
 .mq-wrap:hover .mq-row,
+.mq-wrap:focus-within .mq-row,
 .mq-wrap[data-paused="true"] .mq-row {
   animation-play-state: paused;
+}
+/* De items rekenen hun breedte uit de breedte van de rand (cqw), zodat het
+   aantal kaarten in beeld al klopt voordat de JavaScript draait. */
+.mq-wrap {
+  container-type: inline-size;
 }
 @media (prefers-reduced-motion: reduce) {
   .mq-row {
     animation: none;
   }
-  /* Zonder animatie zou je alleen het eerste stuk zien; zo blijven alle
-     reviews bereikbaar door te scrollen. */
+  /* Geen beweging: de kopieën weg en zelf scrollen, met snap per item. */
+  .mq-kopie {
+    display: none;
+  }
   .mq-wrap {
     overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+  .mq-item {
+    scroll-snap-align: start;
   }
 }
 

@@ -40,7 +40,7 @@ export function PauseButton({
     <button
       type="button"
       onClick={onToggle}
-      aria-label={paused ? `${label} hervatten` : `${label} pauzeren`}
+      aria-label={paused ? `${label} afspelen` : `${label} pauzeren`}
       className={cn(
         "inline-flex items-center justify-center rounded-full text-white/40 transition-colors hover:bg-white/10 hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
         maat.vlak,

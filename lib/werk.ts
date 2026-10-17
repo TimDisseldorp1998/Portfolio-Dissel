@@ -58,7 +58,39 @@ export type CaseMeta = {
   cta: string;
 };
 
-export type Case = CaseMeta & { Inhoud: ComponentType };
+export type Case = CaseMeta & {
+  Inhoud: ComponentType;
+  /** srcset voor het kaartbeeld: de 640px-variant plus het origineel. */
+  kaartSrcSet: string;
+};
+
+/** Breedte van een JPEG uit de SOF-header, zonder extra library. */
+function jpegBreedte(bestand: string): number {
+  const b = fs.readFileSync(bestand);
+  let i = 2;
+  while (i < b.length) {
+    const marker = b[i + 1];
+    const lengte = b.readUInt16BE(i + 2);
+    // SOF0-SOF15, behalve DHT (C4), JPG (C8) en DAC (CC)
+    if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) {
+      return b.readUInt16BE(i + 7);
+    }
+    i += 2 + lengte;
+  }
+  throw new Error(`${bestand}: geen JPEG-breedte gevonden`);
+}
+
+/**
+ * Elk kaartbeeld heeft een kleinere variant naast zich: `naam-640.jpg`. Die
+ * maak je met: sips -Z 640 -s format jpeg -s formatOptions 78 naam.jpg --out naam-640.jpg
+ */
+function kaartSrcSet(kaartbeeld: string): string {
+  const klein = kaartbeeld.replace(/\.jpg$/, "-640.jpg");
+  const pub = (src: string) => path.join(process.cwd(), "public", src);
+  if (!fs.existsSync(pub(klein)))
+    throw new Error(`${klein} ontbreekt. Maak hem met sips (zie lib/werk.ts).`);
+  return `${klein} 640w, ${kaartbeeld} ${jpegBreedte(pub(kaartbeeld))}w`;
+}
 
 const MAP = path.join(process.cwd(), "content", "werk");
 const MAX_TITEL = 60;
@@ -106,7 +138,8 @@ async function laad(bestand: string): Promise<Case> {
   // Een import met een variabel stuk maakt webpack een bundel van alle .mdx
   // in deze map. Zo is er geen lijst om bij te werken bij een nieuwe case.
   const mod = await import(`../content/werk/${bestand}.mdx`);
-  return { ...controleer(bestand, mod.meta), Inhoud: mod.default };
+  const meta = controleer(bestand, mod.meta);
+  return { ...meta, Inhoud: mod.default, kaartSrcSet: kaartSrcSet(meta.kaartbeeld) };
 }
 
 let cache: Promise<Case[]> | null = null;

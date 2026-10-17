@@ -52,9 +52,14 @@ export default async function WerkPagina() {
 
           {/* Zelfde gestaffelde entree als het werk op home. */}
           <RevealStagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {cases.map((c) => (
+            {cases.map((c, i) => (
               <RevealItem key={c.slug}>
-                <CaseKaart caseMeta={c} kop="h2" />
+                <CaseKaart
+                  caseMeta={c}
+                  kop="h2"
+                  laden={i < 3 ? "eager" : "lazy"}
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                />
               </RevealItem>
             ))}
           </RevealStagger>
