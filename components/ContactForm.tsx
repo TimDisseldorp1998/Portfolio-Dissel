@@ -209,6 +209,11 @@ export function ContactForm({ className }: { className?: string }) {
                 {/* Het formulier fadet eerst weg, daarna komt de
                     bedankt-kaart op — zoals mode="wait" dat deed. */}
                 {formulierZichtbaar ? (
+                  <>
+                  <p className="mb-6 text-base leading-relaxed text-white/80">
+                    Stuur een bericht, dan plan ik binnen twee werkdagen een
+                    kennismaking met je in.
+                  </p>
                   <form
                     data-form="fields"
                     data-state={formulierState}
@@ -385,6 +390,7 @@ export function ContactForm({ className }: { className?: string }) {
                         </RevealItem>
                       </RevealStagger>
                   </form>
+                  </>
                 ) : (
                   <SuccessCard onReset={resetForm} />
                 )}
