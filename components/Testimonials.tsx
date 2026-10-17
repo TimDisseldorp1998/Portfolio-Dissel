@@ -42,6 +42,7 @@ export function Testimonials() {
         <Marquee
           label="Reviews"
           herhaal={HERHAAL}
+          bedieningClassName="container-page"
           className="[-webkit-mask-image:linear-gradient(90deg,transparent,#000_7%,#000_93%,transparent)] [mask-image:linear-gradient(90deg,transparent,#000_7%,#000_93%,transparent)]"
           items={reviews.map((review) => ({
             key: review.quote.slice(0, 40),

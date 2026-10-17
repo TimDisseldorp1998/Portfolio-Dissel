@@ -46,6 +46,7 @@ export function Marquee({
   itemClassName,
   setClassName = "gap-5 pr-5",
   onder,
+  bedieningClassName,
 }: {
   items: MarqueeItem[];
   /** Wat er beweegt, bijv. "Projecten". Gebruikt in de pauzeknop. */
@@ -62,6 +63,9 @@ export function Marquee({
   setClassName?: string;
   /** Inhoud links naast de pauzeknop, onder de rij. */
   onder?: ReactNode;
+  /** Klassen op de rij met de pauzeknop, bijv. `container-page` als de
+   *  carrousel zelf van rand tot rand loopt. */
+  bedieningClassName?: string;
 }) {
   const randRef = useRef<HTMLDivElement>(null);
   const setRef = useRef<HTMLDivElement>(null);
@@ -132,7 +136,7 @@ export function Marquee({
           {set(true)}
         </div>
       </div>
-      <div className="mt-6 flex items-center justify-between gap-4">
+      <div className={cn("mt-6 flex items-center justify-between gap-4", bedieningClassName)}>
         <div>{onder}</div>
         <PauseButton
           paused={knopPauze}

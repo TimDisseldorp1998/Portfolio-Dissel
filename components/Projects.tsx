@@ -7,11 +7,13 @@ import { Marquee } from "./ui/Marquee";
 import { CaseKaart } from "./werk/CaseKaart";
 import { OudeCaseLinks } from "./werk/OudeCaseLinks";
 
-/** Kaartbreedte per breakpoint, als deel van de rand (cqw): drie kaarten vanaf
- *  1024px, twee vanaf 768px, daaronder één kaart van 85% met een stukje van de
- *  volgende. 1.5rem is de gap uit `setClassName`. */
+/** De rij loopt van schermrand tot schermrand, maar de kaarten houden de
+ *  maat van de content: drie per containerbreedte vanaf 1024px, twee vanaf
+ *  768px. Containerbreedte = min(schermbreedte, 1200px) min 2x 2.5rem
+ *  padding (zie .container-page); 1.5rem is de gap. Op mobiel 85% van het
+ *  scherm, met een stukje van de volgende kaart. */
 const KAARTBREEDTE =
-  "w-[85cqw] md:w-[calc((100cqw-1.5rem)/2)] lg:w-[calc((100cqw-3rem)/3)]";
+  "w-[85cqw] md:w-[calc((min(100cqw,1200px)-5rem-1.5rem)/2)] lg:w-[calc((min(100cqw,1200px)-5rem-3rem)/3)]";
 const SIZES = "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 85vw";
 
 const alleProjectenLink =
@@ -47,22 +49,26 @@ export async function Projects() {
             </a>
           </div>
         </Reveal>
+      </Container>
 
-        <Marquee
-          label="Projecten"
-          // Op mobiel loopt de rij tot de schermrand (de container heeft daar
-          // 1.5rem padding), zodat 85cqw ook echt 85% van het scherm is.
-          className="-mx-6 md:mx-0 [-webkit-mask-image:linear-gradient(90deg,transparent,#000_4%,#000_96%,transparent)] [mask-image:linear-gradient(90deg,transparent,#000_4%,#000_96%,transparent)]"
-          itemClassName={KAARTBREEDTE}
-          setClassName="gap-6 pr-6"
-          items={cases.map((c, i) => ({
-            key: c.slug,
-            node: (
-              <CaseKaart
-                caseMeta={c}
-                laden={i < 3 ? "eager" : "lazy"}
-                sizes={SIZES}
-              />
+      {/* Buiten de Container: de rij loopt van rand tot rand. Twee keer de
+          lijst per set, zodat één set ook op een heel breed scherm (tot zo'n
+          4500px) breder is dan het scherm en er nooit een gat valt. */}
+      <Marquee
+        label="Projecten"
+        herhaal={2}
+        bedieningClassName="container-page"
+        className="[-webkit-mask-image:linear-gradient(90deg,transparent,#000_5%,#000_95%,transparent)] [mask-image:linear-gradient(90deg,transparent,#000_5%,#000_95%,transparent)]"
+        itemClassName={KAARTBREEDTE}
+        setClassName="gap-6 pr-6"
+        items={cases.map((c, i) => ({
+          key: c.slug,
+          node: (
+            <CaseKaart
+              caseMeta={c}
+              laden={i < 3 ? "eager" : "lazy"}
+              sizes={SIZES}
+            />
             ),
           }))}
           onder={
@@ -72,7 +78,6 @@ export async function Projects() {
             </a>
           }
         />
-      </Container>
     </Section>
   );
 }
