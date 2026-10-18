@@ -18,8 +18,8 @@ export function Hero() {
   const riseDelay = (delay: number) =>
     ({ "--rise-delay": `${delay}s` }) as CSSProperties;
 
-  // Split the fixed prefix into a head ("Digitale product") and its last word
-  // ("designer"). On phones we force the head onto line 1 and the last word +
+  // Split the fixed prefix into a head ("Websites en") and its last word
+  // ("huisstijlen"). On phones we force the head onto line 1 and the last word +
   // "voor" onto line 2, so the heading is a stable 3 lines at any phone width
   // (no orphaned "voor"). From tablet up the prefix sits on one line again.
   const prefixWords = site.hero.headlinePrefix.trim().split(" ");
@@ -65,8 +65,8 @@ export function Hero() {
           style={riseDelay(0.2)}
           className="mount-rise min-h-[3.75em] max-w-4xl font-heading text-[clamp(1.9375rem,8.6vw,2.75rem)] font-semibold leading-[1.25] tracking-tight text-white sm:min-h-0 sm:text-[2.75rem] md:text-[3.25rem] lg:text-[4.25rem]"
         >
-          {/* Phones: 3 lines — "Digitale product" / "designer voor" / word.
-              Tablet+ (sm): 2 lines — "Digitale Product Designer" / "voor" + word.
+          {/* Phones: 3 lines — "Websites en" / "huisstijlen voor" / word.
+              Tablet+ (sm): 2 lines — "Websites en huisstijlen" / "voor" + word.
               "voor" is fixed text; only the rotating word types in and out. */}
           {prefixHead}{" "}
           <br className="sm:hidden" />

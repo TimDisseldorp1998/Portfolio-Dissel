@@ -13,30 +13,34 @@ const serviceColumns: {
   intro: string;
   icon: LucideIcon;
   items: string[];
+  /** Linktekst onderaan de kolom. Tot de dienstpagina's er zijn (stap 3)
+   *  gaan alle drie naar /diensten/; dan krijgt elke kolom zijn eigen URL. */
+  link: { label: string; href: string };
 }[] = [
   {
-    title: "Websites ontwerpen en bouwen",
+    title: "Websites",
     intro:
-      "Van eerste ontwerp tot een snelle site die live staat en aanvragen oplevert.",
+      "Een professionele website die laat zien wat je doet en hoe klanten je bereiken.",
     icon: Code2,
     items: [
       "Webdesign",
       "Landingspagina's",
       "Websites laten maken",
       "Web-apps",
-      "Onderhoud & support",
+      "Onderhoud & hosting",
     ],
+    link: { label: "Meer over websites", href: "/diensten/" },
   },
   {
-    title: "Huisstijl en branding",
-    intro: "Een merk dat klopt, van logo tot de laatste knop op je site.",
+    title: "Huisstijl",
+    intro: "Een herkenbare visuele identiteit die past bij jouw bedrijf.",
     icon: Sparkles,
     items: ["Merkidentiteit", "Logo-ontwerp", "Huisstijl", "Brand guidelines"],
+    link: { label: "Meer over huisstijl", href: "/diensten/" },
   },
   {
-    title: "UX/UI design en optimalisatie",
-    intro:
-      "Interfaces die logisch werken, en bestaande sites die meer opleveren.",
+    title: "UX/UI design",
+    intro: "Digitale ervaringen die logisch werken en prettig aanvoelen.",
     icon: PenTool,
     items: [
       "UX/UI design",
@@ -46,6 +50,7 @@ const serviceColumns: {
       "Conversie-optimalisatie",
       "Snelheid",
     ],
+    link: { label: "Meer over UX/UI design", href: "/diensten/" },
   },
 ];
 
@@ -69,8 +74,7 @@ export function Services({
           Diensten
         </p>
         <Kop className="max-w-3xl font-heading text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
-          <span className="text-white/[0.55]">Van klik tot klant,</span>{" "}
-          <span className="text-white">met design dat converteert.</span>
+          Wat ik voor je maak.
         </Kop>
 
         {/* Intro onder de kop, de drie blokken daaronder over de volle
@@ -79,16 +83,15 @@ export function Services({
         <div className="mt-6 md:mt-12">
           <div className="grid max-w-5xl gap-4 text-base leading-relaxed text-white/70 md:grid-cols-2 md:gap-10">
             <p>
-              Een mooie website is pas het halve werk.{" "}
-              <span className="whitespace-nowrap">Ik ontwerp</span> en bouw
-              digitale producten die er professioneel uitzien én meetbaar meer
-              opleveren. Voor ondernemers die willen groeien, of je nu net
-              begint of al jaren draait.
+              Ik ontwerp en bouw websites, huisstijlen en interfaces voor
+              ondernemers die net beginnen of al jaren draaien. Je praat met de
+              persoon die het ook maakt, van de eerste schets tot de site live
+              staat.
             </p>
             <p>
-              Design en development onder één dak, korte lijnen en snelle
-              oplevering. Geen eindeloze trajecten of losse eindjes. Gewoon
-              design en development dat je bezoekers omzet in klanten.
+              Ontwerp en development liggen bij één persoon. Dat houdt de lijnen
+              kort: je vraag gaat niet via een accountmanager, en wat we
+              afspreken, bouw ik zelf.
             </p>
           </div>
 
@@ -110,7 +113,7 @@ export function Services({
                     <p className="mb-5 mt-2 text-sm leading-relaxed text-white/70">
                       {column.intro}
                     </p>
-                    <ul className="space-y-2.5">
+                    <ul className="mb-6 space-y-2.5">
                       {column.items.map((item) => (
                         <li
                           key={item}
@@ -120,6 +123,17 @@ export function Services({
                         </li>
                       ))}
                     </ul>
+                    {/* Op /diensten/ zelf (kop = h1) zou de link naar
+                        dezelfde pagina wijzen; daar laten we hem weg. */}
+                    {Kop === "h2" && (
+                      <a
+                        href={column.link.href}
+                        className="mt-auto inline-flex items-center gap-1.5 self-start rounded-sm text-sm font-medium text-white underline decoration-white/30 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                      >
+                        {column.link.label}
+                        <ArrowRight size={16} aria-hidden />
+                      </a>
+                    )}
                   </div>
                 );
               })}

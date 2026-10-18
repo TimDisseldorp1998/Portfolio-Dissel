@@ -21,7 +21,7 @@ export const site = {
     eyebrow: "Gevestigd in Noord-Holland",
     // The headline ends with a rotating tail that types in/out (see Typewriter).
     // The first phrase is what renders server-side (SEO + no-JS fallback).
-    headlinePrefix: "Digitale Product Designer",
+    headlinePrefix: "Websites en huisstijlen",
     // "voor" is vaste tekst (wordt niet steeds opnieuw getypt); alleen de
     // woorden erna roteren via de Typewriter.
     headlineConnector: "voor",
@@ -30,7 +30,15 @@ export const site = {
       "regionale bedrijven",
     ],
     subtitle:
-      "Ik ontwerp en bouw websites voor lokale ondernemers, van huisstijl tot live site. Strak design, snel opgeleverd, zonder gedoe.",
+      "Ik ontwerp en bouw je website zelf, van huisstijl tot live site. Je weet vooraf wat het kost en wanneer hij af is.",
+    // Vier feiten in de strook onder de hero (components/Feitenstrook.tsx).
+    // Alleen dingen die Tim kan waarmaken (beslissingen stap 0, oktober 2026).
+    feiten: [
+      "Vaste prijs vooraf",
+      "Webdesign bij één persoon",
+      "Meestal live in 2 tot 4 weken",
+      "De site is helemaal van jou",
+    ],
     // Contact is the primary (filled) action; work is the secondary (ghost) one.
     // The contact CTA targets the form anchor directly so the form lands in view.
     contactCta: { label: "Plan een kennismaking", href: "#contact-form" },
@@ -77,6 +85,19 @@ export type Review = {
   /** Link naar de review op Google. Alleen bij reviews die echt op Google
    *  staan; de kaart toont dan "Bekijk op Google". */
   google?: string;
+};
+
+/**
+ * Prijzen, één keer vastgelegd: de pakketten op home, de prijzenlijst en de
+ * FAQ op /voor-ai/ lezen allemaal hieruit. Opgegeven door Tim, oktober 2026,
+ * allemaal vanaf-prijzen exclusief btw. Onderhoud en hosting heeft bewust
+ * geen bedrag. `\u00a0` houdt het euroteken en het bedrag bij elkaar.
+ */
+export const prijs = {
+  compact: "€\u00a0499,-",
+  zonderHuisstijl: "€\u00a0999,-",
+  metHuisstijl: "€\u00a01.199,-",
+  huisstijlLos: "€\u00a0349,-",
 };
 
 export const reviews: Review[] = [
@@ -145,7 +166,7 @@ export const about = {
 export const bento = {
   intro: {
     title:
-      "Creatieve Digitale Product Designer met een oog voor detail. Ik ontwerp en bouw producten die net zo goed presteren als ze eruitzien.",
+      "Digitale Product Designer uit Heiloo. Ik ontwerp en bouw websites en huisstijlen, en doe dat allemaal zelf.",
   },
   background: {
     paragraphs: [
