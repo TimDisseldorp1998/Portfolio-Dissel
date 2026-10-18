@@ -111,6 +111,40 @@
 /* Entree-animaties bij het laden (hero en navbar). Puur CSS: `both` houdt het
    element verborgen tijdens de vertraging en houdt de eindstand vast, precies
    zoals initial -> animate met een delay eerder deed. */
+/* Stoom uit het koffiekopje (components/ui/KoffieIcoon.tsx, stoom="hover"):
+   in rust weg, bij hover of focus op de knop stijgen de drie lijntjes kort
+   op. Alleen opacity en transform. */
+.koffie-stoom path[d$="2v2"] {
+  opacity: 0;
+  transform: translateY(2px);
+  transform-box: fill-box;
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.3s ease-out;
+}
+.koffie-stoom path[d="M10 2v2"] {
+  transition-delay: 0.05s;
+}
+.koffie-stoom path[d="M14 2v2"] {
+  transition-delay: 0.1s;
+}
+.group:hover .koffie-stoom path[d$="2v2"],
+.group:focus-visible .koffie-stoom path[d$="2v2"] {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+/* Minder beweging: het kopje staat er gewoon met stoom en verandert niet. */
+@media (prefers-reduced-motion: reduce) {
+  .koffie-stoom path[d$="2v2"],
+  .group:hover .koffie-stoom path[d$="2v2"],
+  .group:focus-visible .koffie-stoom path[d$="2v2"] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 /* Info-wolk achter een ⓘ-knop (components/ui/InfoKnop.tsx): kort infaden
    en iets opschalen. Alleen opacity en transform, dus geen layoutverschuiving. */
 .info-wolk:not([hidden]) {

@@ -1,13 +1,13 @@
 "use client";
 
 import { type CSSProperties } from "react";
-import { ArrowRight } from "lucide-react";
 import { site } from "@/lib/content";
 import { cn } from "@/lib/cn";
 import { AuroraBackground } from "./AuroraBackground";
 import { Container } from "./ui/Container";
 import { Button } from "./ui/Button";
 import { Typewriter } from "./ui/Typewriter";
+import { KoffieIcoon } from "./ui/KoffieIcoon";
 
 export function Hero() {
   /**
@@ -100,9 +100,10 @@ export function Hero() {
             variant="primary"
             size="lg"
             data-cta="plan_kennismaking"
+            className="group"
           >
+            <KoffieIcoon stoom="hover" />
             {site.hero.contactCta.label}
-            <ArrowRight size={18} />
           </Button>
         </div>
 

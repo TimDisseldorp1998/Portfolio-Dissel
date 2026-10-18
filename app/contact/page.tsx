@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { Kruimelpad } from "@/components/Kruimelpad";
 import { Container } from "@/components/ui/Container";
 import { ContactForm } from "@/components/ContactForm";
+import { KoffieIcoon } from "@/components/ui/KoffieIcoon";
 
 const TITEL = "Contact | Plan een kennismaking met DisselDesign";
 const OMSCHRIJVING =
@@ -55,6 +56,7 @@ export default function ContactPagina() {
                 <span className="text-white">Plan een gesprek.</span>
               </h1>
               <p className="mt-6 text-lg leading-relaxed text-white/70">
+                <KoffieIcoon size="sm" className="mr-2 inline-block align-[-2px] text-primary" />
                 Plan een vrijblijvend gesprek van 20 minuten. Vertel me waar je
                 naartoe wilt met je merk of product. Ik denk direct met je mee
                 over hoe we daar sneller komen. Geen verplichtingen, gewoon een

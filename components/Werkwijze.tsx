@@ -1,8 +1,8 @@
-import { ArrowRight } from "lucide-react";
 import { Section } from "./ui/Section";
 import { Container } from "./ui/Container";
 import { Reveal, RevealItem, RevealStagger } from "./ui/Reveal";
 import { Button } from "./ui/Button";
+import { KoffieIcoon } from "./ui/KoffieIcoon";
 
 const stappen = [
   { titel: "Kennismaking", tekst: "20 minuten, gratis. Je vertelt wat je wilt bereiken." },
@@ -34,8 +34,10 @@ export function Werkwijze() {
                   RevealStagger zet om elk item een div; de nummers staan
                   daarom als tekst in de kaart. */}
               <div className="flex h-full flex-col rounded-3xl bg-white/[0.04] p-7 transition-colors duration-300 hover:bg-white/[0.06]">
-                <span className="font-heading text-sm font-semibold text-primary">
+                {/* Stap 1 is de kennismaking: daar staat het koffiekopje bij. */}
+                <span className="flex items-center gap-2 font-heading text-sm font-semibold text-primary">
                   {String(i + 1).padStart(2, "0")}
+                  {i === 0 && <KoffieIcoon size="sm" />}
                 </span>
                 <h3 className="mt-3 font-heading text-lg font-semibold text-white">
                   {stap.titel}
@@ -47,9 +49,9 @@ export function Werkwijze() {
         </RevealStagger>
 
         <Reveal className="mt-10">
-          <Button href="/contact/" variant="primary" size="lg" data-cta="plan_kennismaking">
+          <Button href="/contact/" variant="primary" size="lg" data-cta="plan_kennismaking" className="group">
+            <KoffieIcoon stoom="hover" />
             Plan een kennismaking
-            <ArrowRight size={18} aria-hidden />
           </Button>
         </Reveal>
       </Container>

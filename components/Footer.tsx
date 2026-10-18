@@ -6,6 +6,7 @@ import { Container } from "./ui/Container";
 import { Logo } from "./Logo";
 import { CookieVoorkeurenKnop } from "./footer/CookieVoorkeurenKnop";
 import { FooterKolommenOpen } from "./footer/FooterKolommenOpen";
+import { KoffieIcoon } from "./ui/KoffieIcoon";
 
 /**
  * Footer volgens het informatiestructuurplan, alleen de kolommen van fase 1:
@@ -63,6 +64,7 @@ function Kolom({
                 ? { target: "_blank", rel: "noopener noreferrer" }
                 : {})}
             >
+              {l.cta && <KoffieIcoon size="sm" className="mr-2 inline-block align-[-3px]" />}
               {l.naam}
               {l.extern && <span className="sr-only"> (opent in nieuw tabblad)</span>}
             </a>

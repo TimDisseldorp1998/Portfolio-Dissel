@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { ArrowRight } from "lucide-react";
 import { alleCases } from "@/lib/werk";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -8,6 +7,7 @@ import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { CaseKaart } from "@/components/werk/CaseKaart";
 import { RevealItem, RevealStagger } from "@/components/ui/Reveal";
+import { KoffieIcoon } from "@/components/ui/KoffieIcoon";
 
 const TITEL = "Werk van Tim Disseldorp | DisselDesign";
 const OMSCHRIJVING =
@@ -83,9 +83,10 @@ export default async function WerkPagina() {
                 variant="primary"
                 size="lg"
                 data-cta="plan_kennismaking"
+                className="group"
               >
+                <KoffieIcoon stoom="hover" />
                 Plan een kennismaking
-                <ArrowRight size={18} aria-hidden />
               </Button>
             </div>
           </section>

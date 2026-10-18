@@ -6,6 +6,7 @@ import { Container } from "./ui/Container";
 import { Reveal } from "./ui/Reveal";
 import { Button } from "./ui/Button";
 import { InfoKnop } from "./ui/InfoKnop";
+import { KoffieIcoon } from "./ui/KoffieIcoon";
 
 const [landingspagina, website, websiteHuisstijl, huisstijl] = pakketten;
 const kaarten = [landingspagina, website, websiteHuisstijl];
@@ -167,8 +168,8 @@ export function Pakketten() {
           <p className="mt-8 text-base leading-relaxed text-white/70">
             Twijfel je welk pakket past?{" "}
             <a href="#contact-form" data-cta="plan_kennismaking" className={tekstLink}>
+              <KoffieIcoon size="sm" />
               Plan een kennismaking
-              <ArrowRight size={16} aria-hidden />
             </a>
           </p>
         </Reveal>

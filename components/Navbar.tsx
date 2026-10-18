@@ -3,16 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useReducedMotion } from "@/lib/useReducedMotion";
-import {
-  User,
-  Eye,
-  LayoutGrid,
-  MessageCircle,
-  type LucideIcon,
-} from "lucide-react";
+import { User, Eye, LayoutGrid, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { isProgrammaticScroll, scrollToSection } from "@/lib/scroll";
 import { LogoMark } from "./Logo";
+import { KoffieIcoon } from "./ui/KoffieIcoon";
 
 /**
  * Scroll thresholds (hysteresis) for the scrolled pill state: extra blur and
@@ -167,14 +162,11 @@ export function Navbar() {
           data-cta="plan_kennismaking"
           aria-label="Plan een kennismaking"
           aria-current={huidig("/contact/") === "page" ? "page" : undefined}
-          className="ml-1 flex min-h-[50px] min-w-[50px] items-center justify-center gap-2 rounded-full bg-primary px-3.5 text-[15px] font-semibold text-ink transition-colors duration-200 hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40 sm:min-h-[44px] lg:px-4"
+          className="group ml-1 flex min-h-[50px] min-w-[50px] items-center justify-center gap-2 rounded-full bg-primary px-3.5 text-[15px] font-semibold text-ink transition-colors duration-200 hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40 sm:min-h-[44px] lg:px-4"
         >
-          <MessageCircle
-            size={20}
-            strokeWidth={2}
-            aria-hidden
-            className="sm:h-[17px] sm:w-[17px] lg:hidden"
-          />
+          {/* Koffiekopje = kennismaking. Onder lg alleen het kopje; de knop
+              houdt dan zijn aria-label als naam. */}
+          <KoffieIcoon stoom="hover" />
           <span className="hidden lg:inline">Plan een kennismaking</span>
         </a>
       </nav>
