@@ -10,7 +10,10 @@ import { Container } from "./ui/Container";
 
 const serviceColumns: {
   title: string;
+  /** Op /diensten/. */
   intro: string;
+  /** Op home: één korte zin, de rest staat op /diensten/. */
+  introHome: string;
   icon: LucideIcon;
   items: string[];
   /** Linktekst onderaan de kolom. Tot de dienstpagina's er zijn (stap 3)
@@ -21,6 +24,7 @@ const serviceColumns: {
     title: "Websites",
     intro:
       "Een professionele website die laat zien wat je doet en hoe klanten je bereiken.",
+    introHome: "Een professionele website, op maat ontworpen en gebouwd.",
     icon: Code2,
     items: [
       "Webdesign",
@@ -34,6 +38,7 @@ const serviceColumns: {
   {
     title: "Huisstijl",
     intro: "Een herkenbare visuele identiteit die past bij jouw bedrijf.",
+    introHome: "Een herkenbare visuele identiteit die bij je bedrijf past.",
     icon: Sparkles,
     items: ["Merkidentiteit", "Logo-ontwerp", "Huisstijl", "Brand guidelines"],
     link: { label: "Meer over huisstijl", href: "/diensten/" },
@@ -41,6 +46,7 @@ const serviceColumns: {
   {
     title: "UX/UI design",
     intro: "Digitale ervaringen die logisch werken en prettig aanvoelen.",
+    introHome: "Digitale ervaringen die logisch werken en prettig aanvoelen.",
     icon: PenTool,
     items: [
       "UX/UI design",
@@ -55,8 +61,9 @@ const serviceColumns: {
 ];
 
 /**
- * Op home een sectie met H2; op /diensten/ de hoofdinhoud met H1 en een
- * kruimelpad erboven (`boven`).
+ * Op home een compacte sectie met H2: korte intro, per kaart één zin en een
+ * link. Op /diensten/ de hoofdinhoud met H1, kruimelpad (`boven`), twee
+ * alinea's, de lijstjes per dienst en de regel voor bureaus.
  */
 export function Services({
   kop: Kop = "h2",
@@ -65,6 +72,7 @@ export function Services({
   kop?: "h1" | "h2";
   boven?: React.ReactNode;
 } = {}) {
+  const opHome = Kop === "h2";
   return (
     <Section id="services" variant="dark" className={Kop === "h1" ? "lg:pt-32" : undefined}>
       <Container>
@@ -74,26 +82,33 @@ export function Services({
           Diensten
         </p>
         <Kop className="max-w-3xl font-heading text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
-          Wat ik voor je maak.
+          {opHome ? "Waar kan ik je mee helpen?" : "Wat ik voor je maak."}
         </Kop>
 
         {/* Intro onder de kop, de drie blokken daaronder over de volle
             breedte: naast de intro werden ze te smal en liepen de titels
             over drie regels. */}
-        <div className="mt-6 md:mt-12">
-          <div className="grid max-w-5xl gap-4 text-base leading-relaxed text-white/70 md:grid-cols-2 md:gap-10">
-            <p>
-              Ik ontwerp en bouw websites, huisstijlen en interfaces voor
-              ondernemers die net beginnen of al jaren draaien. Je praat met de
-              persoon die het ook maakt, van de eerste schets tot de site live
-              staat.
+        <div className={opHome ? "mt-6" : "mt-6 md:mt-12"}>
+          {opHome ? (
+            <p className="max-w-2xl text-base leading-relaxed text-white/70">
+              Van een nieuwe website tot een herkenbare huisstijl. Je werkt
+              rechtstreeks met mij, van het eerste idee tot het eindresultaat.
             </p>
-            <p>
-              Ontwerp en development liggen bij één persoon. Dat houdt de lijnen
-              kort: je vraag gaat niet via een accountmanager, en wat we
-              afspreken, bouw ik zelf.
-            </p>
-          </div>
+          ) : (
+            <div className="grid max-w-5xl gap-4 text-base leading-relaxed text-white/70 md:grid-cols-2 md:gap-10">
+              <p>
+                Ik ontwerp en bouw websites, huisstijlen en interfaces voor
+                ondernemers die net beginnen of al jaren draaien. Je praat met de
+                persoon die het ook maakt, van de eerste schets tot de site live
+                staat.
+              </p>
+              <p>
+                Ontwerp en development liggen bij één persoon. Dat houdt de lijnen
+                kort: je vraag gaat niet via een accountmanager, en wat we
+                afspreken, bouw ik zelf.
+              </p>
+            </div>
+          )}
 
           <div className="mt-10 md:mt-14">
             <div className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-3">
@@ -111,21 +126,25 @@ export function Services({
                       {column.title}
                     </h3>
                     <p className="mb-5 mt-2 text-sm leading-relaxed text-white/70">
-                      {column.intro}
+                      {opHome ? column.introHome : column.intro}
                     </p>
-                    <ul className="mb-6 space-y-2.5">
-                      {column.items.map((item) => (
-                        <li
-                          key={item}
-                          className="text-sm leading-snug text-white/60"
-                        >
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                    {/* Op /diensten/ zelf (kop = h1) zou de link naar
-                        dezelfde pagina wijzen; daar laten we hem weg. */}
-                    {Kop === "h2" && (
+                    {/* Lijstjes alleen op /diensten/; op home zou het de
+                        sectie te vol maken. */}
+                    {!opHome && (
+                      <ul className="mb-6 space-y-2.5">
+                        {column.items.map((item) => (
+                          <li
+                            key={item}
+                            className="text-sm leading-snug text-white/60"
+                          >
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    {/* Op /diensten/ zelf zou de link naar dezelfde pagina
+                        wijzen; daar laten we hem weg. */}
+                    {opHome && (
                       <a
                         href={column.link.href}
                         className="mt-auto inline-flex items-center gap-1.5 self-start rounded-sm text-sm font-medium text-white underline decoration-white/30 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
@@ -139,16 +158,18 @@ export function Services({
               })}
             </div>
 
-            <p className="mt-8 text-base leading-relaxed text-white/70">
-              Bureau of digitaal team? Ik werk als Freelance Product Designer.{" "}
-              <a
-                href="/contact/"
-                className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-sm font-medium text-white underline decoration-white/30 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-              >
-                Neem contact op
-                <ArrowRight size={16} aria-hidden />
-              </a>
-            </p>
+            {!opHome && (
+              <p className="mt-8 text-base leading-relaxed text-white/70">
+                Bureau of digitaal team? Ik werk als Freelance Product Designer.{" "}
+                <a
+                  href="/contact/"
+                  className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-sm font-medium text-white underline decoration-white/30 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                >
+                  Neem contact op
+                  <ArrowRight size={16} aria-hidden />
+                </a>
+              </p>
+            )}
           </div>
         </div>
       </Container>

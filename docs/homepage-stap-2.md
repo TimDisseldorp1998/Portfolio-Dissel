@@ -28,25 +28,17 @@ Blijft zoals het is: de pill **Gevestigd in Noord-Holland** met het groene bolle
 
 ## 2. Diensten
 
-Het blok met drie kolommen blijft, met de iconen en de lijstjes eronder. Alleen kop en introzinnen veranderen. Elke kolom krijgt onderaan een link; tot de dienstpagina's er zijn (stap 3) gaan ze naar /diensten/.
+Op home compact; /diensten/ houdt de lijstjes, de twee alinea's en de regel voor bureaus.
 
 **Klein:** Diensten
-**Kop:** Wat ik voor je maak.
+**Kop:** Waar kan ik je mee helpen?
+**Intro:** Van een nieuwe website tot een herkenbare huisstijl. Je werkt rechtstreeks met mij, van het eerste idee tot het eindresultaat.
 
-**Websites**
-Een professionele website die laat zien wat je doet en hoe klanten je bereiken.
-Lijstje blijft: Webdesign · Landingspagina's · Websites laten maken · Web-apps · Onderhoud & hosting
-Link: Meer over websites →
+**Websites:** Een professionele website, op maat ontworpen en gebouwd. · Meer over websites →
+**Huisstijl:** Een herkenbare visuele identiteit die bij je bedrijf past. · Meer over huisstijl →
+**UX/UI design:** Digitale ervaringen die logisch werken en prettig aanvoelen. · Meer over UX/UI design →
 
-**Huisstijl**
-Een herkenbare visuele identiteit die past bij jouw bedrijf.
-Lijstje blijft: Merkidentiteit · Logo-ontwerp · Huisstijl · Brand guidelines
-Link: Meer over huisstijl →
-
-**UX/UI design**
-Digitale ervaringen die logisch werken en prettig aanvoelen.
-Lijstje blijft: UX/UI design · Prototyping · Design systemen · SEO · Conversie-optimalisatie · Snelheid
-Link: Meer over UX/UI design →
+Links gaan voorlopig naar /diensten/; in stap 3 naar de eigen dienstpagina's.
 
 ---
 
