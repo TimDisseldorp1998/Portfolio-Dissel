@@ -111,6 +111,30 @@
 /* Entree-animaties bij het laden (hero en navbar). Puur CSS: `both` houdt het
    element verborgen tijdens de vertraging en houdt de eindstand vast, precies
    zoals initial -> animate met een delay eerder deed. */
+/* Info-wolk achter een ⓘ-knop (components/ui/InfoKnop.tsx): kort infaden
+   en iets opschalen. Alleen opacity en transform, dus geen layoutverschuiving. */
+.info-wolk:not([hidden]) {
+  animation: info-in 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: top right;
+}
+
+@keyframes info-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .info-wolk:not([hidden]) {
+    animation: none;
+  }
+}
+
 @keyframes mount-rise {
   from {
     opacity: 0;

@@ -18,7 +18,7 @@ import {
   Loader2,
   Mail,
 } from "lucide-react";
-import { contact, site } from "@/lib/content";
+import { contact, pakketten, site } from "@/lib/content";
 import { Reveal, RevealStagger, RevealItem } from "./ui/Reveal";
 import { cn } from "@/lib/cn";
 import { meet } from "@/lib/meten";
@@ -58,6 +58,45 @@ export function ContactForm({ className }: { className?: string }) {
   });
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Pakket vooraf invullen vanuit de prijzen op home (?pakket=…). Een bericht
+  // dat de bezoeker zelf typte, blijft staan; alleen een eerder vooraf
+  // ingevulde regel wordt vervangen.
+  const voorafBericht = useRef("");
+  useEffect(() => {
+    const kies = (slug: string | null) => {
+      const p = pakketten.find((x) => x.slug === slug);
+      if (!p) return;
+      const tekst = `Ik heb interesse in: ${p.naam} (vanaf € ${p.bedrag.toLocaleString("nl-NL")})`;
+      // Vastleggen vóór de update: React voert de updater later uit, en dan
+      // staat voorafBericht al op de nieuwe tekst.
+      const vorige = voorafBericht.current;
+      voorafBericht.current = tekst;
+      setProjectType(p.projectType);
+      setValues((v) =>
+        v.message.trim() === "" || v.message === vorige ? { ...v, message: tekst } : v
+      );
+    };
+
+    kies(new URLSearchParams(window.location.search).get("pakket"));
+
+    // Een klik op "Vraag aan" blijft op de pagina: invullen, URL bijwerken,
+    // naar het formulier scrollen. Zonder JavaScript werkt de link gewoon.
+    const opKlik = (e: MouseEvent) => {
+      const link = (e.target as Element | null)?.closest?.("a[data-pakket]");
+      if (!link || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const slug = link.getAttribute("data-pakket");
+      e.preventDefault();
+      kies(slug);
+      window.history.replaceState(null, "", `?pakket=${slug}#contact-form`);
+      const rustig = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      document
+        .getElementById("contact-form")
+        ?.scrollIntoView({ behavior: rustig ? "auto" : "smooth", block: "start" });
+    };
+    document.addEventListener("click", opKlik);
+    return () => document.removeEventListener("click", opKlik);
+  }, []);
 
   // Auto-resize textarea, respecting min/max heights.
   useEffect(() => {

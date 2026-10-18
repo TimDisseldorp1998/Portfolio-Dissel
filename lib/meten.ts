@@ -29,7 +29,10 @@ export type MeetEvent =
   | { naam: "email_click"; params: { page_path: string } }
   | {
       naam: "cta_click";
-      params: { cta_name: "plan_kennismaking"; page_path: string };
+      params: {
+        cta_name: "plan_kennismaking" | `pakket_${string}`;
+        page_path: string;
+      };
     };
 
 function heeftToestemming(): boolean {

@@ -1,39 +1,37 @@
 import { ArrowRight, Check } from "lucide-react";
-import { prijs } from "@/lib/content";
+import { bedrag, euro, pakketten, type Pakket } from "@/lib/content";
+import { cn } from "@/lib/cn";
 import { Section } from "./ui/Section";
 import { Container } from "./ui/Container";
-import { Reveal, RevealItem, RevealStagger } from "./ui/Reveal";
+import { Reveal } from "./ui/Reveal";
 import { Button } from "./ui/Button";
+import { InfoKnop } from "./ui/InfoKnop";
 
-const pakketten = [
-  {
-    naam: "Landingspagina of compacte site",
-    prijs: prijs.compact,
-    tekst: "Eén pagina of een kleine site. Voor een nieuw bedrijf, een actie of één dienst die je los wilt laten zien.",
-  },
-  {
-    naam: "Website",
-    prijs: prijs.zonderHuisstijl,
-    tekst: "Tot 8 pagina's, ontworpen rond je bestaande logo en kleuren.",
-  },
-  {
-    naam: "Website + huisstijl",
-    prijs: prijs.metHuisstijl,
-    tekst: "Tot 8 pagina's plus een nieuw logo en huisstijl. Merk en site ontstaan in één traject en passen bij elkaar.",
-  },
-  {
-    naam: "Huisstijl",
-    prijs: prijs.huisstijlLos,
-    tekst: "Logo, kleuren en lettertypen, vastgelegd in een stijlgids die je aan je drukker of socialmediabeheerder kunt geven.",
-  },
-];
+const [landingspagina, website, websiteHuisstijl, huisstijl] = pakketten;
+const kaarten = [landingspagina, website, websiteHuisstijl];
+const aanrader = websiteHuisstijl.slug;
+// Website + huisstijl los gekocht tegenover het pakket: € 999 + € 349 − € 1.199.
+const voordeel = bedrag.zonderHuisstijl + bedrag.huisstijlLos - bedrag.metHuisstijl;
 
-const inbegrepen = [
+const inbegrepenKort = ["Ontwerp op maat", "Getest op elk scherm", "SEO-basis", "Analytics"];
+const inbegrepenLang = [
   "Ontwerp op maat, geen template",
   "Getest op telefoon, tablet en desktop",
   "Basis-SEO: paginatitels, beschrijvingen, een sitemap en aanmelding bij Google",
-  "Een contactformulier dat in je mail binnenkomt, en Google Analytics met cookiebanner",
+  "Een contactformulier dat in je mail binnenkomt",
+  "Google Analytics met cookiebanner",
 ];
+
+/** Link naar het formulier op home, met het pakket in de URL. ContactForm
+ *  vangt de klik op (`data-pakket`) en vult projecttype en bericht in. */
+const aanvraag = (p: Pakket) => ({
+  href: `/?pakket=${p.slug}#contact-form`,
+  "data-pakket": p.slug,
+  "data-cta": `pakket_${p.slug.replace("-", "_")}`,
+});
+
+const tekstLink =
+  "inline-flex min-h-[44px] items-center gap-1.5 rounded-sm font-medium text-white underline decoration-white/30 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary";
 
 /** Pakketten met vanaf-prijzen op home, direct na de diensten. */
 export function Pakketten() {
@@ -47,55 +45,132 @@ export function Pakketten() {
           <h2 className="font-heading text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-5xl">
             Jouw investering.
           </h2>
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/70">
-            Heldere vanaf-prijzen, exclusief btw. Na onze kennismaking ontvang
-            je een voorstel met een vaste prijs, zodat je vooraf precies weet
-            waar je aan toe bent.
+          {/* De enige plek in de sectie waar "excl. btw" staat. */}
+          <p className="mt-5 text-base leading-relaxed text-white/70">
+            Vaste prijs vooraf. Alle prijzen excl. btw.
           </p>
         </Reveal>
 
-        <RevealStagger className="mt-10 grid gap-4 sm:grid-cols-2 md:mt-14 lg:grid-cols-4 lg:gap-5">
-          {pakketten.map((p) => (
-            <RevealItem key={p.naam}>
-              <div className="flex h-full flex-col rounded-3xl bg-white/[0.04] p-7 transition-colors duration-300 hover:bg-white/[0.06]">
-                <h3 className="font-heading text-lg font-semibold leading-snug text-white">
-                  {p.naam}
-                </h3>
-                {/* "excl. btw" bij elk bedrag, zoals op /voor-ai/. */}
-                <p className="mt-4 flex flex-wrap items-baseline gap-x-2">
-                  <span className="text-sm text-white/60">vanaf</span>
-                  <span className="font-heading text-3xl font-semibold text-white">{p.prijs}</span>
-                  <span className="text-sm text-white/60">excl. btw</span>
-                </p>
-                <p className="mt-4 text-[15px] leading-relaxed text-white/70">{p.tekst}</p>
-              </div>
-            </RevealItem>
-          ))}
-        </RevealStagger>
+        {/* Eén Reveal voor alles onder de kop: elke Reveal houdt een transform
+            en wordt zo een eigen laag. Met losse Reveals zou een open
+            info-wolk achter de rij eronder vallen. */}
+        <Reveal>
+          {/* Vanaf 1024px drie kolommen; elke kaart is een subgrid van vier
+              rijen, zodat titel, prijs, regel en knop overal op één lijn
+              staan. Van 640 tot 1023px compacte rijen: links titel en regel,
+              rechts prijs en knop. */}
+          <ul className="mt-10 grid gap-4 md:mt-12 lg:grid-cols-3 lg:gap-5">
+            {kaarten.map((p) => {
+              const isAanrader = p.slug === aanrader;
+              return (
+                <li
+                  key={p.slug}
+                  className={cn(
+                    "relative flex flex-col gap-4 rounded-3xl border bg-white/[0.04] p-6 sm:p-7",
+                    isAanrader ? "border-primary" : "border-transparent",
+                    "sm:max-lg:grid sm:max-lg:grid-cols-[1fr_auto] sm:max-lg:items-center sm:max-lg:gap-x-8 sm:max-lg:gap-y-2",
+                    "lg:row-span-4 lg:grid lg:grid-rows-subgrid lg:gap-4"
+                  )}
+                >
+                  {isAanrader && (
+                    <span className="absolute -top-3 left-6 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-ink">
+                      Aanrader
+                    </span>
+                  )}
 
-        <Reveal className="mt-5">
-          <div className="rounded-3xl bg-white/[0.04] p-7 md:p-8">
-            <h3 className="font-heading text-lg font-semibold text-white">Altijd inbegrepen</h3>
-            <ul className="mt-5 grid gap-3 md:grid-cols-2 md:gap-x-10">
-              {inbegrepen.map((item) => (
-                <li key={item} className="flex gap-3 text-[15px] leading-relaxed text-white/75">
-                  <Check size={18} strokeWidth={2.5} aria-hidden className="mt-0.5 shrink-0 text-primary" />
+                  <div className="relative flex flex-wrap items-start justify-between gap-x-3 sm:max-lg:col-start-1 sm:max-lg:row-start-1 sm:max-lg:justify-start">
+                    <h3 className="font-heading text-lg font-semibold leading-snug text-white">
+                      {p.naam}
+                    </h3>
+                    <InfoKnop label={`Meer over ${p.naam}`}>
+                      <p>{p.info}</p>
+                    </InfoKnop>
+                  </div>
+
+                  <div className="sm:max-lg:col-start-2 sm:max-lg:row-start-1 sm:max-lg:text-right">
+                    <p className="flex items-baseline gap-2 sm:max-lg:justify-end">
+                      <span className="text-sm text-white/60">vanaf</span>
+                      <span className="font-heading text-4xl font-semibold tracking-tight text-white">
+                        {euro(p.bedrag)}
+                      </span>
+                    </p>
+                    {isAanrader && (
+                      <p className="mt-1.5 text-sm text-primary">
+                        {euro(voordeel)} voordeliger dan los
+                      </p>
+                    )}
+                  </div>
+
+                  <p className="text-[15px] leading-relaxed text-white/70 sm:max-lg:col-start-1 sm:max-lg:row-start-2">
+                    {p.regel}
+                  </p>
+
+                  <div className="sm:max-lg:col-start-2 sm:max-lg:row-start-2 sm:max-lg:justify-self-end lg:self-end">
+                    <Button {...aanvraag(p)} variant={isAanrader ? "primary" : "outline"} size="md" className="h-11">
+                      Vraag aan
+                      <ArrowRight size={16} aria-hidden />
+                    </Button>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+
+          {/* Huisstijl is geen website: geen vierde kaart, wel één regel. */}
+          <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 rounded-3xl bg-white/[0.04] px-6 py-4 sm:px-7 lg:mt-5">
+            <p className="text-[15px] leading-relaxed text-white/70">
+              <span className="font-heading font-semibold text-white">Alleen een huisstijl?</span>{" "}
+              {huisstijl.regel}
+            </p>
+            <div className="relative flex flex-wrap items-center gap-x-5 sm:ml-auto">
+              <p className="flex items-baseline gap-2">
+                <span className="text-sm text-white/60">vanaf</span>
+                <span className="font-heading text-xl font-semibold text-white">{euro(huisstijl.bedrag)}</span>
+              </p>
+              <InfoKnop label={`Meer over ${huisstijl.naam}`}>
+                <p>{huisstijl.info}</p>
+              </InfoKnop>
+              <a {...aanvraag(huisstijl)} className={tekstLink}>
+                Vraag aan
+                <ArrowRight size={16} aria-hidden />
+              </a>
+            </div>
+          </div>
+
+          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-white/[0.08] pt-6">
+            <ul className="flex flex-wrap gap-x-6 gap-y-2">
+              {inbegrepenKort.map((item) => (
+                <li key={item} className="flex items-center gap-2 text-[15px] text-white/75">
+                  <Check size={16} strokeWidth={2.5} aria-hidden className="shrink-0 text-primary" />
                   {item}
                 </li>
               ))}
             </ul>
-            <p className="mt-6 border-t border-white/[0.08] pt-5 text-sm leading-relaxed text-white/60">
-              Onderhoud en hosting: op maat, afhankelijk van wat er nodig is.
-              Zelf teksten aanpassen met een CMS: op aanvraag.
-            </p>
+            <div className="relative flex flex-wrap items-center sm:ml-auto">
+              <InfoKnop label="Wat zit er in elk pakket?" tekst="Wat zit erin?">
+                <ul className="space-y-1.5">
+                  {inbegrepenLang.map((item) => (
+                    <li key={item} className="flex gap-2">
+                      <Check size={14} strokeWidth={2.5} aria-hidden className="mt-1 shrink-0 text-primary" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-3 border-t border-white/10 pt-3 text-white/70">
+                  Niet standaard: onderhoud en hosting (op maat), en zelf teksten aanpassen met een
+                  CMS (op aanvraag).
+                </p>
+              </InfoKnop>
+            </div>
           </div>
-        </Reveal>
 
-        <Reveal className="mt-10">
-          <Button href="#contact-form" variant="primary" size="lg" data-cta="plan_kennismaking">
-            Plan een kennismaking
-            <ArrowRight size={18} aria-hidden />
-          </Button>
+          <p className="mt-8 text-base leading-relaxed text-white/70">
+            Twijfel je welk pakket past?{" "}
+            <a href="#contact-form" data-cta="plan_kennismaking" className={tekstLink}>
+              Plan een kennismaking
+              <ArrowRight size={16} aria-hidden />
+            </a>
+          </p>
         </Reveal>
       </Container>
     </Section>
