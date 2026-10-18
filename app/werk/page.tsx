@@ -75,7 +75,7 @@ export default async function WerkPagina() {
               Zelf zoiets?
             </h2>
             <p className="mt-4 max-w-[60ch] leading-relaxed text-white/75">
-              Plan een vrijblijvend gesprek van 20 minuten.
+              Plan een vrijblijvende kennismaking van 20 minuten.
             </p>
             <div className="mt-8">
               <Button

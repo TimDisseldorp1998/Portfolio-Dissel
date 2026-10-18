@@ -13,7 +13,7 @@ const stappen = [
   { titel: "Onderhoud", tekst: "Wil je dat ik hosting, updates en aanpassingen regel, dan kan dat. Op maat." },
 ];
 
-/** "Zo werk ik" op home, tussen het werk en Over mij. */
+/** "Zo werk ik" op /over-mij/, onder "Wat er in elke website zit". */
 export function Werkwijze() {
   return (
     <Section id="werkwijze" variant="dark">

@@ -3,6 +3,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Kruimelpad } from "@/components/Kruimelpad";
 import { Services } from "@/components/Services";
+import { Testimonials } from "@/components/Testimonials";
 
 const TITEL = "Diensten | Webdesign, huisstijl en UX/UI | DisselDesign";
 const OMSCHRIJVING =
@@ -30,6 +31,7 @@ export default function DienstenPagina() {
             </div>
           }
         />
+        <Testimonials />
       </main>
       <Footer />
     </>

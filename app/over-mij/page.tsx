@@ -4,6 +4,8 @@ import { Footer } from "@/components/Footer";
 import { Kruimelpad } from "@/components/Kruimelpad";
 import { Container } from "@/components/ui/Container";
 import { OverMijVolledig } from "@/components/Bento";
+import { Voordelen } from "@/components/Voordelen";
+import { Werkwijze } from "@/components/Werkwijze";
 
 const TITEL = "Over Tim Disseldorp | Digitale Product Designer";
 const OMSCHRIJVING =
@@ -42,6 +44,8 @@ export default function OverMijPagina() {
 
           <OverMijVolledig />
         </Container>
+        <Voordelen />
+        <Werkwijze />
       </main>
       <Footer />
     </>

@@ -3,7 +3,7 @@
 Concept, 18 oktober 2026. Bron: `~/Desktop/beslissingen-stap-0.md` en je antwoorden van vandaag.
 Alles hieronder komt zo op de site, tenzij je iets aanpast. Zinnen met **[check]** zijn een aanname of een mogelijke belofte: kijk daar extra naar.
 
-Volgorde op de pagina: hero → diensten → pakketten → werk → reviews → wat er in elke website zit → werkwijze → over Tim → veelgestelde vragen → contact.
+Volgorde op de pagina (bijgewerkt 18 oktober): hero → feitenstrook → diensten → werk → investering → over Tim → veelgestelde vragen → contact. Reviews staan op /diensten/; "Wat er in elke website zit" en "Zo werk ik" op /over-mij/. De actie heet overal "kennismaking".
 
 ---
 

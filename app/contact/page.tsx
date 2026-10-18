@@ -53,11 +53,11 @@ export default function ContactPagina() {
               </p>
               <h1 className="font-heading text-[clamp(2rem,7vw,3.25rem)] font-semibold leading-[1.15] tracking-tight">
                 <span className="text-white/[0.55]">Klaar om te groeien?</span>{" "}
-                <span className="text-white">Plan een gesprek.</span>
+                <span className="text-white">Plan een kennismaking.</span>
               </h1>
               <p className="mt-6 text-lg leading-relaxed text-white/70">
                 <KoffieIcoon size="sm" className="mr-2 inline-block align-[-2px] text-primary" />
-                Plan een vrijblijvend gesprek van 20 minuten. Vertel me waar je
+                Plan een vrijblijvende kennismaking van 20 minuten. Vertel me waar je
                 naartoe wilt met je merk of product. Ik denk direct met je mee
                 over hoe we daar sneller komen. Geen verplichtingen, gewoon een
                 goed gesprek.

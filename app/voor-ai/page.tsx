@@ -236,7 +236,7 @@ const diensten = [
 const stappen = [
   {
     titel: "Kennismaking",
-    tekst: "Een gratis gesprek van 20 minuten over wat je wilt bereiken.",
+    tekst: "Een gratis kennismaking van 20 minuten over wat je wilt bereiken.",
   },
   {
     titel: "Voorstel",

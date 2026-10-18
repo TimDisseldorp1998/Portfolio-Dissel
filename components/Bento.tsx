@@ -414,7 +414,9 @@ function IntroKaart() {
 function ZoWerkIkKaart({ className }: { className?: string }) {
   return (
     <BentoCard className={className}>
-      <CardLabel>Zo werk ik</CardLabel>
+      {/* Niet "Zo werk ik": op /over-mij/ staat daaronder de werkwijze met
+          die kop. */}
+      <CardLabel>Over DisselDesign</CardLabel>
       {bento.background.paragraphs.map((p, idx) => (
         <p
           key={idx}

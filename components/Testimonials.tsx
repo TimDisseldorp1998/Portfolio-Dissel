@@ -5,7 +5,7 @@ import { Reveal } from "./ui/Reveal";
 import { Marquee } from "./ui/Marquee";
 import { MarqueeCard } from "./ui/Testimonial";
 
-// Staat op home, direct na het werk. De quotes per case staan los daarvan
+// Staat op /diensten/, onder de diensten. De quotes per case staan los daarvan
 // op de casepagina's.
 
 /** Kaartbreedte (desktop) plus de gap. Alleen nodig om uit te rekenen hoe

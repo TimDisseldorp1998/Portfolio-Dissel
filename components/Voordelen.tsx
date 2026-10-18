@@ -37,7 +37,7 @@ const voordelen: { titel: string; tekst: string; icon: LucideIcon }[] = [
   },
 ];
 
-/** "Wat er in elke website zit" op home, tussen de reviews en de werkwijze. */
+/** "Wat er in elke website zit" op /over-mij/, boven de werkwijze. */
 export function Voordelen() {
   return (
     <Section id="waarom" variant="dark">
