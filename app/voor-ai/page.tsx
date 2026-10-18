@@ -679,23 +679,36 @@ export default function VoorAiPage() {
 
           <Block id="reviews" heading="Wat klanten zeggen">
             {/* Zelfde reviews als op de casepagina's, uit lib/content.ts. */}
-            <div className="grid gap-4 lg:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-2">
               {reviews.map((review) => (
                 <figure
                   key={review.quote}
                   className="flex flex-col gap-5 rounded-[20px] bg-white/[0.045] p-[26px]"
                 >
                   <blockquote className="text-[15px] leading-[1.6] text-white/[0.82]">
-                    <p>{review.quote}</p>
+                    <p>&ldquo;{review.quote}&rdquo;</p>
                   </blockquote>
-                  <figcaption className="mt-auto">
-                    <span className="block font-heading text-[13px] font-semibold text-white">
-                      {review.author ?? review.company}
-                    </span>
-                    {review.role && (
-                      <span className="mt-0.5 block text-xs text-white/50">
-                        {review.role}
+                  <figcaption className="mt-auto flex items-end gap-3">
+                    <span>
+                      <span className="block font-heading text-[13px] font-semibold text-white">
+                        {review.author ?? review.company}
                       </span>
+                      {review.role && (
+                        <span className="mt-0.5 block text-xs text-white/50">
+                          {review.role}
+                        </span>
+                      )}
+                    </span>
+                    {review.google && (
+                      <a
+                        href={review.google}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ml-auto shrink-0 rounded-sm text-[11px] leading-[1.2] text-white/60 transition-colors hover:text-white hover:underline hover:underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                      >
+                        Bekijk op Google
+                        <span className="sr-only"> (opent in nieuw tabblad)</span>
+                      </a>
                     )}
                   </figcaption>
                 </figure>

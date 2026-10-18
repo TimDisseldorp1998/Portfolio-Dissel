@@ -74,6 +74,9 @@ export type Review = {
   logo?: string;
   /** Slug van de case waar deze review als quote op staat (content/werk/). */
   case?: string;
+  /** Link naar de review op Google. Alleen bij reviews die echt op Google
+   *  staan; de kaart toont dan "Bekijk op Google". */
+  google?: string;
 };
 
 export const reviews: Review[] = [
@@ -103,6 +106,15 @@ export const reviews: Review[] = [
     company: "Marktzicht Eten & Drinken",
     logo: "/logos/marktzicht-logo.svg",
     case: "marktzicht",
+  },
+  // Letterlijk overgenomen van Google (oktober 2026). Geen case op de site.
+  {
+    quote:
+      "Ik heb een erg goede ervaring gehad met DisselDesign! Wil je een professionele, snelle en mooie website, dan denkt Tim met je mee en denkt vooral na over hoe hij jouw website meer op de kaart kan zetten! Niet alleen het uiterlijk van de website, maar ook meer verkeer richting je website. Een goede kerel die met je mee denkt.",
+    author: "Tim van der Leeden",
+    role: "Founder Leedon",
+    initials: "T",
+    google: "https://share.google/QUKOMkrWmkb72UD8p",
   },
 ];
 

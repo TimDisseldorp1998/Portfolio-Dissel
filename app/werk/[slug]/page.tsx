@@ -161,7 +161,7 @@ export default async function CasePagina({ params }: Props) {
                 <Reveal y={16} className="mt-8">
                   <figure className="rounded-[20px] bg-white/[0.045] p-[26px] md:p-8">
                     <blockquote className="text-lg leading-relaxed text-white/[0.85]">
-                      <p>{review.quote}</p>
+                      <p>&ldquo;{review.quote}&rdquo;</p>
                     </blockquote>
                     <figcaption className="mt-5">
                       <span className="block font-heading text-sm font-semibold text-white">

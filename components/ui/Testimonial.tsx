@@ -24,17 +24,19 @@ export function MarqueeCard({ review }: { review: Review }) {
       className="flex w-[320px] flex-none flex-col gap-5 rounded-[20px] bg-white/[0.045] p-[26px] transition-colors duration-300 hover:bg-white/[0.09] sm:w-[440px]"
     >
       <blockquote className="text-[15px] leading-[1.6] text-white/[0.82] text-pretty">
-        {review.quote}
+        &ldquo;{review.quote}&rdquo;
       </blockquote>
       <figcaption className="mt-auto flex items-center gap-3">
         {review.author ? (
           <>
-            {/* Het logo ligt over de initiaal heen; ontbreekt het bestand, dan
-                verbergt onError het en komt de initiaal weer tevoorschijn. */}
-            <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/[0.14] bg-white/[0.06] font-heading text-[10.5px] font-semibold text-white/60">
-              <span aria-hidden>{review.initials}</span>
-              {review.logo && (
-                // eslint-disable-next-line @next/next/no-img-element
+            {/* Rondje alleen als er een logo is; zonder logo staan alleen
+                naam en bedrijf er. Het logo ligt over de initiaal heen;
+                laadt het bestand niet, dan verbergt onError het en komt de
+                initiaal tevoorschijn. */}
+            {review.logo && (
+              <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/[0.14] bg-white/[0.06] font-heading text-[10.5px] font-semibold text-white/60">
+                <span aria-hidden>{review.initials}</span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={review.logo}
                   alt=""
@@ -45,8 +47,8 @@ export function MarqueeCard({ review }: { review: Review }) {
                     e.currentTarget.style.display = "none";
                   }}
                 />
-              )}
-            </span>
+              </span>
+            )}
             <span className="min-w-0">
               <span className="block font-heading text-[13px] font-semibold leading-[1.2] text-white">
                 {review.author}
@@ -78,6 +80,19 @@ export function MarqueeCard({ review }: { review: Review }) {
               />
             )}
           </>
+        )}
+        {/* Bewust klein: de review draagt de kaart, de bron staat erbij.
+            Rechtsonder, op dezelfde basislijn als de onderste regel links. */}
+        {review.google && (
+          <a
+            href={review.google}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-auto shrink-0 self-end rounded-sm text-[11px] leading-[1.2] text-white/60 transition-colors hover:text-white hover:underline hover:underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          >
+            Bekijk op Google
+            <span className="sr-only"> (opent in nieuw tabblad)</span>
+          </a>
         )}
       </figcaption>
     </figure>
