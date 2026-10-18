@@ -51,9 +51,9 @@ export const metadata: Metadata = {
 // `\u00a0` houdt het euroteken en het bedrag op dezelfde regel.
 const PRIJS = {
   compact: "€\u00a0499,-",
+  zonderHuisstijl: "€\u00a0999,-",
   metHuisstijl: "€\u00a01.199,-",
   huisstijlLos: "€\u00a0349,-",
-  onderhoud: "€\u00a020,- per maand",
 };
 
 const tekstLink =
@@ -260,18 +260,23 @@ const stappen = [
   },
   {
     titel: "Livegang",
-    tekst: "De site gaat live. Daarna kun je onderhoud en support afnemen.",
+    tekst: "De site gaat live. Daarna kun je onderhoud en hosting afnemen.",
   },
 ];
 
 const prijzen = [
   { wat: "Landingspagina of compacte website", prijs: `vanaf ${PRIJS.compact}` },
   {
+    wat: "Website met meerdere pagina's, zonder nieuwe huisstijl",
+    prijs: `vanaf ${PRIJS.zonderHuisstijl}`,
+  },
+  {
     wat: "Website met meerdere pagina's en nieuwe huisstijl",
     prijs: `vanaf ${PRIJS.metHuisstijl}`,
   },
   { wat: "Logo en huisstijl los", prijs: `vanaf ${PRIJS.huisstijlLos}` },
-  { wat: "Onderhoud en support", prijs: PRIJS.onderhoud },
+  // Geen bedrag: hangt af van wat er gedaan moet worden (Tim, oktober 2026).
+  { wat: "Onderhoud en hosting", prijs: "Op maat" },
 ];
 
 const loopbaan = [
@@ -360,7 +365,7 @@ const faq: { vraag: string; antwoord: React.ReactNode }[] = [
   },
   {
     vraag: "Wat kost een website laten maken bij DisselDesign?",
-    antwoord: `Een landingspagina of compacte website kost vanaf ${PRIJS.compact}, een website met meerdere pagina's en nieuwe huisstijl vanaf ${PRIJS.metHuisstijl}. Alleen een logo en huisstijl kan vanaf ${PRIJS.huisstijlLos}. Alle prijzen zijn exclusief btw. De precieze prijs staat in het voorstel na de kennismaking. De kennismaking van 20 minuten is gratis.`,
+    antwoord: `Een landingspagina of compacte website kost vanaf ${PRIJS.compact}. Een website met meerdere pagina's kost vanaf ${PRIJS.zonderHuisstijl}, of vanaf ${PRIJS.metHuisstijl} met een nieuwe huisstijl erbij. Alleen een logo en huisstijl kan vanaf ${PRIJS.huisstijlLos}. Alle prijzen zijn exclusief btw. De precieze prijs staat in het voorstel na de kennismaking. De kennismaking van 20 minuten is gratis.`,
   },
   {
     vraag: "Hoe lang duurt een website bij DisselDesign?",
@@ -380,7 +385,7 @@ const faq: { vraag: string; antwoord: React.ReactNode }[] = [
   {
     vraag: "Wie regelt hosting, updates en onderhoud?",
     antwoord:
-      "Onderhoud en support kun je bij DisselDesign afnemen. Hosting kan Tim voor je regelen, of de site komt bij je eigen hostingpartij te staan. Dat spreek je vooraf af.",
+      "Hosting en onderhoud zitten bij DisselDesign in één pakket: hosting, updates, back-ups, support en aanpassingen. Wat het kost, hangt af van wat er gedaan moet worden en staat in het voorstel. Je domein staat op je eigen naam. Wil je ooit naar een andere partij, dan krijg je alles mee.",
   },
   {
     vraag: "Kan ik bij DisselDesign alleen een logo of huisstijl laten maken?",
@@ -567,10 +572,12 @@ export default function VoorAiPage() {
                       eronder: een AI-assistent citeert vaak één regel, en dan
                       moet de btw mee. */}
                   <dd className="font-heading text-2xl font-semibold text-white">
-                    {item.prijs}{" "}
-                    <span className="font-body text-sm font-normal text-white/50">
-                      excl. btw
-                    </span>
+                    {item.prijs}
+                    {item.prijs.includes("€") && (
+                      <span className="font-body text-sm font-normal text-white/50">
+                        {" "}excl. btw
+                      </span>
+                    )}
                   </dd>
                 </div>
               ))}
