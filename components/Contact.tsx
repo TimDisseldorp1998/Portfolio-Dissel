@@ -11,6 +11,12 @@ const brandIcons: Record<string, (props: { size?: number }) => JSX.Element> = {
   Instagram: InstagramFilled,
 };
 
+const naVersturen = [
+  "Binnen twee werkdagen hoor je van me.",
+  "We plannen een gratis kennismaking van 20 minuten. Dat kan online of, als het uitkomt, op de koffie.",
+  "Daarna krijg je een voorstel met een vaste prijs en planning. Ik begin pas als jij akkoord geeft.",
+];
+
 /** Contactsectie op home: intro en socials links, het formulier rechts. Het
  *  formulier zelf is gedeeld met /contact/. */
 export function Contact() {
@@ -36,8 +42,26 @@ export function Contact() {
                 verplichtingen, gewoon een goed gesprek.
               </p>
 
+              {/* Wat er na het versturen gebeurt: haalt de onzekerheid weg
+                  voordat iemand op Versturen klikt. */}
+              <div className="mb-10 rounded-3xl bg-white/[0.04] p-6 sm:p-7">
+                <h3 className="font-heading text-lg font-semibold text-white">
+                  Wat er gebeurt na het versturen
+                </h3>
+                <ol className="mt-4 space-y-3">
+                  {naVersturen.map((stap, i) => (
+                    <li key={stap} className="flex gap-3 text-[15px] leading-relaxed text-white/75">
+                      <span aria-hidden className="font-heading text-sm font-semibold leading-[1.65rem] text-primary">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      {stap}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+
               {/* Socials */}
-              <div className="mt-10">
+              <div>
                 <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-white/50">
                   Socials
                 </p>

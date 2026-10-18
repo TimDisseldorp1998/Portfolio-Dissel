@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { ArrowRight, ChevronDown } from "lucide-react";
-import { reviews, site } from "@/lib/content";
+import { ArrowRight } from "lucide-react";
+import { prijs, reviews, site } from "@/lib/content";
+import { Veelgesteld } from "@/components/Veelgesteld";
 import { SITE_URL, voorAiPagina } from "@/lib/structured-data";
 import { cn } from "@/lib/cn";
 import { Navbar } from "@/components/Navbar";
@@ -46,15 +47,8 @@ export const metadata: Metadata = {
   },
 };
 
-// Prijzen staan hier één keer, zodat de prijzenlijst en het FAQ-antwoord nooit
-// uit elkaar lopen. Opgegeven door Tim, oktober 2026, allemaal exclusief btw.
-// `\u00a0` houdt het euroteken en het bedrag op dezelfde regel.
-const PRIJS = {
-  compact: "€\u00a0499,-",
-  zonderHuisstijl: "€\u00a0999,-",
-  metHuisstijl: "€\u00a01.199,-",
-  huisstijlLos: "€\u00a0349,-",
-};
+// Prijzen komen uit lib/content.ts, net als op de homepage.
+const PRIJS = prijs;
 
 const tekstLink =
   "font-medium text-white underline decoration-white/30 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm";
@@ -238,29 +232,33 @@ const diensten = [
   },
 ];
 
+// Zelfde zes stappen als op de homepage (components/Werkwijze.tsx).
 const stappen = [
   {
+    titel: "Kennismaking",
+    tekst: "Een gratis gesprek van 20 minuten over wat je wilt bereiken.",
+  },
+  {
     titel: "Voorstel",
-    tekst: "Je krijgt een voorstel met de scope, de planning en de prijs.",
+    tekst: "Je krijgt een voorstel met de scope, de planning en een vaste prijs.",
   },
   {
     titel: "Ontwerp",
     tekst:
-      "Tim zet de structuur en de wireframes op, en waar nodig de huisstijl. Het ontwerp maakt hij in Figma.",
+      "Tim maakt het ontwerp in Figma, en waar nodig de huisstijl. Je geeft feedback voordat er gebouwd wordt.",
   },
   {
-    titel: "Feedback",
+    titel: "Bouwen",
     tekst:
-      "Na elke fase zie je het tussenresultaat. Zo stuur je bij voordat er iets gebouwd is.",
+      "Tim bouwt de site in Next.js en React en test hem op telefoon, tablet en desktop. Daarna volgt de tweede feedbackronde.",
   },
   {
-    titel: "Bouw",
-    tekst:
-      "Tim bouwt de site in Next.js en React en test hem op telefoon, tablet en desktop.",
+    titel: "Live",
+    tekst: "De site gaat live en wordt aangemeld bij Google.",
   },
   {
-    titel: "Livegang",
-    tekst: "De site gaat live. Daarna kun je onderhoud en hosting afnemen.",
+    titel: "Onderhoud",
+    tekst: "Hosting, updates en aanpassingen kun je bij Tim afnemen, op maat.",
   },
 ];
 
@@ -386,6 +384,16 @@ const faq: { vraag: string; antwoord: React.ReactNode }[] = [
     vraag: "Wie regelt hosting, updates en onderhoud?",
     antwoord:
       "Hosting en onderhoud zitten bij DisselDesign in één pakket: hosting, updates, back-ups, support en aanpassingen. Wat het kost, hangt af van wat er gedaan moet worden en staat in het voorstel. Je domein staat op je eigen naam. Wil je ooit naar een andere partij, dan krijg je alles mee.",
+  },
+  {
+    vraag: "Hoeveel pagina's krijg ik bij DisselDesign?",
+    antwoord:
+      "Een website met meerdere pagina's heeft er tot 8, bijvoorbeeld home, diensten, over ons, werk en contact. Meer pagina's kan; dat staat dan in het voorstel.",
+  },
+  {
+    vraag: "Van wie is de website na oplevering?",
+    antwoord:
+      "Van de klant. Ontwerp, code, domein en content zijn na oplevering helemaal van jou. Je domein staat op je eigen naam, en bij een overstap naar een andere partij krijg je alles mee.",
   },
   {
     vraag: "Kan ik bij DisselDesign alleen een logo of huisstijl laten maken?",
@@ -531,7 +539,7 @@ export default function VoorAiPage() {
                 mee. Je zit daarna nergens aan vast.
               </p>
             </div>
-            <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {stappen.map((stap, i) => (
                 <li key={stap.titel} className="rounded-3xl bg-white/[0.04] p-6">
                   <span
@@ -739,37 +747,7 @@ export default function VoorAiPage() {
           </Block>
 
           <Block id="veelgestelde-vragen" heading="Veelgestelde vragen">
-            {/* <details>/<summary>: ook dichtgeklapt staan de antwoorden in de
-                HTML, dus Google en AI-assistenten lezen ze gewoon mee. Werkt
-                zonder JavaScript. De vraag is bewust geen H3: een kop binnen
-                <summary> wordt niet in elke schermlezer als knop voorgelezen.
-                De animaties staan in globals.css onder `.faq-item`. */}
-            <div className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
-              {faq.map((item, i) => (
-                <details
-                  key={item.vraag}
-                  open={i === 0}
-                  className="faq-item group"
-                >
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-6 rounded-sm py-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary [&::-webkit-details-marker]:hidden">
-                    <span className="font-heading text-lg font-semibold leading-snug text-white/80 transition-colors duration-300 group-open:text-white group-hover:text-white">
-                      {item.vraag}
-                    </span>
-                    <span
-                      aria-hidden
-                      className="faq-pijl flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/[0.06] text-white/60 group-open:rotate-180 group-open:bg-primary/15 group-open:text-primary group-hover:bg-white/[0.1] group-hover:text-white group-open:group-hover:bg-primary/25 group-open:group-hover:text-primary"
-                    >
-                      <ChevronDown size={18} strokeWidth={2} />
-                    </span>
-                  </summary>
-                  <div className="faq-antwoord pb-6 pr-0 sm:pr-14">
-                    <p className="max-w-[68ch] leading-relaxed text-white/75">
-                      {item.antwoord}
-                    </p>
-                  </div>
-                </details>
-              ))}
-            </div>
+            <Veelgesteld vragen={faq} />
           </Block>
 
           <Block id="bronnen" heading="Bronnen">
