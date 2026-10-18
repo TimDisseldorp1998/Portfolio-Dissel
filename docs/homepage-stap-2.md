@@ -52,9 +52,9 @@ Link: Meer over UX/UI design →
 
 ## 3. Pakketten (nieuw)
 
-**Klein:** Prijzen
-**Kop:** Wat het kost.
-**Intro:** Dit zijn vanaf-prijzen, exclusief btw. Na de kennismaking krijg je een voorstel met een vaste prijs, dus je weet vooraf waar je aan toe bent.
+**Klein:** Investering
+**Kop:** Jouw investering.
+**Intro:** Heldere vanaf-prijzen, exclusief btw. Na onze kennismaking ontvang je een voorstel met een vaste prijs, zodat je vooraf precies weet waar je aan toe bent.
 
 **Landingspagina of compacte site**
 vanaf € 499

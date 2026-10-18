@@ -42,15 +42,15 @@ export function Pakketten() {
       <Container>
         <Reveal>
           <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-primary">
-            Prijzen
+            Investering
           </p>
           <h2 className="font-heading text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-5xl">
-            Wat het kost.
+            Jouw investering.
           </h2>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/70">
-            Dit zijn vanaf-prijzen, exclusief btw. Na de kennismaking krijg je
-            een voorstel met een vaste prijs, dus je weet vooraf waar je aan
-            toe bent.
+            Heldere vanaf-prijzen, exclusief btw. Na onze kennismaking ontvang
+            je een voorstel met een vaste prijs, zodat je vooraf precies weet
+            waar je aan toe bent.
           </p>
         </Reveal>
 
