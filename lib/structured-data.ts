@@ -7,6 +7,8 @@
  * Google voegt ze samen op dat id.
  */
 
+import { pakketten } from "./content";
+
 export const SITE_URL = "https://disseldesign.com";
 
 const BEDRIJF_ID = `${SITE_URL}/#business`;
@@ -47,6 +49,20 @@ export const bedrijfEnPersoon = {
         "Conversie-optimalisatie",
       ],
       founder: { "@id": TIM_ID },
+      // De pakketten van de homepage. Vanaf-prijzen, dus `minPrice`; btw staat
+      // er niet in (valueAddedTaxIncluded hoort bij PriceSpecification).
+      makesOffer: pakketten.map((p) => ({
+        "@type": "Offer",
+        name: p.naam,
+        description: p.info,
+        url: `${SITE_URL}/#prijzen`,
+        priceSpecification: {
+          "@type": "PriceSpecification",
+          minPrice: p.bedrag,
+          priceCurrency: "EUR",
+          valueAddedTaxIncluded: false,
+        },
+      })),
       sameAs: SOCIALS,
     },
     {

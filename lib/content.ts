@@ -89,16 +89,76 @@ export type Review = {
 
 /**
  * Prijzen, één keer vastgelegd: de pakketten op home, de prijzenlijst en de
- * FAQ op /voor-ai/ lezen allemaal hieruit. Opgegeven door Tim, oktober 2026,
- * allemaal vanaf-prijzen exclusief btw. Onderhoud en hosting heeft bewust
- * geen bedrag. `\u00a0` houdt het euroteken en het bedrag bij elkaar.
+ * FAQ op /voor-ai/ en de JSON-LD lezen allemaal hieruit. Opgegeven door Tim,
+ * oktober 2026, allemaal vanaf-prijzen exclusief btw. Onderhoud en hosting
+ * heeft bewust geen bedrag.
  */
-export const prijs = {
-  compact: "€\u00a0499,-",
-  zonderHuisstijl: "€\u00a0999,-",
-  metHuisstijl: "€\u00a01.199,-",
-  huisstijlLos: "€\u00a0349,-",
+export const bedrag = {
+  compact: 499,
+  zonderHuisstijl: 999,
+  metHuisstijl: 1199,
+  huisstijlLos: 349,
 };
+
+/** "€ 1.199": zonder ",-", met een vaste spatie zodat teken en bedrag bij
+ *  elkaar blijven. */
+export const euro = (n: number) => `€\u00a0${n.toLocaleString("nl-NL")}`;
+
+export const prijs = {
+  compact: euro(bedrag.compact),
+  zonderHuisstijl: euro(bedrag.zonderHuisstijl),
+  metHuisstijl: euro(bedrag.metHuisstijl),
+  huisstijlLos: euro(bedrag.huisstijlLos),
+};
+
+/**
+ * De pakketten. `slug` staat in de URL (?pakket=…) en in de meting
+ * (cta_name "pakket_…"); `projectType` is de knop die het contactformulier
+ * dan aanzet. `info` staat achter de ⓘ.
+ */
+export type Pakket = {
+  slug: "landingspagina" | "website" | "website-huisstijl" | "huisstijl";
+  naam: string;
+  bedrag: number;
+  regel: string;
+  info: string;
+  projectType: string;
+};
+
+export const pakketten: Pakket[] = [
+  {
+    slug: "landingspagina",
+    naam: "Landingspagina",
+    bedrag: bedrag.compact,
+    regel: "Eén pagina voor één dienst of actie.",
+    info: "Eén pagina of een kleine site. Voor een nieuw bedrijf, een actie of één dienst die je los wilt laten zien.",
+    projectType: "Web design",
+  },
+  {
+    slug: "website",
+    naam: "Website",
+    bedrag: bedrag.zonderHuisstijl,
+    regel: "Tot 8 pagina's, rond je huidige logo.",
+    info: "Tot 8 pagina's, ontworpen rond je bestaande logo en kleuren.",
+    projectType: "Web design",
+  },
+  {
+    slug: "website-huisstijl",
+    naam: "Website + huisstijl",
+    bedrag: bedrag.metHuisstijl,
+    regel: "Nieuw merk en nieuwe site in één traject.",
+    info: "Tot 8 pagina's plus een nieuw logo en een nieuwe huisstijl. Merk en site ontstaan in één traject en passen bij elkaar.",
+    projectType: "Web design",
+  },
+  {
+    slug: "huisstijl",
+    naam: "Huisstijl",
+    bedrag: bedrag.huisstijlLos,
+    regel: "Logo, kleuren en lettertypen",
+    info: "Logo, kleuren en lettertypen, vastgelegd in een stijlgids die je aan je drukker of socialmediabeheerder kunt geven.",
+    projectType: "Branding",
+  },
+];
 
 export const reviews: Review[] = [
   {

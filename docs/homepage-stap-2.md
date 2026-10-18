@@ -28,59 +28,36 @@ Blijft zoals het is: de pill **Gevestigd in Noord-Holland** met het groene bolle
 
 ## 2. Diensten
 
-Het blok met drie kolommen blijft, met de iconen en de lijstjes eronder. Alleen kop en introzinnen veranderen. Elke kolom krijgt onderaan een link; tot de dienstpagina's er zijn (stap 3) gaan ze naar /diensten/.
+Op home compact; /diensten/ houdt de lijstjes, de twee alinea's en de regel voor bureaus.
 
 **Klein:** Diensten
-**Kop:** Wat ik voor je maak.
+**Kop:** Waar kan ik je mee helpen?
+**Intro:** Van een nieuwe website tot een herkenbare huisstijl. Je werkt rechtstreeks met mij, van het eerste idee tot het eindresultaat.
 
-**Websites**
-Een professionele website die laat zien wat je doet en hoe klanten je bereiken.
-Lijstje blijft: Webdesign · Landingspagina's · Websites laten maken · Web-apps · Onderhoud & hosting
-Link: Meer over websites →
+**Websites:** Een professionele website, op maat ontworpen en gebouwd. · Meer over websites →
+**Huisstijl:** Een herkenbare visuele identiteit die bij je bedrijf past. · Meer over huisstijl →
+**UX/UI design:** Digitale ervaringen die logisch werken en prettig aanvoelen. · Meer over UX/UI design →
 
-**Huisstijl**
-Een herkenbare visuele identiteit die past bij jouw bedrijf.
-Lijstje blijft: Merkidentiteit · Logo-ontwerp · Huisstijl · Brand guidelines
-Link: Meer over huisstijl →
-
-**UX/UI design**
-Digitale ervaringen die logisch werken en prettig aanvoelen.
-Lijstje blijft: UX/UI design · Prototyping · Design systemen · SEO · Conversie-optimalisatie · Snelheid
-Link: Meer over UX/UI design →
+Links gaan voorlopig naar /diensten/; in stap 3 naar de eigen dienstpagina's.
 
 ---
 
-## 3. Pakketten (nieuw)
+## 3. Pakketten
 
-**Klein:** Investering
-**Kop:** Jouw investering.
-**Intro:** Heldere vanaf-prijzen, exclusief btw. Na onze kennismaking ontvang je een voorstel met een vaste prijs, zodat je vooraf precies weet waar je aan toe bent.
+**Klein:** Investering · **Kop:** Jouw investering.
+**Intro:** Vaste prijs vooraf. Alle prijzen excl. btw. (de enige plek met "excl. btw")
 
-**Landingspagina of compacte site**
-vanaf € 499
-Eén pagina of een kleine site. Voor een nieuw bedrijf, een actie of één dienst die je los wilt laten zien.
+Drie kaarten, elk met een ⓘ (details) en een knop "Vraag aan" die het formulier vooraf invult:
 
-**Website**
-vanaf € 999
-Tot 8 pagina's, ontworpen rond je bestaande logo en kleuren.
+| Kaart | Prijs | Regel | Achter de ⓘ |
+|---|---|---|---|
+| Landingspagina | vanaf € 499 | Eén pagina voor één dienst of actie. | Eén pagina of een kleine site. Voor een nieuw bedrijf, een actie of één dienst die je los wilt laten zien. |
+| Website | vanaf € 999 | Tot 8 pagina's, rond je huidige logo. | Tot 8 pagina's, ontworpen rond je bestaande logo en kleuren. |
+| Website + huisstijl (Aanrader, € 149 voordeliger dan los) | vanaf € 1.199 | Nieuw merk en nieuwe site in één traject. | Tot 8 pagina's plus een nieuw logo en een nieuwe huisstijl. Merk en site ontstaan in één traject en passen bij elkaar. |
 
-**Website + huisstijl**
-vanaf € 1.199
-Tot 8 pagina's plus een nieuw logo en huisstijl. Merk en site ontstaan in één traject en passen bij elkaar.
-
-**Huisstijl**
-vanaf € 349
-Logo, kleuren en lettertypen, vastgelegd in een stijlgids die je aan je drukker of socialmediabeheerder kunt geven.
-
-**Altijd inbegrepen**
-- Ontwerp op maat, geen template
-- Getest op telefoon, tablet en desktop
-- Basis-SEO: paginatitels, beschrijvingen, een sitemap en aanmelding bij Google
-- Een contactformulier dat in je mail binnenkomt, en Google Analytics met cookiebanner
-
-**Kleine regel eronder:** Onderhoud en hosting: op maat, afhankelijk van wat er nodig is. Zelf teksten aanpassen met een CMS: op aanvraag.
-
-**Knop:** Plan een kennismaking
+**Regel eronder:** Alleen een huisstijl? Logo, kleuren en lettertypen · vanaf € 349 · ⓘ (stijlgids) · Vraag aan →
+**Inbegrepen:** Ontwerp op maat · Getest op elk scherm · SEO-basis · Analytics · "Wat zit erin?" ⓘ (volledige lijst, plus: niet standaard onderhoud/hosting en CMS)
+**Afsluiter:** Twijfel je welk pakket past? Plan een kennismaking →
 
 ---
 
