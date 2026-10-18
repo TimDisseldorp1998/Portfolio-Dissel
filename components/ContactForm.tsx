@@ -253,7 +253,7 @@ export function ContactForm({ className }: { className?: string }) {
                       én onder een H1 (/contact/), dus een vast kopniveau zou
                       op één van de twee de volgorde breken. */}
                   <p className="mb-6 font-heading text-xl font-semibold leading-snug text-white md:text-2xl">
-                    Vraag een gratis gesprek aan
+                    Plan een gratis kennismaking
                   </p>
                   <form
                     data-form="fields"
@@ -402,8 +402,9 @@ export function ContactForm({ className }: { className?: string }) {
                               type="submit"
                               disabled={isSubmitting}
                               className={cn(
-                                "group inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-tertiary-600 px-7 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(142,92,224,0.2),_0_20px_60px_-20px_rgba(142,92,224,0.6)] transition-[background-color,box-shadow,opacity] duration-200 sm:w-auto",
-                                "hover:bg-tertiary-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-tertiary/40",
+                                // Zelfde cyaan als de andere hoofdknoppen (Button variant="primary").
+                                "group inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-primary px-7 text-sm font-semibold text-ink shadow-glow transition-[background-color,box-shadow,opacity] duration-200 sm:w-auto",
+                                "hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40",
                                 "disabled:cursor-not-allowed disabled:opacity-70"
                               )}
                             >

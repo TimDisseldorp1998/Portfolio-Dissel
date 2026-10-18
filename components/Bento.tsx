@@ -10,6 +10,7 @@ import { Reveal } from "./ui/Reveal";
 import { LinkedinFilled, InstagramFilled } from "./ui/BrandIcons";
 import { PauseButton } from "./ui/PauseButton";
 import { cn } from "@/lib/cn";
+import { KoffieIcoon } from "./ui/KoffieIcoon";
 
 /** Zelfde koppeling als in Contact en Footer: `icon` uit lib/content wijst hier
  *  naar het echte merk-icoon. */
@@ -413,12 +414,18 @@ function IntroKaart() {
 function ZoWerkIkKaart({ className }: { className?: string }) {
   return (
     <BentoCard className={className}>
-      <CardLabel>Zo werk ik</CardLabel>
+      {/* Niet "Zo werk ik": op /over-mij/ staat daaronder de werkwijze met
+          die kop. */}
+      <CardLabel>Over DisselDesign</CardLabel>
       {bento.background.paragraphs.map((p, idx) => (
         <p
           key={idx}
           className={cn("text-sm leading-relaxed text-white/70", idx > 0 && "mt-3")}
         >
+          {/* "Zin in een koffie…": het kopje staat voor de kennismaking. */}
+          {p.startsWith("Zin in een koffie") && (
+            <KoffieIcoon size="sm" className="mr-2 inline-block align-[-3px] text-primary" />
+          )}
           {p}
         </p>
       ))}

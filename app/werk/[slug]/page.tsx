@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { CSSProperties } from "react";
-import { ArrowRight, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { reviews } from "@/lib/content";
 import {
   DIENSTEN,
@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/Button";
 import { Reveal, RevealItem, RevealStagger } from "@/components/ui/Reveal";
 import { CaseCarousel } from "@/components/werk/CaseCarousel";
 import { CaseNavigatie } from "@/components/werk/CaseNavigatie";
+import { KoffieIcoon } from "@/components/ui/KoffieIcoon";
 
 /**
  * Casepagina, één per bestand in content/werk/. Volgorde volgens het
@@ -217,10 +218,10 @@ export default async function CasePagina({ params }: Props) {
                   variant="primary"
                   size="lg"
                   data-cta="plan_kennismaking"
-                  className="mt-6"
+                  className="group mt-6"
                 >
+                  <KoffieIcoon stoom="hover" />
                   Plan een kennismaking
-                  <ArrowRight size={18} aria-hidden />
                 </Button>
               </section>
             </Reveal>

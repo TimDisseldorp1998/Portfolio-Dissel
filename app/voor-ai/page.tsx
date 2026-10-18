@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { ArrowRight } from "lucide-react";
 import { prijs, reviews, site } from "@/lib/content";
 import { Veelgesteld } from "@/components/Veelgesteld";
 import { SITE_URL, voorAiPagina } from "@/lib/structured-data";
@@ -10,6 +9,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { Kruimelpad } from "@/components/Kruimelpad";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import { KoffieIcoon } from "@/components/ui/KoffieIcoon";
 
 /**
  * /voor-ai/: alle feiten over DisselDesign op één pagina, voor bezoekers én
@@ -236,7 +236,7 @@ const diensten = [
 const stappen = [
   {
     titel: "Kennismaking",
-    tekst: "Een gratis gesprek van 20 minuten over wat je wilt bereiken.",
+    tekst: "Een gratis kennismaking van 20 minuten over wat je wilt bereiken.",
   },
   {
     titel: "Voorstel",
@@ -457,9 +457,10 @@ export default function VoorAiPage() {
                 variant="primary"
                 size="lg"
                 data-cta="plan_kennismaking"
+                className="group"
               >
+                <KoffieIcoon stoom="hover" />
                 Plan een kennismaking
-                <ArrowRight size={18} aria-hidden />
               </Button>
             </div>
           </header>
@@ -807,9 +808,10 @@ export default function VoorAiPage() {
                 variant="primary"
                 size="lg"
                 data-cta="plan_kennismaking"
+                className="group"
               >
+                <KoffieIcoon stoom="hover" />
                 Plan een kennismaking
-                <ArrowRight size={18} aria-hidden />
               </Button>
             </div>
           </section>

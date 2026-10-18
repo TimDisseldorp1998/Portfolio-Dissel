@@ -5,6 +5,7 @@ import { Container } from "./ui/Container";
 import { Reveal } from "./ui/Reveal";
 import { LinkedinFilled, InstagramFilled } from "./ui/BrandIcons";
 import { ContactForm } from "./ContactForm";
+import { KoffieIcoon } from "./ui/KoffieIcoon";
 
 const brandIcons: Record<string, (props: { size?: number }) => JSX.Element> = {
   Linkedin: LinkedinFilled,
@@ -32,10 +33,11 @@ export function Contact() {
               </p>
               <h2 className="mb-6 font-heading text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
                 <span className="text-white/[0.55]">Klaar om te groeien?</span>{" "}
-                <span className="text-white">Plan een gesprek.</span>
+                <span className="text-white">Plan een kennismaking.</span>
               </h2>
               <p className="mb-8 text-lg leading-relaxed text-white/70">
-                Plan een vrijblijvend gesprek van 20 minuten.
+                <KoffieIcoon size="sm" className="mr-2 inline-block align-[-2px] text-primary" />
+                Plan een vrijblijvende kennismaking van 20 minuten.
                 <br />
                 Vertel me waar je naartoe wilt met je merk of product. Ik denk
                 direct met je mee over hoe we daar sneller komen. Geen
