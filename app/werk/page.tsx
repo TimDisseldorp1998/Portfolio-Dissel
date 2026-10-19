@@ -5,7 +5,7 @@ import { Footer } from "@/components/Footer";
 import { Kruimelpad } from "@/components/Kruimelpad";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { CaseKaart } from "@/components/werk/CaseKaart";
+import { CaseTegel } from "@/components/werk/CaseTegel";
 import { RevealItem, RevealStagger } from "@/components/ui/Reveal";
 import { KoffieIcoon } from "@/components/ui/KoffieIcoon";
 
@@ -50,11 +50,11 @@ export default async function WerkPagina() {
             </p>
           </header>
 
-          {/* Zelfde gestaffelde entree als het werk op home. */}
+          {/* Gestaffelde entree, net als de andere kaartgroepen. */}
           <RevealStagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {cases.map((c, i) => (
               <RevealItem key={c.slug}>
-                <CaseKaart
+                <CaseTegel
                   caseMeta={c}
                   kop="h2"
                   laden={i < 3 ? "eager" : "lazy"}

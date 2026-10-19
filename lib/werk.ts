@@ -1,6 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { ComponentType } from "react";
+import type { CaseKaartData, CaseLabel } from "./werk-gedeeld";
+
+export { datumLabel } from "./werk-gedeeld";
+export type { CaseKaartData, CaseLabel } from "./werk-gedeeld";
 
 /**
  * Cases uit content/werk/*.mdx. Een nieuwe case is alleen een nieuw .mdx-
@@ -9,13 +13,6 @@ import type { ComponentType } from "react";
  *
  * Alleen voor servercode (leest het bestandssysteem tijdens de build).
  */
-
-/** "opdracht" = eigen klus als DisselDesign; "in-dienst" = gemaakt in
- *  loondienst; "concept" = geen echte opdracht. */
-export type CaseLabel =
-  | "opdracht"
-  | "concept"
-  | { type: "in-dienst"; werkgever: string };
 
 /** Diensten zoals ze in fase 2 een eigen pagina krijgen. De sleutel wordt dan
  *  de URL; nu staat alleen de naam als tekst op de casepagina. */
@@ -31,6 +28,19 @@ export type Dienst = keyof typeof DIENSTEN;
 
 /** Een beeld in de carousel bovenaan de casepagina. */
 export type Slide = { src: string; alt: string; label: string };
+
+/**
+ * Het beeld van een case op de grote kaart én in de hero van de casepagina:
+ * de mockup (kaart.beeld) als die er is, anders het kaartbeeld. Altijd
+ * hetzelfde op beide plekken, anders is de duik (components/werk/trekIn.ts)
+ * niet naadloos.
+ */
+export function heroBeeld(c: Pick<CaseMeta, "kaart" | "kaartbeeld">): string {
+  return c.kaart.beeld?.src ?? c.kaartbeeld;
+}
+
+/** Hoeveel cases er op home staan. */
+export const AANTAL_OP_HOME = 2;
 
 export type CaseMeta = {
   slug: string;
@@ -56,6 +66,11 @@ export type CaseMeta = {
   diensten: Dienst[];
   /** Tekst bij "Zelf zoiets?" onderaan de case. */
   cta: string;
+  /** "2024" of "2024-06". Bepaalt welke cases het nieuwst zijn. */
+  datum: string;
+  /** Altijd op home, ongeacht de datum. */
+  uitgelicht?: boolean;
+  kaart: CaseKaartData;
 };
 
 export type Case = CaseMeta & {
@@ -99,7 +114,10 @@ const MAX_KAARTTEKST = 120;
 const VERPLICHT: (keyof CaseMeta)[] = [
   "slug", "klant", "volgorde", "seoTitel", "kaarttekst", "label", "rol",
   "jaar", "type", "tags", "liveUrl", "kaartbeeld", "slides", "diensten", "cta",
+  "datum", "kaart",
 ];
+
+const DATUM_RE = /^\d{4}(-(0[1-9]|1[0-2]))?$/;
 
 /** Faalt de build hard bij een fout in een casebestand, zodat een kapotte of
  *  half ingevulde case nooit stil online komt. */
@@ -120,6 +138,10 @@ function controleer(bestand: string, meta: unknown): CaseMeta {
   for (const d of m.diensten) {
     if (!(d in DIENSTEN)) fout(`onbekende dienst "${d}"`);
   }
+  if (!DATUM_RE.test(m.datum)) fout(`datum "${m.datum}" moet "JJJJ" of "JJJJ-MM" zijn`);
+  if (!m.kaart || typeof m.kaart !== "object") fout("verplicht veld \"kaart\" ontbreekt");
+  if (!m.kaart.kop?.trim()) fout("verplicht veld \"kaart.kop\" ontbreekt");
+  if (!m.kaart.kleur) fout("verplicht veld \"kaart.kleur\" ontbreekt");
   // Hoofdletters tellen: de server van Hostinger is hoofdlettergevoelig, de
   // Mac niet. existsSync op de Mac zou "Iconen" en "iconen" allebei goedkeuren.
   const bestaat = (src: string) => {
@@ -127,6 +149,14 @@ function controleer(bestand: string, meta: unknown): CaseMeta {
     return fs.existsSync(vol) && fs.readdirSync(path.dirname(vol)).includes(path.basename(vol));
   };
   if (!bestaat(m.kaartbeeld)) fout(`kaartbeeld ${m.kaartbeeld} bestaat niet in public/`);
+  if (m.kaart.beeld) {
+    if (!m.kaart.beeld.alt) fout(`kaart.beeld ${m.kaart.beeld.src} heeft geen alt-tekst`);
+    // Geen harde fout: tot de mockup er is, tonen kaart en hero het kaartbeeld.
+    if (!bestaat(m.kaart.beeld.src)) {
+      console.warn(`TODO content/werk/${bestand}.mdx: kaartbeeld ${m.kaart.beeld.src} ontbreekt, kaart en hero tonen het gewone kaartbeeld.`);
+      m.kaart = { ...m.kaart, beeld: undefined };
+    }
+  }
   for (const slide of m.slides) {
     if (!bestaat(slide.src)) fout(`slide ${slide.src} bestaat niet in public/`);
     if (!slide.alt) fout(`slide ${slide.src} heeft geen alt-tekst`);
@@ -189,4 +219,18 @@ export function labelTekst(label: CaseLabel): string {
   if (label === "opdracht") return "Opdracht";
   if (label === "concept") return "Concept";
   return `In dienst bij ${label.werkgever}`;
+}
+
+/** De cases op home: eerst de uitgelichte, daarna de nieuwste op `datum`.
+ *  Bij gelijke datum telt `volgorde`. */
+export async function casesVoorHome(aantal = AANTAL_OP_HOME): Promise<Case[]> {
+  const cases = await alleCases();
+  return [...cases]
+    .sort(
+      (a, b) =>
+        Number(!!b.uitgelicht) - Number(!!a.uitgelicht) ||
+        b.datum.localeCompare(a.datum) ||
+        a.volgorde - b.volgorde
+    )
+    .slice(0, aantal);
 }
