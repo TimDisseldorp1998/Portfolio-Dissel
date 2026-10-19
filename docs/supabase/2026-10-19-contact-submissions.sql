@@ -56,3 +56,8 @@ create policy "Anyone can submit the contact form"
       )
     )
   );
+
+-- 19 oktober 2026, later (migratie contact_submissions_alleen_nieuw_formulier):
+-- het nieuwe formulier staat live, dus het blok "oud formulier" is weg. De
+-- policy is nu alleen het tweede blok hierboven (naam + minstens één dienst
+-- uit de vaste lijst, lengtes, project_type leeg), plus de e-mailcheck.
