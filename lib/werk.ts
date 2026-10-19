@@ -1,10 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { ComponentType } from "react";
-import type { CaseKaartData, CaseLabel, TagSoort } from "./werk-gedeeld";
+import type { CaseKaartData, CaseLabel } from "./werk-gedeeld";
 
-export { TAG_KLEUR, datumLabel } from "./werk-gedeeld";
-export type { CaseKaartData, CaseLabel, TagSoort } from "./werk-gedeeld";
+export { datumLabel } from "./werk-gedeeld";
+export type { CaseKaartData, CaseLabel } from "./werk-gedeeld";
 
 /**
  * Cases uit content/werk/*.mdx. Een nieuwe case is alleen een nieuw .mdx-
@@ -118,7 +118,6 @@ const VERPLICHT: (keyof CaseMeta)[] = [
 ];
 
 const DATUM_RE = /^\d{4}(-(0[1-9]|1[0-2]))?$/;
-const SOORTEN: TagSoort[] = ["research", "design", "development", "branding"];
 
 /** Faalt de build hard bij een fout in een casebestand, zodat een kapotte of
  *  half ingevulde case nooit stil online komt. */
@@ -143,9 +142,6 @@ function controleer(bestand: string, meta: unknown): CaseMeta {
   if (!m.kaart || typeof m.kaart !== "object") fout("verplicht veld \"kaart\" ontbreekt");
   if (!m.kaart.kop?.trim()) fout("verplicht veld \"kaart.kop\" ontbreekt");
   if (!m.kaart.kleur) fout("verplicht veld \"kaart.kleur\" ontbreekt");
-  for (const t of m.kaart.tags ?? []) {
-    if (!SOORTEN.includes(t.soort)) fout(`tag "${t.label}" heeft onbekende soort "${t.soort}"`);
-  }
   // Hoofdletters tellen: de server van Hostinger is hoofdlettergevoelig, de
   // Mac niet. existsSync op de Mac zou "Iconen" en "iconen" allebei goedkeuren.
   const bestaat = (src: string) => {

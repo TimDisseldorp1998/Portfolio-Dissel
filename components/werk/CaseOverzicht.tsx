@@ -33,6 +33,7 @@ export function CaseOverzicht({
                 klant: c.klant,
                 datum: c.datum,
                 label: c.label,
+                tags: c.tags,
                 kaart: c.kaart,
                 // Zelfde beeld als de hero: de kaart is de link, het beeld
                 // decoratief, behalve een mockup met eigen alt-tekst.

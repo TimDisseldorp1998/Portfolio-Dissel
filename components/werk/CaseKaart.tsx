@@ -3,7 +3,8 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useRef, type MouseEvent } from "react";
-import { TAG_KLEUR, datumLabel, type CaseKaartData, type CaseLabel } from "@/lib/werk-gedeeld";
+import { ArrowUpRight } from "lucide-react";
+import { datumLabel, type CaseKaartData, type CaseLabel } from "@/lib/werk-gedeeld";
 import { trekIn } from "./trekIn";
 
 /** Alleen gewone data: dit is een client component, dus geen functies. */
@@ -12,6 +13,8 @@ export type CaseKaartProps = {
   klant: string;
   datum: string;
   label: CaseLabel | null;
+  /** De tags uit `meta.tags`, als kleine pillen onderin. */
+  tags: string[];
   kaart: CaseKaartData;
   /** Het beeld van de kaart, gelijk aan de hero van de case (heroBeeld). */
   beeld: { src: string; alt: string };
@@ -61,7 +64,7 @@ export function CaseKaart({
       onMouseEnter={() => router.prefetch(href)}
       onFocus={() => router.prefetch(href)}
       aria-labelledby={`${id}-klant ${id}-kop`}
-      className="group relative block aspect-[3/4] overflow-hidden rounded-[28px] border border-white/10 transition-colors duration-200 hover:border-white/30 focus-visible:border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface-dark"
+      className="group relative block aspect-[3/4] overflow-hidden rounded-[20px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface-dark"
       style={{ backgroundColor: k.kleur }}
     >
       {/* Direct kind van de link: trekIn neemt de rechthoek en hoeken van de
@@ -75,18 +78,21 @@ export function CaseKaart({
         className="object-cover transition-transform duration-200 ease-out motion-safe:group-hover:scale-[1.02] motion-safe:group-focus-visible:scale-[1.02]"
       />
 
-      {/* Kopbalk, als doorschijnende balk over het beeld. */}
-      <div className="absolute inset-x-3 top-3 flex items-center justify-between gap-3 rounded-2xl bg-[rgba(10,10,15,0.55)] px-5 py-3.5 backdrop-blur-md">
+      {/* Kopbalk, als doorschijnende balk over het beeld. Alleen de
+          achtergrond is doorschijnend, de tekst houdt volle dekking. 62% is
+          het minimum voor 4,5:1 op een helemaal witte foto (Ziggo Dome):
+          naam 5,6:1, jaartal (wit op 85%) 4,6:1. */}
+      <div className="absolute inset-x-3 top-3 flex items-center justify-between gap-3 rounded-xl bg-[rgba(10,10,15,0.62)] px-5 py-3.5 backdrop-blur-sm">
         <span id={`${id}-klant`} className="font-heading text-base font-semibold text-white">
           {c.klant}
         </span>
         <span className="flex shrink-0 items-center gap-2">
           {c.label === "concept" && (
-            <span className="rounded-full border border-white/25 px-2 py-0.5 text-[11px] font-medium uppercase tracking-wider text-white/80">
+            <span className="rounded-full bg-white/[0.08] px-2 py-0.5 text-[11px] font-medium uppercase tracking-wider text-white/85">
               Concept
             </span>
           )}
-          <span className="font-mono text-xs uppercase tracking-[0.14em] text-white/75">
+          <span className="text-sm tabular-nums text-white/85">
             {datumLabel(c.datum)}
           </span>
         </span>
@@ -105,19 +111,29 @@ export function CaseKaart({
           {k.kop}
         </Kop>
         {k.subtitel && <p className="mt-1.5 text-base italic text-white/85">{k.subtitel}</p>}
-        {k.tags.length > 0 && (
-          <ul className="mt-4 flex flex-wrap gap-2">
-            {k.tags.map((t) => (
-              <li
-                key={t.label}
-                className="inline-flex h-9 items-center rounded-full border-[1.5px] bg-black/25 px-3.5 text-[15px] text-white"
-                style={{ borderColor: TAG_KLEUR[t.soort] }}
-              >
-                {t.label}
-              </li>
-            ))}
-          </ul>
-        )}
+        {/* Tags links, de oranje pijl rechts, verticaal gecentreerd. De pijl
+            is decoratief: de hele kaart is de link. Hover en focus op de
+            kaart zetten zijn hover aan. */}
+        <div className="mt-4 flex items-center justify-between gap-3">
+          {c.tags.length > 0 && (
+            <ul className="flex flex-wrap gap-1.5">
+              {c.tags.map((t) => (
+                <li
+                  key={t}
+                  className="rounded-full bg-white/[0.04] px-2.5 py-1 text-[11px] font-medium uppercase tracking-wider text-white/60"
+                >
+                  {t}
+                </li>
+              ))}
+            </ul>
+          )}
+          <span
+            aria-hidden="true"
+            className="ml-auto inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-[background-color,color] duration-300 group-hover:bg-secondary group-hover:text-white group-focus-visible:bg-secondary group-focus-visible:text-white"
+          >
+            <ArrowUpRight size={16} />
+          </span>
+        </div>
       </div>
     </a>
   );
