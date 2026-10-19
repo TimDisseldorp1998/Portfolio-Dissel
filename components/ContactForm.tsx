@@ -8,73 +8,100 @@ import {
   type HTMLAttributes,
   type RefObject,
 } from "react";
-import { useReducedMotion } from "@/lib/useReducedMotion";
 import { usePresence } from "@/lib/usePresence";
+import { AlertCircle, ArrowRight, Check, Loader2 } from "lucide-react";
 import {
-  AlertCircle,
-  ArrowRight,
-  Check,
-  Clock,
-  Loader2,
-  Mail,
-} from "lucide-react";
-import { contact, pakketten, site } from "@/lib/content";
+  contact,
+  diensten as alleDiensten,
+  pakketten,
+  site,
+  voorafInvullen,
+  type Dienst,
+} from "@/lib/content";
 import { Reveal, RevealStagger, RevealItem } from "./ui/Reveal";
 import { cn } from "@/lib/cn";
 import { meet } from "@/lib/meten";
 
 type Status = "idle" | "submitting" | "sent" | "error";
-type Errors = { email?: string; message?: string };
+type Veld = "name" | "company" | "email" | "phone" | "website" | "message";
+type Errors = { name?: string; email?: string; diensten?: string };
 
+/** Bewust simpel: iets voor de @, en een punt in het domein. */
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function validateEmail(v: string): string | undefined {
-  if (!v.trim()) return "Vul je e-mailadres in.";
-  if (!EMAIL_RE.test(v)) return "Dit lijkt geen geldig e-mailadres.";
-  return undefined;
-}
+/** Maximale lengtes, gelijk aan de insert-policy in Supabase. */
+const MAX: Record<Veld, number> = {
+  name: 100,
+  company: 100,
+  email: 320,
+  phone: 30,
+  website: 200,
+  message: 2000,
+};
 
-function validateMessage(v: string): string | undefined {
-  if (!v.trim()) return "Vertel me even waar het over gaat.";
-  if (v.trim().length < 3) return "Iets meer graag. Een paar woorden helpen.";
-  return undefined;
-}
+const VERBETEREN: Dienst = "Bestaande website verbeteren";
+
+const valideer = {
+  name: (v: string) => (v.trim() ? undefined : "Vul je naam in."),
+  email: (v: string) => (EMAIL_RE.test(v.trim()) ? undefined : "Vul een geldig e-mailadres in."),
+  diensten: (d: Dienst[]) => (d.length ? undefined : "Selecteer minimaal één dienst."),
+};
+
+/** Haalt HTML-tags weg en knipt af op de maximale lengte. */
+const schoon = (v: string, max: number) => v.replace(/<[^>]*>/g, "").trim().slice(0, max);
+
+/** "jouwwebsite.nl" mag; bij versturen komt er https:// voor. */
+const metProtocol = (v: string) => (!v || /^https?:\/\//i.test(v) ? v : `https://${v}`);
+
+const leeg = { name: "", company: "", email: "", phone: "", website: "", message: "" };
 
 /**
  * Het contactformulier, op home (in de contactsectie) en op /contact/.
  * Eén component op twee plekken: een wijziging hier geldt voor allebei.
  * `id="contact-form"` staat op de buitenste div, zodat /#contact-form en de
  * knoppen die daarheen wijzen blijven werken.
+ *
+ * Verzenden gaat via twee kanalen tegelijk: Supabase (de database; de
+ * insert-policy daar valideert lengtes en de dienstenlijst) en FormSubmit
+ * (de e-mail). Lukt er één, dan is de aanvraag binnen.
  */
 export function ContactForm({ className }: { className?: string }) {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Errors>({});
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [projectType, setProjectType] = useState<string>("");
-  const [values, setValues] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  // Pas na de eerste verzendpoging controleert een veld zichzelf bij elke
+  // wijziging; daarvoor geen meldingen terwijl iemand nog typt.
+  const [gecontroleerd, setGecontroleerd] = useState(false);
+  const [values, setValues] = useState(leeg);
+  const [gekozen, setGekozen] = useState<Dienst[]>([]);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const bezigRef = useRef(false);
+  const pakketRef = useRef<string | null>(null);
+  const toonWebsite = gekozen.includes(VERBETEREN);
 
-  // Pakket vooraf invullen vanuit de prijzen op home (?pakket=…). Een bericht
-  // dat de bezoeker zelf typte, blijft staan; alleen een eerder vooraf
-  // ingevulde regel wordt vervangen.
+  // Vooraf invullen vanuit de prijzen op home (?pakket=…). Eigen tekst en
+  // zelf aangevinkte diensten blijven staan; alleen wat eerder vooraf was
+  // ingevuld, wordt vervangen.
   const voorafBericht = useRef("");
+  const voorafDiensten = useRef<Dienst[]>([]);
   useEffect(() => {
     const kies = (slug: string | null) => {
       const p = pakketten.find((x) => x.slug === slug);
       if (!p) return;
+      pakketRef.current = p.slug;
       const tekst = `Ik heb interesse in: ${p.naam} (vanaf € ${p.bedrag.toLocaleString("nl-NL")})`;
-      // Vastleggen vóór de update: React voert de updater later uit, en dan
-      // staat voorafBericht al op de nieuwe tekst.
-      const vorige = voorafBericht.current;
+      const nieuw = voorafInvullen.pakket[p.slug];
+      // Vastleggen vóór de update: React voert de updaters later uit.
+      const vorigeTekst = voorafBericht.current;
+      const vorigeDiensten = voorafDiensten.current;
       voorafBericht.current = tekst;
-      setProjectType(p.projectType);
+      voorafDiensten.current = nieuw;
+      setGekozen((d) => {
+        const eigen = d.filter((x) => !vorigeDiensten.includes(x));
+        return alleDiensten.filter((x) => eigen.includes(x) || nieuw.includes(x));
+      });
       setValues((v) =>
-        v.message.trim() === "" || v.message === vorige ? { ...v, message: tekst } : v
+        v.message.trim() === "" || v.message === vorigeTekst ? { ...v, message: tekst } : v
       );
     };
 
@@ -98,79 +125,99 @@ export function ContactForm({ className }: { className?: string }) {
     return () => document.removeEventListener("click", opKlik);
   }, []);
 
-  // Auto-resize textarea, respecting min/max heights.
+  // Het berichtveld groeit mee, binnen een minimum en maximum.
   useEffect(() => {
     const ta = textareaRef.current;
     if (!ta) return;
     ta.style.height = "auto";
-    const next = Math.max(130, Math.min(ta.scrollHeight, 300));
+    const next = Math.max(104, Math.min(ta.scrollHeight, 300));
     ta.style.height = `${next}px`;
   }, [values.message]);
 
-  function updateField(name: keyof typeof values, val: string) {
+  function updateField(name: Veld, val: string) {
     setValues((v) => ({ ...v, [name]: val }));
-    // Clear any existing error the moment the field becomes valid.
-    if (name === "email" && errors.email) {
-      if (!validateEmail(val)) setErrors((e) => ({ ...e, email: undefined }));
-    }
-    if (name === "message" && errors.message) {
-      if (!validateMessage(val))
-        setErrors((e) => ({ ...e, message: undefined }));
+    if (gecontroleerd && (name === "name" || name === "email")) {
+      setErrors((e) => ({ ...e, [name]: valideer[name](val) }));
     }
   }
 
-  function handleBlur(name: "email" | "message") {
-    const err =
-      name === "email"
-        ? validateEmail(values.email)
-        : validateMessage(values.message);
-    setErrors((e) => ({ ...e, [name]: err }));
+  function toggleDienst(dienst: Dienst) {
+    // Altijd in de volgorde van de lijst, zodat de e-mail voorspelbaar is.
+    const nieuw = gekozen.includes(dienst)
+      ? gekozen.filter((x) => x !== dienst)
+      : alleDiensten.filter((x) => x === dienst || gekozen.includes(x));
+    setGekozen(nieuw);
+    if (gecontroleerd) setErrors((e) => ({ ...e, diensten: valideer.diensten(nieuw) }));
   }
 
   function resetForm() {
     setStatus("idle");
-    setValues({ name: "", email: "", message: "" });
-    setProjectType("");
+    setValues(leeg);
+    setGekozen([]);
     setErrors({});
-    setErrorMessage(null);
+    setGecontroleerd(false);
+    pakketRef.current = null;
+    voorafBericht.current = "";
+    voorafDiensten.current = [];
   }
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (bezigRef.current) return; // geen dubbele verzending
 
-    // Honeypot check
+    // Honeypot: ingevuld door een bot, dan stil stoppen.
     const honey = (e.currentTarget.elements.namedItem("_honey") as HTMLInputElement | null)?.value;
     if (honey) return;
 
-    const emailErr = validateEmail(values.email);
-    const messageErr = validateMessage(values.message);
-    if (emailErr || messageErr) {
-      setErrors({ email: emailErr, message: messageErr });
-      // Move focus to the first invalid field for keyboard users.
-      const firstInvalid = document.getElementById(
-        emailErr ? "contact-email" : "contact-message"
-      );
-      firstInvalid?.focus();
+    const fouten: Errors = {
+      name: valideer.name(values.name),
+      email: valideer.email(values.email),
+      diensten: valideer.diensten(gekozen),
+    };
+    setGecontroleerd(true);
+    setErrors(fouten);
+    if (fouten.name || fouten.email || fouten.diensten) {
+      // Focus naar het eerste foute veld, in de volgorde van het formulier.
+      const eerste = fouten.name
+        ? "contact-name"
+        : fouten.email
+          ? "contact-email"
+          : "contact-dienst-0";
+      document.getElementById(eerste)?.focus();
       return;
     }
 
+    bezigRef.current = true;
     setStatus("submitting");
-    setErrorMessage(null);
 
-    // 1) Store the lead in Supabase. The site is a static export (no server),
-    //    so the browser writes directly with the public publishable key. RLS
-    //    lets anonymous visitors only INSERT, never read other submissions.
-    const storeInSupabase = async () => {
+    const data = {
+      name: schoon(values.name, MAX.name),
+      company: schoon(values.company, MAX.company),
+      email: schoon(values.email, MAX.email),
+      phone: schoon(values.phone, MAX.phone),
+      // Alleen mee als "Bestaande website verbeteren" aan staat.
+      website: toonWebsite ? metProtocol(schoon(values.website, MAX.website)).slice(0, MAX.website) : "",
+      message: schoon(values.message, MAX.message),
+      diensten: gekozen,
+      pakket: pakketRef.current,
+      pagina: window.location.pathname,
+    };
+
+    const naarSupabase = async () => {
       try {
-        // Dynamisch: Supabase hoort niet in de eerste bundel. De client wordt
-        // pas opgehaald op het moment dat iemand het formulier verstuurt.
+        // Dynamisch: Supabase hoort niet in de eerste bundel.
         const { createClient } = await import("@/lib/supabase/client");
         const supabase = createClient();
         const { error } = await supabase.from("contact_submissions").insert({
-          name: values.name.trim() || null,
-          email: values.email.trim(),
-          project_type: projectType || null,
-          message: values.message.trim(),
+          name: data.name,
+          company: data.company || null,
+          email: data.email,
+          phone: data.phone || null,
+          services: data.diensten,
+          website: data.website || null,
+          message: data.message || null,
+          pakket: data.pakket,
+          page_path: data.pagina,
         });
         return !error;
       } catch {
@@ -178,21 +225,23 @@ export function ContactForm({ className }: { className?: string }) {
       }
     };
 
-    // 2) Also fire the existing email notification via formsubmit.co, so a
-    //    submission still lands in the inbox. Sent as x-www-form-urlencoded
-    //    (a CORS "simple request"), NOT JSON, to avoid a preflight OPTIONS
-    //    that Safari + content blockers often reject.
-    const sendEmail = async () => {
+    // FormSubmit als x-www-form-urlencoded (een CORS "simple request"), geen
+    // JSON: dat voorkomt een preflight die Safari en contentblockers vaak
+    // weigeren. De veldnamen zijn de regels in de e-mail.
+    const naarMail = async () => {
       try {
         const body = new URLSearchParams();
-        body.set("name", values.name.trim() || "—");
-        body.set("email", values.email.trim());
-        body.set("project_type", projectType || "Niet gespecificeerd");
-        body.set("message", values.message.trim());
-        body.set(
-          "_subject",
-          `Nieuw bericht via portfolio — ${projectType || "algemeen"}`
-        );
+        body.set("Naam", data.name);
+        if (data.company) body.set("Bedrijfsnaam", data.company);
+        body.set("E-mailadres", data.email);
+        if (data.phone) body.set("Telefoonnummer", data.phone);
+        body.set("Diensten", data.diensten.map((d) => `• ${d}`).join("\n"));
+        if (data.website) body.set("Website", data.website);
+        if (data.message) body.set("Bericht", data.message);
+        if (data.pakket) body.set("Pakket", data.pakket);
+        body.set("Verstuurd vanaf", data.pagina === "/" ? "Home" : data.pagina);
+        body.set("_subject", `Nieuwe aanvraag van ${data.name} · ${data.diensten.join(", ")}`);
+        body.set("_replyto", data.email);
         body.set("_template", "table");
         body.set("_captcha", "false");
         const res = await fetch(contact.endpoint, {
@@ -200,35 +249,30 @@ export function ContactForm({ className }: { className?: string }) {
           headers: { Accept: "application/json" },
           body,
         });
-        const json = (await res.json().catch(() => ({}))) as {
-          success?: string;
-        };
+        const json = (await res.json().catch(() => ({}))) as { success?: string };
         return res.ok && json.success === "true";
       } catch {
         return false;
       }
     };
 
-    const [stored, emailed] = await Promise.all([
-      storeInSupabase(),
-      sendEmail(),
-    ]);
+    const [opgeslagen, gemaild] = await Promise.all([naarSupabase(), naarMail()]);
+    bezigRef.current = false;
 
-    // The message got through if at least one channel succeeded.
-    if (stored || emailed) {
+    // Alleen een bevestiging als minstens één kanaal het echt heeft verwerkt.
+    if (opgeslagen || gemaild) {
       setStatus("sent");
       meet({
         naam: "generate_lead",
         params: {
-          page_path: window.location.pathname,
-          project_type: projectType || "niet gekozen",
+          page_path: data.pagina,
+          diensten: data.diensten.join(","),
+          ...(data.pakket ? { pakket: data.pakket } : {}),
         },
       });
     } else {
+      // Alles blijft ingevuld; de melding staat bij de knop.
       setStatus("error");
-      setErrorMessage(
-        `We konden je bericht niet direct versturen. Mail me rechtstreeks op ${site.email}.`
-      );
     }
   }
 
@@ -278,156 +322,202 @@ export function ContactForm({ className }: { className?: string }) {
                               id="contact-name"
                               name="name"
                               label="Naam"
-                              optional
+                              required
                               value={values.name}
                               onChange={(v) => updateField("name", v)}
+                              error={errors.name}
                               placeholder="Je naam"
                               autoComplete="name"
+                              maxLength={MAX.name}
+                            />
+                            <Field
+                              id="contact-company"
+                              name="company"
+                              label="Bedrijfsnaam"
+                              optional
+                              value={values.company}
+                              onChange={(v) => updateField("company", v)}
+                              placeholder="Naam van je bedrijf"
+                              autoComplete="organization"
+                              maxLength={MAX.company}
                             />
                             <Field
                               id="contact-email"
                               name="email"
-                              label="E-mail"
+                              label="E-mailadres"
                               required
                               type="email"
                               inputMode="email"
                               value={values.email}
                               onChange={(v) => updateField("email", v)}
-                              onBlur={() => handleBlur("email")}
                               error={errors.email}
-                              placeholder="jij@voorbeeld.nl"
+                              placeholder="jij@bedrijf.nl"
                               autoComplete="email"
+                              maxLength={MAX.email}
+                            />
+                            <Field
+                              id="contact-phone"
+                              name="phone"
+                              label="Telefoonnummer"
+                              optional
+                              type="tel"
+                              inputMode="tel"
+                              value={values.phone}
+                              onChange={(v) => updateField("phone", v)}
+                              placeholder="06 12345678"
+                              autoComplete="tel"
+                              maxLength={MAX.phone}
                             />
                           </div>
                         </RevealItem>
 
                         <RevealItem>
-                          <fieldset>
-                            <legend className="mb-2 flex items-baseline gap-1.5 text-xs font-medium uppercase tracking-[0.18em] text-white/60">
-                              Project type
-                              <span className="text-[10px] normal-case tracking-normal text-white/50">
-                                (optioneel)
+                          <fieldset
+                            aria-describedby={cn(
+                              "contact-diensten-uitleg",
+                              errors.diensten && "contact-diensten-error"
+                            )}
+                            aria-invalid={!!errors.diensten || undefined}
+                          >
+                            <legend className="flex items-baseline gap-1.5 text-xs font-medium uppercase tracking-[0.18em] text-white/60">
+                              Waar kan ik je mee helpen?
+                              <span aria-hidden className="text-primary">
+                                *
                               </span>
                             </legend>
-                            {/* Toggle-knoppen, geen radiogroep: een tweede klik
-                                zet de keuze weer uit, en dat kan een radio niet.
-                                De fieldset + legend zorgen al voor groepering
-                                en naam. */}
-                            <div className="flex flex-wrap gap-2">
-                              {contact.projectTypes.map((opt) => {
-                                const selected = projectType === opt.value;
+                            <p id="contact-diensten-uitleg" className="mb-3 mt-1 text-xs text-white/60">
+                              Kies één of meer opties.
+                            </p>
+                            <div className="grid gap-2 sm:grid-cols-2">
+                              {alleDiensten.map((dienst, i) => {
+                                const aan = gekozen.includes(dienst);
                                 return (
-                                  <button
-                                    key={opt.value}
-                                    type="button"
-                                    aria-pressed={selected}
-                                    onClick={() =>
-                                      setProjectType(selected ? "" : opt.value)
-                                    }
+                                  // De hele tegel is het label, dus overal klikbaar.
+                                  <label
+                                    key={dienst}
                                     className={cn(
-                                      "min-h-[40px] rounded-full border px-4 text-sm font-medium transition-[background-color,border-color,color,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25",
-                                      selected
-                                        ? "border-primary bg-primary text-ink shadow-glow"
-                                        : "border-white/15 bg-white/[0.04] text-white/80 hover:border-primary/40 hover:bg-white/[0.06] hover:text-primary"
+                                      "group flex min-h-[44px] cursor-pointer items-center gap-3 rounded-xl border px-4 py-2.5 text-sm transition-[background-color,border-color,color] duration-200",
+                                      "has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-primary/25",
+                                      aan
+                                        ? "border-primary bg-primary/10 text-white"
+                                        : errors.diensten
+                                          ? "border-red-400/70 bg-white/[0.04] text-white/80 hover:border-red-400"
+                                          : "border-white/10 bg-white/[0.04] text-white/80 hover:border-primary/40 hover:bg-white/[0.06]"
                                     )}
                                   >
-                                    {opt.label}
-                                  </button>
+                                    <input
+                                      id={`contact-dienst-${i}`}
+                                      type="checkbox"
+                                      name="diensten"
+                                      value={dienst}
+                                      checked={aan}
+                                      onChange={() => toggleDienst(dienst)}
+                                      className="sr-only"
+                                    />
+                                    <span
+                                      aria-hidden
+                                      className={cn(
+                                        "flex h-5 w-5 shrink-0 items-center justify-center rounded-md border transition-colors duration-200",
+                                        aan ? "border-primary bg-primary text-ink" : "border-white/30"
+                                      )}
+                                    >
+                                      {aan && <Check size={14} strokeWidth={3} />}
+                                    </span>
+                                    {dienst}
+                                  </label>
                                 );
                               })}
                             </div>
+                            <Foutmelding id="contact-diensten-error" fout={errors.diensten} />
                           </fieldset>
+
+                          {/* Alleen bij "Bestaande website verbeteren". Uit =
+                              weg uit de DOM, dus de waarde gaat niet mee. */}
+                          {toonWebsite && (
+                            <div className="veld-in mt-5">
+                              <Field
+                                id="contact-website"
+                                name="website"
+                                label="Wat is je huidige website?"
+                                optional
+                                inputMode="url"
+                                value={values.website}
+                                onChange={(v) => updateField("website", v)}
+                                placeholder="jouwwebsite.nl"
+                                autoComplete="url"
+                                maxLength={MAX.website}
+                              />
+                            </div>
+                          )}
                         </RevealItem>
 
                         <RevealItem>
                           <Field
                             id="contact-message"
                             name="message"
-                            label="Bericht"
-                            required
+                            label="Vertel kort over je vraag of idee"
+                            optional
                             as="textarea"
                             textareaRef={textareaRef}
                             value={values.message}
                             onChange={(v) => updateField("message", v)}
-                            onBlur={() => handleBlur("message")}
-                            error={errors.message}
-                            placeholder="Vertel kort waar je mee bezig bent…"
+                            placeholder="Vertel bijvoorbeeld wat je wilt laten maken of verbeteren en wat je ermee wilt bereiken."
+                            hint="Een paar zinnen is genoeg. Je hoeft nog geen uitgewerkt plan te hebben."
+                            maxLength={MAX.message}
                           />
                         </RevealItem>
 
                         <RevealItem>
-                          <div className="flex flex-col-reverse items-stretch gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between">
-                            <div
-                              role="status"
-                              aria-live="polite"
-                              className="min-h-[1.25rem] text-xs"
-                            >
-                              {status === "error" ? (
-                                <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-red-400">
-                                  <span className="flex items-center gap-1.5">
-                                    <AlertCircle
-                                      size={14}
-                                      className="shrink-0"
-                                      aria-hidden
-                                    />
-                                    <span>{errorMessage}</span>
+                          <div className="flex flex-col gap-3 pt-2">
+                            <div role="status" aria-live="polite">
+                              {status === "error" && (
+                                <p className="flex items-start gap-1.5 text-sm text-red-400">
+                                  <AlertCircle size={16} className="mt-0.5 shrink-0" aria-hidden />
+                                  <span>
+                                    Er ging iets mis bij het versturen. Probeer het opnieuw of mail naar{" "}
+                                    <a
+                                      href={`mailto:${site.email}`}
+                                      className="rounded font-medium underline underline-offset-2 hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400/50"
+                                    >
+                                      {site.email}
+                                    </a>
+                                    .
                                   </span>
-                                  <a
-                                    href={`mailto:${site.email}`}
-                                    className="font-medium underline underline-offset-2 hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400/50 rounded"
-                                  >
-                                    Mail me direct
-                                  </a>
-                                  <span aria-hidden className="text-red-400/40">·</span>
-                                  <button
-                                    type="button"
-                                    onClick={() => setStatus("idle")}
-                                    className="font-medium underline underline-offset-2 hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400/50 rounded"
-                                  >
-                                    Opnieuw proberen
-                                  </button>
-                                </p>
-                              ) : (
-                                <p className="flex items-center gap-1.5 text-white/60">
-                                  <Clock
-                                    size={14}
-                                    className="shrink-0 text-primary"
-                                    aria-hidden
-                                  />
-                                  <span>Reactie binnen twee werkdagen.</span>
                                 </p>
                               )}
                             </div>
-                            <button
-                              type="submit"
-                              disabled={isSubmitting}
-                              className={cn(
-                                // Zelfde cyaan als de andere hoofdknoppen (Button variant="primary").
-                                "group inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-primary px-7 text-sm font-semibold text-ink shadow-glow transition-[background-color,box-shadow,opacity] duration-200 sm:w-auto",
-                                "hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40",
-                                "disabled:cursor-not-allowed disabled:opacity-70"
-                              )}
-                            >
-                              {isSubmitting ? (
-                                <>
-                                  <Loader2
-                                    size={16}
-                                    className="animate-spin"
-                                    aria-hidden
-                                  />
-                                  <span>Versturen…</span>
-                                </>
-                              ) : (
-                                <>
-                                  <span>Verstuur bericht</span>
-                                  <ArrowRight
-                                    size={16}
-                                    className="transition-transform duration-200 group-hover:translate-x-1"
-                                    aria-hidden
-                                  />
-                                </>
-                              )}
-                            </button>
+                            <div className="flex flex-col items-stretch gap-2 sm:items-start">
+                              <button
+                                type="submit"
+                                disabled={isSubmitting}
+                                aria-busy={isSubmitting || undefined}
+                                className={cn(
+                                  // Zelfde cyaan als de andere hoofdknoppen (Button variant="primary").
+                                  "group inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-primary px-7 text-sm font-semibold text-ink shadow-glow transition-[background-color,box-shadow,opacity] duration-200 sm:w-auto",
+                                  "hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40",
+                                  "disabled:cursor-not-allowed disabled:opacity-70"
+                                )}
+                              >
+                                {isSubmitting ? (
+                                  <>
+                                    <Loader2 size={16} className="animate-spin" aria-hidden />
+                                    <span>Versturen…</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <span>Bespreek mijn project</span>
+                                    <ArrowRight
+                                      size={16}
+                                      className="transition-transform duration-200 group-hover:translate-x-1"
+                                      aria-hidden
+                                    />
+                                  </>
+                                )}
+                              </button>
+                              <p className="text-center text-xs text-white/60 sm:text-left">
+                                Reactie binnen twee werkdagen · Vrijblijvend
+                              </p>
+                            </div>
                           </div>
                         </RevealItem>
                       </RevealStagger>
@@ -442,9 +532,31 @@ export function ContactForm({ className }: { className?: string }) {
   );
 }
 
+/* ------------------------------ Foutmelding ------------------------------ */
+
+/** Blijft staan zodat hij ook dicht kan animeren (grid-truc in globals.css). */
+function Foutmelding({ id, fout }: { id: string; fout?: string }) {
+  return (
+    <div className="field-error" data-state={fout ? "open" : "closed"}>
+      <div>
+        <p id={id} role="alert" className="mt-1.5 flex items-center gap-1.5 text-xs text-red-400">
+          <AlertCircle size={12} className="shrink-0" aria-hidden />
+          <span>{fout}</span>
+        </p>
+      </div>
+    </div>
+  );
+}
+
 /* ------------------------------ SuccessCard ------------------------------ */
 
 function SuccessCard({ onReset }: { onReset: () => void }) {
+  // De focus gaat naar de kop, zodat toetsenbord en schermlezer meteen
+  // weten dat het gelukt is.
+  const kopRef = useRef<HTMLParagraphElement>(null);
+  useEffect(() => {
+    kopRef.current?.focus();
+  }, []);
   return (
     <div
       role="status"
@@ -455,11 +567,15 @@ function SuccessCard({ onReset }: { onReset: () => void }) {
         <Check size={28} strokeWidth={2.5} aria-hidden />
       </div>
       <div>
-        <p className="font-heading text-2xl font-semibold text-white">
-          Bedankt!
+        <p
+          ref={kopRef}
+          tabIndex={-1}
+          className="rounded font-heading text-2xl font-semibold text-white focus:outline-none focus-visible:ring-4 focus-visible:ring-primary/25"
+        >
+          Bedankt voor je bericht!
         </p>
         <p className="mt-2 max-w-sm text-white/70">
-          Je bericht is verstuurd. Je hoort binnen twee werkdagen van me.
+          Ik heb je aanvraag ontvangen en neem binnen twee werkdagen contact met je op.
         </p>
       </div>
       <button
@@ -487,6 +603,9 @@ interface BaseFieldProps {
   required?: boolean;
   optional?: boolean;
   autoComplete?: string;
+  /** Korte toelichting onder het veld, gekoppeld via aria-describedby. */
+  hint?: string;
+  maxLength?: number;
 }
 
 interface InputFieldProps extends BaseFieldProps {
@@ -518,10 +637,13 @@ function Field(props: FieldProps) {
     required,
     optional,
     autoComplete,
+    hint,
+    maxLength,
   } = props;
 
   const errorId = `${id}-error`;
-  const describedBy = error ? errorId : undefined;
+  const hintId = `${id}-hint`;
+  const describedBy = cn(hint && hintId, error && errorId) || undefined;
 
   const controlClasses = cn(
     "block w-full rounded-xl border bg-white/[0.04] px-4 py-3 text-sm text-white transition-[background-color,border-color,box-shadow] duration-200",
@@ -564,10 +686,11 @@ function Field(props: FieldProps) {
           aria-required={required || undefined}
           aria-invalid={!!error || undefined}
           aria-describedby={describedBy}
-          rows={5}
+          maxLength={maxLength}
+          rows={4}
           className={cn(
             controlClasses,
-            "min-h-[130px] max-h-[300px] resize-none overflow-y-auto"
+            "min-h-[104px] max-h-[300px] resize-none overflow-y-auto"
           )}
         />
       ) : (
@@ -585,25 +708,18 @@ function Field(props: FieldProps) {
           aria-invalid={!!error || undefined}
           aria-describedby={describedBy}
           autoComplete={autoComplete}
+          maxLength={maxLength}
           spellCheck={false}
           className={cn(controlClasses, "min-h-[48px]")}
         />
       )}
 
-      {/* Blijft staan zodat hij ook dicht kan animeren; de grid-truc in
-          globals.css doet het hoogte-effect. */}
-      <div className="field-error" data-state={error ? "open" : "closed"}>
-        <div>
-          <p
-            id={errorId}
-            role="alert"
-            className="mt-1.5 flex items-center gap-1.5 text-xs text-red-400"
-          >
-            <AlertCircle size={12} className="shrink-0" aria-hidden />
-            <span>{error}</span>
-          </p>
-        </div>
-      </div>
+      {hint && (
+        <p id={hintId} className="mt-1.5 text-xs text-white/60">
+          {hint}
+        </p>
+      )}
+      <Foutmelding id={errorId} fout={error} />
     </div>
   );
 }
