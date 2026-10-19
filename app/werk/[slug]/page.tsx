@@ -7,6 +7,7 @@ import {
   DIENSTEN,
   alleCases,
   carouselSlides,
+  heroBeeld,
   labelTekst,
   vindCase,
   volgendeCase,
@@ -84,10 +85,14 @@ export default async function CasePagina({ params }: Props) {
       <main id="main" className="bg-surface-dark text-white">
         {/* Grote foto over de volle breedte. Hier landt de overgang vanaf de
             vorige/volgende-kaart; de maten staan ook in CaseNavigatie. */}
-        <div data-case-hero className="relative h-[75svh] min-h-[22rem] w-full">
+        <div
+          data-case-hero
+          className="relative h-[75svh] min-h-[22rem] w-full"
+          style={{ backgroundColor: c.kaart.kleur }}
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={c.kaartbeeld}
+            src={heroBeeld(c)}
             alt=""
             fetchPriority="high"
             decoding="async"
@@ -229,8 +234,8 @@ export default async function CasePagina({ params }: Props) {
             {/* Vorige en volgende case. Een klik trekt je de foto in. */}
             <Reveal y={16} className="mt-14">
               <CaseNavigatie
-                vorige={{ slug: vorige.slug, klant: vorige.klant, kaartbeeld: vorige.kaartbeeld }}
-                volgende={{ slug: volgende.slug, klant: volgende.klant, kaartbeeld: volgende.kaartbeeld }}
+                vorige={{ slug: vorige.slug, klant: vorige.klant, kaartbeeld: heroBeeld(vorige) }}
+                volgende={{ slug: volgende.slug, klant: volgende.klant, kaartbeeld: heroBeeld(volgende) }}
               />
             </Reveal>
           </div>

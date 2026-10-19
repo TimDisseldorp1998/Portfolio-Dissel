@@ -1,91 +1,124 @@
-import { ArrowUpRight } from "lucide-react";
-import type { Case } from "@/lib/werk";
+"use client";
+
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useRef, type MouseEvent } from "react";
+import { TAG_KLEUR, datumLabel, type CaseKaartData, type CaseLabel } from "@/lib/werk-gedeeld";
+import { trekIn } from "./trekIn";
+
+/** Alleen gewone data: dit is een client component, dus geen functies. */
+export type CaseKaartProps = {
+  slug: string;
+  klant: string;
+  datum: string;
+  label: CaseLabel | null;
+  kaart: CaseKaartData;
+  /** Het beeld van de kaart, gelijk aan de hero van de case (heroBeeld). */
+  beeld: { src: string; alt: string };
+};
 
 /**
- * Casekaart op home en /werk/. Eén vorm voor elke case: het kaartbeeld over
- * de hele kaart, de tekst eroverheen tegen de onderrand. Geen rand en geen
- * lift bij hover: inzoomen en de oranje knop doen het werk.
+ * De grote casekaart op home. Weet niets van grid of slider: vaste
+ * verhouding (3:4), geen marges naar buiten. De indeling regelt CaseOverzicht.
  *
- * De link ligt als overlay over de hele kaart, met een korte naam. Was de
- * hele kaart de link, dan werd alle kaarttekst één lange linknaam.
+ * Het beeld vult de hele kaart; de kopbalk ligt er bovenin overheen, kop en
+ * tags onderin op een gradient. Een klik trekt je de case in, met dezelfde
+ * duik als de vorige/volgende-kaarten (./trekIn.ts). Zonder JavaScript, bij
+ * reduced motion of met cmd/ctrl-klik is het een gewone link.
+ *
+ * De toegankelijke naam is klantnaam plus kop (aria-labelledby), anders
+ * werden datum en tags er ook in voorgelezen.
  */
 export function CaseKaart({
-  caseMeta,
+  caseMeta: c,
   kop: Kop = "h3",
-  laden = "lazy",
-  sizes,
+  sizes = "(min-width: 1024px) 50vw, 100vw",
 }: {
-  caseMeta: Pick<Case, "slug" | "klant" | "kaarttekst" | "tags" | "kaartbeeld" | "kaartSrcSet">;
-  /** h3 onder een H2 (home), h2 direct onder de H1 (/werk/). */
+  caseMeta: CaseKaartProps;
+  /** h3 onder een H2 (home). */
   kop?: "h2" | "h3";
-  /** "eager" voor de kaarten die meteen in beeld staan. */
-  laden?: "eager" | "lazy";
-  /** Hoe breed de kaart is per breakpoint, zodat de browser de juiste
-   *  variant uit srcset kiest. */
-  sizes: string;
+  sizes?: string;
 }) {
-  const c = caseMeta;
-  return (
-    <article className="group relative flex h-full w-full flex-col overflow-hidden rounded-3xl text-left transition-[box-shadow] duration-300 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[#ff833d] has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-surface-dark">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={c.kaartbeeld}
-        srcSet={c.kaartSrcSet}
-        sizes={sizes}
-        alt=""
-        aria-hidden
-        loading={laden}
-        decoding="async"
-        draggable={false}
-        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.04]"
-      />
-      {/* Bij hover zakt de tint van 0.55 naar 0.45, waardoor de foto oplicht.
-          Niet verder: op 0.35 zakt het oranje pijl-icoon naar 4,52:1. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-surface-dark opacity-[0.55] transition-opacity duration-500 ease-out group-hover:opacity-[0.45]"
-      />
-      {/* Onderste stop volledig dekkend: bij 0.95 schijnt de foto door en
-          licht de onderrand van de kaart op als haarlijn. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(10,10,15,1)_0%,rgba(10,10,15,0.80)_38%,rgba(10,10,15,0)_78%)]"
-      />
-      {/* Houdt de kaarthoogte op de verhouding van het oude beeldblok; `grow`
-          vangt de speling op als een buurkaart hoger uitvalt. */}
-      <div aria-hidden className="w-full grow aspect-[16/11]" />
+  const router = useRouter();
+  const imgRef = useRef<HTMLImageElement>(null);
+  const k = c.kaart;
+  const id = `kaart-${c.slug}`;
+  const href = `/werk/${c.slug}/`;
 
-      <div className="relative flex flex-col gap-3 p-6">
-        <div className="flex items-start justify-between gap-3">
-          <Kop className="font-heading text-lg font-semibold leading-snug text-white">
-            {c.klant}
-          </Kop>
-          <span
-            aria-hidden
-            className="mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-[background-color,color] duration-300 group-hover:bg-secondary group-hover:text-white"
-          >
-            <ArrowUpRight size={16} />
-          </span>
-        </div>
-        <p className="text-sm leading-relaxed text-white/60">{c.kaarttekst}</p>
-        <div className="mt-2 flex flex-wrap gap-1.5">
-          {c.tags.map((t) => (
-            <span
-              key={t}
-              className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[11px] font-medium uppercase tracking-wider text-white/60"
-            >
-              {t}
+  function klik(e: MouseEvent<HTMLAnchorElement>) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const img = imgRef.current;
+    if (!img || typeof img.animate !== "function") return;
+    e.preventDefault();
+    trekIn(img, href, (url) => router.push(url), { waas: 0 });
+  }
+
+  return (
+    <a
+      href={href}
+      onClick={klik}
+      onMouseEnter={() => router.prefetch(href)}
+      onFocus={() => router.prefetch(href)}
+      aria-labelledby={`${id}-klant ${id}-kop`}
+      className="group relative block aspect-[3/4] overflow-hidden rounded-[28px] border border-white/10 transition-colors duration-200 hover:border-white/30 focus-visible:border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface-dark"
+      style={{ backgroundColor: k.kleur }}
+    >
+      {/* Direct kind van de link: trekIn neemt de rechthoek en hoeken van de
+          ouder als startpunt. Zelfde bestand als de hero van de case. */}
+      <Image
+        ref={imgRef}
+        src={c.beeld.src}
+        alt={c.beeld.alt}
+        fill
+        sizes={sizes}
+        className="object-cover transition-transform duration-200 ease-out motion-safe:group-hover:scale-[1.02] motion-safe:group-focus-visible:scale-[1.02]"
+      />
+
+      {/* Kopbalk, als doorschijnende balk over het beeld. */}
+      <div className="absolute inset-x-3 top-3 flex items-center justify-between gap-3 rounded-2xl bg-[rgba(10,10,15,0.55)] px-5 py-3.5 backdrop-blur-md">
+        <span id={`${id}-klant`} className="font-heading text-base font-semibold text-white">
+          {c.klant}
+        </span>
+        <span className="flex shrink-0 items-center gap-2">
+          {c.label === "concept" && (
+            <span className="rounded-full border border-white/25 px-2 py-0.5 text-[11px] font-medium uppercase tracking-wider text-white/80">
+              Concept
             </span>
-          ))}
-        </div>
+          )}
+          <span className="font-mono text-xs uppercase tracking-[0.14em] text-white/75">
+            {datumLabel(c.datum)}
+          </span>
+        </span>
       </div>
 
-      <a
-        href={`/werk/${c.slug}/`}
-        className="absolute -inset-px z-10 rounded-3xl focus:outline-none"
-      >
-        <span className="sr-only">Bekijk case: {c.klant}</span>
-      </a>
-    </article>
+      {/* Zachte gradient onderin, zodat de tekst op elk beeld leesbaar is. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-3/5 bg-[linear-gradient(to_top,rgba(10,10,15,0.92)_0%,rgba(10,10,15,0.6)_45%,rgba(10,10,15,0)_100%)]"
+      />
+      <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
+        <Kop
+          id={`${id}-kop`}
+          className="max-w-[30ch] font-heading text-[22px] font-semibold leading-[1.2] text-white sm:text-2xl lg:text-[30px]"
+        >
+          {k.kop}
+        </Kop>
+        {k.subtitel && <p className="mt-1.5 text-base italic text-white/85">{k.subtitel}</p>}
+        {k.tags.length > 0 && (
+          <ul className="mt-4 flex flex-wrap gap-2">
+            {k.tags.map((t) => (
+              <li
+                key={t.label}
+                className="inline-flex h-9 items-center rounded-full border-[1.5px] bg-black/25 px-3.5 text-[15px] text-white"
+                style={{ borderColor: TAG_KLEUR[t.soort] }}
+              >
+                {t.label}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </a>
   );
 }
