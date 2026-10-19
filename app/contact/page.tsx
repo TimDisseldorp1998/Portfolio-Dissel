@@ -9,9 +9,9 @@ import { Container } from "@/components/ui/Container";
 import { ContactForm } from "@/components/ContactForm";
 import { KoffieIcoon } from "@/components/ui/KoffieIcoon";
 
-const TITEL = "Contact | Plan een kennismaking met DisselDesign";
+const TITEL = "Contact | Plan een gesprek met DisselDesign";
 const OMSCHRIJVING =
-  "Plan een gratis kennismaking van 20 minuten of mail info@disseldesign.com. Gevestigd in Heiloo, Noord-Holland. Reactie binnen twee werkdagen.";
+  "Plan een gratis gesprek van 20 minuten of mail info@disseldesign.com. Gevestigd in Heiloo, Noord-Holland. Reactie binnen twee werkdagen.";
 
 export const metadata: Metadata = {
   title: TITEL,
@@ -53,14 +53,14 @@ export default function ContactPagina() {
               </p>
               <h1 className="font-heading text-[clamp(2rem,7vw,3.25rem)] font-semibold leading-[1.15] tracking-tight">
                 <span className="text-white/[0.55]">Klaar om te groeien?</span>{" "}
-                <span className="text-white">Plan een kennismaking.</span>
+                <span className="text-white">Plan een gesprek.</span>
               </h1>
               <p className="mt-6 text-lg leading-relaxed text-white/70">
                 <KoffieIcoon size="sm" className="mr-2 inline-block align-[-2px] text-primary" />
-                Plan een vrijblijvende kennismaking van 20 minuten. Vertel me waar je
+                Plan een vrijblijvend gesprek van 20 minuten. Vertel me waar je
                 naartoe wilt met je merk of product. Ik denk direct met je mee
-                over hoe we daar sneller komen. Geen verplichtingen, gewoon een
-                goed gesprek.
+                over hoe we daar sneller komen. Geen verplichtingen, gewoon even
+                sparren.
               </p>
 
               <ul className="mt-10 space-y-4 text-white/80">

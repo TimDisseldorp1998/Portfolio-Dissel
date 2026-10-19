@@ -90,7 +90,7 @@ export async function Footer() {
   const contact: FooterLink[] = [
     { naam: site.email, href: `mailto:${site.email}` },
     { naam: "WhatsApp", href: site.whatsapp.href, extern: true },
-    { naam: "Plan een kennismaking", href: "/contact/", cta: true },
+    { naam: "Plan een gesprek", href: "/contact/", cta: true },
     ...socials.map((s) => ({ naam: s.label, href: s.href, extern: true })),
   ];
 

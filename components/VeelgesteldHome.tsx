@@ -7,7 +7,7 @@ import { Veelgesteld, type Vraag } from "./Veelgesteld";
 const vragen: Vraag[] = [
   {
     vraag: "Wat kost een website?",
-    antwoord: `Een landingspagina of compacte site kost vanaf ${prijs.compact}. Een website met meerdere pagina's kost vanaf ${prijs.zonderHuisstijl}, of vanaf ${prijs.metHuisstijl} met een nieuwe huisstijl erbij. Alleen een huisstijl kan vanaf ${prijs.huisstijlLos}. Alle prijzen zijn exclusief btw. Na de kennismaking krijg je een voorstel met een vaste prijs.`,
+    antwoord: `Een landingspagina of compacte site kost vanaf ${prijs.compact}. Een website met meerdere pagina's kost vanaf ${prijs.zonderHuisstijl}, of vanaf ${prijs.metHuisstijl} met een nieuwe huisstijl erbij. Alleen een huisstijl kan vanaf ${prijs.huisstijlLos}. Alle prijzen zijn exclusief btw. Na het gesprek krijg je een voorstel met een vaste prijs.`,
   },
   {
     vraag: "Hoe lang duurt het?",

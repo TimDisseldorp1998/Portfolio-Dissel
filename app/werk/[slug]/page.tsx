@@ -221,7 +221,7 @@ export default async function CasePagina({ params }: Props) {
                   className="group mt-6"
                 >
                   <KoffieIcoon stoom="hover" />
-                  Plan een kennismaking
+                  Plan een gesprek
                 </Button>
               </section>
             </Reveal>

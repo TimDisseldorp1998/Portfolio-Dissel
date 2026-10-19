@@ -28,7 +28,7 @@ const TITEL = "Tim Disseldorp | Digitale Product Designer in Noord-Holland";
 // stuk paginatekst, langer kapt hij af. Geen beloofd resultaat in deze zin,
 // alleen wat er gebeurt en wat de bezoeker kan doen.
 const OMSCHRIJVING =
-  "Websites en huisstijlen voor lokale ondernemers in Noord-Holland. Ontwerp en bouw bij één persoon, vanaf € 499 excl. btw. Plan een gratis kennismaking.";
+  "Websites en huisstijlen voor lokale ondernemers in Noord-Holland. Ontwerp en bouw bij één persoon, vanaf € 499 excl. btw. Plan een gratis gesprek.";
 
 export const metadata: Metadata = {
   // Maakt relatieve canonicals en OG-URL's op subpagina's absoluut.
