@@ -384,6 +384,27 @@ html[data-case-overgang] main .mount-rise {
   transform: translateY(0);
 }
 
+/* Veld dat erbij komt in het contactformulier (de website bij "Bestaande
+   website verbeteren"): kort infaden en iets omlaag schuiven. */
+.veld-in {
+  animation: veld-in 0.2s ease-out;
+}
+@keyframes veld-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .veld-in {
+    animation: none;
+  }
+}
+
 /* Chatberichten in de portretkaart: alle plekken staan er meteen, de bubbels
    faden één voor één op hun plek in. Er schuift dus niets. */
 .chat-bubble {

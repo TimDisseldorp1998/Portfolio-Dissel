@@ -41,7 +41,7 @@ export const site = {
     ],
     // Contact is the primary (filled) action; work is the secondary (ghost) one.
     // The contact CTA targets the form anchor directly so the form lands in view.
-    contactCta: { label: "Plan een kennismaking", href: "#contact-form" },
+    contactCta: { label: "Plan een gesprek", href: "#contact-form" },
     workCta: { label: "Bekijk mijn werk", href: "#work" },
     /**
      * Client logo strip under the hero CTAs. SVGs live in /public/logos/
@@ -113,8 +113,8 @@ export const prijs = {
 
 /**
  * De pakketten. `slug` staat in de URL (?pakket=…) en in de meting
- * (cta_name "pakket_…"); `projectType` is de knop die het contactformulier
- * dan aanzet. `info` staat achter de ⓘ.
+ * (cta_name "pakket_…"). Welke diensten het contactformulier dan aanvinkt,
+ * staat in `voorafInvullen`. `info` staat achter de ⓘ.
  */
 export type Pakket = {
   slug: "landingspagina" | "website" | "website-huisstijl" | "huisstijl";
@@ -122,7 +122,6 @@ export type Pakket = {
   bedrag: number;
   regel: string;
   info: string;
-  projectType: string;
 };
 
 export const pakketten: Pakket[] = [
@@ -132,7 +131,6 @@ export const pakketten: Pakket[] = [
     bedrag: bedrag.compact,
     regel: "Eén pagina voor één dienst of actie.",
     info: "Eén pagina of een kleine site. Voor een nieuw bedrijf, een actie of één dienst die je los wilt laten zien.",
-    projectType: "Web design",
   },
   {
     slug: "website",
@@ -140,7 +138,6 @@ export const pakketten: Pakket[] = [
     bedrag: bedrag.zonderHuisstijl,
     regel: "Tot 8 pagina's, rond je huidige logo.",
     info: "Tot 8 pagina's, ontworpen rond je bestaande logo en kleuren.",
-    projectType: "Web design",
   },
   {
     slug: "website-huisstijl",
@@ -148,7 +145,6 @@ export const pakketten: Pakket[] = [
     bedrag: bedrag.metHuisstijl,
     regel: "Nieuw merk en nieuwe site in één traject.",
     info: "Tot 8 pagina's plus een nieuw logo en een nieuwe huisstijl. Merk en site ontstaan in één traject en passen bij elkaar.",
-    projectType: "Web design",
   },
   {
     slug: "huisstijl",
@@ -156,7 +152,6 @@ export const pakketten: Pakket[] = [
     bedrag: bedrag.huisstijlLos,
     regel: "Logo, kleuren en lettertypen",
     info: "Logo, kleuren en lettertypen, vastgelegd in een stijlgids die je aan je drukker of socialmediabeheerder kunt geven.",
-    projectType: "Branding",
   },
 ];
 
@@ -367,10 +362,40 @@ export const socials = [
  */
 export const contact = {
   endpoint: "https://formsubmit.co/ajax/info@disseldesign.com",
-  projectTypes: [
-    { value: "Branding", label: "Branding" },
-    { value: "Web design", label: "Web design" },
-    { value: "Development", label: "Development" },
-    { value: "Anders", label: "Anders" },
-  ],
+};
+
+/**
+ * De diensten in het contactformulier (checkboxen). Deze lijst staat ook in
+ * de insert-policy van Supabase (contact_submissions): voeg je hier een optie
+ * toe of hernoem je er een, pas die policy dan ook aan, anders weigert de
+ * database de aanvraag. Zie docs/supabase/.
+ */
+export const diensten = [
+  "Nieuwe website",
+  "Bestaande website verbeteren",
+  "Webshop",
+  "Branding & huisstijl",
+  "UX/UI design",
+  "Webdevelopment",
+  "Anders / weet ik nog niet",
+] as const;
+
+export type Dienst = (typeof diensten)[number];
+
+/**
+ * Wat het contactformulier vooraf aanvinkt via de URL. Nu alleen ?pakket=
+ * (vanuit de investeringssectie); ?dienst= vanaf de dienstpagina's kan hier
+ * later bij, met dezelfde vorm.
+ */
+export const voorafInvullen: {
+  pakket: Record<Pakket["slug"], Dienst[]>;
+  dienst: Record<string, Dienst[]>;
+} = {
+  pakket: {
+    landingspagina: ["Nieuwe website"],
+    website: ["Nieuwe website"],
+    "website-huisstijl": ["Nieuwe website", "Branding & huisstijl"],
+    huisstijl: ["Branding & huisstijl"],
+  },
+  dienst: {},
 };

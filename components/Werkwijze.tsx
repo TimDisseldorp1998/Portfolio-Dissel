@@ -5,7 +5,7 @@ import { Button } from "./ui/Button";
 import { KoffieIcoon } from "./ui/KoffieIcoon";
 
 const stappen = [
-  { titel: "Kennismaking", tekst: "20 minuten, gratis. Je vertelt wat je wilt bereiken." },
+  { titel: "Gesprek", tekst: "20 minuten, gratis. Je vertelt wat je wilt bereiken." },
   { titel: "Voorstel", tekst: "Wat ik maak, wanneer het af is en wat het kost. Een vaste prijs." },
   { titel: "Ontwerp", tekst: "Ik ontwerp in Figma en jij geeft feedback, voordat er code komt." },
   { titel: "Bouwen", tekst: "Ik bouw de site en test hem op mobiel. Daarna kijk jij hem na en geef je je tweede ronde feedback." },
@@ -51,7 +51,7 @@ export function Werkwijze() {
         <Reveal className="mt-10">
           <Button href="/contact/" variant="primary" size="lg" data-cta="plan_kennismaking" className="group">
             <KoffieIcoon stoom="hover" />
-            Plan een kennismaking
+            Plan een gesprek
           </Button>
         </Reveal>
       </Container>

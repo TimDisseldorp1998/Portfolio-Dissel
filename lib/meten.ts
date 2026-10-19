@@ -4,7 +4,7 @@
  * zonder toestemming wordt er niets verstuurd en ook niets in de wachtrij
  * gezet.
  *
- * GA4 toont eigen parameters (project_type, page_path, cta_name) pas in
+ * GA4 toont eigen parameters (diensten, pakket, page_path, cta_name) pas in
  * rapporten als ze in GA4 als aangepaste dimensie (bereik: event) zijn
  * aangemaakt.
  */
@@ -24,7 +24,8 @@ declare global {
 export type MeetEvent =
   | {
       naam: "generate_lead";
-      params: { page_path: string; project_type: string };
+      /** `diensten` gescheiden door komma's; `pakket` alleen via ?pakket=. */
+      params: { page_path: string; diensten: string; pakket?: string };
     }
   | { naam: "email_click"; params: { page_path: string } }
   | {

@@ -169,7 +169,7 @@ export function Pakketten() {
             Twijfel je welk pakket past?{" "}
             <a href="#contact-form" data-cta="plan_kennismaking" className={tekstLink}>
               <KoffieIcoon size="sm" />
-              Plan een kennismaking
+              Plan een gesprek
             </a>
           </p>
         </Reveal>

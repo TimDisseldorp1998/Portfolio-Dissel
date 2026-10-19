@@ -14,7 +14,7 @@ const brandIcons: Record<string, (props: { size?: number }) => JSX.Element> = {
 
 const naVersturen = [
   "Binnen twee werkdagen hoor je van me.",
-  "We plannen een gratis kennismaking van 20 minuten. Dat kan online of, als het uitkomt, op de koffie.",
+  "We plannen een gratis gesprek van 20 minuten. Dat kan online of, als het uitkomt, op de koffie.",
   "Daarna krijg je een voorstel met een vaste prijs en planning. Ik begin pas als jij akkoord geeft.",
 ];
 
@@ -33,15 +33,15 @@ export function Contact() {
               </p>
               <h2 className="mb-6 font-heading text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
                 <span className="text-white/[0.55]">Klaar om te groeien?</span>{" "}
-                <span className="text-white">Plan een kennismaking.</span>
+                <span className="text-white">Plan een gesprek.</span>
               </h2>
               <p className="mb-8 text-lg leading-relaxed text-white/70">
                 <KoffieIcoon size="sm" className="mr-2 inline-block align-[-2px] text-primary" />
-                Plan een vrijblijvende kennismaking van 20 minuten.
+                Plan een vrijblijvend gesprek van 20 minuten.
                 <br />
                 Vertel me waar je naartoe wilt met je merk of product. Ik denk
                 direct met je mee over hoe we daar sneller komen. Geen
-                verplichtingen, gewoon een goed gesprek.
+                verplichtingen, gewoon even sparren.
               </p>
 
               {/* Wat er na het versturen gebeurt: haalt de onzekerheid weg

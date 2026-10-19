@@ -160,14 +160,14 @@ export function Navbar() {
         <a
           href="/contact/"
           data-cta="plan_kennismaking"
-          aria-label="Plan een kennismaking"
+          aria-label="Plan een gesprek"
           aria-current={huidig("/contact/") === "page" ? "page" : undefined}
           className="group ml-1 flex min-h-[50px] min-w-[50px] items-center justify-center gap-2 rounded-full bg-primary px-3.5 text-[15px] font-semibold text-ink transition-colors duration-200 hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40 sm:min-h-[44px] lg:px-4"
         >
           {/* Koffiekopje = kennismaking. Onder lg alleen het kopje; de knop
               houdt dan zijn aria-label als naam. */}
           <KoffieIcoon stoom="hover" />
-          <span className="hidden lg:inline">Plan een kennismaking</span>
+          <span className="hidden lg:inline">Plan een gesprek</span>
         </a>
       </nav>
     </header>

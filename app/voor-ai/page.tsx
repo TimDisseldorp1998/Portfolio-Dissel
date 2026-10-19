@@ -235,8 +235,8 @@ const diensten = [
 // Zelfde zes stappen als op de homepage (components/Werkwijze.tsx).
 const stappen = [
   {
-    titel: "Kennismaking",
-    tekst: "Een gratis kennismaking van 20 minuten over wat je wilt bereiken.",
+    titel: "Gesprek",
+    tekst: "Een gratis gesprek van 20 minuten over wat je wilt bereiken.",
   },
   {
     titel: "Voorstel",
@@ -363,7 +363,7 @@ const faq: { vraag: string; antwoord: React.ReactNode }[] = [
   },
   {
     vraag: "Wat kost een website laten maken bij DisselDesign?",
-    antwoord: `Een landingspagina of compacte website kost vanaf ${PRIJS.compact}. Een website met meerdere pagina's kost vanaf ${PRIJS.zonderHuisstijl}, of vanaf ${PRIJS.metHuisstijl} met een nieuwe huisstijl erbij. Alleen een logo en huisstijl kan vanaf ${PRIJS.huisstijlLos}. Alle prijzen zijn exclusief btw. De precieze prijs staat in het voorstel na de kennismaking. De kennismaking van 20 minuten is gratis.`,
+    antwoord: `Een landingspagina of compacte website kost vanaf ${PRIJS.compact}. Een website met meerdere pagina's kost vanaf ${PRIJS.zonderHuisstijl}, of vanaf ${PRIJS.metHuisstijl} met een nieuwe huisstijl erbij. Alleen een logo en huisstijl kan vanaf ${PRIJS.huisstijlLos}. Alle prijzen zijn exclusief btw. De precieze prijs staat in het voorstel na het gesprek. Het gesprek van 20 minuten is gratis.`,
   },
   {
     vraag: "Hoe lang duurt een website bij DisselDesign?",
@@ -460,7 +460,7 @@ export default function VoorAiPage() {
                 className="group"
               >
                 <KoffieIcoon stoom="hover" />
-                Plan een kennismaking
+                Plan een gesprek
               </Button>
             </div>
           </header>
@@ -535,7 +535,7 @@ export default function VoorAiPage() {
           <Block id="werkwijze" heading="Werkwijze">
             <div className={proza}>
               <p>
-                De eerste stap is een gratis kennismaking van 20 minuten. Je
+                De eerste stap is een gratis gesprek van 20 minuten. Je
                 vertelt waar je naartoe wilt met je bedrijf, Tim denkt direct
                 mee. Je zit daarna nergens aan vast.
               </p>
@@ -594,7 +594,7 @@ export default function VoorAiPage() {
             <div className={cn(proza, "mt-6")}>
               <p>
                 Scope en prijs leg je vooraf samen vast. Wat jouw project precies
-                kost, staat in het voorstel na de kennismaking.
+                kost, staat in het voorstel na het gesprek.
               </p>
             </div>
           </Block>
@@ -799,7 +799,7 @@ export default function VoorAiPage() {
               Vragen over DisselDesign?
             </h2>
             <p className="mt-4 max-w-[60ch] leading-relaxed text-white/75">
-              Mail <Mail /> of plan een kennismaking van 20 minuten. Je hoort
+              Mail <Mail /> of plan een gesprek van 20 minuten. Je hoort
               binnen twee werkdagen van Tim.
             </p>
             <div className="mt-8">
@@ -811,7 +811,7 @@ export default function VoorAiPage() {
                 className="group"
               >
                 <KoffieIcoon stoom="hover" />
-                Plan een kennismaking
+                Plan een gesprek
               </Button>
             </div>
           </section>
