@@ -7,7 +7,7 @@ import { KoffieIcoon } from "./ui/KoffieIcoon";
 const stappen = [
   { titel: "Gesprek", tekst: "20 minuten, gratis. Je vertelt wat je wilt bereiken." },
   { titel: "Voorstel", tekst: "Wat ik maak, wanneer het af is en wat het kost. Een vaste prijs." },
-  { titel: "Ontwerp", tekst: "Ik ontwerp in Figma en jij geeft feedback, voordat er code komt." },
+  { titel: "Ontwerp", tekst: "Je ziet het ontwerp in Figma of als werkende versie via een link, op je eigen telefoon. Jij geeft feedback voordat ik verder bouw." },
   { titel: "Bouwen", tekst: "Ik bouw de site en test hem op mobiel. Daarna kijk jij hem na en geef je je tweede ronde feedback." },
   { titel: "Live", tekst: "Ik zet de site live en meld hem aan bij Google." },
   { titel: "Onderhoud", tekst: "Wil je dat ik hosting, updates en aanpassingen regel, dan kan dat. Op maat." },
