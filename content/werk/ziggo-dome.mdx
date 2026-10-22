@@ -11,7 +11,9 @@ export const meta = {
   type: "Web",
   tags: ["Mobile-first", "UX", "Animation"],
   liveUrl: "https://www.ziggodome.nl",
-  kaartbeeld: "/mockup/image-ZiggoDome-portfolio-card.jpg",
+  kaartbeeld: "/mockup/image-ZiggoDome-woestijn.jpg",
+  // De persoon staat net rechts van het midden; kaart, tegel en hero zetten hem in het midden.
+  kaartbeeldFocus: { x: 0.6, y: 0.4 },
   slides: [
     { src: "/mockup/zd-mockup-slider1-mobilefirst.webp", alt: "De Ziggo Dome homepage op desktop en op een telefoon in de hand", label: "Mobile-first home" },
     { src: "/mockup/zd-mockup-slider2-itereren-3screens.webp", alt: "Drie schermen die de agendapagina tonen van wireframe tot definitief ontwerp", label: "Agenda-iteraties" },
@@ -27,8 +29,6 @@ export const meta = {
     kop: "De agenda en tickets onder je duim, op elk scherm.",
     subtitel: "Mobile first",
     kleur: "#14141c",
-    // TODO: kaartbeeld aanleveren in public/werk/ziggo-dome/kaart.webp (WebP, transparant, min. 1600px breed).
-    beeld: { src: "/werk/ziggo-dome/kaart.webp", alt: "De Ziggo Dome-site op laptop, tablet en telefoon" },
   },
   cta:
     "Loopt jouw site achter op je bezoekers? Vertel me over je project, dan kijk ik met je mee. Een vrijblijvend gesprek is zo gepland.",

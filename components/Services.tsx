@@ -5,7 +5,7 @@ import { Container } from "./ui/Container";
 /**
  * Services section (server component — no "use client", so the headings, icons
  * and lists render straight into the static HTML for SEO). Drie blokken; in
- * fase 2 krijgt elk blok een link naar zijn eigen dienstpagina.
+ * elk blok linkt naar zijn eigen dienstpagina.
  */
 
 const serviceColumns: {
@@ -16,8 +16,7 @@ const serviceColumns: {
   introHome: string;
   icon: LucideIcon;
   items: string[];
-  /** Linktekst onderaan de kolom. Tot de dienstpagina's er zijn (stap 3)
-   *  gaan alle drie naar /diensten/; dan krijgt elke kolom zijn eigen URL. */
+  /** Link onderaan de kolom, naar de eigen dienstpagina. */
   link: { label: string; href: string };
 }[] = [
   {
@@ -33,7 +32,7 @@ const serviceColumns: {
       "Web-apps",
       "Onderhoud & hosting",
     ],
-    link: { label: "Meer over websites", href: "/diensten/" },
+    link: { label: "Meer over websites", href: "/website-laten-maken/" },
   },
   {
     title: "Huisstijl",
@@ -41,7 +40,7 @@ const serviceColumns: {
     introHome: "Een herkenbare visuele identiteit die bij je bedrijf past.",
     icon: Sparkles,
     items: ["Merkidentiteit", "Logo-ontwerp", "Huisstijl", "Brand guidelines"],
-    link: { label: "Meer over huisstijl", href: "/diensten/" },
+    link: { label: "Meer over huisstijl", href: "/huisstijl-laten-maken/" },
   },
   {
     title: "UX/UI design",
@@ -56,7 +55,7 @@ const serviceColumns: {
       "Conversie-optimalisatie",
       "Snelheid",
     ],
-    link: { label: "Meer over UX/UI design", href: "/diensten/" },
+    link: { label: "Meer over UX/UI design", href: "/ux-ui-design/" },
   },
 ];
 
@@ -82,7 +81,7 @@ export function Services({
           Diensten
         </p>
         <Kop className="max-w-3xl font-heading text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
-          {opHome ? "Waar kan ik je mee helpen?" : "Wat ik voor je maak."}
+          {opHome ? "Waar kan ik je mee helpen?" : "Websites, huisstijlen en UX/UI design"}
         </Kop>
 
         {/* Intro onder de kop, de drie blokken daaronder over de volle
@@ -95,19 +94,10 @@ export function Services({
               rechtstreeks met mij, van het eerste idee tot het eindresultaat.
             </p>
           ) : (
-            <div className="grid max-w-5xl gap-4 text-base leading-relaxed text-white/70 md:grid-cols-2 md:gap-10">
-              <p>
-                Ik ontwerp en bouw websites, huisstijlen en interfaces voor
-                ondernemers die net beginnen of al jaren draaien. Je praat met de
-                persoon die het ook maakt, van de eerste schets tot de site live
-                staat.
-              </p>
-              <p>
-                Ontwerp en development liggen bij één persoon. Dat houdt de lijnen
-                kort: je vraag gaat niet via een accountmanager, en wat we
-                afspreken, bouw ik zelf.
-              </p>
-            </div>
+            <p className="max-w-2xl text-lg leading-relaxed text-white/70">
+              Wat ik voor ondernemers en bedrijven maak, van de eerste schets tot
+              de site live staat.
+            </p>
           )}
 
           <div className="mt-10 md:mt-14">
@@ -142,33 +132,41 @@ export function Services({
                         ))}
                       </ul>
                     )}
-                    {/* Op /diensten/ zelf zou de link naar dezelfde pagina
-                        wijzen; daar laten we hem weg. */}
-                    {opHome && (
-                      <a
+                    <a
                         href={column.link.href}
                         className="mt-auto inline-flex items-center gap-1.5 self-start rounded-sm text-sm font-medium text-white underline decoration-white/30 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                       >
                         {column.link.label}
                         <ArrowRight size={16} aria-hidden />
                       </a>
-                    )}
                   </div>
                 );
               })}
             </div>
 
             {!opHome && (
-              <p className="mt-8 text-base leading-relaxed text-white/70">
-                Bureau of digitaal team? Ik werk als Freelance Product Designer.{" "}
-                <a
-                  href="/contact/"
-                  className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-sm font-medium text-white underline decoration-white/30 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                >
-                  Neem contact op
-                  <ArrowRight size={16} aria-hidden />
-                </a>
-              </p>
+              <div className="mt-8 space-y-3 text-base leading-relaxed text-white/70">
+                <p>
+                  Al een website die beter kan?{" "}
+                  <a
+                    href="/website-verbeteren/"
+                    className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-sm font-medium text-white underline decoration-white/30 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  >
+                    Vraag een gratis websitecheck
+                    <ArrowRight size={16} aria-hidden />
+                  </a>
+                </p>
+                <p>
+                  Bureau of digitaal team? Ik werk als freelance UX/UI designer.{" "}
+                  <a
+                    href="/voor-bureaus/"
+                    className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-sm font-medium text-white underline decoration-white/30 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  >
+                    Zo werk ik met bureaus
+                    <ArrowRight size={16} aria-hidden />
+                  </a>
+                </p>
+              </div>
             )}
           </div>
         </div>

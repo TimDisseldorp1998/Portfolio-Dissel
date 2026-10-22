@@ -624,7 +624,7 @@ interface TextareaFieldProps extends BaseFieldProps {
 
 type FieldProps = InputFieldProps | TextareaFieldProps;
 
-function Field(props: FieldProps) {
+export function Field(props: FieldProps) {
   const {
     id,
     name,

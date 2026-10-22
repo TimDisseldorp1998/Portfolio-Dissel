@@ -1,10 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
-import type { ComponentType } from "react";
-import type { CaseKaartData, CaseLabel } from "./werk-gedeeld";
+import type { ComponentType, CSSProperties } from "react";
+import { focusStijl, type BeeldFocus, type CaseKaartData, type CaseLabel } from "./werk-gedeeld";
 
 export { datumLabel } from "./werk-gedeeld";
-export type { CaseKaartData, CaseLabel } from "./werk-gedeeld";
+export type { BeeldFocus, CaseKaartData, CaseLabel } from "./werk-gedeeld";
 
 /**
  * Cases uit content/werk/*.mdx. Een nieuwe case is alleen een nieuw .mdx-
@@ -26,6 +26,15 @@ export const DIENSTEN = {
 
 export type Dienst = keyof typeof DIENSTEN;
 
+/** De dienstpagina per dienst; op de casepagina's (Ingezette diensten) een link. */
+export const DIENST_URL: Partial<Record<Dienst, string>> = {
+  "website-laten-maken": "/website-laten-maken/",
+  "huisstijl-laten-maken": "/huisstijl-laten-maken/",
+  "ux-ui-design": "/ux-ui-design/",
+  "website-verbeteren": "/website-verbeteren/",
+  "voor-bureaus": "/voor-bureaus/",
+};
+
 /** Een beeld in de carousel bovenaan de casepagina. */
 export type Slide = { src: string; alt: string; label: string };
 
@@ -37,6 +46,11 @@ export type Slide = { src: string; alt: string; label: string };
  */
 export function heroBeeld(c: Pick<CaseMeta, "kaart" | "kaartbeeld">): string {
   return c.kaart.beeld?.src ?? c.kaartbeeld;
+}
+
+/** De uitsnede bij heroBeeld: het focuspunt geldt alleen voor het kaartbeeld. */
+export function heroStijl(c: Pick<Case, "kaart" | "kaartbeeldStijl">) {
+  return c.kaart.beeld ? undefined : c.kaartbeeldStijl;
 }
 
 /** Hoeveel cases er op home staan. */
@@ -61,6 +75,9 @@ export type CaseMeta = {
   tags: string[];
   liveUrl: string | null;
   kaartbeeld: string;
+  /** Waar de persoon of het onderwerp in het kaartbeeld staat. Kaart, tegel,
+   *  hero en vorige/volgende zetten dat punt dan in het midden. */
+  kaartbeeldFocus?: BeeldFocus;
   /** Beelden voor de carousel, in volgorde. Leeg = alleen het kaartbeeld. */
   slides: Slide[];
   diensten: Dienst[];
@@ -77,10 +94,12 @@ export type Case = CaseMeta & {
   Inhoud: ComponentType;
   /** srcset voor het kaartbeeld: de 640px-variant plus het origineel. */
   kaartSrcSet: string;
+  /** Maat en positie voor kaartbeeldFocus, zie focusStijl. */
+  kaartbeeldStijl?: CSSProperties;
 };
 
-/** Breedte van een JPEG uit de SOF-header, zonder extra library. */
-function jpegBreedte(bestand: string): number {
+/** Breedte en hoogte van een JPEG uit de SOF-header, zonder extra library. */
+function jpegMaten(bestand: string): { breedte: number; hoogte: number } {
   const b = fs.readFileSync(bestand);
   let i = 2;
   while (i < b.length) {
@@ -88,7 +107,7 @@ function jpegBreedte(bestand: string): number {
     const lengte = b.readUInt16BE(i + 2);
     // SOF0-SOF15, behalve DHT (C4), JPG (C8) en DAC (CC)
     if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) {
-      return b.readUInt16BE(i + 7);
+      return { hoogte: b.readUInt16BE(i + 5), breedte: b.readUInt16BE(i + 7) };
     }
     i += 2 + lengte;
   }
@@ -104,7 +123,7 @@ function kaartSrcSet(kaartbeeld: string): string {
   const pub = (src: string) => path.join(process.cwd(), "public", src);
   if (!fs.existsSync(pub(klein)))
     throw new Error(`${klein} ontbreekt. Maak hem met sips (zie lib/werk.ts).`);
-  return `${klein} 640w, ${kaartbeeld} ${jpegBreedte(pub(kaartbeeld))}w`;
+  return `${klein} 640w, ${kaartbeeld} ${jpegMaten(pub(kaartbeeld)).breedte}w`;
 }
 
 const MAP = path.join(process.cwd(), "content", "werk");
@@ -169,7 +188,13 @@ async function laad(bestand: string): Promise<Case> {
   // in deze map. Zo is er geen lijst om bij te werken bij een nieuwe case.
   const mod = await import(`../content/werk/${bestand}.mdx`);
   const meta = controleer(bestand, mod.meta);
-  return { ...meta, Inhoud: mod.default, kaartSrcSet: kaartSrcSet(meta.kaartbeeld) };
+  const maten = jpegMaten(path.join(process.cwd(), "public", meta.kaartbeeld));
+  return {
+    ...meta,
+    Inhoud: mod.default,
+    kaartSrcSet: kaartSrcSet(meta.kaartbeeld),
+    kaartbeeldStijl: focusStijl(meta.kaartbeeldFocus, maten.breedte / maten.hoogte),
+  };
 }
 
 let cache: Promise<Case[]> | null = null;

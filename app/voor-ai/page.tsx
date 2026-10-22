@@ -754,8 +754,32 @@ export default function VoorAiPage() {
           <Block id="bronnen" heading="Bronnen">
             <ul className="space-y-3 leading-relaxed text-white/75">
               <li className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                <a href="/#services" className={tekstLink}>
+                <a href="/diensten/" className={tekstLink}>
                   Diensten
+                </a>
+                <span aria-hidden className="text-white/30">·</span>
+                <a href="/website-laten-maken/" className={tekstLink}>
+                  Website laten maken
+                </a>
+                <span aria-hidden className="text-white/30">·</span>
+                <a href="/website-laten-maken/wat-kost-een-website/" className={tekstLink}>
+                  Wat kost een website?
+                </a>
+                <span aria-hidden className="text-white/30">·</span>
+                <a href="/huisstijl-laten-maken/" className={tekstLink}>
+                  Huisstijl laten maken
+                </a>
+                <span aria-hidden className="text-white/30">·</span>
+                <a href="/ux-ui-design/" className={tekstLink}>
+                  UX/UI design
+                </a>
+                <span aria-hidden className="text-white/30">·</span>
+                <a href="/website-verbeteren/" className={tekstLink}>
+                  Website verbeteren
+                </a>
+                <span aria-hidden className="text-white/30">·</span>
+                <a href="/voor-bureaus/" className={tekstLink}>
+                  Voor bureaus
                 </a>
                 <span aria-hidden className="text-white/30">·</span>
                 <a href="/#work" className={tekstLink}>

@@ -1,12 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useRef, type MouseEvent } from "react";
+import { useRef, type CSSProperties, type MouseEvent } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { trekIn } from "./trekIn";
 
-type Buur = { slug: string; klant: string; kaartbeeld: string };
+/** `stijl`: de uitsnede uit heroStijl, zodat de foto hier en in de hero
+ *  hetzelfde focuspunt heeft. */
+type Buur = { slug: string; klant: string; kaartbeeld: string; stijl?: CSSProperties };
 
 /**
  * Vorige en volgende case. Een klik trekt je de foto in: het beeld maakt zich
@@ -49,15 +51,21 @@ function Kaart({ buur, richting }: { buur: Buur; richting: "vorige" | "volgende"
       onFocus={() => router.prefetch(href)}
       className="group relative flex min-h-[10rem] items-end overflow-hidden rounded-3xl p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff833d] focus-visible:ring-offset-2 focus-visible:ring-offset-surface-dark md:min-h-[13rem] md:p-8"
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        ref={imgRef}
-        src={buur.kaartbeeld}
-        alt=""
-        loading="lazy"
-        decoding="async"
-        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.04]"
-      />
+      {/* Eigen laag als container voor de uitsnede (focusStijl); neemt de
+          hoeken over, want trekIn start vanaf de ouder van het beeld. */}
+      <div className="absolute inset-0 overflow-hidden rounded-[inherit] [container-type:size]">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          ref={imgRef}
+          src={buur.kaartbeeld}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.04]"
+          style={buur.stijl}
+          data-focus={buur.stijl ? "" : undefined}
+        />
+      </div>
       <div
         aria-hidden
         className="absolute inset-0 bg-surface-dark opacity-[0.6] transition-opacity duration-500 group-hover:opacity-[0.5]"

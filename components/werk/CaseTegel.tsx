@@ -15,7 +15,7 @@ export function CaseTegel({
   laden = "lazy",
   sizes,
 }: {
-  caseMeta: Pick<Case, "slug" | "klant" | "kaarttekst" | "tags" | "kaartbeeld" | "kaartSrcSet">;
+  caseMeta: Pick<Case, "slug" | "klant" | "kaarttekst" | "tags" | "kaartbeeld" | "kaartSrcSet" | "kaartbeeldStijl">;
   /** h3 onder een H2 (home), h2 direct onder de H1 (/werk/). */
   kop?: "h2" | "h3";
   /** "eager" voor de kaarten die meteen in beeld staan. */
@@ -27,6 +27,8 @@ export function CaseTegel({
   const c = caseMeta;
   return (
     <article className="group relative flex h-full w-full flex-col overflow-hidden rounded-3xl text-left transition-[box-shadow] duration-300 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[#ff833d] has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-surface-dark">
+      {/* Container voor de uitsnede (focusStijl). */}
+      <div aria-hidden className="absolute inset-0 overflow-hidden [container-type:size]">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={c.kaartbeeld}
@@ -38,7 +40,9 @@ export function CaseTegel({
         decoding="async"
         draggable={false}
         className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.04]"
+        style={c.kaartbeeldStijl}
       />
+      </div>
       {/* Bij hover zakt de tint van 0.55 naar 0.45, waardoor de foto oplicht.
           Niet verder: op 0.35 zakt het oranje pijl-icoon naar 4,52:1. */}
       <div
