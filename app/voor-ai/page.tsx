@@ -245,7 +245,7 @@ const stappen = [
   {
     titel: "Ontwerp",
     tekst:
-      "Tim maakt het ontwerp in Figma, en waar nodig de huisstijl. Je geeft feedback voordat er gebouwd wordt.",
+      "Tim maakt het ontwerp, en waar nodig de huisstijl. Je bekijkt het in Figma of als werkende versie via een link, op je eigen telefoon of laptop, en geeft feedback voordat hij verder bouwt.",
   },
   {
     titel: "Bouwen",
