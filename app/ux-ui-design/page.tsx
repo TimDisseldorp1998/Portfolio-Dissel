@@ -51,12 +51,6 @@ export default function UxUiDesign() {
           "Je hebt een platform, webshop of app, en gebruikers lopen vast of haken af. Of je bouwt iets nieuws en wilt dat het vanaf het begin logisch werkt.",
           "Ik ben UX/UI designer met meer dan zes jaar ervaring, bij bureaus en voor eigen klanten. Ik onderzoek hoe je gebruikers werken, ontwerp de schermen en leg alles vast, zodat er direct mee gebouwd kan worden.",
         ],
-        beeld: {
-          src: "/mockup/zd-mockup-slider2-itereren-3screens.webp",
-          alt: "Drie schermen van de Ziggo Dome-agenda, van wireframe tot definitief ontwerp",
-          breedte: 3840,
-          hoogte: 2740,
-        },
         tweedeKnop: { label: "Bekijk het werk", href: "#werk" },
         voordelen: {
           kicker: "Wat ik doe",

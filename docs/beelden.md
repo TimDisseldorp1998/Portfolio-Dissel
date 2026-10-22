@@ -51,7 +51,7 @@ Elke dienstpagina heeft hooguit twee beeldblokken: de hero en de rij casekaarten
 | Pagina | Hero nu | Wat er beter past | Bestand | Formaat |
 |---|---|---|---|---|
 | /huisstijl-laten-maken/ | Brandboard Kleintjes van Alkmaar, uitsnede zonder donkere rand, groot naast de tekst (7 van 12 kolommen) | Prima zo. Later eventueel een eigen huisstijl-mockup: logo, kleuren en een visitekaartje bij elkaar. | `public/diensten/huisstijl-brandboard.webp` | 2072×1944, ongeveer vierkant |
-| /ux-ui-design/ | Drie Ziggo Dome-schermen, wireframe tot ontwerp | Prima zo. Laat het proces zien, dat past bij "van onderzoek tot overdracht". | | |
+| /ux-ui-design/ | **Geen beeld (keuze Tim, 23 okt).** Alleen tekst in de hero; het werk staat in de casekaarten. | Niets toevoegen. | | |
 | /website-verbeteren/ | **Geen beeld, bewust.** Het websitecheck-formulier staat direct onder de hero en is de hoofdzaak. | Niets toevoegen. | | |
 | /voor-bureaus/ | `public/bento/werkplek.webp` (voorlopig) | Jij aan het werk met een team of op locatie, bijvoorbeeld in een overleg. De tekst zegt "remote of op locatie". | `public/diensten/voor-bureaus.webp` | 4:3, 1600×1200 |
 
