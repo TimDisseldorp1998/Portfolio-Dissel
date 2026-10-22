@@ -31,7 +31,16 @@ export type DienstpaginaInhoud = {
   intro: string[];
   /** Hero-beeld rechts. Weglaten = alleen tekst (max. 2-3 beelden per pagina,
    *  zie docs/beelden.md). */
-  beeld?: { src: string; alt: string; breedte: number; hoogte: number };
+  beeld?: {
+    src: string;
+    alt: string;
+    breedte: number;
+    hoogte: number;
+    /** Groot: het beeld krijgt meer ruimte dan de tekst (7 van 12 kolommen)
+     *  en houdt zijn eigen verhouding, zonder uitsnede. Voor een brandboard
+     *  of mockup waar detail in zit. */
+    groot?: boolean;
+  };
   /** Tweede knop naast "Plan een gesprek". */
   tweedeKnop?: { label: string; href: string };
   /** Extra blok direct onder de hero (bijv. de gratis websitecheck). */
@@ -77,7 +86,7 @@ export async function Dienstpagina({ inhoud: d }: { inhoud: DienstpaginaInhoud }
           />
 
           <div className="mt-8 grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
-            <div className={d.beeld ? "lg:col-span-7" : "lg:col-span-9"}>
+            <div className={!d.beeld ? "lg:col-span-9" : d.beeld.groot ? "lg:col-span-5" : "lg:col-span-7"}>
               <p className={kicker}>{d.naam}</p>
               <h1 className="font-heading text-[clamp(2rem,7vw,3.5rem)] font-semibold leading-[1.1] tracking-tight">
                 {d.h1}
@@ -97,7 +106,7 @@ export async function Dienstpagina({ inhoud: d }: { inhoud: DienstpaginaInhoud }
               </div>
             </div>
             {d.beeld && (
-              <div className="lg:col-span-5">
+              <div className={d.beeld.groot ? "lg:col-span-7" : "lg:col-span-5"}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={d.beeld.src}
@@ -106,7 +115,7 @@ export async function Dienstpagina({ inhoud: d }: { inhoud: DienstpaginaInhoud }
                   height={d.beeld.hoogte}
                   fetchPriority="high"
                   decoding="async"
-                  className="aspect-[4/3] w-full rounded-3xl object-cover"
+                  className={`w-full rounded-3xl object-cover ${d.beeld.groot ? "h-auto" : "aspect-[4/3]"}`}
                 />
               </div>
             )}

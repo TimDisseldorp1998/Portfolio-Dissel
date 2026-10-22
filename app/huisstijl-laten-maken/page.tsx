@@ -52,10 +52,13 @@ export default function HuisstijlLatenMaken() {
           "Ik ontwerp een huisstijl die je overal gebruikt, en leg hem vast in een stijlgids. Zo blijft alles herkenbaar, ook als iemand anders er later mee werkt.",
         ],
         beeld: {
-          src: "/mockup/KvA-mockup-screens-styleguide-slider4.webp",
+          // Uitsnede van public/mockup/KvA-mockup-screens-styleguide-slider4.webp,
+          // zonder de donkere rand, zodat het board zelf groot staat.
+          src: "/diensten/huisstijl-brandboard.webp",
           alt: "Het brandboard van Kleintjes van Alkmaar met kleursysteem, typografie en logoregels",
-          breedte: 3840,
-          hoogte: 2740,
+          breedte: 2072,
+          hoogte: 1944,
+          groot: true,
         },
         tweedeKnop: { label: "Bekijk de prijzen", href: "#prijzen" },
         voordelen: {
