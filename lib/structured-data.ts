@@ -96,3 +96,55 @@ export const voorAiPagina = {
     name: "DisselDesign",
   },
 };
+
+/** Een dienst van DisselDesign, voor de dienstpagina's. */
+export function dienstSchema({
+  pad,
+  naam,
+  omschrijving,
+  vanaf,
+}: {
+  pad: string;
+  naam: string;
+  omschrijving: string;
+  /** Laagste vanaf-prijs in euro, excl. btw. */
+  vanaf?: number;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${SITE_URL}${pad}#service`,
+    url: `${SITE_URL}${pad}`,
+    name: naam,
+    description: omschrijving,
+    serviceType: naam,
+    provider: { "@id": BEDRIJF_ID },
+    areaServed: { "@type": "AdministrativeArea", name: "Noord-Holland" },
+    ...(vanaf
+      ? {
+          offers: {
+            "@type": "Offer",
+            priceSpecification: {
+              "@type": "PriceSpecification",
+              minPrice: vanaf,
+              priceCurrency: "EUR",
+              valueAddedTaxIncluded: false,
+            },
+          },
+        }
+      : {}),
+  };
+}
+
+/** FAQPage uit vragen met een platte-tekstantwoord. */
+export function faqSchema(vragen: { vraag: string; antwoord: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: vragen.map((v) => ({
+      "@type": "Question",
+      name: v.vraag,
+      acceptedAnswer: { "@type": "Answer", text: v.antwoord },
+    })),
+  };
+}

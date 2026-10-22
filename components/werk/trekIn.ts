@@ -84,16 +84,19 @@ export function trekIn(
     overflow: "hidden",
     zIndex: "100",
     pointerEvents: "none",
+    // Container voor focusStijl: de uitsnede rekent mee terwijl het frame
+    // van kaart naar hero groeit, dus begin en eind kloppen allebei.
+    containerType: "size",
     ...px(r, radius),
   });
   const foto = bron.cloneNode() as HTMLImageElement;
   const beeldSrc = bron.getAttribute("src");
   foto.removeAttribute("loading");
+  // Een beeld met focuspunt (data-focus) houdt zijn eigen maat en positie
+  // uit focusStijl; die staan inline en gaan met cloneNode mee.
+  if (!bron.hasAttribute("data-focus"))
+    Object.assign(foto.style, { position: "absolute", inset: "0", width: "100%", height: "100%" });
   Object.assign(foto.style, {
-    position: "absolute",
-    inset: "0",
-    width: "100%",
-    height: "100%",
     objectFit: "cover",
     transition: "none",
     transform: "scale(1.04)",

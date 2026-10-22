@@ -9,10 +9,10 @@ import { FooterKolommenOpen } from "./footer/FooterKolommenOpen";
 import { KoffieIcoon } from "./ui/KoffieIcoon";
 
 /**
- * Footer volgens het informatiestructuurplan, alleen de kolommen van fase 1:
- * DisselDesign, Werk en Contact, plus de onderbalk. Diensten, Regio en Kennis
- * komen erbij zodra die pagina's bestaan; de footer linkt nooit naar een
- * pagina die er nog niet is.
+ * Footer volgens het informatiestructuurplan: DisselDesign, Werk, Diensten,
+ * Populair en Contact, plus de onderbalk. Regio en Kennis komen erbij zodra
+ * die pagina's bestaan; de footer linkt nooit naar een pagina die er nog
+ * niet is.
  *
  * Servercomponent: de Werk-kolom komt rechtstreeks uit content/werk/, dus een
  * nieuwe case staat hier vanzelf.
@@ -87,6 +87,22 @@ export async function Footer() {
     { naam: "Alle projecten", href: "/werk/" },
   ];
 
+  // Website laten maken staat onder Populair, dus hier niet nog een keer.
+  const diensten: FooterLink[] = [
+    { naam: "Huisstijl laten maken", href: "/huisstijl-laten-maken/" },
+    { naam: "UX/UI design", href: "/ux-ui-design/" },
+    { naam: "Website verbeteren", href: "/website-verbeteren/" },
+    { naam: "Voor bureaus", href: "/voor-bureaus/" },
+    { naam: "Alle diensten", href: "/diensten/" },
+  ];
+
+  // Populair: de pagina's waar de meeste ondernemers op zoeken. Groeit mee
+  // met stap 4 (regiopagina's), alleen pagina's die live staan.
+  const populair: FooterLink[] = [
+    { naam: "Website laten maken", href: "/website-laten-maken/" },
+    { naam: "Wat kost een website?", href: "/website-laten-maken/wat-kost-een-website/" },
+  ];
+
   const contact: FooterLink[] = [
     { naam: site.email, href: `mailto:${site.email}` },
     { naam: "WhatsApp", href: site.whatsapp.href, extern: true },
@@ -97,7 +113,7 @@ export async function Footer() {
   return (
     <footer className="relative border-t border-white/10 bg-surface-dark text-white">
       <FooterKolommenOpen />
-      <Container className="grid gap-10 py-14 md:grid-cols-[2fr_1fr_1fr] md:gap-12">
+      <Container className="grid gap-10 py-14 md:gap-12 lg:grid-cols-[1fr_3fr]">
         <div className="max-w-sm">
           <Link
             href="/"
@@ -117,12 +133,14 @@ export async function Footer() {
         </div>
 
         {/* Op mobiel één grens boven de uitklapblokken; de kolommen hebben
-            er elk een onder. Vanaf tablet twee kolommen naast elkaar. */}
+            er elk een onder. Vanaf tablet vier kolommen naast elkaar. */}
         <nav
           aria-label="Footer"
-          className="border-t border-white/10 md:col-span-2 md:grid md:grid-cols-2 md:gap-12 md:border-0"
+          className="border-t border-white/10 md:grid md:grid-cols-4 md:gap-8 md:border-0"
         >
           <Kolom titel="Werk" links={werk} />
+          <Kolom titel="Diensten" links={diensten} />
+          <Kolom titel="Populair" links={populair} />
           <Kolom
             titel="Contact"
             links={contact}

@@ -1,8 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useRef, type MouseEvent } from "react";
+import { useRef, type CSSProperties, type MouseEvent } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { datumLabel, type CaseKaartData, type CaseLabel } from "@/lib/werk-gedeeld";
 import { trekIn } from "./trekIn";
@@ -17,7 +16,7 @@ export type CaseKaartProps = {
   tags: string[];
   kaart: CaseKaartData;
   /** Het beeld van de kaart, gelijk aan de hero van de case (heroBeeld). */
-  beeld: { src: string; alt: string };
+  beeld: { src: string; alt: string; stijl?: CSSProperties };
 };
 
 /**
@@ -35,12 +34,10 @@ export type CaseKaartProps = {
 export function CaseKaart({
   caseMeta: c,
   kop: Kop = "h3",
-  sizes = "(min-width: 1024px) 50vw, 100vw",
 }: {
   caseMeta: CaseKaartProps;
   /** h3 onder een H2 (home). */
   kop?: "h2" | "h3";
-  sizes?: string;
 }) {
   const router = useRouter();
   const imgRef = useRef<HTMLImageElement>(null);
@@ -67,16 +64,25 @@ export function CaseKaart({
       className="group relative block aspect-[3/4] overflow-hidden rounded-[20px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface-dark"
       style={{ backgroundColor: k.kleur }}
     >
-      {/* Direct kind van de link: trekIn neemt de rechthoek en hoeken van de
-          ouder als startpunt. Zelfde bestand als de hero van de case. */}
-      <Image
-        ref={imgRef}
-        src={c.beeld.src}
-        alt={c.beeld.alt}
-        fill
-        sizes={sizes}
-        className="object-cover transition-transform duration-200 ease-out motion-safe:group-hover:scale-[1.02] motion-safe:group-focus-visible:scale-[1.02]"
-      />
+      {/* trekIn neemt de rechthoek en hoeken van de ouder van het beeld als
+          startpunt; deze laag vult de kaart en erft de hoeken. Hij is ook de
+          container voor de uitsnede (focusStijl). Zelfde bestand als de hero
+          van de case. */}
+      <div className="absolute inset-0 overflow-hidden rounded-[inherit] [container-type:size]">
+        {/* Gewone img: next/image met `fill` staat geen eigen maat toe, en
+            die heeft focusStijl nodig. De beelden zijn toch unoptimized. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          ref={imgRef}
+          src={c.beeld.src}
+          alt={c.beeld.alt}
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-200 ease-out motion-safe:group-hover:scale-[1.02] motion-safe:group-focus-visible:scale-[1.02]"
+          style={c.beeld.stijl}
+          data-focus={c.beeld.stijl ? "" : undefined}
+        />
+      </div>
 
       {/* Kopbalk, als doorschijnende balk over het beeld. Alleen de
           achtergrond is doorschijnend, de tekst houdt volle dekking. 62% is

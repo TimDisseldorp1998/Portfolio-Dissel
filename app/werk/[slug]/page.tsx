@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { CSSProperties } from "react";
-import { ExternalLink } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 import { reviews } from "@/lib/content";
 import {
   DIENSTEN,
+  DIENST_URL,
   alleCases,
   carouselSlides,
   heroBeeld,
+  heroStijl,
   labelTekst,
   vindCase,
   volgendeCase,
@@ -87,7 +89,7 @@ export default async function CasePagina({ params }: Props) {
             vorige/volgende-kaart; de maten staan ook in CaseNavigatie. */}
         <div
           data-case-hero
-          className="relative h-[75svh] min-h-[22rem] w-full"
+          className="relative h-[75svh] min-h-[22rem] w-full overflow-hidden [container-type:size]"
           style={{ backgroundColor: c.kaart.kleur }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -97,6 +99,8 @@ export default async function CasePagina({ params }: Props) {
             fetchPriority="high"
             decoding="async"
             className="absolute inset-0 h-full w-full object-cover"
+            style={heroStijl(c)}
+            data-focus={heroStijl(c) ? "" : undefined}
           />
           <div aria-hidden className="absolute inset-x-0 -bottom-px h-1/2 bg-[linear-gradient(to_top,#0a0a0f,rgba(10,10,15,0))]" />
         </div>
@@ -184,8 +188,8 @@ export default async function CasePagina({ params }: Props) {
               )}
             </article>
 
-            {/* Ingezette diensten. Fase 2 maakt hier links van naar de
-                dienstpagina's; de sleutels in DIENSTEN worden dan de URL. */}
+            {/* Ingezette diensten. Een dienst met een eigen pagina
+                (DIENST_URL in lib/werk.ts) is een link, de rest tekst. */}
             <section aria-labelledby="diensten" className="mt-10">
               <Reveal y={16}>
                 <h2 id="diensten" className={kicker}>
@@ -195,9 +199,19 @@ export default async function CasePagina({ params }: Props) {
               <RevealStagger className="mt-4 flex flex-wrap gap-2" stagger={0.06}>
                 {c.diensten.map((d) => (
                   <RevealItem key={d} y={12}>
-                    <span className="inline-flex rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-sm text-white/80">
-                      {DIENSTEN[d]}
-                    </span>
+                    {DIENST_URL[d] ? (
+                      <a
+                        href={DIENST_URL[d]}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-sm text-white transition-colors hover:border-primary/50 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                      >
+                        {DIENSTEN[d]}
+                        <ArrowRight size={14} aria-hidden />
+                      </a>
+                    ) : (
+                      <span className="inline-flex rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-sm text-white/80">
+                        {DIENSTEN[d]}
+                      </span>
+                    )}
                   </RevealItem>
                 ))}
               </RevealStagger>
@@ -234,8 +248,8 @@ export default async function CasePagina({ params }: Props) {
             {/* Vorige en volgende case. Een klik trekt je de foto in. */}
             <Reveal y={16} className="mt-14">
               <CaseNavigatie
-                vorige={{ slug: vorige.slug, klant: vorige.klant, kaartbeeld: heroBeeld(vorige) }}
-                volgende={{ slug: volgende.slug, klant: volgende.klant, kaartbeeld: heroBeeld(volgende) }}
+                vorige={{ slug: vorige.slug, klant: vorige.klant, kaartbeeld: heroBeeld(vorige), stijl: heroStijl(vorige) }}
+                volgende={{ slug: volgende.slug, klant: volgende.klant, kaartbeeld: heroBeeld(volgende), stijl: heroStijl(volgende) }}
               />
             </Reveal>
           </div>

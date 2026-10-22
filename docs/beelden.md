@@ -14,7 +14,7 @@ Opgesteld 21 oktober 2026. Regel van Tim: **maximaal twee tot drie beelden per p
 
 | # | Pagina | Plek | Soort beeld | Wat past bij de tekst | Bestand | Formaat |
 |---|---|---|---|---|---|---|
-| 1 | Home, werk | Kaart Ziggo Dome | Mockup | De agenda en tickets op telefoon, tablet en laptop naast elkaar. De kop zegt "onder je duim, op elk scherm", dus de telefoon vooraan. | `public/werk/ziggo-dome/kaart.webp` | 3:4 staand, 1200×1600 |
+| ✓ | Home, werk | Kaart Ziggo Dome | Foto | **Klaar (23 okt):** de woestijnfoto, met 160px extra lucht bovenin zodat het hoofd onder de kopbalk uitkomt. Staat op kaart, tegel, hero en vorige/volgende, met focuspunt (`kaartbeeldFocus` in de MDX). | `public/mockup/image-ZiggoDome-woestijn.jpg` + `-640.jpg` | 1942×969 |
 | 2 | Home, werk | Kaart New Edition | Mockup | De homepage op laptop, met de Order Portal op een tablet ernaast. De kop noemt de huisstijl en de route naar de portal. | `public/werk/new-edition/kaart.webp` | 3:4 staand, 1200×1600 |
 | 3 | /website-laten-maken/ | Hero, naast of onder de H1 | Sfeerbeeld | Jij aan je bureau met een site op het scherm. De tekst zegt "Ik ontwerp je site en bouw hem zelf" en "één aanspreekpunt": laat de persoon zien. **Kan nu al met `public/bento/focus.webp`.** | `public/diensten/website-laten-maken.webp` | 4:3, 1600×1200 |
 | 4 | /contact/ | Naast de intro | Sfeerbeeld | Een vriendelijke foto van jou, gerust met een kop koffie. De tekst zegt "online of, als het uitkomt, op de koffie". **Kan nu al met `public/mockup/image-portret-tim.jpg`.** | `public/contact/tim.webp` | 4:5 staand, 1000×1250 |
@@ -43,6 +43,17 @@ Twee beeldblokken, binnen het maximum:
 2. **Werk:** de drie casekaarten (Kleintjes van Alkmaar, De-Stock, Marktzicht) met hun bestaande kaartbeeld. Dat is één blok en hoeft niet nieuw.
 
 Geen beeld bij "Wat je krijgt", "Past het bij je?", de werkwijze of de prijzen. Die zijn met tekst en iconen duidelijker.
+
+## Dienstpagina's stap 3b
+
+Elke dienstpagina heeft hooguit twee beeldblokken: de hero en de rij casekaarten.
+
+| Pagina | Hero nu | Wat er beter past | Bestand | Formaat |
+|---|---|---|---|---|
+| /huisstijl-laten-maken/ | Brandboard Kleintjes van Alkmaar, uitsnede zonder donkere rand, groot naast de tekst (7 van 12 kolommen) | Prima zo. Later eventueel een eigen huisstijl-mockup: logo, kleuren en een visitekaartje bij elkaar. | `public/diensten/huisstijl-brandboard.webp` | 2072×1944, ongeveer vierkant |
+| /ux-ui-design/ | Drie Ziggo Dome-schermen, wireframe tot ontwerp | Prima zo. Laat het proces zien, dat past bij "van onderzoek tot overdracht". | | |
+| /website-verbeteren/ | **Geen beeld, bewust.** Het websitecheck-formulier staat direct onder de hero en is de hoofdzaak. | Niets toevoegen. | | |
+| /voor-bureaus/ | `public/bento/werkplek.webp` (voorlopig) | Jij aan het werk met een team of op locatie, bijvoorbeeld in een overleg. De tekst zegt "remote of op locatie". | `public/diensten/voor-bureaus.webp` | 4:3, 1600×1200 |
 
 ## Tips voor het maken
 

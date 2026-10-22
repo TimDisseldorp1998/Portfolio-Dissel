@@ -1,4 +1,4 @@
-import { heroBeeld, type Case } from "@/lib/werk";
+import { heroBeeld, heroStijl, type Case } from "@/lib/werk";
 import { CaseKaart } from "./CaseKaart";
 
 /**
@@ -37,10 +37,9 @@ export function CaseOverzicht({
                 kaart: c.kaart,
                 // Zelfde beeld als de hero: de kaart is de link, het beeld
                 // decoratief, behalve een mockup met eigen alt-tekst.
-                beeld: { src: heroBeeld(c), alt: c.kaart.beeld?.alt ?? "" },
+                beeld: { src: heroBeeld(c), alt: c.kaart.beeld?.alt ?? "", stijl: heroStijl(c) },
               }}
               kop={kop}
-              sizes="(min-width: 1024px) 50vw, 100vw"
             />
           </li>
         ))}
