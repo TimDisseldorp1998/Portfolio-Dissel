@@ -383,7 +383,7 @@ const faq: { vraag: string; antwoord: React.ReactNode }[] = [
   {
     vraag: "Wie regelt hosting, updates en onderhoud?",
     antwoord:
-      "Hosting en onderhoud zitten bij DisselDesign in één pakket: hosting, updates, back-ups, support en aanpassingen. Wat het kost, hangt af van wat er gedaan moet worden en staat in het voorstel. Je domein staat op je eigen naam. Wil je ooit naar een andere partij, dan krijg je alles mee.",
+      "Hosting en onderhoud zitten bij DisselDesign in één pakket: hosting, updates, back-ups, monitoring, support en aanpassingen. Op een vraag krijg je binnen 2 werkdagen antwoord, en het pakket is maandelijks opzegbaar. Wat het kost, hangt af van wat er gedaan moet worden en staat in het voorstel. Je domein staat op je eigen naam. Wil je ooit naar een andere partij, dan krijg je het ontwerp en de code mee, zonder kosten.",
   },
   {
     vraag: "Hoeveel pagina's krijg ik bij DisselDesign?",
@@ -764,6 +764,10 @@ export default function VoorAiPage() {
                 <span aria-hidden className="text-white/30">·</span>
                 <a href="/website-laten-maken/wat-kost-een-website/" className={tekstLink}>
                   Wat kost een website?
+                </a>
+                <span aria-hidden className="text-white/30">·</span>
+                <a href="/kennis/" className={tekstLink}>
+                  Kennis
                 </a>
                 <span aria-hidden className="text-white/30">·</span>
                 <a href="/huisstijl-laten-maken/" className={tekstLink}>

@@ -148,3 +148,31 @@ export function faqSchema(vragen: { vraag: string; antwoord: string }[]) {
     })),
   };
 }
+
+/** Een kennisartikel, geschreven door Tim en uitgegeven door DisselDesign. */
+export function artikelSchema({
+  pad,
+  titel,
+  omschrijving,
+  datum,
+}: {
+  pad: string;
+  titel: string;
+  omschrijving: string;
+  /** JJJJ-MM-DD */
+  datum: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `${SITE_URL}${pad}#article`,
+    url: `${SITE_URL}${pad}`,
+    mainEntityOfPage: `${SITE_URL}${pad}`,
+    headline: titel,
+    description: omschrijving,
+    datePublished: datum,
+    inLanguage: "nl-NL",
+    author: { "@id": TIM_ID },
+    publisher: { "@id": BEDRIJF_ID },
+  };
+}
