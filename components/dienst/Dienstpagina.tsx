@@ -53,6 +53,8 @@ export type DienstpaginaInhoud = {
   stappen: { kop: string; items: { titel: string; tekst: string }[]; link?: { label: string; href: string } };
   prijzen: { kop: string; inhoud: ReactNode };
   vragen: { vraag: string; antwoord: string }[];
+  /** Extra onder de FAQ, bijv. links naar de kennisartikelen. */
+  naVragen?: ReactNode;
   cta: { kop: string; tekst: string };
   schema: { omschrijving: string; vanaf?: number };
 };
@@ -192,6 +194,7 @@ export async function Dienstpagina({ inhoud: d }: { inhoud: DienstpaginaInhoud }
               </Reveal>
               <Reveal className="lg:col-span-8">
                 <Veelgesteld vragen={d.vragen} />
+                {d.naVragen}
               </Reveal>
             </div>
           </Blok>

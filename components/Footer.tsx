@@ -101,6 +101,7 @@ export async function Footer() {
   const populair: FooterLink[] = [
     { naam: "Website laten maken", href: "/website-laten-maken/" },
     { naam: "Wat kost een website?", href: "/website-laten-maken/wat-kost-een-website/" },
+    { naam: "Kennis", href: "/kennis/" },
   ];
 
   const contact: FooterLink[] = [

@@ -3,6 +3,7 @@ import { Code2, KeyRound, Mail, PenTool, Search, Smartphone } from "lucide-react
 import { bedrag, euro } from "@/lib/content";
 import { Dienstpagina, PrijsTekst } from "@/components/dienst/Dienstpagina";
 import { PijlLink, PrijsTabel } from "@/components/dienst/onderdelen";
+import { MeerVragen } from "@/components/kennis/Artikel";
 
 const PAD = "/website-laten-maken/";
 const TITEL = "Website laten maken in Noord-Holland | DisselDesign";
@@ -178,6 +179,15 @@ export default function WebsiteLatenMaken() {
           ),
         },
         vragen,
+        naVragen: (
+          <div className="mt-10">
+            <h3 className="font-heading text-xl font-semibold text-white">Meer vragen</h3>
+            <MeerVragen className="mt-4" />
+            <p className="mt-5">
+              <PijlLink href="/kennis/">Alle vragen op een rij</PijlLink>
+            </p>
+          </div>
+        ),
         cta: {
           kop: "Zelf een website laten maken?",
           tekst:
