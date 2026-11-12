@@ -19,6 +19,12 @@ RewriteRule ^(.*)$ https://disseldesign.com/$1 [R=301,L]
 # Don't rewrite requests that are already inside /out/ — they resolve normally.
 RewriteRule ^out/ - [L]
 
+# AI-agents die om Markdown vragen krijgen op de homepage llms.txt, de
+# Markdown-samenvatting van de site. Browsers sturen nooit text/markdown.
+# shortcut: kijkt niet naar q-waarden, pas aan als iemand text/markdown;q=0 stuurt.
+RewriteCond %{HTTP_ACCEPT} text/markdown [NC]
+RewriteRule ^$ out/llms.txt [L]
+
 # Root request → out/index.html
 RewriteRule ^$ out/index.html [L]
 
@@ -29,6 +35,21 @@ RewriteRule ^(.*)$ out/$1 [L]
 
 # Fallback for trailing-slash URLs that Next generates as directories.
 ErrorDocument 404 /out/404.html
+# Agents krijgen de 404 als Markdown, met links naar llms.txt en de sitemap.
+<If "%{HTTP_ACCEPT} =~ m#text/markdown#i">
+  ErrorDocument 404 /out/404.md
+</If>
+
+AddType "text/markdown; charset=utf-8" .md
+# llms.txt is Markdown: zo voor agents, platte tekst voor browsers
+# (text/markdown laat een browser het bestand downloaden).
+<Files "llms.txt">
+  Header set Content-Type "text/markdown; charset=utf-8" "expr=%{HTTP_ACCEPT} =~ m#text/markdown#i"
+</Files>
+# Zelfde URL, andere inhoud per Accept: caches moeten dat weten.
+<FilesMatch "\.(html|md)$|^llms\.txt$">
+  Header merge Vary Accept
+</FilesMatch>
 
 # dev.disseldesign.com is de testomgeving en hoort niet in Google. Dezelfde
 # .htaccess draait ook op live, maar daar matcht de host niet en komt de

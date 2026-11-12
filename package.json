@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "rm -rf .next && next dev -p 1080",
     "check:content": "node scripts/check-content.mjs",
+    "check:agents": "bash scripts/check-agents.sh",
     "prebuild": "node scripts/check-content.mjs",
     "build": "next build",
     "start": "next start",
