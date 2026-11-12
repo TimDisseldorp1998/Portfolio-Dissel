@@ -34,11 +34,8 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ out/$1 [L]
 
 # Fallback for trailing-slash URLs that Next generates as directories.
-ErrorDocument 404 /out/404.html
-# Agents krijgen de 404 als Markdown, met links naar llms.txt en de sitemap.
-<If "%{HTTP_ACCEPT} =~ m#text/markdown#i">
-  ErrorDocument 404 /out/404.md
-</If>
+# 404.php kiest: HTML voor browsers, Markdown (out/404.md) voor agents.
+ErrorDocument 404 /404.php
 
 AddType "text/markdown; charset=utf-8" .md
 # llms.txt is Markdown: zo voor agents, platte tekst voor browsers
