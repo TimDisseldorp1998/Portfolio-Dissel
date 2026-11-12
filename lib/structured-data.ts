@@ -29,6 +29,14 @@ export const bedrijfEnPersoon = {
       name: "DisselDesign",
       url: `${SITE_URL}/`,
       email: "info@disseldesign.com",
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "customer service",
+        email: "info@disseldesign.com",
+        url: `${SITE_URL}/contact/`,
+        availableLanguage: "nl",
+        areaServed: "NL",
+      },
       description:
         "UX/UI design, webdesign, branding en webdevelopment voor ondernemers, merken en bureaus, vanuit Noord-Holland.",
       foundingDate: "2024",
