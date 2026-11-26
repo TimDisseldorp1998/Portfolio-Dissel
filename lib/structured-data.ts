@@ -57,13 +57,13 @@ export const bedrijfEnPersoon = {
         "Conversie-optimalisatie",
       ],
       founder: { "@id": TIM_ID },
-      // De pakketten van de homepage. Vanaf-prijzen, dus `minPrice`; btw staat
+      // De pakketten. Vanaf-prijzen, dus `minPrice`; btw staat
       // er niet in (valueAddedTaxIncluded hoort bij PriceSpecification).
       makesOffer: pakketten.map((p) => ({
         "@type": "Offer",
         name: p.naam,
         description: p.info,
-        url: `${SITE_URL}/#prijzen`,
+        url: `${SITE_URL}/website-laten-maken/wat-kost-een-website/`,
         priceSpecification: {
           "@type": "PriceSpecification",
           minPrice: p.bedrag,
