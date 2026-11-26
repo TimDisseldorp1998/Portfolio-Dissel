@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 ## Project
-- Dit is de zakelijke site van DisselDesign: disseldesign.com (Next.js 14).
+- Dit is de zakelijke site van DisselDesign: disseldesign.com (Next.js 15, React 19).
 - Alle copy op de site is Nederlands, geschreven voor lokale ondernemers, zonder designjargon.
 - De site wordt bij de build vooraf gerenderd (`output: "export"`, geen Node-server). H1, title, description en canonical staan in de HTML van elke pagina, de intro-tekst ook (behalve op de 404, die er geen `<p>` voor heeft). Voor SEO is geen SSR nodig (gecontroleerd 2026-11-26).
 - Elke pagina heeft `og:image` en `twitter:card` `summary_large_image`. Een nieuwe pagina met een eigen `openGraph`-blok heeft `images: [OG_BEELD]` nodig (`lib/structured-data.ts`), en `siteName: "DisselDesign"`, en `card` in het `twitter`-blok. `og:description` is maximaal 125 tekens.
