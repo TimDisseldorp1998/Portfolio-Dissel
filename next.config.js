@@ -27,6 +27,13 @@ const nextConfig = {
     // terwijl de client het huidige jaar rendert (hydration-mismatch rond
     // de jaarwisseling).
     NEXT_PUBLIC_BUILD_YEAR: String(new Date().getFullYear()),
+    // Versiecode voor het deelbeeld, uit de inhoud van het bestand: een nieuwe
+    // afbeelding krijgt zo een nieuwe URL en omzeilt de cache.
+    NEXT_PUBLIC_OG_VERSIE: require("node:crypto")
+      .createHash("md5")
+      .update(require("node:fs").readFileSync(`${__dirname}/public/opengraph-image.jpg`))
+      .digest("hex")
+      .slice(0, 8),
   },
 };
 
