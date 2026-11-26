@@ -59,6 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: c.kaarttekst,
     alternates: { canonical: url },
     openGraph: {
+      siteName: "DisselDesign",
       title: c.seoTitel,
       description: c.kaarttekst,
       type: "website",

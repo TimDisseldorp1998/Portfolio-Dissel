@@ -9,13 +9,16 @@ const PAD = "/huisstijl-laten-maken/";
 const TITEL = "Huisstijl laten maken in Noord-Holland | DisselDesign";
 const OMSCHRIJVING =
   "Huisstijl of logo laten maken? Logo, kleuren, lettertypen en een stijlgids, vanaf € 349 excl. btw. Ook samen met je website. Plan een gratis gesprek.";
+// Korter voor de deelkaart: maximaal 125 tekens.
+const OG_OMSCHRIJVING =
+  "Huisstijl of logo laten maken? Logo, kleuren, lettertypen en stijlgids vanaf € 349 excl. btw. Plan een gratis gesprek.";
 
 export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: { canonical: PAD },
-  openGraph: { images: [OG_BEELD], title: TITEL, description: OMSCHRIJVING, type: "website", locale: "nl_NL", url: PAD },
-  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
+  openGraph: { siteName: "DisselDesign", images: [OG_BEELD], title: TITEL, description: OG_OMSCHRIJVING, type: "website", locale: "nl_NL", url: PAD },
+  twitter: { card: "summary_large_image", title: TITEL, description: OG_OMSCHRIJVING },
 };
 
 const vragen = [

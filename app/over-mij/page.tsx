@@ -11,20 +11,24 @@ import { OG_BEELD } from "@/lib/structured-data";
 const TITEL = "Over Tim Disseldorp | Digitale Product Designer";
 const OMSCHRIJVING =
   "Tim Disseldorp, Digitale Product Designer in Heiloo. Werkervaring, opleidingen, toolstack en hoe ik werk, sinds 2024 als DisselDesign.";
+// Korter voor de deelkaart: maximaal 125 tekens.
+const OG_OMSCHRIJVING =
+  "Tim Disseldorp, Digitale Product Designer in Heiloo. Werkervaring, opleidingen, tools en hoe ik werk.";
 
 export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: { canonical: "/over-mij/" },
   openGraph: {
+    siteName: "DisselDesign",
     images: [OG_BEELD],
     title: TITEL,
-    description: OMSCHRIJVING,
+    description: OG_OMSCHRIJVING,
     type: "profile",
     locale: "nl_NL",
     url: "/over-mij/",
   },
-  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
+  twitter: { card: "summary_large_image", title: TITEL, description: OG_OMSCHRIJVING },
 };
 
 export default function OverMijPagina() {

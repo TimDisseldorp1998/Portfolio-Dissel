@@ -6,13 +6,16 @@ const PAD = "/website-laten-maken/hosting-en-onderhoud/";
 const TITEL = "Hosting en onderhoud van je website | DisselDesign";
 const OMSCHRIJVING =
   "Hosting, updates, back-ups en kleine aanpassingen in één onderhoudspakket, maandelijks opzegbaar. Wat erin zit en hoe de prijs wordt bepaald.";
+// Korter voor de deelkaart: maximaal 125 tekens.
+const OG_OMSCHRIJVING =
+  "Hosting, updates, back-ups en kleine aanpassingen in één onderhoudspakket, maandelijks opzegbaar.";
 
 export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: { canonical: PAD },
-  openGraph: { images: [OG_BEELD], title: TITEL, description: OMSCHRIJVING, type: "article", locale: "nl_NL", url: PAD },
-  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
+  openGraph: { siteName: "DisselDesign", images: [OG_BEELD], title: TITEL, description: OG_OMSCHRIJVING, type: "article", locale: "nl_NL", url: PAD },
+  twitter: { card: "summary_large_image", title: TITEL, description: OG_OMSCHRIJVING },
 };
 
 const vragen = [

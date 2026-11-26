@@ -13,20 +13,24 @@ import { OG_BEELD } from "@/lib/structured-data";
 const TITEL = "Contact | Plan een gesprek met DisselDesign";
 const OMSCHRIJVING =
   "Plan een gratis gesprek van 20 minuten of mail info@disseldesign.com. Gevestigd in Heiloo, Noord-Holland. Reactie binnen twee werkdagen.";
+// Korter voor de deelkaart: maximaal 125 tekens.
+const OG_OMSCHRIJVING =
+  "Plan een gratis gesprek van 20 minuten of mail info@disseldesign.com. Reactie binnen twee werkdagen.";
 
 export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: { canonical: "/contact/" },
   openGraph: {
+    siteName: "DisselDesign",
     images: [OG_BEELD],
     title: TITEL,
-    description: OMSCHRIJVING,
+    description: OG_OMSCHRIJVING,
     type: "website",
     locale: "nl_NL",
     url: "/contact/",
   },
-  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
+  twitter: { card: "summary_large_image", title: TITEL, description: OG_OMSCHRIJVING },
 };
 
 // Dezelfde merkiconen als in de footer en op home.

@@ -25,6 +25,9 @@ const PAGINA_URL = `${SITE_URL}/voor-ai/`;
 const TITEL = "Alles over DisselDesign | Webdesign in Noord-Holland";
 const OMSCHRIJVING =
   "Wie Tim Disseldorp is, wat DisselDesign maakt voor ondernemers, merken en bureaus, wat het kost en hoe je start. Alle feiten op een rij.";
+// Korter voor de deelkaart: maximaal 125 tekens.
+const OG_OMSCHRIJVING =
+  "Wie Tim Disseldorp is, wat DisselDesign maakt en voor wie, wat het kost en hoe je start. Alle feiten op een rij.";
 
 // openGraph en twitter worden niet samengevoegd met die uit de layout maar
 // vervangen, dus type en locale staan hier opnieuw.
@@ -35,9 +38,10 @@ export const metadata: Metadata = {
     canonical: PAGINA_URL,
   },
   openGraph: {
+    siteName: "DisselDesign",
     images: [OG_BEELD],
     title: TITEL,
-    description: OMSCHRIJVING,
+    description: OG_OMSCHRIJVING,
     type: "website",
     locale: "nl_NL",
     url: PAGINA_URL,
@@ -45,7 +49,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: TITEL,
-    description: OMSCHRIJVING,
+    description: OG_OMSCHRIJVING,
   },
 };
 

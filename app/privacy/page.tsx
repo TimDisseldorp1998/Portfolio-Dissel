@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   openGraph: {
+    siteName: "DisselDesign",
     images: [OG_BEELD],
     title: TITEL,
     description: OMSCHRIJVING,

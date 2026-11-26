@@ -12,13 +12,16 @@ import { OG_BEELD } from "@/lib/structured-data";
 const TITEL = "Kennis: vragen over een website laten maken | DisselDesign";
 const OMSCHRIJVING =
   "Antwoorden op de vragen die ondernemers stellen voordat ze een website laten maken: kosten, doorlooptijd, zelf aanpassen, hosting en eigendom.";
+// Korter voor de deelkaart: maximaal 125 tekens.
+const OG_OMSCHRIJVING =
+  "Antwoorden voor ondernemers die een website laten maken: kosten, doorlooptijd, zelf aanpassen, hosting en eigendom.";
 
 export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: { canonical: "/kennis/" },
-  openGraph: { images: [OG_BEELD], title: TITEL, description: OMSCHRIJVING, type: "website", locale: "nl_NL", url: "/kennis/" },
-  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
+  openGraph: { siteName: "DisselDesign", images: [OG_BEELD], title: TITEL, description: OG_OMSCHRIJVING, type: "website", locale: "nl_NL", url: "/kennis/" },
+  twitter: { card: "summary_large_image", title: TITEL, description: OG_OMSCHRIJVING },
 };
 
 /** Overzicht van alle kennisartikelen (lib/kennis.ts). */

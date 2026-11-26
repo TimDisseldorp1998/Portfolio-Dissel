@@ -6,13 +6,16 @@ const PAD = "/website-laten-maken/hoe-snel-staat-mijn-website-live/";
 const TITEL = "Hoe snel staat mijn website live? | DisselDesign";
 const OMSCHRIJVING =
   "Een landingspagina staat meestal binnen een week live, een complete website in twee tot vier weken. Wat het sneller of langzamer maakt.";
+// Korter voor de deelkaart: maximaal 125 tekens.
+const OG_OMSCHRIJVING =
+  "Een landingspagina staat meestal binnen een week live, een complete website in twee tot vier weken.";
 
 export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: { canonical: PAD },
-  openGraph: { images: [OG_BEELD], title: TITEL, description: OMSCHRIJVING, type: "article", locale: "nl_NL", url: PAD },
-  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
+  openGraph: { siteName: "DisselDesign", images: [OG_BEELD], title: TITEL, description: OG_OMSCHRIJVING, type: "article", locale: "nl_NL", url: PAD },
+  twitter: { card: "summary_large_image", title: TITEL, description: OG_OMSCHRIJVING },
 };
 
 const vragen = [

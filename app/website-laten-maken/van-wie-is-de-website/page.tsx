@@ -6,13 +6,16 @@ const PAD = "/website-laten-maken/van-wie-is-de-website/";
 const TITEL = "Van wie is de website na oplevering? | DisselDesign";
 const OMSCHRIJVING =
   "Na de oplevering is alles van jou: ontwerp, code, domein en content. Wat dat betekent als je later naar een andere partij wilt.";
+// Korter voor de deelkaart: maximaal 125 tekens.
+const OG_OMSCHRIJVING =
+  "Na oplevering is alles van jou: ontwerp, code, domein en content. Wat dat betekent als je later overstapt.";
 
 export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: { canonical: PAD },
-  openGraph: { images: [OG_BEELD], title: TITEL, description: OMSCHRIJVING, type: "article", locale: "nl_NL", url: PAD },
-  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
+  openGraph: { siteName: "DisselDesign", images: [OG_BEELD], title: TITEL, description: OG_OMSCHRIJVING, type: "article", locale: "nl_NL", url: PAD },
+  twitter: { card: "summary_large_image", title: TITEL, description: OG_OMSCHRIJVING },
 };
 
 const vragen = [

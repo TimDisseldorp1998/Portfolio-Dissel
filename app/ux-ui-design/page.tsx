@@ -8,13 +8,16 @@ const PAD = "/ux-ui-design/";
 const TITEL = "UX/UI designer voor je product of platform | DisselDesign";
 const OMSCHRIJVING =
   "UX/UI designer nodig? Onderzoek, wireframes, UI-ontwerp en design systemen in Figma, en als het moet ook de frontend. Plan een gratis gesprek.";
+// Korter voor de deelkaart: maximaal 125 tekens.
+const OG_OMSCHRIJVING =
+  "UX/UI designer nodig? Onderzoek, wireframes, UI-ontwerp en design systemen in Figma. Plan een gratis gesprek.";
 
 export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: { canonical: PAD },
-  openGraph: { images: [OG_BEELD], title: TITEL, description: OMSCHRIJVING, type: "website", locale: "nl_NL", url: PAD },
-  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
+  openGraph: { siteName: "DisselDesign", images: [OG_BEELD], title: TITEL, description: OG_OMSCHRIJVING, type: "website", locale: "nl_NL", url: PAD },
+  twitter: { card: "summary_large_image", title: TITEL, description: OG_OMSCHRIJVING },
 };
 
 const vragen = [
