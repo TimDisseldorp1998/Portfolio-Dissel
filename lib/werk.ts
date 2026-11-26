@@ -75,6 +75,9 @@ export type CaseMeta = {
   tags: string[];
   liveUrl: string | null;
   kaartbeeld: string;
+  /** Eigen deelbeeld (og:image) van 1200x630. Zonder dit veld is het het
+   *  kaartbeeld. Vervang je het, kies dan een nieuwe bestandsnaam (cache). */
+  deelbeeld?: string;
   /** Waar de persoon of het onderwerp in het kaartbeeld staat. Kaart, tegel,
    *  hero en vorige/volgende zetten dat punt dan in het midden. */
   kaartbeeldFocus?: BeeldFocus;
@@ -168,6 +171,12 @@ function controleer(bestand: string, meta: unknown): CaseMeta {
     return fs.existsSync(vol) && fs.readdirSync(path.dirname(vol)).includes(path.basename(vol));
   };
   if (!bestaat(m.kaartbeeld)) fout(`kaartbeeld ${m.kaartbeeld} bestaat niet in public/`);
+  if (m.deelbeeld) {
+    if (!bestaat(m.deelbeeld)) fout(`deelbeeld ${m.deelbeeld} bestaat niet in public/`);
+    const { breedte, hoogte } = jpegMaten(path.join(process.cwd(), "public", m.deelbeeld));
+    if (breedte !== 1200 || hoogte !== 630)
+      fout(`deelbeeld is ${breedte}x${hoogte}, moet 1200x630 zijn`);
+  }
   if (m.kaart.beeld) {
     if (!m.kaart.beeld.alt) fout(`kaart.beeld ${m.kaart.beeld.src} heeft geen alt-tekst`);
     // Geen harde fout: tot de mockup er is, tonen kaart en hero het kaartbeeld.
