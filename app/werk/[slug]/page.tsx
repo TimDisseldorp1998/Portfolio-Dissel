@@ -65,7 +65,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "website",
       locale: "nl_NL",
       url,
-      images: [{ url: c.kaartbeeld, alt: c.klant }],
+      images: [
+        c.deelbeeld
+          ? { url: c.deelbeeld, width: 1200, height: 630, alt: c.klant }
+          : { url: c.kaartbeeld, alt: c.klant },
+      ],
     },
     twitter: { card: "summary_large_image", title: c.seoTitel, description: c.kaarttekst },
   };
