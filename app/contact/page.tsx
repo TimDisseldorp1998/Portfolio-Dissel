@@ -8,6 +8,7 @@ import { Kruimelpad } from "@/components/Kruimelpad";
 import { Container } from "@/components/ui/Container";
 import { ContactForm } from "@/components/ContactForm";
 import { KoffieIcoon } from "@/components/ui/KoffieIcoon";
+import { OG_BEELD } from "@/lib/structured-data";
 
 const TITEL = "Contact | Plan een gesprek met DisselDesign";
 const OMSCHRIJVING =
@@ -18,13 +19,14 @@ export const metadata: Metadata = {
   description: OMSCHRIJVING,
   alternates: { canonical: "/contact/" },
   openGraph: {
+    images: [OG_BEELD],
     title: TITEL,
     description: OMSCHRIJVING,
     type: "website",
     locale: "nl_NL",
     url: "/contact/",
   },
-  twitter: { title: TITEL, description: OMSCHRIJVING },
+  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
 };
 
 // Dezelfde merkiconen als in de footer en op home.

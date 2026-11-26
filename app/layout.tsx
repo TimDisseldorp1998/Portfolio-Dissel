@@ -4,7 +4,7 @@ import "./globals.css";
 import { CookieConsent } from "@/components/CookieConsent";
 import { JsonLd } from "@/components/JsonLd";
 import { KlikMeter } from "@/components/KlikMeter";
-import { SITE_URL, bedrijfEnPersoon } from "@/lib/structured-data";
+import { SITE_URL, bedrijfEnPersoon, OG_BEELD } from "@/lib/structured-data";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -39,6 +39,7 @@ export const metadata: Metadata = {
     canonical: SITE_URL,
   },
   openGraph: {
+    images: [OG_BEELD],
     title: TITEL,
     description: OMSCHRIJVING,
     type: "website",
@@ -46,6 +47,7 @@ export const metadata: Metadata = {
     url: SITE_URL,
   },
   twitter: {
+    card: "summary_large_image",
     title: TITEL,
     description: OMSCHRIJVING,
   },

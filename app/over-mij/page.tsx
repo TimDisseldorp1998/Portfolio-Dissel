@@ -6,6 +6,7 @@ import { Container } from "@/components/ui/Container";
 import { OverMijVolledig } from "@/components/Bento";
 import { Voordelen } from "@/components/Voordelen";
 import { Werkwijze } from "@/components/Werkwijze";
+import { OG_BEELD } from "@/lib/structured-data";
 
 const TITEL = "Over Tim Disseldorp | Digitale Product Designer";
 const OMSCHRIJVING =
@@ -16,13 +17,14 @@ export const metadata: Metadata = {
   description: OMSCHRIJVING,
   alternates: { canonical: "/over-mij/" },
   openGraph: {
+    images: [OG_BEELD],
     title: TITEL,
     description: OMSCHRIJVING,
     type: "profile",
     locale: "nl_NL",
     url: "/over-mij/",
   },
-  twitter: { title: TITEL, description: OMSCHRIJVING },
+  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
 };
 
 export default function OverMijPagina() {

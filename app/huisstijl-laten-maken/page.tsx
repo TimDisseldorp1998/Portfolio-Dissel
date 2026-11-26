@@ -3,6 +3,7 @@ import { FileText, Mail, Palette, PenTool, Printer, Share2 } from "lucide-react"
 import { bedrag, euro } from "@/lib/content";
 import { Dienstpagina, PrijsTekst } from "@/components/dienst/Dienstpagina";
 import { PrijsTabel } from "@/components/dienst/onderdelen";
+import { OG_BEELD } from "@/lib/structured-data";
 
 const PAD = "/huisstijl-laten-maken/";
 const TITEL = "Huisstijl laten maken in Noord-Holland | DisselDesign";
@@ -13,8 +14,8 @@ export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: { canonical: PAD },
-  openGraph: { title: TITEL, description: OMSCHRIJVING, type: "website", locale: "nl_NL", url: PAD },
-  twitter: { title: TITEL, description: OMSCHRIJVING },
+  openGraph: { images: [OG_BEELD], title: TITEL, description: OMSCHRIJVING, type: "website", locale: "nl_NL", url: PAD },
+  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
 };
 
 const vragen = [

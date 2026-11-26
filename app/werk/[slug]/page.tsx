@@ -66,7 +66,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url,
       images: [{ url: c.kaartbeeld, alt: c.klant }],
     },
-    twitter: { title: c.seoTitel, description: c.kaarttekst },
+    twitter: { card: "summary_large_image", title: c.seoTitel, description: c.kaarttekst },
   };
 }
 

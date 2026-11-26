@@ -7,6 +7,7 @@ import { Kruimelpad } from "@/components/Kruimelpad";
 import { Container } from "@/components/ui/Container";
 import { RevealItem, RevealStagger } from "@/components/ui/Reveal";
 import { DienstCta } from "@/components/dienst/onderdelen";
+import { OG_BEELD } from "@/lib/structured-data";
 
 const TITEL = "Kennis: vragen over een website laten maken | DisselDesign";
 const OMSCHRIJVING =
@@ -16,8 +17,8 @@ export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: { canonical: "/kennis/" },
-  openGraph: { title: TITEL, description: OMSCHRIJVING, type: "website", locale: "nl_NL", url: "/kennis/" },
-  twitter: { title: TITEL, description: OMSCHRIJVING },
+  openGraph: { images: [OG_BEELD], title: TITEL, description: OMSCHRIJVING, type: "website", locale: "nl_NL", url: "/kennis/" },
+  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
 };
 
 /** Overzicht van alle kennisartikelen (lib/kennis.ts). */

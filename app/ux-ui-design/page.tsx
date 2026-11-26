@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Code2, Layers, LayoutTemplate, MousePointerClick, Search, Workflow } from "lucide-react";
 import { Dienstpagina, PrijsTekst } from "@/components/dienst/Dienstpagina";
 import { PijlLink } from "@/components/dienst/onderdelen";
+import { OG_BEELD } from "@/lib/structured-data";
 
 const PAD = "/ux-ui-design/";
 const TITEL = "UX/UI designer voor je product of platform | DisselDesign";
@@ -12,8 +13,8 @@ export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: { canonical: PAD },
-  openGraph: { title: TITEL, description: OMSCHRIJVING, type: "website", locale: "nl_NL", url: PAD },
-  twitter: { title: TITEL, description: OMSCHRIJVING },
+  openGraph: { images: [OG_BEELD], title: TITEL, description: OMSCHRIJVING, type: "website", locale: "nl_NL", url: PAD },
+  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
 };
 
 const vragen = [
