@@ -8,7 +8,7 @@ import { useEffect, useState, type RefObject } from "react";
  *
  * `amount` is het deel van het element dat zichtbaar moet zijn (0 tot 1).
  */
-export function useInView(ref: RefObject<Element>, amount = 0.5) {
+export function useInView(ref: RefObject<Element | null>, amount = 0.5) {
   const [inView, setInView] = useState(false);
 
   useEffect(() => {

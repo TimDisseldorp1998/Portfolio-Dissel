@@ -54,7 +54,7 @@ export function InfoKnop({
     setOmhoog(k.bottom + hoogte > window.innerHeight && k.top > hoogte);
   }, [open]);
   // Kleine vertraging bij weggaan, zodat de muis van knop naar wolk kan.
-  const hoverTimer = useRef<number>();
+  const hoverTimer = useRef<number | undefined>(undefined);
   const hoverAan = (e: React.PointerEvent) => {
     if (e.pointerType !== "mouse") return;
     window.clearTimeout(hoverTimer.current);

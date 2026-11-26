@@ -40,7 +40,7 @@ import { KoffieIcoon } from "@/components/ui/KoffieIcoon";
 /** Vertraging voor de entree-animatie (.mount-rise in globals.css). */
 const vertraging = (s: number) => ({ "--rise-delay": `${s}s` }) as CSSProperties;
 
-type Props = { params: { slug: string } };
+type Props = { params: Promise<{ slug: string }> };
 
 
 // Geen `dynamicParams = false`: in Next 14.2 laat dat `npm run dev` met een
@@ -51,7 +51,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const c = await vindCase(params.slug);
+  const c = await vindCase((await params).slug);
   if (!c) return {};
   const url = `/werk/${c.slug}/`;
   return {
@@ -75,7 +75,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const kicker = "text-xs font-medium uppercase tracking-[0.22em] text-white/60";
 
 export default async function CasePagina({ params }: Props) {
-  const c = await vindCase(params.slug);
+  const c = await vindCase((await params).slug);
   if (!c) notFound();
   const volgende = await volgendeCase(c.slug);
   const vorige = await vorigeCase(c.slug);

@@ -7,7 +7,7 @@ import { LinkedinFilled, InstagramFilled } from "./ui/BrandIcons";
 import { ContactForm } from "./ContactForm";
 import { KoffieIcoon } from "./ui/KoffieIcoon";
 
-const brandIcons: Record<string, (props: { size?: number }) => JSX.Element> = {
+const brandIcons: Record<string, (props: { size?: number }) => React.JSX.Element> = {
   Linkedin: LinkedinFilled,
   Instagram: InstagramFilled,
 };

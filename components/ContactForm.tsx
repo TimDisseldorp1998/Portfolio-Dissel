@@ -617,7 +617,7 @@ interface InputFieldProps extends BaseFieldProps {
 
 interface TextareaFieldProps extends BaseFieldProps {
   as: "textarea";
-  textareaRef?: RefObject<HTMLTextAreaElement>;
+  textareaRef?: RefObject<HTMLTextAreaElement | null>;
   type?: never;
   inputMode?: never;
 }
