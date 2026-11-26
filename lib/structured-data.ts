@@ -188,7 +188,7 @@ export function artikelSchema({
 /** Deelafbeelding voor de home en alle pagina's zonder eigen beeld. Een eigen
  *  openGraph-blok vervangt dat uit de layout, dus zet hem daar ook in. */
 export const OG_BEELD = {
-  url: `/opengraph-image.jpg?v=${process.env.NEXT_PUBLIC_OG_VERSIE}`,
+  url: `/deelbeeld-lokale-ondernemers.jpg?v=${process.env.NEXT_PUBLIC_OG_VERSIE}`,
   width: 1200,
   height: 630,
   alt: "DisselDesign: websites en huisstijlen voor lokale ondernemers",

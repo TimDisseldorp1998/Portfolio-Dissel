@@ -31,7 +31,7 @@ const nextConfig = {
     // afbeelding krijgt zo een nieuwe URL en omzeilt de cache.
     NEXT_PUBLIC_OG_VERSIE: require("node:crypto")
       .createHash("md5")
-      .update(require("node:fs").readFileSync(`${__dirname}/public/opengraph-image.jpg`))
+      .update(require("node:fs").readFileSync(`${__dirname}/public/deelbeeld-lokale-ondernemers.jpg`))
       .digest("hex")
       .slice(0, 8),
   },
