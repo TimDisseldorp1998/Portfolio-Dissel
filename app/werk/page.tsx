@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { CaseTegel } from "@/components/werk/CaseTegel";
 import { RevealItem, RevealStagger } from "@/components/ui/Reveal";
 import { KoffieIcoon } from "@/components/ui/KoffieIcoon";
+import { OG_BEELD } from "@/lib/structured-data";
 
 const TITEL = "Werk van Tim Disseldorp | DisselDesign";
 const OMSCHRIJVING =
@@ -18,13 +19,14 @@ export const metadata: Metadata = {
   description: OMSCHRIJVING,
   alternates: { canonical: "/werk/" },
   openGraph: {
+    images: [OG_BEELD],
     title: TITEL,
     description: OMSCHRIJVING,
     type: "website",
     locale: "nl_NL",
     url: "/werk/",
   },
-  twitter: { title: TITEL, description: OMSCHRIJVING },
+  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
 };
 
 /** Overzicht van alle cases. Linkt naar elke casepagina. */

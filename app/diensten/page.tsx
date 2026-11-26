@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { Kruimelpad } from "@/components/Kruimelpad";
 import { Services } from "@/components/Services";
 import { Testimonials } from "@/components/Testimonials";
+import { OG_BEELD } from "@/lib/structured-data";
 
 const TITEL = "Diensten | Webdesign, huisstijl en UX/UI | DisselDesign";
 const OMSCHRIJVING =
@@ -13,8 +14,8 @@ export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: { canonical: "/diensten/" },
-  openGraph: { title: TITEL, description: OMSCHRIJVING, type: "website", locale: "nl_NL", url: "/diensten/" },
-  twitter: { title: TITEL, description: OMSCHRIJVING },
+  openGraph: { images: [OG_BEELD], title: TITEL, description: OMSCHRIJVING, type: "website", locale: "nl_NL", url: "/diensten/" },
+  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
 };
 
 /** Overzicht van de diensten. In fase 2 komt per dienst een eigen pagina. */

@@ -184,3 +184,12 @@ export function artikelSchema({
     publisher: { "@id": BEDRIJF_ID },
   };
 }
+
+/** Deelafbeelding voor de home en alle pagina's zonder eigen beeld. Een eigen
+ *  openGraph-blok vervangt dat uit de layout, dus zet hem daar ook in. */
+export const OG_BEELD = {
+  url: `/opengraph-image.jpg?v=${process.env.NEXT_PUBLIC_OG_VERSIE}`,
+  width: 1200,
+  height: 630,
+  alt: "DisselDesign: websites en huisstijlen voor lokale ondernemers",
+};

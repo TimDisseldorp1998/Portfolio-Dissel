@@ -3,7 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { site } from "@/lib/content";
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/Logo";
-import { SITE_URL } from "@/lib/structured-data";
+import { SITE_URL, OG_BEELD } from "@/lib/structured-data";
 import { Kruimelpad } from "@/components/Kruimelpad";
 
 const TITEL = "Privacy & cookies | DisselDesign";
@@ -14,13 +14,14 @@ export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   openGraph: {
+    images: [OG_BEELD],
     title: TITEL,
     description: OMSCHRIJVING,
     type: "website",
     locale: "nl_NL",
     url: "/privacy/",
   },
-  twitter: { title: TITEL, description: OMSCHRIJVING },
+  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
   // Zonder deze regel erft de pagina de canonical van de homepage uit de
   // layout en zegt hij tegen Google dat hij een kopie van de homepage is.
   alternates: {

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { prijs, reviews, site } from "@/lib/content";
 import { Veelgesteld } from "@/components/Veelgesteld";
-import { SITE_URL, voorAiPagina } from "@/lib/structured-data";
+import { SITE_URL, voorAiPagina, OG_BEELD } from "@/lib/structured-data";
 import { cn } from "@/lib/cn";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -35,6 +35,7 @@ export const metadata: Metadata = {
     canonical: PAGINA_URL,
   },
   openGraph: {
+    images: [OG_BEELD],
     title: TITEL,
     description: OMSCHRIJVING,
     type: "website",
@@ -42,6 +43,7 @@ export const metadata: Metadata = {
     url: PAGINA_URL,
   },
   twitter: {
+    card: "summary_large_image",
     title: TITEL,
     description: OMSCHRIJVING,
   },

@@ -4,6 +4,7 @@ import { Dienstpagina, PrijsTekst } from "@/components/dienst/Dienstpagina";
 import { Blok, h2, kicker } from "@/components/dienst/onderdelen";
 import { WebsiteCheck } from "@/components/dienst/WebsiteCheck";
 import { Reveal } from "@/components/ui/Reveal";
+import { OG_BEELD } from "@/lib/structured-data";
 
 const PAD = "/website-verbeteren/";
 const TITEL = "Website laten verbeteren | DisselDesign";
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: { canonical: PAD },
-  openGraph: { title: TITEL, description: OMSCHRIJVING, type: "website", locale: "nl_NL", url: PAD },
-  twitter: { title: TITEL, description: OMSCHRIJVING },
+  openGraph: { images: [OG_BEELD], title: TITEL, description: OMSCHRIJVING, type: "website", locale: "nl_NL", url: PAD },
+  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
 };
 
 const vragen = [

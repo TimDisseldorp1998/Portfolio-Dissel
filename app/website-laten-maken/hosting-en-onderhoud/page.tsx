@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Artikel, Tabel, alinea, inlineLink, tussenkop } from "@/components/kennis/Artikel";
+import { OG_BEELD } from "@/lib/structured-data";
 
 const PAD = "/website-laten-maken/hosting-en-onderhoud/";
 const TITEL = "Hosting en onderhoud van je website | DisselDesign";
@@ -10,8 +11,8 @@ export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: { canonical: PAD },
-  openGraph: { title: TITEL, description: OMSCHRIJVING, type: "article", locale: "nl_NL", url: PAD },
-  twitter: { title: TITEL, description: OMSCHRIJVING },
+  openGraph: { images: [OG_BEELD], title: TITEL, description: OMSCHRIJVING, type: "article", locale: "nl_NL", url: PAD },
+  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
 };
 
 const vragen = [

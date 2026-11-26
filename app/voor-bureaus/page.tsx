@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Code2, Layers, LayoutTemplate, MapPin, Search, Users } from "lucide-react";
 import { Dienstpagina, PrijsTekst } from "@/components/dienst/Dienstpagina";
+import { OG_BEELD } from "@/lib/structured-data";
 
 const PAD = "/voor-bureaus/";
 const TITEL = "Freelance UX/UI designer voor bureaus | DisselDesign";
@@ -11,8 +12,8 @@ export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: { canonical: PAD },
-  openGraph: { title: TITEL, description: OMSCHRIJVING, type: "website", locale: "nl_NL", url: PAD },
-  twitter: { title: TITEL, description: OMSCHRIJVING },
+  openGraph: { images: [OG_BEELD], title: TITEL, description: OMSCHRIJVING, type: "website", locale: "nl_NL", url: PAD },
+  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
 };
 
 const vragen = [
