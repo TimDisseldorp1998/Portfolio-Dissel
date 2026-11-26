@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { ArrowRight, ChevronDown, User, Eye, LayoutGrid, type LucideIcon } from "lucide-react";
@@ -151,7 +152,7 @@ export function Navbar() {
       >
         {/* Logo — mark only. Op home scrolt hij terug naar boven, elders gaat
             hij naar home. */}
-        <a
+        <Link
           href="/"
           onClick={(e) => {
             if (opHome) scrollToSection(e, "#top", prefersReducedMotion);
@@ -162,7 +163,7 @@ export function Navbar() {
           className="flex min-h-[50px] shrink-0 items-center rounded-full px-2 transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40 sm:min-h-[44px]"
         >
           <LogoMark className="h-8 w-auto sm:h-7" />
-        </a>
+        </Link>
 
         <ul className="flex items-center gap-0.5 sm:gap-1">
           {items.map((item) => {
@@ -184,7 +185,7 @@ export function Navbar() {
                     }
                   : {})}
               >
-                <a
+                <Link
                   href={item.href}
                   onClick={(e) =>
                     scrollToSection(e, item.href, prefersReducedMotion)
@@ -209,7 +210,7 @@ export function Navbar() {
                   <span className={cn(isActive ? "inline" : "hidden sm:inline")}>
                     {item.label}
                   </span>
-                </a>
+                </Link>
                 {item.href === "/diensten/" && (
                   <>
                     <button
@@ -240,24 +241,24 @@ export function Navbar() {
                         <ul>
                           {dienstLinks.map((d) => (
                             <li key={d.href}>
-                              <a
+                              <Link
                                 href={d.href}
                                 aria-current={pad === kaal(d.href) ? "page" : undefined}
                                 className="block rounded-2xl px-4 py-3 transition-colors hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40 aria-[current=page]:bg-primary/10"
                               >
                                 <span className="block text-[15px] font-medium text-white">{d.naam}</span>
                                 <span className="mt-0.5 block text-sm text-white/60">{d.tekst}</span>
-                              </a>
+                              </Link>
                             </li>
                           ))}
                         </ul>
-                        <a
+                        <Link
                           href="/diensten/"
                           className="mt-1 flex items-center gap-1.5 rounded-2xl border-t border-white/10 px-4 py-3 text-sm font-medium text-white/70 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
                         >
                           Alle diensten
                           <ArrowRight size={16} aria-hidden />
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </>
@@ -271,7 +272,7 @@ export function Navbar() {
             pil onderin en is hij in rust 1,15x geschaald, dan past de tekst
             er naast de drie items niet in. Daar een gevuld icoon met dezelfde
             toegankelijke naam. */}
-        <a
+        <Link
           href="/contact/"
           data-cta="plan_kennismaking"
           aria-label="Plan een gesprek"
@@ -282,7 +283,7 @@ export function Navbar() {
               houdt dan zijn aria-label als naam. */}
           <KoffieIcoon stoom="hover" />
           <span className="hidden lg:inline">Plan een gesprek</span>
-        </a>
+        </Link>
       </nav>
     </header>
   );
