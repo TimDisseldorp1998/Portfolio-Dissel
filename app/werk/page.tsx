@@ -13,6 +13,9 @@ import { OG_BEELD } from "@/lib/structured-data";
 const TITEL = "Werk van Tim Disseldorp | DisselDesign";
 const OMSCHRIJVING =
   "Cases van Tim Disseldorp: huisstijlen, websites en interfaces voor onder meer Kleintjes van Alkmaar, De-Stock, Marktzicht en Ziggo Dome.";
+// Korter voor de deelkaart: maximaal 125 tekens.
+const OG_OMSCHRIJVING =
+  "Cases van Tim Disseldorp: huisstijlen, websites en interfaces voor o.a. De-Stock, Marktzicht en Ziggo Dome.";
 
 export const metadata: Metadata = {
   title: TITEL,
@@ -21,12 +24,12 @@ export const metadata: Metadata = {
   openGraph: {
     images: [OG_BEELD],
     title: TITEL,
-    description: OMSCHRIJVING,
+    description: OG_OMSCHRIJVING,
     type: "website",
     locale: "nl_NL",
     url: "/werk/",
   },
-  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
+  twitter: { card: "summary_large_image", title: TITEL, description: OG_OMSCHRIJVING },
 };
 
 /** Overzicht van alle cases. Linkt naar elke casepagina. */

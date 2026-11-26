@@ -6,13 +6,16 @@ const PAD = "/website-laten-maken/website-zelf-aanpassen/";
 const TITEL = "Kan ik mijn website zelf aanpassen? | DisselDesign";
 const OMSCHRIJVING =
   "Ja, met een CMS pas je zelf teksten en foto's aan. Wanneer dat handig is, wat het kost en wat je ook zonder CMS kunt laten aanpassen.";
+// Korter voor de deelkaart: maximaal 125 tekens.
+const OG_OMSCHRIJVING =
+  "Ja, met een CMS pas je zelf teksten en foto's aan. Wanneer dat handig is en wat het kost.";
 
 export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: { canonical: PAD },
-  openGraph: { images: [OG_BEELD], title: TITEL, description: OMSCHRIJVING, type: "article", locale: "nl_NL", url: PAD },
-  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
+  openGraph: { images: [OG_BEELD], title: TITEL, description: OG_OMSCHRIJVING, type: "article", locale: "nl_NL", url: PAD },
+  twitter: { card: "summary_large_image", title: TITEL, description: OG_OMSCHRIJVING },
 };
 
 const vragen = [

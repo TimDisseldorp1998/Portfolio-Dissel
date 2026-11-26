@@ -10,13 +10,16 @@ const PAD = "/website-verbeteren/";
 const TITEL = "Website laten verbeteren | DisselDesign";
 const OMSCHRIJVING =
   "Website laten verbeteren? Snelheid, vindbaarheid en conversie. Vraag een gratis websitecheck aan: binnen 3 werkdagen drie verbeterpunten in je mail.";
+// Korter voor de deelkaart: maximaal 125 tekens.
+const OG_OMSCHRIJVING =
+  "Website laten verbeteren? Vraag een gratis websitecheck aan: binnen 3 werkdagen drie verbeterpunten in je mail.";
 
 export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: { canonical: PAD },
-  openGraph: { images: [OG_BEELD], title: TITEL, description: OMSCHRIJVING, type: "website", locale: "nl_NL", url: PAD },
-  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
+  openGraph: { images: [OG_BEELD], title: TITEL, description: OG_OMSCHRIJVING, type: "website", locale: "nl_NL", url: PAD },
+  twitter: { card: "summary_large_image", title: TITEL, description: OG_OMSCHRIJVING },
 };
 
 const vragen = [

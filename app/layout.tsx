@@ -29,6 +29,9 @@ const TITEL = "Tim Disseldorp | Digitale Product Designer in Noord-Holland";
 // alleen wat er gebeurt en wat de bezoeker kan doen.
 const OMSCHRIJVING =
   "Websites en huisstijlen voor lokale ondernemers in Noord-Holland. Ontwerp en bouw bij één persoon, vanaf € 499 excl. btw. Plan een gratis gesprek.";
+// Korter voor de deelkaart: maximaal 125 tekens.
+const OG_OMSCHRIJVING =
+  "Websites en huisstijlen voor lokale ondernemers in Noord-Holland. Ontwerp en bouw bij één persoon, vanaf € 499 excl. btw.";
 
 export const metadata: Metadata = {
   // Maakt relatieve canonicals en OG-URL's op subpagina's absoluut.
@@ -41,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [OG_BEELD],
     title: TITEL,
-    description: OMSCHRIJVING,
+    description: OG_OMSCHRIJVING,
     type: "website",
     locale: "nl_NL",
     url: SITE_URL,
@@ -49,7 +52,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: TITEL,
-    description: OMSCHRIJVING,
+    description: OG_OMSCHRIJVING,
   },
 };
 

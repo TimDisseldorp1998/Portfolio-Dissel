@@ -7,13 +7,16 @@ const PAD = "/voor-bureaus/";
 const TITEL = "Freelance UX/UI designer voor bureaus | DisselDesign";
 const OMSCHRIJVING =
   "Freelance UX/UI designer voor bureaus en digitale teams. Ervaring bij ShopCommerce en Touch Creative. Remote of op locatie. Plan een gesprek.";
+// Korter voor de deelkaart: maximaal 125 tekens.
+const OG_OMSCHRIJVING =
+  "Freelance UX/UI designer voor bureaus en digitale teams. Remote of op locatie. Plan een gesprek.";
 
 export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: { canonical: PAD },
-  openGraph: { images: [OG_BEELD], title: TITEL, description: OMSCHRIJVING, type: "website", locale: "nl_NL", url: PAD },
-  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
+  openGraph: { images: [OG_BEELD], title: TITEL, description: OG_OMSCHRIJVING, type: "website", locale: "nl_NL", url: PAD },
+  twitter: { card: "summary_large_image", title: TITEL, description: OG_OMSCHRIJVING },
 };
 
 const vragen = [

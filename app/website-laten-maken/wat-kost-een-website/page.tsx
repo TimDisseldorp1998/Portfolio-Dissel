@@ -9,13 +9,16 @@ const PAD = "/website-laten-maken/wat-kost-een-website/";
 const TITEL = "Wat kost een website laten maken? | DisselDesign";
 const OMSCHRIJVING =
   "Een website bij DisselDesign kost vanaf € 499 excl. btw. Lees wat de prijs bepaalt, wat er altijd in zit en wat er na de oplevering bij komt.";
+// Korter voor de deelkaart: maximaal 125 tekens.
+const OG_OMSCHRIJVING =
+  "Een website bij DisselDesign kost vanaf € 499 excl. btw. Lees wat de prijs bepaalt en wat erbij komt.";
 
 export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: { canonical: PAD },
-  openGraph: { images: [OG_BEELD], title: TITEL, description: OMSCHRIJVING, type: "article", locale: "nl_NL", url: PAD },
-  twitter: { card: "summary_large_image", title: TITEL, description: OMSCHRIJVING },
+  openGraph: { images: [OG_BEELD], title: TITEL, description: OG_OMSCHRIJVING, type: "article", locale: "nl_NL", url: PAD },
+  twitter: { card: "summary_large_image", title: TITEL, description: OG_OMSCHRIJVING },
 };
 
 const vragen = [
