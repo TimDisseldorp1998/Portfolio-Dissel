@@ -42,6 +42,7 @@ export const metadata: Metadata = {
     canonical: SITE_URL,
   },
   openGraph: {
+    siteName: "DisselDesign",
     images: [OG_BEELD],
     title: TITEL,
     description: OG_OMSCHRIJVING,

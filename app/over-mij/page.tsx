@@ -20,6 +20,7 @@ export const metadata: Metadata = {
   description: OMSCHRIJVING,
   alternates: { canonical: "/over-mij/" },
   openGraph: {
+    siteName: "DisselDesign",
     images: [OG_BEELD],
     title: TITEL,
     description: OG_OMSCHRIJVING,

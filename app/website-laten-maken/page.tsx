@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: { canonical: PAD },
-  openGraph: { images: [OG_BEELD], title: TITEL, description: OG_OMSCHRIJVING, type: "website", locale: "nl_NL", url: PAD },
+  openGraph: { siteName: "DisselDesign", images: [OG_BEELD], title: TITEL, description: OG_OMSCHRIJVING, type: "website", locale: "nl_NL", url: PAD },
   twitter: { card: "summary_large_image", title: TITEL, description: OG_OMSCHRIJVING },
 };
 

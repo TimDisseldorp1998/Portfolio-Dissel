@@ -15,13 +15,14 @@ const OMSCHRIJVING =
   "Plan een gratis gesprek van 20 minuten of mail info@disseldesign.com. Gevestigd in Heiloo, Noord-Holland. Reactie binnen twee werkdagen.";
 // Korter voor de deelkaart: maximaal 125 tekens.
 const OG_OMSCHRIJVING =
-  "Plan een gratis gesprek van 20 minuten of mail info@disseldesign.com. Heiloo. Reactie binnen twee werkdagen.";
+  "Plan een gratis gesprek van 20 minuten of mail info@disseldesign.com. Reactie binnen twee werkdagen.";
 
 export const metadata: Metadata = {
   title: TITEL,
   description: OMSCHRIJVING,
   alternates: { canonical: "/contact/" },
   openGraph: {
+    siteName: "DisselDesign",
     images: [OG_BEELD],
     title: TITEL,
     description: OG_OMSCHRIJVING,

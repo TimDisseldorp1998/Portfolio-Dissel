@@ -4,7 +4,7 @@
 - Dit is de zakelijke site van DisselDesign: disseldesign.com (Next.js 14).
 - Alle copy op de site is Nederlands, geschreven voor lokale ondernemers, zonder designjargon.
 - De site wordt bij de build vooraf gerenderd (`output: "export"`, geen Node-server). H1, title, description en canonical staan in de HTML van elke pagina, de intro-tekst ook (behalve op de 404, die er geen `<p>` voor heeft). Voor SEO is geen SSR nodig (gecontroleerd 2026-11-26).
-- Elke pagina heeft `og:image` en `twitter:card` `summary_large_image`. Een nieuwe pagina met een eigen `openGraph`-blok heeft `images: [OG_BEELD]` nodig (`lib/structured-data.ts`), en `card` in het `twitter`-blok.
+- Elke pagina heeft `og:image` en `twitter:card` `summary_large_image`. Een nieuwe pagina met een eigen `openGraph`-blok heeft `images: [OG_BEELD]` nodig (`lib/structured-data.ts`), en `siteName: "DisselDesign"`, en `card` in het `twitter`-blok. `og:description` is maximaal 125 tekens.
 - Alleen in de browser: cookiebanner en Google Analytics, het tekenen van de aurora-achtergrond op de home (de lege `<canvas>` staat in de HTML), het wisselen van het H1-woord (in de H1 in de HTML staat alleen "lokale ondernemers", niet "regionale bedrijven"), klikmeting (`KlikMeter`), doorsturen van oude `?case=`-links (`OudeCaseLinks`), openklappen van de footerkolommen op desktop (`FooterKolommenOpen`) en reacties op invoer, zoals formuliermeldingen, de bedankkaart en het extra websiteveld in het contactformulier.
 
 ## Lokaal
